@@ -1,0 +1,215 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="DigitX" Name="myWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
+    <Grid>
+        <Grid x:Name="myGrid" Margin="250,40,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Canvas Height="800" Name="content" Background="White" Width="1000"
+            PreviewMouseLeftButtonDown="StartDraw" 
+            PreviewMouseMove="MouseMoved" 
+            PreviewMouseLeftButtonUp="MouseReleased">
+                <Image x:Name="image" />
+                <Canvas x:Name="dragCanvas" PreviewMouseMove="MouseMoved"
+                            Height="{Binding ElementName=myGrid, Path=ActualHeight}"
+                            Width="{Binding ElementName=myGrid, Path=ActualWidth}">
+                    <Canvas.Background>
+                        <VisualBrush TileMode="Tile"
+                             Viewport="0,0,20,20"
+                             ViewportUnits="Absolute"
+                             Viewbox="0,0,20,20"
+                             ViewboxUnits="Absolute">
+                            <VisualBrush.Visual>
+                                <Ellipse Fill="Black"
+                                 Width="2"
+                                 Height="2" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Canvas.Background>
+                </Canvas>
+                <!--<Rectangle Name="RectRed" Height="105" Width="148" Fill="Red" Canvas.Left="44" Canvas.Top="10"></Rectangle>
+            <Rectangle Height="100" Canvas.Left="528" Stroke="Black" Canvas.Top="223" Width="100" Fill="Yellow">
+            </Rectangle>
+            <Rectangle Height="100" Canvas.Left="68" Stroke="Black" Canvas.Top="238" Width="100" Fill="Blue">
+            </Rectangle>
+            <Image x:Name="sortieBlue" Height="18" Canvas.Left="168" Canvas.Top="273" Width="12" Source="point.jpg" 
+                   MouseEnter="Cursor" MouseLeave="CursorInverse" PreviewMouseLeftButtonUp="MouseRelaesed"/>
+            <Image x:Name="sortieRed" Height="18" Canvas.Left="192" Canvas.Top="48" Width="12" Source="point.jpg" SnapsToDevicePixels="True" 
+                   MouseEnter="Cursor" MouseLeave="CursorInverse" PreviewMouseLeftButtonUp="MouseRelaesed" >
+            </Image>
+            <Image x:Name="sortieYellow" Height="18" Canvas.Left="516" Canvas.Top="258" Width="12" Source="point.jpg" 
+                   MouseEnter="Cursor" MouseLeave="CursorInverse" PreviewMouseLeftButtonUp="MouseRelaesed">
+            </Image>-->
+                <!--<Line X1="0" Y1="0" X2="100" Y2="0" Stroke="Black" StrokeThickness="5"/>-->
+                <TextBlock x:Name="text" Height="50" Width="208" Canvas.Left="528" Canvas.Top="35"></TextBlock>
+            </Canvas>
+        </Grid>
+        <StackPanel>
+            <Grid Background="#060629" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Sauvegarder" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ContentSaveAll"  Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="simuler" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Simuler" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Play" Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="aide" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="aide_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Aide" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="HelpCircle"  Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="Autre" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="Lavender" StaysOpen="False">
+                            <StackPanel Width="150">
+                                <Button Content="Ouvrir un Fichier"/>
+                                <Button Content="Tutorielles"/>
+                                <Button Content="Information"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+
+        <Grid Width="250" HorizontalAlignment="Left" Background="#060629">
+            <Grid Width="250" Height="90" Background="#CBD7EE" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>
+            </Grid>
+
+            <Grid Margin="0 100" >
+                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal" >
+                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="Lavender" VerticalAlignment="Center" Margin="5"/>
+                                <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender"/>
+                            </StackPanel>
+                        </ListViewItem>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="Lavender" />
+                            <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold"/>
+                            <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte ET"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte OU"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte NON"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte NOR"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte NAND"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Porte OUX"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Waves" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListViewItem>
+                                        <TextBlock Text="Decodeur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Encodeur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Multiplexeur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Demultiplexeur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Additionneur N Bits"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Additionneur Complet"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Demi Additionneur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListViewItem>
+                                        <TextBlock Text="Registre a decalage"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Compteur"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Basule JK"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Bascule D"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Bascule T"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Bascule RST"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Hourglass" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListViewItem>
+                                        <TextBlock Text="Horloge"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <TextBlock Text="Pin"  Padding="20 5"></TextBlock>
+                                    </ListViewItem>
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
