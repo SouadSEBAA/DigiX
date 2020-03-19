@@ -20,23 +20,13 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        double x, y;
         Point mousePos;
         int grid_gap = 20;
-        int GRID_SIZE;
-        Polyline Linelist = new Polyline();
-        PointCollection pointcollection = new PointCollection();
         private bool isDrawing;
-        List<UIElement> list = new List<UIElement>();
         Line line = null;
-
-        RadioButton chkSnapToGrid = new RadioButton();
         public MainWindow()
         {
             InitializeComponent();
-            chkSnapToGrid.IsChecked = true;
-
-
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
@@ -55,21 +45,16 @@ namespace WpfApp2
 
         }
 
-        private void SnapToGrid(ref double x, ref double y)
+        private Point SnapToGrid( double x,  double y)
         {
             x = grid_gap * (double)Math.Round((double)x / grid_gap);
             y = grid_gap * (double)Math.Round((double)y / grid_gap);
+
+            return new Point(x, y);
         }
+
         private void StartDraw(object sender, MouseButtonEventArgs e)
         {
-            mousePos = e.GetPosition(content);
-            //            UIElement obj = e.Source as FrameworkElement;
-
-            //            Point point = e.GetPosition(myWindow);
-            //                //obj.TranslatePoint(new Point(0, 0), content);
-            //            text.Text = point.X + "  " + point.Y; ;
-
-
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 isDrawing = true;
@@ -78,33 +63,28 @@ namespace WpfApp2
                 line.StrokeThickness = 3;
                 line.Stroke = Brushes.Black;
 
-                x = mousePos.X;
-                y = mousePos.Y;
-                SnapToGrid(ref x, ref y);
-                //                /*
-                line.X1 = x/* e.GetPosition(content).X*/;
-                line.Y1 = y/*e.GetPosition(content).Y;*/;
-                //                pointcollection.Add(point);
-                //                Linelist.Points.Add(point);
-                content.Children.Add(line);
+                line.X1 = mousePos.X;
+                line.Y1 = mousePos.Y;
+
+                line.X2 = mousePos.X;
+                line.Y2 = mousePos.Y;
+
+                Grille.Children.Add(line);
             }
         }
 
         private void MouseMoved(object sender, MouseEventArgs e)
         {
+            mousePos = e.GetPosition(Grille);
+            mousePos = SnapToGrid(mousePos.X, mousePos.Y);
+            
             if (e.LeftButton == MouseButtonState.Pressed && isDrawing)
             {
-                mousePos = e.GetPosition(myWindow);
-                //            //text.Text = mousePos.X + "  " + mousePos.Y;
-                x = mousePos.X;
-                y = mousePos.Y;
-                SnapToGrid(ref x, ref y);
-
                 var bind1 = new Binding();
-                bind1.Source = x;
+                bind1.Source = mousePos.X;
 
                 var bind2 = new Binding();
-                bind2.Source = y;
+                bind2.Source = mousePos.Y;
 
                 line.SetBinding(Line.X2Property, bind1);
                 line.SetBinding(Line.Y2Property, bind2);
@@ -113,43 +93,38 @@ namespace WpfApp2
 
         private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
-            mousePos = e.GetPosition(content);
             if (isDrawing)
             {
                 isDrawing = false;
-                FrameworkElement source = e.OriginalSource as FrameworkElement;
-                Point point = source.TranslatePoint(new Point(), content);
-                x = mousePos.X;
-                y = mousePos.Y;
-                SnapToGrid(ref x, ref y);
-
-                //            text.Text = point.X + "  " + point.Y;
-                //                //MessageBox.Show(point.ToString());
-                //                Linelist.Points.Add(mousePos);
+                if (line.X1 == line.X2 && line.Y1 == line.Y2)
+                    Grille.Children.Remove(line);
             }
         }
 
-        private void Cursor(object sender, MouseEventArgs e)
-        {
-            //        e.MouseDevice.OverrideCursor = Cursors.Hand;
-        }
+        // Zoom
+        private Double zoomMax = 5;
+        private Double zoomMin = 0.5;
+        private Double zoomSpeed = 0.001;
+        private Double zoom = 1;
 
-        private void CursorInverse(object sender, MouseEventArgs e)
+        // Zoom on Mouse wheel
+        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            //        e.MouseDevice.OverrideCursor = Cursors.Arrow;
-        }
+            zoom += zoomSpeed * e.Delta; // Ajust zooming speed (e.Delta = Mouse spin value )
+            if (zoom < zoomMin) { zoom = zoomMin; } // Limit Min Scale
+            if (zoom > zoomMax) { zoom = zoomMax; } // Limit Max Scale
 
-        private void MouseRelaesed(object sender, MouseButtonEventArgs e)
-        {
-            //        if (isDrawing)
-            //        {
-            //            isDrawing = false;
-            //            FrameworkElement source = e.Source as FrameworkElement;
-            //            Point point = source.TranslatePoint(new Point(0, 0), myWindow);
-            //            text.Text = point.X + "  " + point.Y;
-            //        }
-        }
+            Point mousePos = e.GetPosition(Grille);
 
+            if (zoom > 1)
+            {
+                Grille.RenderTransform = new ScaleTransform(zoom, zoom, mousePos.X, mousePos.Y); // transform Canvas size from mouse position
+            }
+            else
+            {
+                Grille.RenderTransform = new ScaleTransform(zoom, zoom); // transform Canvas size
+            }
+        }
 
     }
 }
