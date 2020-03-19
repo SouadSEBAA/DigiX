@@ -11,17 +11,13 @@
     <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
-        <Canvas x:Name="Grille"         
+            <Canvas x:Name="Grille"         
                 PreviewMouseLeftButtonDown="StartDraw" 
                 PreviewMouseMove="MouseMoved" 
-                
                 PreviewMouseLeftButtonUp="MouseReleased"
                 Height="2000"
                 Width="2000">
-            <ScrollViewer Width="100" Height="100" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
-                
-            </ScrollViewer>
-            <Canvas.Background>
+                <Canvas.Background>
                     <VisualBrush TileMode="Tile"
                              Viewport="0,0,20,20"
                              ViewportUnits="Absolute"
