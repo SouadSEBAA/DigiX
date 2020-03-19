@@ -6,20 +6,20 @@
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="DigitX" Name="myWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
+        Title="DigitX" Name="myWindow" Height="700" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
     <Grid>
         <Grid x:Name="myGrid" Margin="250,40,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <Canvas Height="800" Name="content" Background="White" Width="1000"
+            <Canvas Height="640" Name="content" Background="White" Width="950"
             PreviewMouseLeftButtonDown="StartDraw" 
             PreviewMouseMove="MouseMoved" 
-            PreviewMouseLeftButtonUp="MouseReleased">
+            PreviewMouseLeftButtonUp="MouseReleased" Margin="-6,-9,0,0">
                 <Image x:Name="image" />
                 <Canvas x:Name="dragCanvas" PreviewMouseMove="MouseMoved"
-                            Height="{Binding ElementName=myGrid, Path=ActualHeight}"
-                            Width="{Binding ElementName=myGrid, Path=ActualWidth}">
+                            Height="630"
+                            Width="{Binding ElementName=myGrid, Path=ActualWidth}" Canvas.Top="10">
                     <Canvas.Background>
                         <VisualBrush TileMode="Tile"
                              Viewport="0,0,20,20"
@@ -51,6 +51,7 @@
                 <TextBlock x:Name="text" Height="50" Width="208" Canvas.Left="528" Canvas.Top="35"></TextBlock>
             </Canvas>
         </Grid>
+
         <StackPanel>
             <Grid Background="#060629" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -98,7 +99,7 @@
             </Grid>
 
             <Grid Margin="0 100" >
-                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
 
                         <ListViewItem Height="60">
