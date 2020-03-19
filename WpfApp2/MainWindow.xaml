@@ -5,19 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Name="DigitX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
 
-
+    <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid>
+        <ScrollViewer HorizontalScrollBarVisibility="Visible">
         <Canvas x:Name="Grille"         
                 PreviewMouseLeftButtonDown="StartDraw" 
                 PreviewMouseMove="MouseMoved" 
-                MouseWheel="Canvas_MouseWheel"
+                
                 PreviewMouseLeftButtonUp="MouseReleased"
-                Height="{Binding ElementName=Tools, Path=ActualHeight}"
-                Width="{Binding ElementName=Menu, Path=ActualWidth}">
-                <Canvas.Background>
+                Height="2000"
+                Width="2000">
+            <ScrollViewer Width="100" Height="100" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Visible">
+                
+            </ScrollViewer>
+            <Canvas.Background>
                     <VisualBrush TileMode="Tile"
                              Viewport="0,0,20,20"
                              ViewportUnits="Absolute"
@@ -31,6 +35,7 @@
                     </VisualBrush>
                 </Canvas.Background>
             </Canvas>
+        </ScrollViewer>
         <StackPanel x:Name="Menu">
             <Grid Background="#060629" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

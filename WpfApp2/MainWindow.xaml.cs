@@ -90,7 +90,7 @@ namespace WpfApp2
                 line.SetBinding(Line.Y2Property, bind2);
             }
         }
-
+     
         private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
@@ -101,6 +101,9 @@ namespace WpfApp2
             }
         }
 
+        //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..
+
+        /*
         // Zoom
         private Double zoomMax = 5;
         private Double zoomMin = 0.5;
@@ -125,6 +128,7 @@ namespace WpfApp2
                 Grille.RenderTransform = new ScaleTransform(zoom, zoom); // transform Canvas size
             }
         }
+        */
 
     }
 }
