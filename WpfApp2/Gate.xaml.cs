@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using logisimConsole;
 
 namespace WpfApp2
 {
@@ -20,22 +21,23 @@ namespace WpfApp2
     /// </summary>
     public partial class Gate : UserControl
     {
-        Path path;
-        public Gate(String ph /*, Outils outil*/)
+        Path path = new Path();
+
+        public Gate(Outils outil, String ph)
         {
             InitializeComponent();
 
-            path = new Path();
+            T t = new T("e", Disposition.down);
+
             path.StrokeThickness = 2;
             path.Stroke = Brushes.Black;
             path.Data = StreamGeometry.Parse(ph);
 
-            CanvasShape.Children.Add(path);
+            OutilShape.Children.Add(path);
 
             //GateElement.Height = 30;
             //GateElement.Width = 30;
             //TO-DO :  Width and Height proportionnels à la grille (y compris les entrees et sorties)
         }
     }
-
 }

@@ -27,7 +27,6 @@ namespace WpfApp2
         public MainWindow()
         {
             InitializeComponent();
-            essai.Children.Add(new Gate());
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
