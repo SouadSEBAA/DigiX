@@ -21,12 +21,13 @@ namespace WpfApp2
     public partial class MainWindow : Window
     {
         Point mousePos;
-        int grid_gap = 20;
+        int gridGap = 10;
         private bool isDrawing;
         Line line = null;
         public MainWindow()
         {
             InitializeComponent();
+            essai.Children.Add(new Gate());
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
@@ -47,8 +48,8 @@ namespace WpfApp2
 
         private Point SnapToGrid( double x,  double y)
         {
-            x = grid_gap * (double)Math.Round((double)x / grid_gap);
-            y = grid_gap * (double)Math.Round((double)y / grid_gap);
+            x = gridGap * (double)Math.Round((double)x / gridGap);
+            y = gridGap * (double)Math.Round((double)y / gridGap);
 
             return new Point(x, y);
         }
@@ -60,7 +61,7 @@ namespace WpfApp2
                 isDrawing = true;
 
                 line = new Line();
-                line.StrokeThickness = 3;
+                line.StrokeThickness = 1.5;
                 line.Stroke = Brushes.Black;
 
                 line.X1 = mousePos.X;

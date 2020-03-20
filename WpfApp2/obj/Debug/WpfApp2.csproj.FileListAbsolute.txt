@@ -82,3 +82,5 @@ C:\Users\Oussama\Desktop\PotatoGUI-master\WpfApp2\obj\Debug\WpfApp2.csproj.Gener
 C:\Users\Oussama\Desktop\PotatoGUI-master\WpfApp2\obj\Debug\WpfApp2.csproj.CopyComplete
 C:\Users\Oussama\Desktop\PotatoGUI-master\WpfApp2\obj\Debug\WpfApp2.exe
 C:\Users\Oussama\Desktop\PotatoGUI-master\WpfApp2\obj\Debug\WpfApp2.pdb
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\Gate.baml
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\Gate.g.cs
