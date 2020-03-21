@@ -43,6 +43,18 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=3.0.1.920, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.3.0.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="QuickGraph, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Data, Version=3.6.61114.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Graphviz, Version=3.6.61114.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Graphviz.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph.Serialization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QuickGraph.3.6.61119.7\lib\net4\QuickGraph.Serialization.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -63,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Gate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,12 +87,51 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Gate.xaml.cs">
+      <DependentUpon>Gate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Noyau\AddComplet.cs" />
+    <Compile Include="Noyau\AddNbits.cs" />
+    <Compile Include="Noyau\Bascule.cs" />
+    <Compile Include="Noyau\CircCombinatoire.cs" />
+    <Compile Include="Noyau\CircSequentielle.cs" />
+    <Compile Include="Noyau\Circuit.cs" />
+    <Compile Include="Noyau\CircuitPersonnalise.cs" />
+    <Compile Include="Noyau\ClasseEntree.cs" />
+    <Compile Include="Noyau\Compteur.cs" />
+    <Compile Include="Noyau\D.cs" />
+    <Compile Include="Noyau\Decodeur.cs" />
+    <Compile Include="Noyau\DemiAdd.cs" />
+    <Compile Include="Noyau\Demultiplexeur.cs" />
+    <Compile Include="Noyau\Disposition.cs" />
+    <Compile Include="Noyau\EmptyListException.cs" />
+    <Compile Include="Noyau\Encodeur.cs" />
+    <Compile Include="Noyau\ET.cs" />
+    <Compile Include="Noyau\Horloge.cs" />
+    <Compile Include="Noyau\InputOutput.cs" />
+    <Compile Include="Noyau\JK.cs" />
+    <Compile Include="Noyau\Liaison.cs" />
+    <Compile Include="Noyau\Multiplexeur.cs" />
+    <Compile Include="Noyau\NAND.cs" />
+    <Compile Include="Noyau\NON.cs" />
+    <Compile Include="Noyau\NOR.cs" />
+    <Compile Include="Noyau\OU.cs" />
+    <Compile Include="Noyau\Outils.cs" />
+    <Compile Include="Noyau\OutStruct.cs" />
+    <Compile Include="Noyau\OUX.cs" />
+    <Compile Include="Noyau\PorteLogique.cs" />
+    <Compile Include="Noyau\Program.cs" />
+    <Compile Include="Noyau\Reg_Dec.cs" />
+    <Compile Include="Noyau\RelatedException.cs" />
+    <Compile Include="Noyau\RST.cs" />
+    <Compile Include="Noyau\Sortie.cs" />
+    <Compile Include="Noyau\T.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
