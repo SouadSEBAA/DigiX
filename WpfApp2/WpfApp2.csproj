@@ -114,6 +114,7 @@
     <Compile Include="Noyau\Encodeur.cs" />
     <Compile Include="Noyau\ET.cs" />
     <Compile Include="Noyau\Horloge.cs" />
+    <Compile Include="Noyau\InputOutput.cs" />
     <Compile Include="Noyau\JK.cs" />
     <Compile Include="Noyau\Liaison.cs" />
     <Compile Include="Noyau\Multiplexeur.cs" />

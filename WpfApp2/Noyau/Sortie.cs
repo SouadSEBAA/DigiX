@@ -4,15 +4,15 @@ using System.Text;
 
 namespace logisimConsole
 {
-    public class Sortie
+    public class Sortie : InputOutput
     {
         private bool etat;
         private List<OutStruct> Sorties;
-        public Sortie() { }
+        public Sortie():base() { }
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
-        public Sortie(bool etat, List<OutStruct> Sorties)
+        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties):base(ID,disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;

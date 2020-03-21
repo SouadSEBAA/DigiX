@@ -6,14 +6,15 @@ namespace logisimConsole
 {
     class JK : Bascule
     {
+        Disposition dd = Disposition.down;
         //liste_entrees[3] == J
         //liste_entrees[4] == K
         private const int nb_entrees = 5;
         public JK(string etiquette, Disposition dispo) : base(nb_entrees, etiquette,dispo)
         {
             Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie(false, null);
-            tab[1] = new Sortie(false, null);
+            tab[0] = new Sortie(1, dd, false, null);
+            tab[1] = new Sortie(1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);
         }

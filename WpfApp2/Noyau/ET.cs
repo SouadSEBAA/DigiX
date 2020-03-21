@@ -6,6 +6,7 @@ namespace logisimConsole
 {
     class ET : PorteLogique
     {
+        Disposition dd = Disposition.down;
         //Constructeur
         public ET(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e,dispo) { }
 
@@ -37,7 +38,7 @@ namespace logisimConsole
             if (liste_sorties == null) { throw new EmptyListException(); }
             else
             {
-                liste_sorties.Add(new Sortie(output, null));
+                liste_sorties.Add(new Sortie(1, dd, output, null));
                 Console.WriteLine(liste_sorties[0].getEtat());
             }
         }

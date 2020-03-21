@@ -8,12 +8,13 @@ namespace logisimConsole
 	{//liste des sorties : [SD*SG*mem...]
 	 //liste des entrées : [clock*raz*chg*dd*dg*esd*esg*les entrees paraleles ]]
 
+		Disposition dd = Disposition.down;
 		public Reg_Dec(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo)
 		{
 			this.nb_sorties = nb_sorties + 2;
 			this.nb_entrees = nb_entrees + 7;
 			int i = 0;
-			while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree(false, false)); i++; }
+			while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
 			i = 0;
 			while (i < this.nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
 		}

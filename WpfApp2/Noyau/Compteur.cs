@@ -7,10 +7,11 @@ namespace logisimConsole
 	class Compteur : CircSequentielle
 	{//liste des entrées : [clock ,raz]
 	 //liste des sorties : [les sories du compteur]
+		Disposition dd = Disposition.down;
 		public Compteur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo)
 		{
 			this.nb_entrees = nb_entrees; this.nb_sorties = nb_sorties; int i = 0;
-			while (i < nb_entrees) { this.liste_entrees.Add(new ClasseEntree(false, false)); i++; }
+			while (i < nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
 			i = 0;
 			while (i < nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
 

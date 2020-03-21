@@ -5,12 +5,12 @@ using System.Text;
 
 namespace logisimConsole
 {
-    public class ClasseEntree
+    public class ClasseEntree : InputOutput
     {
         private bool related;
         private bool etat;
 
-        public ClasseEntree(bool rel,bool etat) 
+        public ClasseEntree(int ID, Disposition disposi,bool rel, bool etat) : base(ID,disposi)
         {
             this.related = rel;
             this.etat = etat;
