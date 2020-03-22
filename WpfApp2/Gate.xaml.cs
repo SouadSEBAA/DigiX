@@ -27,16 +27,15 @@ namespace WpfApp2
         {
             InitializeComponent();
 
-            T t = new T("e", Disposition.down);
-
             path.StrokeThickness = 2;
             path.Stroke = Brushes.Black;
             path.Data = StreamGeometry.Parse(ph);
 
             OutilShape.Children.Add(path);
 
-            //GateElement.Height = 30;
-            //GateElement.Width = 30;
+            //Pour effectuer des essais faut initialiser Width et Height
+            //Outil.Height = 100;
+            //Outil.Width = 100;
             //TO-DO :  Width and Height proportionnels à la grille (y compris les entrees et sorties)
         }
     }
