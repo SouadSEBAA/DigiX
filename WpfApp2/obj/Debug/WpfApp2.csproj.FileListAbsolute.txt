@@ -63,9 +63,7 @@ C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\WpfApp2.csproj.GenerateR
 C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\WpfApp2.csproj.CopyComplete
 C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\WpfApp2.exe
 C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\WpfApp2.pdb
-<<<<<<< HEAD
 >>>>>>> upstream/master
-=======
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\bin\Debug\WpfApp2.exe.config
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\bin\Debug\WpfApp2.exe
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\bin\Debug\WpfApp2.pdb
@@ -97,4 +95,3 @@ D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csproj.GenerateResource.c
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csproj.CopyComplete
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.exe
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.pdb
->>>>>>> upstream/master

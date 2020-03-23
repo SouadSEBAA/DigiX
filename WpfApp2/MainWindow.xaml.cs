@@ -28,7 +28,7 @@ namespace WpfApp2
         public MainWindow()
         {
             InitializeComponent();
-             //pour essayer les gates creer
+          /*   //pour essayer les gates creer
              
             List<ClasseEntree> list = new List<ClasseEntree>();
             list.Add(new ClasseEntree(1,Disposition.left,true, true));
@@ -36,6 +36,7 @@ namespace WpfApp2
             CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
             Gate g = new Decod(d);
             Grille.Children.Add(g);
+            */
             
         }
 
