@@ -4,16 +4,28 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\
+=======
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\
+>>>>>>> upstream/master
 WpfApp2
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\App.xaml
 2501108910
 
 42988397231
 19-800099624
+=======
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\App.xaml
+2501108910
+
+42988397231
+19294345841
+>>>>>>> upstream/master
 Gate.xaml;MainWindow.xaml;
 
 False
