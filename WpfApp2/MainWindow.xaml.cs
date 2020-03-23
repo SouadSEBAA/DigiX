@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using logisimConsole;
 
 namespace WpfApp2
 {
@@ -27,6 +28,15 @@ namespace WpfApp2
         public MainWindow()
         {
             InitializeComponent();
+             //pour essayer les gates creer
+             
+            List<ClasseEntree> list = new List<ClasseEntree>();
+            list.Add(new ClasseEntree(1,Disposition.left,true, true));
+            List<Sortie> list_s = new List<Sortie>();
+            CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
+            Gate g = new Decod(d);
+            Grille.Children.Add(g);
+            
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
