@@ -26,12 +26,6 @@ namespace WpfApp2
         public Gate(Outils outil, String ph)
         {
             InitializeComponent();
-
-<<<<<<< HEAD
-            //T t = new T("e", Disposition.down); //???
-
-=======
->>>>>>> upstream/master
             path.StrokeThickness = 2;
             path.Stroke = Brushes.Black;
             path.Data = StreamGeometry.Parse(ph);
