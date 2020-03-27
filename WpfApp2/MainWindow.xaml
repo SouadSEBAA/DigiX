@@ -36,6 +36,13 @@
         <StackPanel x:Name="Menu">
             <Grid Background="#060629" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                   
+                    <Button x:Name="CaptEcran" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="CellphoneScreenshot" Margin="5" />
+                        </StackPanel>
+                    </Button>
 
                     <Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >

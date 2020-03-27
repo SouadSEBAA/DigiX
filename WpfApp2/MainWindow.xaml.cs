@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -111,6 +112,50 @@ namespace WpfApp2
                     Grille.Children.Remove(line);
             }
         }
+
+        private void CaptEcran_Click(object sender, RoutedEventArgs e)
+        {
+            //Console.WriteLine("hello");
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[8];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+            string chemin1 = @".\..\..\..\Capture\";
+            string strRes1 = String.Concat(chemin1, finalString);
+            string strRes = String.Concat(strRes1, ".png");
+            CreateScreenShot(this, strRes);
+        }
+
+        private void CreateScreenShot(UIElement visual, string file)
+        {
+            double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
+            double height = Convert.ToDouble(visual.GetValue(FrameworkElement.HeightProperty));
+            if (double.IsNaN(width) || double.IsNaN(height))
+            {
+                throw new FormatException("You need to indicate the Width and Height values of the UIElement.");
+            }
+            RenderTargetBitmap render = new RenderTargetBitmap(
+               Convert.ToInt32(width),
+               Convert.ToInt32(visual.GetValue(FrameworkElement.HeightProperty)),
+               96,
+               96,
+               PixelFormats.Pbgra32);
+            // Indicate which control to render in the image
+            render.Render(visual);
+            using (FileStream stream = new FileStream(file, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(render));
+                encoder.Save(stream);
+            }
+        }
+
 
         //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..
 
