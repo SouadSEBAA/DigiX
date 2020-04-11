@@ -11,37 +11,49 @@
 
     <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid x:Name="grid"  >
-        <ScrollViewer HorizontalScrollBarVisibility="Visible">
-            <Canvas x:Name="Grille"         
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Background="Lavender">
+
+            <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                <Canvas x:Name="Grille"         
                 PreviewMouseLeftButtonDown="StartDraw" 
                 PreviewMouseMove="MouseMoved" 
                 PreviewMouseLeftButtonUp="MouseReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
                 Drop="Grille_Drop"
-                Height="419"
-                Width="787">
-                <Canvas.Background>
-                    <VisualBrush TileMode="Tile"
+                Height="2000"
+                Width="2000">
+                    <Canvas.Background>
+                        <VisualBrush TileMode="Tile"
                              Viewport="0,0,10,10"
                              ViewportUnits="Absolute"
                              Viewbox="0,0,10,10"
                              ViewboxUnits="Absolute">
-                        <VisualBrush.Visual>
-                            <Ellipse Fill="Black"
+                            <VisualBrush.Visual>
+                                <Ellipse Fill="Black"
                                  Width="1"
                                  Height="1" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Canvas.Background>
-            </Canvas>
-        </ScrollViewer>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Canvas.Background>
+                </Canvas>
+            </ScrollViewer>
+        </Grid>
 
-        <StackPanel x:Name="Menu">
+        <StackPanel x:Name="Menu" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
             <Grid Background="#060629" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 
-                    <Button x:Name="CaptEcran" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
+                    <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="CellphoneScreenshot" Margin="5" />
@@ -85,8 +97,8 @@
             </Grid>
         </StackPanel>
 
-        <Grid Width="250" HorizontalAlignment="Left" Background="#060629" Name="Tools">
-            <Grid Width="250" Height="90" Background="#CBD7EE" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
+            <Grid Width="250" Height="90" Background="#060629" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>
             </Grid>
 
