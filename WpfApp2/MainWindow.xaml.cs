@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using logisimConsole;
+using WpfApp2.Chronogramme;
 
 namespace WpfApp2
 {
@@ -38,7 +38,6 @@ namespace WpfApp2
             Gate g = new Decod(d);
             Grille.Children.Add(g);
             */
-            
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
@@ -156,6 +155,11 @@ namespace WpfApp2
             }
         }
 
+        private void ChronogrammesClick(object sender, RoutedEventArgs e)
+        {
+            Chronogrammes chronoPage = new Chronogrammes();
+            Chronogrammes.Children.Add(chronoPage);
+        }
 
         //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..
 

@@ -4,32 +4,17 @@
 winexe
 C#
 .cs
-<<<<<<< HEAD
-C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\
-=======
-C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\
->>>>>>> upstream/master
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\
 WpfApp2
 none
 false
 DEBUG;TRACE
-<<<<<<< HEAD
-C:\Users\linak\Documents\PotatoGUI\WpfApp2\App.xaml
-2501108910
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\App.xaml
+4-562619554
 
-421771121128
-19-800099624
-Gate.xaml;MainWindow.xaml;
-
-False
-=======
-C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\App.xaml
-2501108910
-
-431911398879
-19-1695747173
-Gate.xaml;MainWindow.xaml;
+45-1259202321
+221863065979
+Chronogramme\Chronogrammes.xaml;Chronogramme\StepLine.xaml;Gate.xaml;MainWindow.xaml;
 
 True
->>>>>>> upstream/master
 

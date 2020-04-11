@@ -32,11 +32,11 @@
                 </Canvas.Background>
             </Canvas>
         </ScrollViewer>
-        
+
         <StackPanel x:Name="Menu">
             <Grid Background="#060629" >
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                   
+
                     <Button x:Name="CaptEcran" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
@@ -72,6 +72,7 @@
                                 <Button Content="Ouvrir un Fichier"/>
                                 <Button Content="Tutorielles"/>
                                 <Button Content="Information"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -102,13 +103,13 @@
                             <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold"/>
                             <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
                                             <Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0">
-                                                    <Path StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
-                                                </Canvas>
+                                                <Path StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
+                                            </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
 
@@ -174,7 +175,7 @@
                             <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Decodeur"  Padding="20 5" VerticalAlignment="Center"/>
@@ -183,16 +184,16 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
-                                        <TextBlock Text="Encodeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Encodeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
                                             <Canvas x:Name="c12" Height="50" Width="40" Margin="20 0">
                                                 <Path Stroke="OldLace" StrokeThickness="1.5" Canvas.Left="1.5" Data= "M0.69133333,0.50000001 L0.5,38.514667 M0.69,39.346667 L23.528333,31.235 M0.49999999,0.5 L23.528334,11.894667 M23.537167,11.429 L23.537167,31.208667 M9.226,15.11 L15.414395,15.11 15.414395,17.036221 11.642991,17.036221 11.642991,19.372588 15.152492,19.372588 15.152492,21.291486 11.642991,21.291486 11.642991,23.693769 15.661333,23.693769 15.661333,25.612667 9.226,25.612667 z"/>
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Multiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -201,7 +202,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Demultiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -210,7 +211,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="210">
                                             <TextBlock Text="Add N Bits"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -219,7 +220,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="210" Height="44">
                                             <TextBlock Text="Add Complet"  Padding="19 5" VerticalAlignment="Center"></TextBlock>
@@ -228,7 +229,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="44">
                                             <TextBlock Text="Demi Add"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -237,7 +238,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                 </ListView>
                             </Expander>
                         </Grid>
@@ -247,7 +248,7 @@
                             <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="44">
                                             <TextBlock Text="Reg a decalage"  Padding="20 5"></TextBlock>
@@ -256,7 +257,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="44">
                                             <TextBlock Text="Compteur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -265,7 +266,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Basule JK"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -274,7 +275,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Bascule D"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -283,7 +284,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Bascule T"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -292,7 +293,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Bascule RST"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -301,7 +302,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                 </ListView>
                             </Expander>
                         </Grid>
@@ -311,7 +312,7 @@
                             <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -370,7 +371,7 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
+
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
                                             <TextBlock Text="Pin"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
@@ -395,8 +396,8 @@
                                             </Canvas>
                                         </StackPanel>
                                     </ListViewItem>
-                                    
-                                    
+
+
                                 </ListView>
                             </Expander>
                         </Grid>
@@ -405,5 +406,6 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
+        <Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" />
     </Grid>
 </Window>
