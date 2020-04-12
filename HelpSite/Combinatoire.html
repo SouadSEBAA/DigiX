@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuits Combinatoires</title>
+    <link rel="stylesheet" href="c.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"  ></script>
+</head>
+<body>
+
+
+    <div class="main_container" id="home">
+        <!-- the main container contains everything in the html page-->
+        <nav class="navbar navbar-default fixed-top navbar-expand-sm" role="navigation">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">
+          <img src="./img/logo.png" alt="logo" style="width: 150px;height: 150px;">
+        </a>     
+        <ul class="navbar-nav ml-auto" style="margin-right: 50px">
+          <li class="nav-item ">
+            <a class="nav-link" href="home.html"><i class="fa fa-home"></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./tuto.html"><i class="fa fa-chevron-circle-right"></i>Tutoriels</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            <i class="fa fa-chevron-circle-right"></i>Portes Logiques
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="./Portes.html#ET">ET</a>
+              <a class="dropdown-item" href="./Portes.html#OU">OU</a>
+              <a class="dropdown-item" href="./Portes.html#NON">NON</a>
+              <a class="dropdown-item" href="./Portes.html#NOR">NOR</a>
+              <a class="dropdown-item" href="./Portes.html#XOR">XOR</a>
+              <a class="dropdown-item" href="./Portes.html#NAND">NAND</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            <i class="fa fa-chevron-circle-right"></i>Circuits Combinatoires
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="Combinatoire.html#Multiplexeur">Multiplexeur</a>
+              <a class="dropdown-item" href="Combinatoire.html#Demultiplexeur">Démultipltexeur</a>
+              <a class="dropdown-item" href="Combinatoire.html#Encodeur">Encodeur</a>
+              <a class="dropdown-item" href="Combinatoire.html#Decodeur">Décodeur</a>
+              <a class="dropdown-item" href="Combinatoire.html#AddCom">Additionneur Complet</a>
+              <a class="dropdown-item" href="Combinatoire.html#DemiAdd">Demi Additionneur</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            <i class="fa fa-chevron-circle-right"></i>Circuits Séquentiels
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="Sequentielle.html#D">Bascule D</a>
+              <a class="dropdown-item" href="Sequentielle.html#T">Bascule T</a>
+              <a class="dropdown-item" href="Sequentielle.html#JK">Bascule JK</a>
+              <a class="dropdown-item" href="Sequentielle.html#RST">Bascule RST</a>
+              <a class="dropdown-item" href="Sequentielle.html#Reg">Registre à décalage</a>
+              <a class="dropdown-item" href="Sequentielle.html#Compteur">Compteur Standard</a>
+            </div>
+          </li>
+        </ul>
+        </nav>
+
+        <div class="banner_image">
+            <!-- Banner -->
+            <div class="banner_content">
+                <h1> <span> Les Circuits Logiques</span></h1>
+                <h2>
+                    Le circuit logique est une combinaison ou association de plusieurs portes et filspour réaliser une fonction particulière. On distingue deux types de circuits: Le combinatoire et le séquentielle.
+                    <p><span> Quel est donc la différence entre les deux?</span> </p>
+                    <img src="./img/differences.PNG" alt="les differences entres les deux types combinatoire/séquentielle">
+                </h2>
+                <h1> Les Circuits Combinatoires.</h1>
+            </div>
+        </div>
+
+        <div class="type1" id="Multiplexeur">
+            <h1 class="title">Les Multiplexeurs</h1>
+            <p>
+                  Un multiplexeur est un circuit combinatoire qui permet de sélectionner une information (1bit) à parmi 2^n valeurs en entrée.Il possède donc:
+                  <li><a>Une sortie.</a></li>
+                  <li><a>2^n entrées.</a></li>
+                  <li><a>N entrées de sélection (commande).</a></li>
+            </p>
+        </div>
+
+        <div class="type2" id="Demultiplexeur">
+            <h1 class="title">Les Démultiplexeurs</h1>
+            <p>
+                Fait passer l’information en entrée dans l’une des sorties selon les bits de commande.Il possède donc :
+                  <li><a>Une entrée.</a></li>
+                  <li><a>2^n sorties.</a></li>
+                  <li><a>N entrées de sélection (commande).</a></li>
+            </p>
+        </div>
+
+        <div class="type1" id="Encodeur">
+            <h1 class="title">Les Encodeurs </h1>
+            <p>
+                Il joue le rôle inverse d’un décodeur. Il possède :  
+                  <li><a>2n entrées.</a></li>
+                  <li><a>N sortie .</a></li>
+                  <li><a>Pour chaque combinaison en entrée on va avoir son numéro (en binaire) en sortie.</a></li>
+            </p>
+        </div>
+
+        <div class="type2" id="Decodeur">
+            <h1 class="title">Les Décodeurs</h1>
+            <p>
+                C’est un circuit combinatoire qui est constitué de :
+                  <li><a>N : entrées de données.</a></li>
+                  <li><a>2n sorties.</a></li>
+                  <li><a>Pour chaque combinaison en entrée une seule sortie est active à la fois.</a></li>
+            </p>
+        </div>
+
+        <div class="type1" id="DemiAdd">
+            <h1 class="title">Les Demi-Additionneurs</h1>
+            <p>
+                Le demi additionneur est un circuit combinatoire qui permet de réaliser la sommearithmétique de deux nombres A et B sur un bit.  A la sotie on va avoir la somme S et la retenu R (Carry).
+            </p>
+        </div>
+
+        <div class="type2" id="AddCom">
+            <h1 class="title">Les Additionneurs complets</h1>
+            <p>
+                L’additionneur complet un bit possède 3 entrées :
+                  <li><a>ai : le premier nombre sur un bit.</a></li>
+                  <li><a>bi : le deuxième nombre sur un bit.</a></li>
+                  <li><a>ri-1 : le retenue entrante sur un bit.</a></li>
+                Il possède deux sorties :
+                <li><a>Si : la somme.</a></li>
+                <li><a>Ri la retenue sortante.</a></li>
+            </p>
+        </div>
+           
+           
+    </div>
+    
+
+</body>
+</html>

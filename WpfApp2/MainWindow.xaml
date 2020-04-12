@@ -1,0 +1,448 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+       
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Name="DigitX"
+        Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
+
+    <!--MouseWheel="Canvas_MouseWheel"-->
+    <Grid x:Name="grid"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Background="Lavender">
+
+            <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                <Canvas x:Name="Grille"         
+                PreviewMouseLeftButtonDown="StartDraw" 
+                PreviewMouseMove="MouseMoved" 
+                PreviewMouseLeftButtonUp="MouseReleased"
+                AllowDrop="True"
+                DragOver="Grille_DragOver"
+                Drop="Grille_Drop"
+                Height="2000"
+                Width="2000">
+                    <Canvas.Background>
+                        <VisualBrush TileMode="Tile"
+                             Viewport="0,0,10,10"
+                             ViewportUnits="Absolute"
+                             Viewbox="0,0,10,10"
+                             ViewboxUnits="Absolute">
+                            <VisualBrush.Visual>
+                                <Ellipse Fill="Black"
+                                 Width="1"
+                                 Height="1" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Canvas.Background>
+                </Canvas>
+            </ScrollViewer>
+        </Grid>
+
+        <StackPanel x:Name="Menu" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+            <Grid Background="#060629" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="CellphoneScreenshot" Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Sauvegarder" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ContentSaveAll"  Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="simuler" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Simuler" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Play" Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="aide" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="aide_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Aide" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="HelpCircle"  Margin="5" />
+                        </StackPanel>
+                    </Button>
+
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="Autre" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="Lavender" StaysOpen="False">
+                            <StackPanel Width="150">
+                                <Button Content="Ouvrir un Fichier" Click="open_file"/>
+                                <Button Content="Tutorielles" Click="open_tut"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+
+        <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
+            <Grid Width="250" Height="90" Background="#060629" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>
+            </Grid>
+
+            <Grid Margin="0 100" >
+                <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+
+                        <ListViewItem Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="Lavender" VerticalAlignment="Center" Margin="5"/>
+                                <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender"/>
+                            </StackPanel>
+                        </ListViewItem>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="Lavender" />
+                            <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold"/>
+                            <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                    <ListViewItem >
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="65">
+                                            <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
+                                            
+                                                <local:et Canvas.Top="0" Canvas.Left="0" />
+                                            
+                                            <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
+                                                    <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
+                                            </-->
+                                        </StackPanel>
+
+                                    </ListViewItem>
+                                    <ListViewItem/>
+
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
+                                            <TextBlock Text="Porte OU"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="canvas3" Height="40" Width="45" Margin="20 0">
+                                                <Path Stroke="DarkViolet" StrokeThickness="3" Fill="AliceBlue" Data="M 15,17 h 10 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -10 c 5,-10 5,-20 0,-30" Height="37.5" Stretch="Fill" Canvas.Top="2" Canvas.Left="3"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
+                                            <TextBlock Text="Porte NON"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="canvas2" Height="40" Width="45" Margin="13 0">
+                                                <Path Stroke="DarkViolet" StrokeThickness="3" Canvas.Top="1" Canvas.Left="2" Fill="AliceBlue" Data="M 15,17 v 30 l 30,-15 l -30,-15 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Height="38.618" Stretch="Fill"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
+                                            <TextBlock Text="Porte NOR"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="canvas4" Height="40" Width="45" Margin="12 0">
+                                                <Path Stroke="DarkViolet" StrokeThickness="3"   Data="M 15,17 h 5 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -5 c 5,-10 5,-20 0,-30 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Fill="AliceBlue" Height="37.5" Stretch="Fill" Canvas.Left="2" Canvas.Top="1"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+                                    <ListViewItem >
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
+                                            <TextBlock Text="Porte NAND"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="canvas6" Height="40" Width="45" Margin="12 0">
+                                                <Path  StrokeThickness="3" Fill="AliceBlue" Stroke="DarkViolet"  Data="M 15,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Height="37.5" Stretch="Fill"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
+                                            <TextBlock Text="Porte OUX"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="canvas5" Height="40" Width="40" Margin="13 0">
+                                                <Path Stroke="DarkViolet" StrokeThickness="2" Fill="White" Canvas.Top="1" Canvas.Left="2" Data="M 13,47 c 5,-10 5,-20 0,-30 M 13,17 c 5,10 5,20 0,30 M 18,17 h 7 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -7 c 5,-10 5,-20 0,-30" Height="37.5" Stretch="Fill" />
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Waves" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Decodeur"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas x:Name="c11" Height="50" Width="40" Margin="20 0">
+                                                <Path  Stroke="OldLace" StrokeThickness="1.5" Canvas.Left="1.5" Data="M26.560334,0.81300001 L26.388,41.499665 M26.552335,41.499667 L1.1430005,27.341 M26.705334,0.5 L0.5000005,15.249667 M0.50816717,14.833 L0.50816717,27.440667 M12.296,16.842 L12.296,25.625667 13.560062,25.625667 C14.666116,25.625667 15.533841,25.219821 16.163239,24.408129 16.792635,23.596437 17.107334,22.491634 17.107334,21.09372 17.107334,19.773109 16.795269,18.734338 16.171139,17.977403 15.547008,17.220467 14.671382,16.842 13.544262,16.842 z M9.8510005,16.25 L13.995407,16.25 C18.150691,16.25 20.228334,17.955688 20.228334,21.367064 20.228334,23.001986 19.661333,24.307483 18.527333,25.283556 17.393331,26.259629 15.882689,26.747667 13.995407,26.747667 L9.8510005,26.747667 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Encodeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c12" Height="50" Width="40" Margin="20 0">
+                                                <Path Stroke="OldLace" StrokeThickness="1.5" Canvas.Left="1.5" Data= "M0.69133333,0.50000001 L0.5,38.514667 M0.69,39.346667 L23.528333,31.235 M0.49999999,0.5 L23.528334,11.894667 M23.537167,11.429 L23.537167,31.208667 M9.226,15.11 L15.414395,15.11 15.414395,17.036221 11.642991,17.036221 11.642991,19.372588 15.152492,19.372588 15.152492,21.291486 11.642991,21.291486 11.642991,23.693769 15.661333,23.693769 15.661333,25.612667 9.226,25.612667 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Multiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c10" Height="50" Width="40" Margin="23 0">
+                                                <Path Stroke="RoyalBlue" StrokeThickness="1.5" Canvas.Left="1.5"  Data= "M0.69,39.346667 L23.528333,31.235001 M0.69133332,0.50000062 L0.5,39.346666 M0.49999999,0.50000061 L23.529333,11.894668 M23.537167,11.429001 L23.537167,31.208667 M6.622,15.589001 L9.531017,15.589001 11.333009,21.362758 C11.476513,21.824658 11.581065,22.288823 11.646667,22.755251 L11.683567,22.755251 C11.79427,22.216368 11.911123,21.747674 12.034125,21.349172 L13.836117,15.589001 16.671333,15.589001 16.671333,25.329667 14.709438,25.329667 14.709438,19.501569 C14.709436,18.872117 14.734037,18.177002 14.783239,17.416225 L14.734038,17.416225 C14.631534,18.013978 14.539282,18.44418 14.457281,18.706829 L12.390835,25.329667 10.767196,25.329667 8.6638472,18.774755 C8.6064458,18.598147 8.514194,18.145303 8.3870908,17.416225 L8.3317394,17.416225 C8.3850408,18.376253 8.4116916,19.218542 8.4116916,19.943092 L8.4116916,25.329667 6.622,25.329667 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Demultiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c13" Height="52" Width="40" Margin="9 0">
+                                                <Path Stroke="RoyalBlue" StrokeThickness="1.5" Canvas.Left="0" Canvas.Top="0" Data="M31.966167,0.81299999 L31.760834,41.499667 M31.957167,41.499666 L1.0108337,30.008 M32.138166,0.5 L1.0108337,12.175667 M0.50000041,11.25 L0.50000041,30.551667 M9.7268337,18.176 L9.7268337,25.306666 10.528235,25.306666 C11.229461,25.306666 11.77959,24.977197 12.178621,24.318257 12.577651,23.659318 12.777167,22.762428 12.777167,21.627588 12.777167,20.555503 12.579321,19.712218 12.18363,19.097731 11.787937,18.483243 11.2328,18.176 10.518218,18.176 z M6.8358337,16.25 L10.22463,16.25 C13.622321,16.25 15.321167,17.955363 15.321167,21.366089 15.321167,23.000699 14.857542,24.305948 13.930293,25.281835 13.003043,26.257722 11.767822,26.745667 10.22463,26.745667 L6.8358337,26.745667 z M17.362834,16.618 L20.290377,16.618 22.103846,22.429693 C22.248263,22.894628 22.353482,23.361842 22.419501,23.831336 L22.456637,23.831336 C22.568045,23.288911 22.685642,22.817138 22.809427,22.416018 L24.622896,16.618 27.476167,16.618 27.476167,26.422667 25.501778,26.422667 25.501778,20.556276 C25.501776,19.922688 25.526533,19.223006 25.576049,18.45723 L25.526535,18.45723 C25.423378,19.058911 25.330539,19.491939 25.248016,19.756314 L23.168408,26.422667 21.534429,26.422667 19.417685,19.824686 C19.359918,19.646917 19.267078,19.191098 19.139166,18.45723 L19.083462,18.45723 C19.137103,19.423566 19.163923,20.271389 19.163923,21.0007 L19.163923,26.422667 17.362834,26.422667 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="210">
+                                            <TextBlock Text="Add N Bits"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c3" Height="50" Width="40" Margin="23 0">
+                                                <Path  Canvas.Left="1.5" Canvas.Top="1.5" Stroke="DeepSkyBlue" Data="M0.5,0.5 L35.499,0.5 35.499,41.5 0.5,41.5 z M9.1085635,15.42336 C9.0564794,15.741065 8.9965826,15.991062 8.9288737,16.173351 L7.1866638,20.946736 L11.069526,20.946736 L9.3116911,16.173351 C9.2543984,16.017103 9.1971062,15.767106 9.1398139,15.42336 z M8.4679303,14.064 L9.8273228,14.064 L14.139878,25.267 L12.686735,25.267 L11.499219,22.12641 L6.7491582,22.12641 L5.6319563,25.267 L4.171,25.267 z M19.553698,17.079591 C20.428709,17.079591 21.097987,17.362141 21.561536,17.927238 C22.025083,18.492336 22.256857,19.308733 22.256857,20.37643 L22.256857,25.267 L20.975591,25.267 L20.975591,20.704551 C20.975591,19.006654 20.35579,18.157704 19.116192,18.157704 C18.475559,18.157704 17.945604,18.398587 17.526328,18.880353 C17.107051,19.362119 16.897413,19.970184 16.897413,20.704551 L16.897413,25.267 L15.616147,25.267 L15.616147,17.267089 L16.897413,17.267089 L16.897413,18.595199 L16.928664,18.595199 C17.532838,17.584795 18.407849,17.079591 19.553698,17.079591 z M26.153991,20.048308 L26.153991,24.079513 L27.935264,24.079513 C28.706106,24.079513 29.303769,23.897223 29.728255,23.532644 C30.152739,23.168065 30.364982,22.668071 30.364982,22.032661 C30.364982,20.70976 29.463928,20.048308 27.661823,20.048308 z M26.153991,15.251487 L26.153991,18.868634 L27.497758,18.868634 C28.216517,18.868634 28.781628,18.695459 29.193092,18.349108 C29.604555,18.002759 29.810288,17.514483 29.810288,16.884281 C29.810288,15.795752 29.094132,15.251487 27.661823,15.251487 z M24.841474,14.064 L28.029015,14.064 C28.997777,14.064 29.766016,14.300977 30.333732,14.77493 C30.901446,15.248883 31.185305,15.866064 31.185305,16.626471 C31.185305,17.261881 31.013428,17.813958 30.669674,18.282703 C30.325919,18.751448 29.851954,19.084778 29.24778,19.282692 L29.24778,19.313941 C30.002997,19.402482 30.607173,19.687635 31.060304,20.169401 C31.513435,20.651167 31.74,21.277461 31.74,22.048286 C31.74,23.006609 31.396246,23.782642 30.708737,24.376385 C30.021228,24.970128 29.154029,25.267 28.107141,25.267 L24.841474,25.267 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Width="210" Height="44">
+                                            <TextBlock Text="Add Complet"  Padding="19 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c1" Height="50" Width="40" Margin="10 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="DeepSkyBlue" Data="M0.5,0.5 L35.499001,0.5 35.499001,41.5 0.5,41.5 z M13.775358,17.422858 C13.723276,17.740564 13.663382,17.990561 13.595676,18.17285 L11.853539,22.946236 L15.73624,22.946236 L13.978478,18.17285 C13.921187,18.016602 13.863897,17.766605 13.806607,17.422858 z M13.134752,16.063498 L14.494088,16.063498 L18.806464,27.266502 L17.353381,27.266502 L16.165915,24.125911 L11.416051,24.125911 L10.298896,27.266502 L8.838,27.266502 z M25.125451,15.876 C26.18792,15.876 27.068102,16.029645 27.766,16.336933 L27.766,17.735355 C26.963937,17.287444 26.078548,17.063487 25.109826,17.063487 C23.823404,17.063487 22.780465,17.49317 21.981009,18.352536 C21.181552,19.211901 20.781824,20.360327 20.781824,21.797811 C20.781824,23.16238 21.155512,24.249608 21.902886,25.059495 C22.65026,25.869381 23.630701,26.274325 24.844209,26.274325 C25.969177,26.274325 26.943106,26.024328 27.766,25.524333 L27.766,26.797757 C26.937899,27.235252 25.906676,27.454 24.672339,27.454 C23.078634,27.454 21.802628,26.940984 20.844323,25.914954 C19.886017,24.888924 19.406864,23.542584 19.406864,21.875935 C19.406864,20.084289 19.945911,18.636387 21.024005,17.532232 C22.102099,16.428078 23.469247,15.876 25.125451,15.876 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Width="201" Height="44">
+                                            <TextBlock Text="Demi Add"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c2" Height="50" Width="40" Margin="26 0">
+                                                <Path  Canvas.Top="1.5" Canvas.Left="1.5" Stroke="DeepSkyBlue" Data="M0.5,0.5 L35.498998,0.5 35.498998,41.5 0.5,41.5 z M9.7814635,17.917487 L9.7814635,26.745513 L11.453292,26.745513 C12.922001,26.745513 14.065198,26.352288 14.882884,25.565839 C15.700569,24.77939 16.109412,23.664819 16.109412,22.222126 C16.109412,19.352367 14.583413,17.917487 11.531415,17.917487 z M8.469,16.73 L11.562664,16.73 C15.51047,16.73 17.484374,18.550292 17.484374,22.190877 C17.484374,23.920024 16.936212,25.309332 15.839889,26.358799 C14.743565,27.408266 13.276157,27.933 11.437667,27.933 L8.469,27.933 z M22.935889,18.08936 C22.883808,18.407065 22.823913,18.657062 22.756207,18.839351 L21.014068,23.612736 L24.896773,23.612736 L23.139009,18.839351 C23.081718,18.683103 23.024429,18.433106 22.967138,18.08936 z M22.295282,16.73 L23.65462,16.73 L27.967,27.933 L26.513915,27.933 L25.326449,24.79241 L20.57658,24.79241 L19.459423,27.933 L17.998527,27.933 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Width="201" Height="44">
+                                            <TextBlock Text="Reg a decalage"  Padding="20 5"></TextBlock>
+                                            <Canvas x:Name="c5" Height="50" Width="40" Margin="10 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="#FF1F8AAD" Data="M0.5,0.5 L35.499002,0.5 35.499002,41.5 0.5,41.5 z M6.7814675,16.251462 L6.7814675,20.31383 L8.5626735,20.31383 C8.8907903,20.31383 9.1941681,20.264353 9.4728072,20.165397 C9.7514458,20.066443 9.9923256,19.92452 10.195446,19.73963 C10.398566,19.55474 10.557416,19.328185 10.671996,19.059964 C10.786576,18.791745 10.843867,18.490973 10.843867,18.15765 C10.843867,17.558711 10.649861,17.091278 10.26185,16.755352 C9.8738388,16.419425 9.3126549,16.251462 8.5782981,16.251462 z M5.469,15.064 L8.8126673,15.064 C9.3022382,15.064 9.7540502,15.125196 10.168102,15.247588 C10.582155,15.36998 10.941521,15.556172 11.246201,15.806163 C11.550881,16.056155 11.789156,16.367344 11.961027,16.739727 C12.132898,17.112111 12.218833,17.548295 12.218833,18.048278 C12.218833,18.438891 12.160241,18.796952 12.043056,19.122462 C11.925872,19.447973 11.759209,19.738328 11.543068,19.993528 C11.326927,20.248729 11.066517,20.466169 10.761838,20.645851 C10.457157,20.825532 10.114718,20.964851 9.7345195,21.063806 L9.7345195,21.095055 C9.9220148,21.178386 10.084771,21.273435 10.222789,21.380202 C10.360806,21.48697 10.492313,21.613268 10.61731,21.759096 C10.742307,21.904925 10.866002,22.070284 10.988395,22.255174 C11.110787,22.440064 11.247503,22.654901 11.398541,22.899684 L13.500051,26.266763 L11.93759,26.266763 L10.062636,23.126239 C9.8907656,22.834583 9.7241027,22.585892 9.5626487,22.38017 C9.4011942,22.174448 9.2358336,22.006484 9.0665672,21.87628 C8.8973004,21.746076 8.7150134,21.651027 8.5197058,21.591133 C8.3243981,21.531239 8.1043513,21.501292 7.8595659,21.501292 L6.7814675,21.501292 L6.7814675,26.266763 L5.469,26.266763 z M13.570049,27.657343 L20.21051,27.657343 L20.21051,28.587 L13.570049,28.587 z M22.991066,16.251462 L22.991066,25.079301 L24.662899,25.079301 C26.131613,25.079301 27.274813,24.686084 28.092502,23.899652 C28.910189,23.113219 29.319034,21.998672 29.319034,20.55601 C29.319034,17.686312 27.793029,16.251462 24.741022,16.251462 z M21.678598,15.064 L24.772272,15.064 C28.72009,15.064 30.694,16.884254 30.694,20.524761 C30.694,22.253872 30.145836,23.64315 29.049509,24.692595 C27.953181,25.742039 26.48577,26.266763 24.647275,26.266763 L21.678598,26.266763 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Width="201" Height="44">
+                                            <TextBlock Text="Compteur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c4" Height="50" Width="40" Margin="21 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="#FFB6D9EE" Data="M0.5,0.5 L35.498999,0.5 35.498999,41.5 0.5,41.5 z M10.452741,13.876 C11.515239,13.876 12.395446,14.029645 13.093362,14.336933 L13.093362,15.735355 C12.291279,15.287444 11.405864,15.063487 10.437116,15.063487 C9.1506599,15.063487 8.1076923,15.49317 7.3082146,16.352536 C6.5087366,17.211901 6.1089978,18.360327 6.1089978,19.797811 C6.1089978,21.16238 6.4826949,22.249608 7.2300897,23.059495 C7.9774843,23.869381 8.9579512,24.274325 10.171491,24.274325 C11.296489,24.274325 12.270446,24.024328 13.093362,23.524333 L13.093362,24.797757 C12.265238,25.235252 11.233989,25.454 9.9996166,25.454 C8.4058691,25.454 7.1298291,24.940984 6.1714977,23.914954 C5.2131659,22.888924 4.7339999,21.542584 4.734,19.875935 C4.7339999,18.084289 5.2730616,16.636387 6.3511849,15.532232 C7.4293082,14.428078 8.7964935,13.876 10.452741,13.876 z M16.687523,15.250985 L16.687523,19.844686 L18.06252,19.844686 C18.968769,19.844686 19.660174,19.637657 20.136735,19.223599 C20.613297,18.80954 20.851578,18.224912 20.851578,17.469711 C20.851578,15.990561 19.97658,15.250985 18.226583,15.250985 z M15.375025,14.063498 L18.453145,14.063498 C19.65106,14.063498 20.579443,14.355162 21.238296,14.938489 C21.89715,15.521816 22.226575,16.344723 22.226575,17.407212 C22.226575,18.4697 21.860691,19.339483 21.128921,20.016559 C20.397153,20.693635 19.408873,21.032173 18.164083,21.032173 L16.687523,21.032173 L16.687523,25.266502 L15.375025,25.266502 z M23.186575,14.063498 L30.96,14.063498 L30.96,15.250985 L27.72563,15.250985 L27.72563,25.266502 L26.413132,25.266502 L26.413132,15.250985 L23.186575,15.250985 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Basule JK"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c6" Height="50" Width="40" Margin="25 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="BlueViolet" Data="M9.9094336,12.526 L12.591,12.526 12.591,20.510798 C12.590999,22.283146 12.220411,23.6401 11.479232,24.58166 10.738054,25.523221 9.6651497,25.994 8.2605199,25.994 7.6331554,25.994 7.0529821,25.873998 6.52,25.633992 L6.52,22.837005 C6.9808076,23.224706 7.4971337,23.418557 8.0689793,23.418557 9.2959488,23.418557 9.9094336,22.409303 9.9094336,20.390795 z M0.50000001,0.50000002 L35.499332,0.50000002 35.499332,41.499667 0.50000001,41.499667 z M16.591,12.526 L19.280951,12.526 19.280951,18.784498 19.322591,18.784498 C19.389215,18.61219 19.500255,18.366035 19.655711,18.046033 L22.953607,12.526 26.159894,12.526 21.995884,18.839883 26.518,25.763 23.120167,25.763 19.639056,20.012198 C19.572431,19.901428 19.466943,19.65835 19.322591,19.282963 L19.280951,19.282963 19.280951,25.763 16.591,25.763 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Bascule D"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c7" Height="50" Width="40" Margin="22 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="BlueViolet" Data="M15.032,14.542 L15.032,25.194666 16.907161,25.194666 C18.547928,25.194666 19.835148,24.702465 20.768822,23.718059 21.702495,22.733654 22.169332,21.39377 22.169333,19.698406 22.169332,18.096795 21.706402,16.836991 20.780541,15.918994 19.854681,15.000998 18.55574,14.542001 16.883721,14.542 z M11.247,11.46 L17.200158,11.46 C23.16894,11.46 26.153333,14.190466 26.153333,19.651396 26.153333,22.26858 25.338876,24.358421 23.709961,25.920919 22.081045,27.483417 19.911111,28.264666 17.200158,28.264666 L11.247,28.264666 z M0.49999999,0.49999999 L35.498999,0.49999999 35.498999,41.499999 0.49999999,41.499999 z" />
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Bascule T"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c8" Height="50" Width="40" Margin="24 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="BlueViolet" Data="M10.688,12.46 L24.048334,12.46 24.048334,15.542028 19.255021,15.542028 19.255021,29.264666 15.457873,29.264666 15.457873,15.542028 10.688,15.542028 z M0.50000001,0.50000003 L35.499333,0.50000003 35.499333,41.499668 0.50000001,41.499668 z" />
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Bascule RST"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas x:Name="c9" Height="50" Width="40" Margin="10 0">
+                                                <Path Canvas.Left="1.5" Canvas.Top="1.5" Stroke="BlueViolet" Data="M0.50000001,0.50000002 L35.592333,0.50000002 35.592333,41.499666 0.50000001,41.499666 z M7.283,13.999 L7.283,18.218667 8.4623711,18.218667 C9.0464402,18.218667 9.5153811,18.007155 9.8691923,17.58413 10.228619,17.154056 10.408333,16.62175 10.408333,15.987214 10.408333,14.661739 9.7765274,13.999001 8.5129156,13.999 z M4.942,11.163 L8.8615168,11.163 C11.525562,11.163 12.857585,12.685439 12.857587,15.730315 12.857585,16.315868 12.798895,16.856529 12.681514,17.352297 12.564132,17.848066 12.398267,18.295038 12.18392,18.693214 11.96957,19.09139 11.710565,19.434915 11.406906,19.723788 11.103246,20.012661 10.765136,20.239075 10.392578,20.403029 L10.392578,20.449873 C10.555891,20.527948 10.714101,20.654818 10.867207,20.830483 11.020313,21.006149 11.168316,21.211093 11.311215,21.445315 11.454114,21.679536 11.590634,21.931323 11.720773,22.200678 11.850912,22.470033 11.96957,22.733531 12.076745,22.991175 L14.151333,27.956666 11.311215,27.956666 9.6040816,23.635284 C9.4764929,23.307374 9.354008,23.014596 9.2366269,22.756954 9.1192452,22.49931 9.0005884,22.278751 8.880655,22.095279 8.7607217,21.911805 8.6356852,21.771272 8.5055449,21.67368 8.3754046,21.576088 8.2337814,21.527291 8.0806755,21.527291 L7.4146636,21.527291 7.4146636,27.956666 4.942,27.956666 z M18.738086,10.882 C19.30957,10.882 19.815996,10.934701 20.257365,11.040101 20.698733,11.145501 21.10566,11.307506 21.478144,11.526115 L21.478144,15.027754 C21.294454,14.832569 21.094179,14.660805 20.877321,14.512463 20.660464,14.364123 20.437229,14.241155 20.207615,14.14356 19.978001,14.045969 19.749663,13.97375 19.5226,13.926904 19.295538,13.88006 19.079956,13.856639 18.875855,13.856638 18.595215,13.856639 18.340089,13.897627 18.110475,13.979604 17.880861,14.061584 17.686965,14.176744 17.528787,14.325084 17.370608,14.473426 17.248147,14.651046 17.161405,14.857942 17.074662,15.06484 17.03129,15.297113&#xD;&#xA;17.03129,15.554757 17.03129,15.835825 17.079764,16.087615 17.176712,16.310128 17.27366,16.532639 17.411429,16.743441 17.590017,16.942531 17.768605,17.141621 17.985463,17.336807 18.24059,17.52809 18.495716,17.719372 18.784009,17.916509 19.105468,18.119504 19.544286,18.400571 19.938456,18.699206 20.28798,19.015408 20.637503,19.33161 20.937277,19.688801 21.1873,20.08698 21.437324,20.48516 21.628669,20.939943 21.761335,21.451331 21.894001,21.962719&#xD;&#xA;21.960333,22.558037 21.960333,23.237285 21.960333,24.174178 21.844251,24.960779 21.612086,25.597086 21.379921,26.233393 21.064839,26.748684 20.666842,27.14296 20.268845,27.537237 19.805791,27.820256 19.277679,27.99202 18.749567,28.163784 18.192115,28.249666 17.605325,28.249666 17.003226,28.249666 16.430467,28.171592 15.887048,28.015443 15.343628,27.859294 14.87292,27.62507 14.474923,27.312772 L14.474923,23.565198 C14.918843,24.135141 15.401032,24.562599 15.92149,24.847571 16.441948,25.132543 16.967508,25.275028 17.498172,25.275028 17.809426,25.275028 18.081136,25.232087 18.3133,25.146205 18.545466,25.060324 18.739362,24.94126 18.894989,24.789015 19.050616,24.63677 19.166699,24.457199 19.243237,24.250301 19.319775,24.043404 19.358043,23.818939 19.358043,23.576909 19.358043,23.248996 19.296813,22.956216 19.174353,22.698571 19.051892,22.440926 18.884784,22.202798&#xD;&#xA;18.673029,21.98419 18.461274,21.765581 18.209974,21.55478 17.91913,21.351786 17.628286,21.148793 17.31448,20.941896 16.977713,20.731094 16.120489,20.184573 15.481397,19.517037 15.060438,18.728484 14.639479,17.939932 14.429,16.987424 14.429,15.870958 14.429,14.996526 14.543807,14.245058 14.773421,13.616558 15.003035,12.98806 15.315564,12.470816 15.711011,12.064828 16.106457,11.658841 16.564409,11.360206 17.084867,11.168924 17.605325,10.977642&#xD;&#xA;18.156398,10.882 18.738086,10.882 z M21.165,11.163 L32.302333,11.163 32.302333,14.243009 28.306571,14.243009 28.306571,27.956666 25.141224,27.956666 25.141224,14.243009 21.165,14.243009 z"/>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                        <Grid>
+                            <materialDesign:PackIcon Kind="Hourglass" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
+                            <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
+                                <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas Height="40" Width="50" Margin="25 0">
+                                                <Path Stroke="GhostWhite" StrokeThickness="2" Canvas.Left="3"  Canvas.Top="5" Height="25" Stretch="Fill" Width="30" >
+                                                    <Path.Data>
+                                                        <PathGeometry>
+                                                            <PathFigure IsClosed="True" StartPoint="93.5,31.5">
+                                                                <BezierSegment IsSmoothJoin="True" Point3="91.5,33.5" Point2="92.6045694996616,33.5" Point1="93.5,32.6045694996616"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="89.5,31.5" Point2="89.5,32.6045694996616" Point1="90.3954305003384,33.5"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="91.5,29.5" Point2="90.3954305003384,29.5" Point1="89.5,30.3954305003384"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="93.5,31.5" Point2="93.5,30.3954305003384" Point1="92.6045694996616,29.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure IsClosed="True" StartPoint="81.5,31.5">
+                                                                <PolyLineSegment Points="91.5,31.5 91.5,32.5 81.5,32.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure IsClosed="True" StartPoint="1.5,1.5">
+                                                                <PolyLineSegment Points="81.5,1.5 81.5,61.5 1.5,61.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="11.5,41.5">
+                                                                <LineSegment Point="21.5,41.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="21.5,41.5">
+                                                                <LineSegment Point="21.5,11.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="21.5,11.5">
+                                                                <LineSegment Point="31.5,11.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="31.5,11.5">
+                                                                <LineSegment Point="31.5,41.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="31.5,41.5">
+                                                                <LineSegment Point="41.5,41.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="41.5,41.5">
+                                                                <LineSegment Point="41.5,11.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="41.5,11.5">
+                                                                <LineSegment Point="51.5,11.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="51.5,11.5">
+                                                                <LineSegment Point="51.5,41.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="51.5,41.5">
+                                                                <LineSegment Point="61.5,41.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="61.5,41.5">
+                                                                <LineSegment Point="61.5,11.5"/>
+                                                            </PathFigure>
+                                                            <PathFigure StartPoint="61.5,11.5">
+                                                                <LineSegment Point="71.5,11.5"/>
+                                                            </PathFigure>
+                                                        </PathGeometry>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Pin"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
+                                            <Canvas Height="40" Width="50" Margin="45 0">
+                                                <Path Canvas.Top="2"  Canvas.Left="2.44"  Data="M42.5,22 C42.5,33.321837 33.321837,42.5 22,42.5 10.678163,42.5 1.5,33.321837 1.5,22 1.5,10.678163 10.678163,1.5 22,1.5 33.321837,1.5 42.5,10.678163 42.5,22 z"  Height="35.666" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="35.56"/>
+                                                <Path Fill="#FFDCEBDC" Canvas.Top="7.944" Canvas.Left="8.273"  Data="M22.539979,12.635862 C22.539979,18.786027 17.830019,23.771723 12.01999,23.771723 6.2099599,23.771723 1.5000003,18.786027 1.5000003,12.635862 1.5000003,6.4856951 6.2099599,1.5 12.01999,1.5 17.830019,1.5 22.539979,6.4856951 22.539979,12.635862 z"  Height="22.939" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="23.374"/>
+                                                <Path Stroke="#FFDCEBDC" StrokeThickness="1.5" Stretch="Fill" Canvas.Top="16.25" Width="10.604" Canvas.Left="37.5" >
+                                                    <Path.Data>
+                                                        <PathGeometry>
+                                                            <PathFigure IsClosed="True" StartPoint="15.3543330898287,3.07883337978803">
+                                                                <BezierSegment IsSmoothJoin="True" Point3="12.9741665382746,5.15766674353922" Point2="14.2886962267553,5.15766674353922" Point1="15.3543330898287,4.22694134402728"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="10.5939999867204,3.07883337978803" Point2="10.5939999867204,4.22694134402728" Point1="11.6596368497939,5.15766674353922"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="12.9741665382746,1.0000000160368" Point2="11.6596368497939,1.0000000160368" Point1="10.5939999867204,1.93072541554875"/>
+                                                                <BezierSegment IsSmoothJoin="True" Point3="15.3543330898287,3.07883337978803" Point2="15.3543330898287,1.93072541554875" Point1="14.2886962267553,1.0000000160368"/>
+                                                            </PathFigure>
+                                                            <PathFigure IsClosed="True" StartPoint="0.999999993403805,1.99100001696377">
+                                                                <PolyLineSegment Points="9.5933337,1.991 9.5933337,4.1526667 0.99999999,4.1526667"/>
+                                                            </PathFigure>
+                                                        </PathGeometry>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Pin" Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas Height="50" Width="50 " Margin="45 0">
+                                                <Path Name="Lampe"  Stroke="White" Canvas.Top="4"  Canvas.Left="2" StrokeThickness="2" Height="35.333" Stretch="Fill" Width="41.336" >
+                                                    <Path.Data>
+                                                        <GeometryGroup FillRule="Nonzero">
+                                                            <EllipseGeometry Center="170,260" RadiusX="2" RadiusY="2"  />
+                                                            <RectangleGeometry Rect="170,260 10 1"  />
+                                                            <RectangleGeometry Rect="180,230 60 60" />
+                                                            <EllipseGeometry Center="210,260" RadiusX="20" RadiusY="20"  />
+                                                        </GeometryGroup>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
+                                </ListView>
+                            </Expander>
+                        </Grid>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

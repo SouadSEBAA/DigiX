@@ -1,0 +1,252 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Century Gothic;
+}
+ 
+header{
+	background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(./img/3.png);
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+}
+/*    navigation bar*/
+body{padding: auto;}
+
+.main{
+	max-width: 1200px;
+	
+}
+/* Classe principale de la barre de navigation */
+.navbar-default {
+ /* Couleur de fond de la barre de navigation */
+ background-color: #414956;/*#02070E;/*#F8F8F8;*/
+ border-color: #E7E7E7;
+ display: inline-flex;
+ height: 40px;
+ padding-top: 2px;
+}
+/* Couleur des titres affichés dans la barre */
+.navbar-default .navbar-brand {
+ color: #fff ;/*777*/
+ display: inline-flex;
+
+}
+/* Couleur utilisée lors du passage de la souris sur un titre de la barre */
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+ color: white;/*#5E5E5E;*/
+}
+/* Couleur utilisée pour les liens */
+.navbar-default .navbar-nav > li > a {
+ color: #fff  ;
+margin-right: 20px;
+
+}
+.navbar-default .navbar-nav > li > a > i{
+	width:34px;float:left;line-height:18px;font-size:16px;text-align:left
+}
+
+
+/* Couleur utilisée pour les liens lorsque la souris passe dessus */
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+ color: #000;/*#333;*/
+ background-color: #fff;/*#E7E7E7;*/
+}
+/* Couleur utilisée pour le lien actif (celui qui est affiché sur la page) */
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+ color: #000;
+ background-color: #fff;
+}
+/* Couleur utilisée pour un menu dépliant lorsqu'il est ouvert */
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+ color: #555;
+ background-color: #D5D5D5;
+}
+/* Caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+ border-top-color: #777;
+ border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+ border-top-color: #333;
+ border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+ border-top-color: #555;
+ border-bottom-color: #555;
+}
+/* Version mobile, le menu devient une icône qui déroule une liste avec le menu en vertical */
+.navbar-default .navbar-toggle {
+ border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+ background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+ background-color: #CCC;
+}
+@media (max-width: 767px) {
+ .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+ color: #777;
+ }
+ .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+ .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+ color: #333;
+ }
+}
+/*fin du controle de navbar*/
+.title{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	color: #fff;
+	align-content: center;
+}
+.title p{
+	color: #fff;
+	font-size: 30px;
+	margin-right: auto;
+	margin-left: auto;
+
+	
+}
+.nom{
+	float: right;
+	align-self: right;
+}
+.button ul {
+	text-decoration: none;
+	display: inline-flex;
+	position: absolute;
+	top :62%;
+	left :50%;
+	transform: translate(-50%,-50%);
+
+}
+.button ul li a {
+	text-decoration: none;
+	border: 1px solid #fff;
+	bottom: 10px;
+	padding: 10px 30px;
+	color: #fff;
+	margin-top: 30px;
+	margin-right: 50px;
+}
+/*  team members*/
+#team{
+	padding-top: 50px;
+	padding-bottom: 50px;
+	color :#555;
+} 
+h1
+{
+	text-align: center;
+	color: #555 !important;
+	padding-bottom: 10px;
+}
+h1::after
+{
+	content: '';
+	background: #007bff;
+	display: block;
+	height: 3px;
+	width: 170px;
+	margin: 20px auto 5px;
+
+}
+.video{
+
+}
+.profile-pic{
+	margin-top: 25px;
+
+	
+
+}
+.profile-pic .img-box{
+
+	opacity: 1;
+	display: block;
+	position: relative;
+}
+.profile-pic .img-box img{
+	filter: grayscale(1);
+
+
+}
+.profile-pic .img-box img:hover{
+	filter: grayscale(0);
+	cursor: pointer;
+	
+
+}
+.profile-pic h2{
+
+	font-size: 22px;
+	font-weight: bold;
+	margin-top: 15px;
+	
+	color:#007bff !important; 
+}
+#team .fa{
+	height: 25px;
+	width: 25px;
+	color: #007bff !important;
+	background: #fff;
+	padding: 4px;
+	border-radius: 50%;
+
+}
+.img-box ul{
+	padding:  15px 0;
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	opacity: 0;
+}
+.img-box ul li{
+	padding: 5px;
+	display: inline-block;
+}
+.img-box:hover ul{
+	opacity: 1;
+}
+.img-box ul,.img-box ul li{
+	transition: 0.5s; 
+}
+.video{
+	display:block;width:480px;margin:0 auto 35px auto
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
