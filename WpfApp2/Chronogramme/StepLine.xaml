@@ -27,7 +27,7 @@
         <lvc:CartesianChart  Grid.Column="1" Grid.Row="0" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True" x:Name="Chart">
             <lvc:CartesianChart.Series>
                 <!--<lvc:StepLineSeries x:Name="line"  Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>-->
-                <geared:GStepLineSeries  x:Name="line" Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>-->
+                <geared:GStepLineSeries  x:Name="line" Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>
             </lvc:CartesianChart.Series>
 
             <lvc:CartesianChart.AxisX>
