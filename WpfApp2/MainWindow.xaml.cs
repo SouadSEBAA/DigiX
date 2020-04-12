@@ -45,85 +45,6 @@ namespace WpfApp2
 
         }
 
-        //to generate menu options
-        private void simuler_click(object sender, RoutedEventArgs e)
-        {
-            //needs some work
-        }
-
-
-        private void aide_click(object sender, MouseButtonEventArgs e)
-        {
-            //takes us to our main help site
-            string path = @".\..\..\..\HelpSite\home.html"; // C:/Users/username/Documents (or whatever directory)
-            System.Diagnostics.Process.Start(path);
-        }
-
-        private void open_file(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
-            // Launch OpenFileDialog by calling ShowDialog method
-            Nullable<bool> result = openFileDlg.ShowDialog();
-            if (result == true)
-            {
-                MessageBox.Show(openFileDlg.FileName, "Fichier Ouvert", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            }
-        }
-
-        private void open_tut(object sender, RoutedEventArgs e)
-        {
-            //takes us directly to the tutorial page
-            string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
-            System.Diagnostics.Process.Start(path);
-        }
-
-        private void CreateScreenShot(UIElement visual, string file)
-        {
-            double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
-            double height = Convert.ToDouble(visual.GetValue(FrameworkElement.HeightProperty));
-            if (double.IsNaN(width) || double.IsNaN(height))
-            {
-                throw new FormatException("You need to indicate the Width and Height values of the UIElement.");
-            }
-            RenderTargetBitmap render = new RenderTargetBitmap(
-               Convert.ToInt32(width),
-               Convert.ToInt32(visual.GetValue(FrameworkElement.HeightProperty)),
-               96,
-               96,
-               PixelFormats.Pbgra32);
-            // Indicate which control to render in the image
-            render.Render(visual);
-            using (FileStream stream = new FileStream(file, FileMode.Create))
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(render));
-                encoder.Save(stream);
-            }
-        }
-
-        private void CaptEcran_Click(object sender, RoutedEventArgs e)
-        {
-            //Console.WriteLine("hello");
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
-            var random = new Random();
-
-            for (int i = 0; i < stringChars.Length; i++)
-            {
-                stringChars[i] = chars[random.Next(chars.Length)];
-            }
-
-            var finalString = new String(stringChars);
-            string chemin1 = @".\..\..\..\Capture\";
-            string strRes1 = String.Concat(chemin1, finalString);
-            string strRes = String.Concat(strRes1, ".png");
-            CreateScreenShot(this, strRes);
-
-            //to inform theuser that the screeshot was created successfully
-            MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-        }
-
-      
 
         private Point SnapToGrid(double x, double y)
         {
@@ -253,6 +174,38 @@ namespace WpfApp2
 
         }
 
+        
+        //FOR THE MENU BUTTONS 
+        private void aide_click(object sender, RoutedEventArgs e)
+        { 
+            //takes us to our main help site
+            string path = @".\..\..\..\HelpSite\home.html"; // C:/Users/username/Documents (or whatever directory)
+            System.Diagnostics.Process.Start(path);
+        }
+        
+        private void simuler_click(object sender, RoutedEventArgs e)
+        {
+            //needs some work
+        }
+
+        private void open_tut(object sender, RoutedEventArgs e)
+        {
+            //takes us directly to the tutorial page
+            string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
+            System.Diagnostics.Process.Start(path);
+        }
+
+        private void open_file(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+            // Launch OpenFileDialog by calling ShowDialog method
+            Nullable<bool> result = openFileDlg.ShowDialog();
+            if (result == true)
+            {
+                MessageBox.Show(openFileDlg.FileName, "Fichier Ouvert", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+        }
+
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
 
@@ -267,6 +220,55 @@ namespace WpfApp2
             }
             MessageBox.Show("Votre fichier a ete sauvegarder.", "Sauvegarder", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
+
+
+        private void CreateScreenShot(UIElement visual, string file)
+        {
+            double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
+            double height = Convert.ToDouble(visual.GetValue(FrameworkElement.HeightProperty));
+            if (double.IsNaN(width) || double.IsNaN(height))
+            {
+                throw new FormatException("You need to indicate the Width and Height values of the UIElement.");
+            }
+            RenderTargetBitmap render = new RenderTargetBitmap(
+               Convert.ToInt32(width),
+               Convert.ToInt32(visual.GetValue(FrameworkElement.HeightProperty)),
+               96,
+               96,
+               PixelFormats.Pbgra32);
+            // Indicate which control to render in the image
+            render.Render(visual);
+            using (FileStream stream = new FileStream(file, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(render));
+                encoder.Save(stream);
+            }
+        }
+
+        private void CaptEcran_Click(object sender, RoutedEventArgs e)
+        {
+            //Console.WriteLine("hello");
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var stringChars = new char[8];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+            var finalString = new String(stringChars);
+            string chemin1 = @".\..\..\..\Capture\";
+            string strRes1 = String.Concat(chemin1, finalString);
+            string strRes = String.Concat(strRes1, ".png");
+            CreateScreenShot(this, strRes);
+
+            //to inform theuser that the screeshot was created successfully
+            MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+        //END OF MENU BUTTONS
+
 
 
         //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..

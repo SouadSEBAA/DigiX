@@ -85,9 +85,8 @@
                         <TextBlock Text="Autre" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="Lavender" StaysOpen="False">
                             <StackPanel Width="150">
-                                <Button Content="Ouvrir un Fichier"/>
-                                <Button Content="Tutorielles"/>
-                                <Button Content="Information"/>
+                                <Button Content="Ouvrir un Fichier" Click="open_file"/>
+                                <Button Content="Tutorielles" Click="open_tut"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -119,14 +118,15 @@
                             <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                                    <ListViewItem>
-                                        <StackPanel Orientation="Horizontal"  Width="201" Height="240">
+                                    <ListViewItem >
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="65">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <Canvas Height="80" Width="80" x:Name="canvas" Margin="24 0"  >
+                                                <local:et Canvas.Top="0" Canvas.Left="0" />
+                                            </Canvas>
                                             <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
                                                     <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
                                             </-->
-                                            <local:et></local:et>
-
                                         </StackPanel>
 
                                     </ListViewItem>
@@ -413,6 +413,25 @@
                                                     </Path.Data>
                                                 </Path>
                                             </Canvas>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                            <TextBlock Text="Pin" Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <Canvas Height="50" Width="50 " Margin="45 0">
+                                                <Path Name="Lampe"  Stroke="White" Canvas.Top="4"  Canvas.Left="2" StrokeThickness="2" Height="35.333" Stretch="Fill" Width="41.336" >
+                                                    <Path.Data>
+                                                        <GeometryGroup FillRule="Nonzero">
+                                                            <EllipseGeometry Center="170,260" RadiusX="2" RadiusY="2"  />
+                                                            <RectangleGeometry Rect="170,260 10 1"  />
+                                                            <RectangleGeometry Rect="180,230 60 60" />
+                                                            <EllipseGeometry Center="210,260" RadiusX="20" RadiusY="20"  />
+                                                        </GeometryGroup>
+                                                    </Path.Data>
+                                                </Path>
+                                            </Canvas>
+
                                         </StackPanel>
                                     </ListViewItem>
 
