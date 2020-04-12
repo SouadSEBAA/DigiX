@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace logisimConsole
 {
     class OU : PorteLogique
     {
         Disposition dd = Disposition.down;
-        public OU(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e,dispo) { }
+        public OU(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo) { }
         //Methodes
         public override void calcul_sorties()
         {

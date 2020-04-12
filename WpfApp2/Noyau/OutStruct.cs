@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace logisimConsole
 {
@@ -14,7 +12,6 @@ namespace logisimConsole
             this.num_entree = num_entree;
             this.outils = outils;
         }
-        
         public int getNum_entree() { return this.num_entree; }
         public void setNum_entree(int entree) { num_entree = entree; }
         public void setOutil(Outils outil) { outils = outil; }
@@ -22,7 +19,7 @@ namespace logisimConsole
 
         public override bool Equals(object obj)
         {
-            return ((OutStruct) obj).num_entree.Equals(this.num_entree) && ((OutStruct)obj).outils.Equals(this.outils);
+            return ((OutStruct)obj).num_entree.Equals(this.num_entree) && ((OutStruct)obj).outils.Equals(this.outils);
         }
 
     }

@@ -4,19 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
+       
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Name="DigitX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
 
     <!--MouseWheel="Canvas_MouseWheel"-->
-    <Grid x:Name="grid">
+    <Grid x:Name="grid"  >
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Canvas x:Name="Grille"         
                 PreviewMouseLeftButtonDown="StartDraw" 
                 PreviewMouseMove="MouseMoved" 
                 PreviewMouseLeftButtonUp="MouseReleased"
-                Height="2000"
-                Width="2000">
+                AllowDrop="True"
+                DragOver="Grille_DragOver"
+                Drop="Grille_Drop"
+                Height="419"
+                Width="787">
                 <Canvas.Background>
                     <VisualBrush TileMode="Tile"
                              Viewport="0,0,10,10"
@@ -105,18 +109,22 @@
                                 <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0">
-                                                <Path StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
-                                            </Canvas>
+                                        <StackPanel Orientation="Horizontal"  Width="201" Height="240">
+                                            <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
+                                            <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
+                                                    <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
+                                            </-->
+                                            <local:et></local:et>
+
                                         </StackPanel>
+
                                     </ListViewItem>
+                                    <ListViewItem/>
 
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte OU"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Porte OU"  Padding="20 5" VerticalAlignment="Center"/>
                                             <Canvas x:Name="canvas3" Height="40" Width="45" Margin="20 0">
                                                 <Path Stroke="DarkViolet" StrokeThickness="3" Fill="AliceBlue" Data="M 15,17 h 10 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -10 c 5,-10 5,-20 0,-30" Height="37.5" Stretch="Fill" Canvas.Top="2" Canvas.Left="3"/>
                                             </Canvas>
@@ -126,7 +134,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte NON"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Porte NON"  Padding="20 5" VerticalAlignment="Center"/>
                                             <Canvas x:Name="canvas2" Height="40" Width="45" Margin="13 0">
                                                 <Path Stroke="DarkViolet" StrokeThickness="3" Canvas.Top="1" Canvas.Left="2" Fill="AliceBlue" Data="M 15,17 v 30 l 30,-15 l -30,-15 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Height="38.618" Stretch="Fill"/>
                                             </Canvas>
@@ -136,7 +144,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte NOR"  Padding="20 5" VerticalAlignment="Center"></TextBlock >
+                                            <TextBlock Text="Porte NOR"  Padding="20 5" VerticalAlignment="Center"/>
                                             <Canvas x:Name="canvas4" Height="40" Width="45" Margin="12 0">
                                                 <Path Stroke="DarkViolet" StrokeThickness="3"   Data="M 15,17 h 5 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -5 c 5,-10 5,-20 0,-30 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Fill="AliceBlue" Height="37.5" Stretch="Fill" Canvas.Left="2" Canvas.Top="1"/>
                                             </Canvas>
@@ -146,7 +154,7 @@
 
                                     <ListViewItem >
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte NAND"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Porte NAND"  Padding="20 5" VerticalAlignment="Center"/>
                                             <Canvas x:Name="canvas6" Height="40" Width="45" Margin="12 0">
                                                 <Path  StrokeThickness="3" Fill="AliceBlue" Stroke="DarkViolet"  Data="M 15,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15 M 46,33.5 a 3,3 1 1 1 0.1,0.1" Height="37.5" Stretch="Fill"/>
                                             </Canvas>
@@ -158,7 +166,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="40">
-                                            <TextBlock Text="Porte OUX"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Porte OUX"  Padding="20 5" VerticalAlignment="Center"/>
                                             <Canvas x:Name="canvas5" Height="40" Width="40" Margin="13 0">
                                                 <Path Stroke="DarkViolet" StrokeThickness="2" Fill="White" Canvas.Top="1" Canvas.Left="2" Data="M 13,47 c 5,-10 5,-20 0,-30 M 13,17 c 5,10 5,20 0,30 M 18,17 h 7 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -7 c 5,-10 5,-20 0,-30" Height="37.5" Stretch="Fill" />
                                             </Canvas>

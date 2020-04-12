@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace logisimConsole
 {
@@ -8,7 +7,7 @@ namespace logisimConsole
     {
         Disposition dd = Disposition.down;
         //Constructeur
-        public NOR(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e,dispo) { }
+        public NOR(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo) { }
 
         //Methodes
         public override void calcul_sorties()

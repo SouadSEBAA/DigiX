@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace logisimConsole
 {
@@ -8,7 +6,7 @@ namespace logisimConsole
     {
         //liste_entrees[3] = T
         private const int nb_entrees = 4;
-        public T(string etiquette, Disposition dispo) : base(nb_entrees, etiquette,dispo)
+        public T(string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo)
         {
             liste_entrees = new List<ClasseEntree>(nb_entrees);
         }

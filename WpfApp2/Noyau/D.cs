@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace logisimConsole
 
-namespace logisimConsole
 {
     class D : Bascule
     {//liste des entrées :[clock,Pr,Clr,D]
      //liste des sorties :[Q,-Q]
         private const int nb_sorties = 2;
 
-        public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette,dispo) { }
+        public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }
 
 
         public override void calcul_sorties()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace logisimConsole
 {
@@ -17,7 +16,7 @@ namespace logisimConsole
         //Methodes:
         public abstract void calcul_sorties();
 
-        public Outils(int nb_entrees, int nb_sorties, string etiquette,Disposition dispo)
+        public Outils(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo)
         {
             this.disposition = dispo;
             liste_sorties = new List<Sortie>();
@@ -57,7 +56,6 @@ namespace logisimConsole
         public List<Sortie> get_liste_sortie() { return liste_sorties; }
         public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
 
-    
 
         public Outils()
         {
@@ -67,8 +65,8 @@ namespace logisimConsole
 
 
         public List<Sortie> getListesorties() { return liste_sorties; }
-         public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
-         public int getnbrentrees() { return this.nb_entrees; }
+        public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
+        public int getnbrentrees() { return this.nb_entrees; }
         public int getnbrsoryies() { return this.nb_sorties; }
 
         public bool verifiRelie()

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace logisimConsole
+﻿namespace logisimConsole
 {
     class RST : Bascule
     {
@@ -11,7 +7,7 @@ namespace logisimConsole
         //liste_entrees[0] == T
         private const int nb_entrees = 2;
 
-        public RST(string etiquette, Disposition dispo) : base(nb_entrees, etiquette,dispo) { }
+        public RST(string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }
 
         public override void calcul_sorties()
         {

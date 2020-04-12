@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace logisimConsole
 {
@@ -13,7 +11,7 @@ namespace logisimConsole
         private System.Timers.Timer timer = new System.Timers.Timer(100); //Timer qui s'occupe de la gestion du front
         //TO DO changer 100
 
-        public CircSequentielle(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo)
+        public CircSequentielle(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
         {
             Trigger = true; //Initialisé à etre déclenché sur un front montant (par défaut)
             timer.AutoReset = false; //Indique que le task du timer ne va s'exécuter qu'une seule fois

@@ -4,11 +4,16 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\
+=======
+C:\Users\Dell\Downloads\PotatoGUI-master(1)\WpfApp2\obj\Debug\
+>>>>>>> 5d7b5e2867c66d9ae43ca0df40ffe03127c0e03c
 WpfApp2
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\App.xaml
 4-562619554
 
@@ -17,4 +22,14 @@ D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\App.xaml
 Chronogramme\Chronogrammes.xaml;Chronogramme\StepLine.xaml;Gate.xaml;MainWindow.xaml;
 
 True
+=======
+C:\Users\Dell\Downloads\PotatoGUI-master(1)\WpfApp2\App.xaml
+31970733066
+
+43-1041419454
+201234952158
+Gate.xaml;InputOutput.xaml;MainWindow.xaml;
+
+False
+>>>>>>> 5d7b5e2867c66d9ae43ca0df40ffe03127c0e03c
 

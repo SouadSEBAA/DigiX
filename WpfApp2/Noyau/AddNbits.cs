@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace logisimConsole
+﻿namespace logisimConsole
 {
     class AddNbits : CircCombinatoire
     {
-        public AddNbits(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo) { }
+        public AddNbits(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
 
         public override void calcul_sorties()
         {
             if (nb_entrees == 4)
             {
                 AddComplet add1 = new AddComplet();
-                add1.setEntree(0,liste_entrees[0].isEtat());
-                add1.setEntree(1,liste_entrees[2].isEtat());
-                add1.setEntree(2,false);
+                add1.setEntree(0, liste_entrees[0].isEtat());
+                add1.setEntree(1, liste_entrees[2].isEtat());
+                add1.setEntree(2, false);
 
                 add1.calcul_sorties();
                 liste_sorties[0].setEtat(add1.getSortie());

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace logisimConsole
 {
@@ -10,7 +8,7 @@ namespace logisimConsole
         //liste_entrees[3] == J
         //liste_entrees[4] == K
         private const int nb_entrees = 5;
-        public JK(string etiquette, Disposition dispo) : base(nb_entrees, etiquette,dispo)
+        public JK(string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo)
         {
             Sortie[] tab = new Sortie[2];
             tab[0] = new Sortie(1, dd, false, null);

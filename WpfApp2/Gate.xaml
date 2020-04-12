@@ -4,44 +4,59 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp2"
+             
              mc:Ignorable="d">
-    
-    <Canvas x:Name="OutilShape">
-        
-        <Grid x:Name="TopGate" 
-              Width="{Binding ElementName=Outil, Path=ActualWidth}">
+
+    <Canvas x:Name="OutilShape" Width="74" Height="74" >
+        <!-- Width="{Binding ElementName=Outil, Path=ActualWidth}"
+        Height="{Binding ElementName=Outil, Path=ActualHeight}"-->
+
+        <Path x:Name="path" Margin="22,22 22,22" Height="30"  Stretch="Fill" Stroke="Black" Fill="White" Width="30" />
+
+        <Grid x:Name="TopGate"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Canvas.Left="22"
+              Width="{Binding ElementName=path, Path=ActualWidth}">
+
+
         </Grid>
 
-        <Grid x:Name="BottomGate" 
-              Width="{Binding ElementName=Outil, Path=ActualWidth}" >
+        <Grid x:Name="BottomGate" VerticalAlignment="Top" HorizontalAlignment="Stretch"  Canvas.Left="20"
+              Width="{Binding ElementName=path, Path=ActualWidth}"  >
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1" ></ScaleTransform>
-                    <TranslateTransform Y="{Binding ElementName=Outil, Path=ActualHeight}"></TranslateTransform>
+                    <TranslateTransform Y="{Binding ElementName=OutilShape, Path=ActualHeight}"></TranslateTransform>
                 </TransformGroup>
             </Grid.RenderTransform>
+
+
+
         </Grid>
 
-        <Grid x:Name="LeftGate" 
-              Width="{Binding ElementName=Outil, Path=ActualHeight}" >
+        <Grid x:Name="LeftGate"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Canvas.Top="22"
+            Width="{Binding ElementName=path, Path=ActualHeight}" >
             <Grid.RenderTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="-90" ></RotateTransform>
-                    <TranslateTransform Y="{Binding ElementName=Outil, Path=ActualHeight}"></TranslateTransform>
+                    <RotateTransform Angle="-90"  ></RotateTransform>
+                    <TranslateTransform Y="{Binding ElementName=path, Path=ActualHeight}"></TranslateTransform>
                 </TransformGroup>
             </Grid.RenderTransform>
+
+
+
         </Grid>
 
-        <Grid x:Name="RightGate"
-              Width="{Binding ElementName=Outil, Path=ActualHeight}" >
+        <Grid x:Name="RightGate"  VerticalAlignment="Top" HorizontalAlignment="Right" 
+             Width="{Binding ElementName=path, Path=ActualHeight}"  Canvas.Top="22">
+
             <Grid.RenderTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="90" ></RotateTransform>
-                    <TranslateTransform X="{Binding ElementName=Outil, Path=ActualWidth}"></TranslateTransform>
+                    <RotateTransform Angle="90"  ></RotateTransform>
+                    <TranslateTransform X="{Binding ElementName=OutilShape, Path=ActualWidth}"></TranslateTransform>
                 </TransformGroup>
             </Grid.RenderTransform>
-        </Grid>
 
-        
+
+
+        </Grid>
     </Canvas>
 </UserControl>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace logisimConsole
 {
@@ -10,10 +7,10 @@ namespace logisimConsole
         Disposition dd = Disposition.down;
         private const int nb_sorties = 2;
 
-        public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo)
+        public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
         {
             Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie(1,dd,false, null);
+            tab[0] = new Sortie(1, dd, false, null);
             tab[1] = new Sortie(1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);

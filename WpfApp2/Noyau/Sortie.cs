@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using System.Collections.Generic;
+using WpfApp2;
 namespace logisimConsole
 {
     public class Sortie : InputOutput
     {
         private bool etat;
         private List<OutStruct> Sorties;
-        public Sortie():base() { }
+        public Sortie() : base() { }
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
-        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties):base(ID,disposi)
+        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(ID, disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace logisimConsole
+﻿namespace logisimConsole
 {
     class AddComplet : CircCombinatoire
     {
         // les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente
         // On a deux sortie, la somme et la retenue sortante
-        public AddComplet(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(3, 2, etiquette,dispo) { }
+        public AddComplet(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(3, 2, etiquette, dispo) { }
         public AddComplet() : base() { }
 
 
@@ -68,7 +64,7 @@ namespace logisimConsole
             }
         }
 
-        public void setEntree(int ind,bool entree)
+        public void setEntree(int ind, bool entree)
         {
             liste_entrees[ind].setEtat(entree);
         }

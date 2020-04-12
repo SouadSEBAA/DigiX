@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace logisimConsole
+﻿namespace logisimConsole
 {
     class Decodeur : CircCombinatoire
     {
-        public Decodeur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette,dispo) { }
+        public Decodeur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
 
         public override void calcul_sorties()
         {
-           // Decodeur 2 -> 4
-           if (nb_entrees == 2)
-           {
+            // Decodeur 2 -> 4
+            if (nb_entrees == 2)
+            {
                 if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == false)
                 {
                     liste_sorties[0].setEtat(true);
@@ -44,11 +40,11 @@ namespace logisimConsole
                     liste_sorties[2].setEtat(false);
                     liste_sorties[3].setEtat(true);
                 }
-           }
+            }
 
-           // decodeur 3 -> 8
-           if (nb_entrees == 3)
-           {
+            // decodeur 3 -> 8
+            if (nb_entrees == 3)
+            {
                 if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == false && liste_entrees[2].isEtat() == false)
                 {
                     liste_sorties[0].setEtat(true);
