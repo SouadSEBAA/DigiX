@@ -121,9 +121,9 @@
                                     <ListViewItem >
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="65">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
-                                            <Canvas Height="80" Width="80" x:Name="canvas" Margin="24 0"  >
+                                            
                                                 <local:et Canvas.Top="0" Canvas.Left="0" />
-                                            </Canvas>
+                                            
                                             <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
                                                     <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
                                             </-->
