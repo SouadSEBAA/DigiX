@@ -35,8 +35,8 @@ namespace WpfApp2.Chronogramme
         Task task;
         Stopwatch watch;
 
-        //public GearedValues<MeasureModel> ChartValues { get; set; }
-        public ChartValues<MeasureModel> ChartValues { get; set; }
+        public GearedValues<MeasureModel> ChartValues { get; set; }
+        //public ChartValues<MeasureModel> ChartValues { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -84,9 +84,9 @@ namespace WpfApp2.Chronogramme
             .Y(model => model.Value);           //use the value property as Y
 
             Charting.For<MeasureModel>(mapper);//lets save the mapper globally.
-            ChartValues = new ChartValues<MeasureModel>();
-            //ChartValues = new GearedValues<MeasureModel>();
-            line.AlternativeStroke = Brushes.Black;
+            //ChartValues = new ChartValues<MeasureModel>();
+            ChartValues = new GearedValues<MeasureModel>();
+            //line.AlternativeStroke = Brushes.Black;
             line.PointGeometry = null;
 
             From = 0;
@@ -96,7 +96,7 @@ namespace WpfApp2.Chronogramme
             DataContext = this;
             timer = new Thread(new ThreadStart(Read));
             
-            //tf.StartNew(new Action(Read));
+            tf.StartNew(new Action(Read));
             //Parallel.Invoke(Read);
         }
         double d;

@@ -26,5 +26,14 @@ namespace WpfApp2
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
         public Disposition GetDisposition() { return dispo; }
 
+        private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = System.Windows.Input.Cursors.Hand;
+        }
+
+        private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = System.Windows.Input.Cursors.Arrow;
+        }
     }
 }

@@ -13,9 +13,9 @@
     <Grid x:Name="grid"  >
         <ScrollViewer HorizontalScrollBarVisibility="Visible">
             <Canvas x:Name="Grille"         
-                PreviewMouseLeftButtonDown="StartDraw" 
+                PreviewMouseLeftButtonDown="MouseLeftButtonPressed" 
                 PreviewMouseMove="MouseMoved" 
-                PreviewMouseLeftButtonUp="MouseReleased"
+                PreviewMouseLeftButtonUp="MouseLeftButtonReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
                 Drop="Grille_Drop"

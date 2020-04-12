@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using logisimConsole;
+using WpfApp2.Chronogramme;
 
 namespace WpfApp2
 {
@@ -16,10 +17,7 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        Point mousePos;
         int gridGap = 10;
-        private bool isDrawing;
-        Line line = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -58,9 +56,16 @@ namespace WpfApp2
             return new Point(x, y);
         }
 
-        private void StartDraw(object sender, MouseButtonEventArgs e)
+
+        //Liaison
+        /*****************************************************************/
+        private bool isDrawing;
+        Line line = null;
+        Point mousePos;
+
+        private void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.OriginalSource is Object)
             {
                 isDrawing = true;
 
@@ -81,8 +86,8 @@ namespace WpfApp2
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
-            mousePos = SnapToGrid(mousePos.X, mousePos.Y);
-            if (e.LeftButton == MouseButtonState.Pressed && isDrawing)
+            //mousePos = SnapToGrid(mousePos.X, mousePos.Y);
+            if (/*e.LeftButton == MouseButtonState.Pressed && */isDrawing)
             {
                 var bind1 = new Binding();
                 bind1.Source = mousePos.X;
@@ -94,15 +99,26 @@ namespace WpfApp2
                 line.SetBinding(Line.Y2Property, bind2);
             }
         }
-        private void MouseReleased(object sender, MouseButtonEventArgs e)
+        private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
             {
                 isDrawing = false;
-                if (line.X1 == line.X2 && line.Y1 == line.Y2)
+                if (! (e.OriginalSource is InputOutput))
                     Grille.Children.Remove(line);
             }
         }
+        /******************************************************************************/
+
+        //Chronogrammes
+        /******************************************************************************/
+        private void ChronogrammesClick(object sender, RoutedEventArgs e)
+        {
+            Chronogrammes chronoPage = new Chronogrammes();
+            Chronogrammes.Children.Add(chronoPage);
+        }
+        /******************************************************************************/
+
 
         private void CaptEcran_Click(object sender, RoutedEventArgs e)
         {
@@ -147,12 +163,6 @@ namespace WpfApp2
             }
         }
 
-        private void ChronogrammesClick(object sender, RoutedEventArgs e)
-        {
-            Chronogrammes chronoPage = new Chronogrammes();
-            Chronogrammes.Children.Add(chronoPage);
-        }
-
         /*****************/
         //drag and drop 
         
@@ -195,33 +205,32 @@ namespace WpfApp2
 
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.All;
-            Gate gate = (Gate)e.Data.GetData("Object");
-            gate.currentPoint = e.GetPosition(Grille);               
-            gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
-            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-            gate.RenderTransform = gate.transform;
-            gate.anchorPoint = gate.currentPoint;
-            if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }
-            e.Handled = true;           
+                e.Effects = DragDropEffects.All;
+                Gate gate = (Gate)e.Data.GetData("Object");
+                gate.currentPoint = e.GetPosition(Grille);
+                gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
+                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+                gate.RenderTransform = gate.transform;
+                gate.anchorPoint = gate.currentPoint;
+                if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }
+                e.Handled = true;
         }
         
 
         private void Grille_Drop(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.All;
-         
-            Console.WriteLine("Ecrit");
-            Gate gate = (Gate)e.Data.GetData("Object");
+                e.Effects = DragDropEffects.All;
 
-            //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
-            gate.currentPoint = e.GetPosition(Grille);
-            gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
-            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-            gate.RenderTransform = gate.transform;
-            gate.anchorPoint = gate.currentPoint;
-            // Grille.Children.Add(gate);
+                Console.WriteLine("Ecrit");
+                Gate gate = (Gate)e.Data.GetData("Object");
 
+                //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
+                gate.currentPoint = e.GetPosition(Grille);
+                gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
+                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+                gate.RenderTransform = gate.transform;
+                gate.anchorPoint = gate.currentPoint;
+                // Grille.Children.Add(gate);
         }
 
         
