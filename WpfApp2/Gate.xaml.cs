@@ -18,7 +18,7 @@ namespace WpfApp2
         protected string data;
         protected Outils outil;
         public Gate() { }
-        public Gate(Gate gate) {}
+        public Gate(Gate gate) { }
         public Gate(Outils outil, String ph)
         {
             this.data = ph;
@@ -58,7 +58,7 @@ namespace WpfApp2
                 }
 
                 AjouterIO(target, true, nE);
-                
+
                 nE++;
             }
             //ajouter les sorties 
@@ -121,29 +121,13 @@ namespace WpfApp2
         public Point currentPoint;
         public TranslateTransform transform = new TranslateTransform();
         public Point anchorPoint;
-     /*
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            if (e.LeftButton == MouseButtonState.Pressed && e.OriginalSource==this.path )
-            {
-                Gate gate;
-                Canvas a=new Canvas();
-                if (this.Parent.GetType().IsInstanceOfType(a))//le cas de la grille 
-                { gate = this; }
-                else {  gate = new Gate(this.outil, this.data);}//le cas du menu  
-                //transfert de l'information
-                DataObject data = new DataObject();             
-                data.SetData("Object", gate);//l'outils à copier                                            
-                // Inititate the drag-and-drop operation.
-                DragDrop.DoDragDrop(this, data,  DragDropEffects.All);
-            }
-            else { }
-        }*/
-        
+
+
+
+
         protected override void OnGiveFeedback(GiveFeedbackEventArgs e)
         {
-            
+
             base.OnGiveFeedback(e);
             // These Effects values are set in the drop target's
             // DragOver event handler.
@@ -162,9 +146,10 @@ namespace WpfApp2
             e.Handled = true;
         }
 
+
         private void path_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed )
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Gate gate;
                 Canvas a = new Canvas();
@@ -178,6 +163,12 @@ namespace WpfApp2
                 DragDrop.DoDragDrop(this, data, DragDropEffects.All);
             }
         }
+
+
+
+
+
+
     }
 
 
