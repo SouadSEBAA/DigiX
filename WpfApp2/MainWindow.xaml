@@ -14,14 +14,14 @@
             
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Background="Lavender">
+        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Background="Lavender">
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible">
                 <Canvas x:Name="Grille"         
@@ -46,6 +46,8 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Canvas.Background>
+                    <local:InputOutput Height="500" Width="200"/>
+                    <local:InputOutput Height="500" Width="200" Canvas.Left="330" Canvas.Top="-1"/>
                 </Canvas>
             </ScrollViewer>
         </Grid>

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="WpfApp2.InputOutput"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Height="22" Width="10" MouseEnter="MouseOver" MouseLeave="MouseLeft">
+    Height="22" Width="10" MouseEnter="MouseOver" MouseLeave="MouseLeft" PreviewMouseLeftButtonDown="Lier">
 
     <UserControl.Resources>
         <Style TargetType="Ellipse">

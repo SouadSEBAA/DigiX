@@ -1,4 +1,5 @@
 ﻿using logisimConsole;
+using System.Windows;
 using System.Windows.Controls;
 //**********
 
@@ -35,5 +36,11 @@ namespace WpfApp2
         {
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
+
+        private void Lier(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
+        }
+
     }
 }

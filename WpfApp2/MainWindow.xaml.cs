@@ -59,14 +59,14 @@ namespace WpfApp2
         Line line = null;
         Point mousePos;
 
-        private void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
+        public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
-            if (e.OriginalSource is Object)
+            if (e.Source is InputOutput)
             {
                 isDrawing = true;
 
-                line = new Line();
-                line.StrokeThickness = 1.5;
+                line  =  new Line();
+                line.StrokeThickness = 2.5;
                 line.Stroke = Brushes.Black;
 
                 line.X1 = mousePos.X;
@@ -78,12 +78,12 @@ namespace WpfApp2
                 Grille.Children.Add(line);
             }
         }
-        
+
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
             //mousePos = SnapToGrid(mousePos.X, mousePos.Y);
-            if (/*e.LeftButton == MouseButtonState.Pressed && */isDrawing)
+            if ( isDrawing)
             {
                 var bind1 = new Binding();
                 bind1.Source = mousePos.X;
@@ -95,12 +95,13 @@ namespace WpfApp2
                 line.SetBinding(Line.Y2Property, bind2);
             }
         }
+
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
             {
                 isDrawing = false;
-                if (! (e.OriginalSource is InputOutput))
+                if (! (e.Source is InputOutput))
                     Grille.Children.Remove(line);
             }
         }
@@ -156,7 +157,7 @@ namespace WpfApp2
            
         }
         //nos controleurs de Drag &Drop 
-
+        bool dragging = true;
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
                 e.Effects = DragDropEffects.All;
