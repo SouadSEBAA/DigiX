@@ -83,12 +83,19 @@ namespace WpfApp2
                     line.StrokeThickness = 2.5;
                     line.Stroke = Brushes.Black;
 
-                    line.X1 = mousePos.X + 3;
-                    line.Y1 = mousePos.Y + 3;
+                    line.X1 = mousePos.X ;
+                    line.Y1 = mousePos.Y ;
 
-                    line.X2 = mousePos.X +3;
-                    line.Y2 = mousePos.Y +3;
+                    line.X2 = mousePos.X ;
+                    line.Y2 = mousePos.Y ;
 
+                    Point p = io.TranslatePoint(new Point(5, 5), Grille);
+                    line.X1 = p.X;
+                    line.Y1 = p.Y;
+
+                    line.X2 = p.X;
+                    line.Y2 = p.Y;
+                    Panel.SetZIndex(line, -2);
                     Grille.Children.Add(line);
                 }
             }
@@ -103,10 +110,10 @@ namespace WpfApp2
             if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
                 var bind1 = new Binding();
-                bind1.Source = mousePos.X + 3;
+                bind1.Source = mousePos.X ;
 
                 var bind2 = new Binding();
-                bind2.Source = mousePos.Y +3;
+                bind2.Source = mousePos.Y ;
 
                 line.SetBinding(Line.X2Property, bind1);
                 line.SetBinding(Line.Y2Property, bind2);
@@ -126,11 +133,16 @@ namespace WpfApp2
                     if (IO.IsMouseOver)
                     {
                         target = true;
+                        Point p = IO.TranslatePoint(new Point(5, 5), Grille);
+                        line.X2 = p.X;
+                        line.Y2 = p.Y;
                         break;
                     }
 
                     target = true;
                 }
+
+
                 if (target == false)
                     Grille.Children.Remove(line);
             }
