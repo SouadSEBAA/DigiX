@@ -61,50 +61,92 @@ namespace WpfApp2
 
         public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
-            if (e.Source is InputOutput)
+            if (!isDrawing)
             {
-                isDrawing = true;
+                Gate gate = (Gate)e.Source;
+                InputOutput io = null;
 
-                line  =  new Line();
-                line.StrokeThickness = 2.5;
-                line.Stroke = Brushes.Black;
+                foreach (InputOutput IO in gate.InputOutputs)
+                {
+                    if (IO.IsMouseOver)
+                    {
+                        io = IO;
+                        break;
+                    }
+                }
+                if (io != null)
+                {
 
-                line.X1 = mousePos.X;
-                line.Y1 = mousePos.Y;
+                    isDrawing = true;
 
-                line.X2 = mousePos.X;
-                line.Y2 = mousePos.Y;
+                    line = new Line();
+                    line.StrokeThickness = 2.5;
+                    line.Stroke = Brushes.Black;
 
-                Grille.Children.Add(line);
+                    line.X1 = mousePos.X + 3;
+                    line.Y1 = mousePos.Y + 3;
+
+                    line.X2 = mousePos.X +3;
+                    line.Y2 = mousePos.Y +3;
+
+                    Grille.Children.Add(line);
+                }
             }
+            e.Handled = true;
         }
+
 
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
             //mousePos = SnapToGrid(mousePos.X, mousePos.Y);
-            if ( isDrawing)
+            if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
                 var bind1 = new Binding();
-                bind1.Source = mousePos.X;
+                bind1.Source = mousePos.X + 3;
 
                 var bind2 = new Binding();
-                bind2.Source = mousePos.Y;
+                bind2.Source = mousePos.Y +3;
 
                 line.SetBinding(Line.X2Property, bind1);
                 line.SetBinding(Line.Y2Property, bind2);
             }
+
         }
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
             {
+                bool target = false;
                 isDrawing = false;
-                if (! (e.Source is InputOutput))
+                Gate gate = (Gate)sender;
+                foreach (InputOutput IO in gate.InputOutputs)
+                {
+                    if (IO.IsMouseOver)
+                    {
+                        target = true;
+                        break;
+                    }
+
+                    target = true;
+                }
+                if (target == false)
                     Grille.Children.Remove(line);
             }
+        
+            e.Handled = true;
         }
+
+    private void MouseReleased(object sender, MouseButtonEventArgs e)
+        {
+            if (isDrawing )
+            {
+                isDrawing = false;
+                Grille.Children.Remove(line);
+            }
+        }
+
         /******************************************************************************/
 
         //Chronogrammes
@@ -120,83 +162,88 @@ namespace WpfApp2
 
         /*****************/
         //drag and drop 
-        
+
         protected override void OnDrop(DragEventArgs e)
         {
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
-           
-            
+
+
             e.Handled = true;
         }
-        
+
         protected override void OnDragOver(DragEventArgs e)
         {
             base.OnDragOver(e);
-            e.Effects= DragDropEffects.All;
+            e.Effects = DragDropEffects.All;
 
-            
+
             //e.Effects = DragDropEffects.None;
             Console.WriteLine("mouse111");
-            
+
             e.Handled = true;
         }
         protected override void OnDragEnter(DragEventArgs e)
         {
             base.OnDragEnter(e);
             e.Effects = DragDropEffects.All;
-            
-           
+
+
         }
-        
+
         protected override void OnDragLeave(DragEventArgs e)
         {
             base.OnDragLeave(e);
             //Si la grille contient l'element in le supprime 
             // Undo the preview that was applied in OnDragEnter.
-           
+
         }
         //nos controleurs de Drag &Drop 
-        bool dragging = true;
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
-                e.Effects = DragDropEffects.All;
-                Gate gate = (Gate)e.Data.GetData("Object");
-                gate.currentPoint = e.GetPosition(Grille);
-                gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
-                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-                gate.RenderTransform = gate.transform;
-                gate.anchorPoint = gate.currentPoint;
-                if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }
-                e.Handled = true;
+            e.Effects = DragDropEffects.All;
+            Gate gate = (Gate)e.Data.GetData("Object");
+            gate.currentPoint = e.GetPosition(Grille);
+            gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
+            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+            gate.RenderTransform = gate.transform;
+            gate.anchorPoint = gate.currentPoint;
+
+            //Liaison
+            gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
+            gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
+            /*******/
+
+            if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }
+            e.Handled = true;
         }
-        
+
 
         private void Grille_Drop(object sender, DragEventArgs e)
         {
-                e.Effects = DragDropEffects.All;
+            e.Effects = DragDropEffects.All;
 
-                Console.WriteLine("Ecrit");
-                Gate gate = (Gate)e.Data.GetData("Object");
+            Console.WriteLine("Ecrit");
+            Gate gate = (Gate)e.Data.GetData("Object");
 
-                //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
-                gate.currentPoint = e.GetPosition(Grille);
-                gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
-                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-                gate.RenderTransform = gate.transform;
-                gate.anchorPoint = gate.currentPoint;
-                // Grille.Children.Add(gate);
+            //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
+            gate.currentPoint = e.GetPosition(Grille);
+            gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
+            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+            gate.RenderTransform = gate.transform;
+            gate.anchorPoint = gate.currentPoint;
+            // Grille.Children.Add(gate);
         }
 
-        
+
         //FOR THE MENU BUTTONS 
         private void aide_click(object sender, RoutedEventArgs e)
-        { 
+        {
             //takes us to our main help site
             string path = @".\..\..\..\HelpSite\home.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
-        
+
         private void simuler_click(object sender, RoutedEventArgs e)
         {
             //needs some work
