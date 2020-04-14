@@ -91,7 +91,7 @@ namespace WpfApp2
 
                 }
 
-                AjouterIO(target, false, nS);
+                AjouterIO(target, true, nS);
                 nS++;
             }
 
