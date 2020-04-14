@@ -123,6 +123,7 @@ namespace WpfApp2
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaa");
             if (isDrawing)
             {
                 bool target = false;
@@ -141,9 +142,7 @@ namespace WpfApp2
                         break;
                     }
 
-                    target = true;
                 }
-
 
                 if (target == false || entry1.Equals(entry2) == true)
                     Grille.Children.Remove(line);
