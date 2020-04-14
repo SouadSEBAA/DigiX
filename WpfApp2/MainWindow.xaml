@@ -92,9 +92,9 @@
                         </materialDesign:PopupBox>
 
                 </StackPanel>
-
-        </StackPanel>
+                </StackPanel>
             </Grid>
+        </StackPanel>
             <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
             <Grid Width="250" Height="90" Background="#060629" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>

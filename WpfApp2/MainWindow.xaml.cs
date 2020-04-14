@@ -163,7 +163,7 @@ namespace WpfApp2
         /******************************************************************************/
 
         //Chronogrammes
-        /******************************************************************************
+        /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
             Chronogrammes chronoPage = new Chronogrammes();
