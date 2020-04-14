@@ -21,9 +21,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Background="Lavender">
+        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Background="Lavender">
 
-            <ScrollViewer HorizontalScrollBarVisibility="Visible">
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
                 <Canvas x:Name="Grille"         
                 MouseMove="MouseMoved"
                 MouseLeftButtonUp="MouseReleased"
@@ -87,13 +87,13 @@
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
-                                <!--Button Content="Chronogrammes" Click="ChronogrammesClick"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </>
 
                 </StackPanel-->
-
+                </StackPanel>
             </Grid>
         </StackPanel>
 

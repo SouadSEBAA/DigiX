@@ -157,3 +157,14 @@ C:\Users\Dell\Downloads\PotatoGUI-master (1)\PotatoGUI-master\WpfApp2\bin\Debug\
 C:\Users\Dell\Downloads\PotatoGUI-master (1)\PotatoGUI-master\WpfApp2\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\Dell\Downloads\PotatoGUI-master (1)\PotatoGUI-master\WpfApp2\obj\Debug\Chronogramme\Chronogrammes.baml
 C:\Users\Dell\Downloads\PotatoGUI-master (1)\PotatoGUI-master\WpfApp2\obj\Debug\Chronogramme\StepLine.baml
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\Chronogrammes.g.cs
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\StepLine.g.cs
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.dll
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Geared.dll
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.pdb
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.xml
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\Chronogrammes.baml
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\StepLine.baml
