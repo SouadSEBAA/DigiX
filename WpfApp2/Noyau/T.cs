@@ -5,12 +5,25 @@ namespace logisimConsole
     class T : Bascule
     {
         //liste_entrees[3] = T
-        private const int nb_entrees = 4;
-        public T(string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo)
+        
+        public T(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
         {
             liste_entrees = new List<ClasseEntree>(nb_entrees);
         }
-
+        public T() : base() 
+        {
+            this.nb_entrees = 5;
+            this.nb_sorties = 2;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(4, Disposition.down, false, false));
+            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
+        }
         public override void calcul_sorties()
         {
             base.calcul_sorties();

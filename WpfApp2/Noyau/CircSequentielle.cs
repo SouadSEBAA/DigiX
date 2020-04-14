@@ -17,7 +17,7 @@ namespace logisimConsole
             timer.AutoReset = false; //Indique que le task du timer ne va s'exécuter qu'une seule fois
             timer.Elapsed += Maj; //Associe la methode a exécuter une fois l'intervalle de temps dépassé
         }
-
+        public CircSequentielle() : base() { }
         private void Maj(Object source, System.Timers.ElapsedEventArgs elapsedEventArgs)
         {
             front = false;

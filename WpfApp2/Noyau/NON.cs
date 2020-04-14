@@ -10,6 +10,7 @@ namespace logisimConsole
         {
             setnb_entrees(1);
         }
+        public NON() : base() { }
 
 
         //Methodes
