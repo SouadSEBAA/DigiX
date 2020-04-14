@@ -26,7 +26,7 @@ namespace logisimConsole
             this.etiquette = etiquette;
         }
 
-        //public Outils() { }
+        public Outils() { }
 
 
         //Constructeur pour les portes logiques (le nobre de sorties est fixee a 1)
@@ -57,11 +57,7 @@ namespace logisimConsole
         public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
 
 
-        public Outils()
-        {
-            liste_sorties = new List<Sortie>();
-            liste_entrees = new List<ClasseEntree>();
-        }
+
 
 
         public List<Sortie> getListesorties() { return liste_sorties; }

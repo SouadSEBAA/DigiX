@@ -7,7 +7,7 @@ namespace logisimConsole
     {
 
         //protected List<ClasseEntree> liste_controlleurs;
-
+        public Multiplexeur() { }
         public Multiplexeur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, 1, etiquette, dispo)
         {
             //this.liste_controlleurs = liste_commande;

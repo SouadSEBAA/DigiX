@@ -1,12 +1,24 @@
-﻿namespace logisimConsole
+﻿using System.Collections.Generic;
+namespace logisimConsole
 {
     class AddComplet : CircCombinatoire
     {
         // les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente
         // On a deux sortie, la somme et la retenue sortante
         public AddComplet(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(3, 2, etiquette, dispo) { }
-        public AddComplet() : base() { }
-
+        public AddComplet() : base() 
+        {
+            this.nb_entrees = 3;
+            this.nb_sorties = 2;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
+        }
+        
 
         public override void calcul_sorties()
         {

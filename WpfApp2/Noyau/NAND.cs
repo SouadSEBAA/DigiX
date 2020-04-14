@@ -8,6 +8,7 @@ namespace logisimConsole
         Disposition dd = Disposition.down;
         //Constructeur
         public NAND(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo) { }
+        public NAND() : base() { }
 
         //Methodes
         public override void calcul_sorties()

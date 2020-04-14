@@ -7,6 +7,7 @@ namespace logisimConsole
     {
         Disposition dd = Disposition.down;
         public OU(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo) { }
+        public OU() : base() { }
         //Methodes
         public override void calcul_sorties()
         {

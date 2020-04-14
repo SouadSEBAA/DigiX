@@ -1,4 +1,5 @@
-﻿namespace logisimConsole
+﻿using System.Collections.Generic;
+namespace logisimConsole
 {
     class DemiAdd : CircCombinatoire
     {
@@ -7,7 +8,18 @@
         // Comme entree, on a 2 bits
         // Comme sortie, on a 2 bits, bit de some et bit de retenue
         public DemiAdd(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(2, 2, etiquette, dispo) { }
-
+        public DemiAdd() 
+        {
+            this.nb_entrees = 2;
+            this.nb_sorties = 3;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+        }
         public override void calcul_sorties()
         {
             //throw new NotImplementedException();

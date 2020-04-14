@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
@@ -15,6 +16,25 @@ namespace logisimConsole
             while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
             i = 0;
             while (i < this.nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
+        }
+        public Reg_Dec() : base() 
+        {
+            this.nb_entrees =8 ;
+            this.nb_sorties = 4;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree(3, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree(4, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(5, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(6, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(7, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(3, Disposition.down, false, null));
         }
         /*
 		public override bool verifiRelie(){//verifier le  nombre d'entrées paralleles est egale aunombre de sorties

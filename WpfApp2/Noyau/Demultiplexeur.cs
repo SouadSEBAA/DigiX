@@ -10,7 +10,7 @@ namespace logisimConsole
         {
             //this.liste_controlleurs = liste_commande;
         }
-
+        public Demultiplexeur() { }
 
         public override void calcul_sorties()
         {

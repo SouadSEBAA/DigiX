@@ -12,12 +12,12 @@
         Height="{Binding ElementName=Outil, Path=ActualHeight}"-->
 
 
-        <Path x:Name="path" MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill" Stroke="Black" Fill="White" Width="30" />
-
+        <Path x:Name="path" StrokeThickness="3" Stroke="Black" Fill="AliceBlue"   MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill"  Width="30" />
+       
 
         <Grid x:Name="TopGate"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Canvas.Left="22"
               Width="{Binding ElementName=path, Path=ActualWidth}">
-
+            
 
         </Grid>
 

@@ -7,14 +7,28 @@ namespace logisimConsole
         Disposition dd = Disposition.down;
         //liste_entrees[3] == J
         //liste_entrees[4] == K
-        private const int nb_entrees = 5;
-        public JK(string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo)
+        
+        public JK(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
         {
             Sortie[] tab = new Sortie[2];
             tab[0] = new Sortie(1, dd, false, null);
             tab[1] = new Sortie(1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);
+        }
+        public JK() : base() 
+        {
+            this.nb_entrees = 5;
+            this.nb_sorties = 2;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(4, Disposition.down, false, false));
+            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
         }
 
         public override void calcul_sorties()

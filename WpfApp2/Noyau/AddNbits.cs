@@ -1,9 +1,22 @@
-﻿namespace logisimConsole
+﻿using System.Collections.Generic;
+namespace logisimConsole
 {
     class AddNbits : CircCombinatoire
     {
         public AddNbits(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
-
+        public AddNbits() 
+        {
+            this.nb_entrees = 3;
+            this.nb_sorties = 2;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            //on crée less listes
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+        }
         public override void calcul_sorties()
         {
             if (nb_entrees == 4)
