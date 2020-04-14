@@ -1,5 +1,7 @@
+
 ﻿using System.Collections.Generic;
 namespace logisimConsole
+
 {
     class D : Bascule
     {//liste des entrées :[clock,Pr,Clr,D]

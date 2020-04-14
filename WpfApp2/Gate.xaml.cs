@@ -21,14 +21,17 @@ namespace WpfApp2
         public Gate(Gate gate) { }
         public Gate(Outils outil, String ph)
         {
+            InputOutputs = new List<InputOutput>();
+
             this.data = ph;
             this.outil = outil;
             this.InitializeComponent();
             path.Data = StreamGeometry.Parse(ph);
             List<ClasseEntree> listEntre = outil.getListeentrees();
             List<Sortie> sorties = outil.getListesorties();
+
             Grid target=LeftGate;
-            //on respecte margin du path 22 et la longueur des i/o 22 pour avoir la correspendance daans les dessins 
+
 
             int nE = 0, nS = 0, up = 0, left = 0, right = 0, down = 0,i=0;
 
@@ -113,7 +116,6 @@ namespace WpfApp2
             OutilShape.Width = path.Width + 44;
             OutilShape.Height = path.Height + 44;
             //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la foncyion ajouterio
-
         }
         //cette fonction pour ajouter et créer les i/o
         public void AjouterIO(Grid grid, bool isInput, int n)
@@ -124,6 +126,9 @@ namespace WpfApp2
             grid.ColumnDefinitions.Add(cd);
             grid.Children.Add(myt);
             Grid.SetColumn(myt, n);
+
+            //Liaison
+            InputOutputs.Add(myt);
         }
         //Drag Drop 
         //les attributs
@@ -176,9 +181,13 @@ namespace WpfApp2
         }
 
 
+        public Outils GetOutil()
+        {
+            return outil;
+        }
 
-
-
+        //Liaison
+        public List<InputOutput> InputOutputs;
 
     }
 

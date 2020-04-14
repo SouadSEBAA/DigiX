@@ -1,4 +1,6 @@
-﻿namespace logisimConsole
+﻿using System;
+
+namespace logisimConsole
 {
     public class OutStruct
     {
@@ -10,7 +12,6 @@
             this.num_entree = num_entree;
             this.outils = outils;
         }
-
         public int getNum_entree() { return this.num_entree; }
         public void setNum_entree(int entree) { num_entree = entree; }
         public void setOutil(Outils outil) { outils = outil; }

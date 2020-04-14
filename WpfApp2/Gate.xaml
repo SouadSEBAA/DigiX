@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp2"
              
-             mc:Ignorable="d">
+             mc:Ignorable="d" >
 
     <Canvas x:Name="OutilShape" Width="74" Height="74" >
         <!-- Width="{Binding ElementName=Outil, Path=ActualWidth}"
         Height="{Binding ElementName=Outil, Path=ActualHeight}"-->
 
 
-        <Path x:Name="path" StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue"   MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill"  Width="30" />
+        <Path x:Name="path" StrokeThickness="3" Stroke="Black" Fill="AliceBlue"   MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill"  Width="30" />
        
 
         <Grid x:Name="TopGate"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Canvas.Left="22"

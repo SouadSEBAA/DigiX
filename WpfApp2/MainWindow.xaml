@@ -11,22 +11,22 @@
 
     <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid x:Name="grid"  >
+            
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="3" Background="Lavender">
+        <Grid HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" Background="Lavender">
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible">
                 <Canvas x:Name="Grille"         
-                PreviewMouseLeftButtonDown="StartDraw" 
-                PreviewMouseMove="MouseMoved" 
-                PreviewMouseLeftButtonUp="MouseReleased"
+                MouseMove="MouseMoved"
+                MouseLeftButtonUp="MouseReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
                 Drop="Grille_Drop"
@@ -81,17 +81,18 @@
                         </StackPanel>
                     </Button>
 
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!--StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock Text="Autre" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="Lavender" StaysOpen="False">
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
+                                <!--Button Content="Chronogrammes" Click="ChronogrammesClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
-                    </StackPanel>
+                    </>
 
-                </StackPanel>
+                </StackPanel-->
 
             </Grid>
         </StackPanel>
@@ -414,5 +415,6 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
+        <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
     </Grid>
 </Window>

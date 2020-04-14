@@ -58,7 +58,6 @@ namespace logisimConsole
 
 
 
-        
 
 
         public List<Sortie> getListesorties() { return liste_sorties; }

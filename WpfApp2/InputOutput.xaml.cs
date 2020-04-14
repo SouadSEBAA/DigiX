@@ -1,9 +1,12 @@
 ﻿using logisimConsole;
 using System.Windows;
 using System.Windows.Controls;
+
 using System.Windows.Input;
 using System.Windows.Shapes;
-//**********
+
+using System;
+
 
 namespace WpfApp2
 {
@@ -48,9 +51,16 @@ namespace WpfApp2
             }
         }
 
-        private void cercle_Drop(object sender, DragEventArgs e)
-        {
 
+
+        private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = System.Windows.Input.Cursors.Hand;
+        }
+
+        private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.Cursor = System.Windows.Input.Cursors.Arrow;
 
         }
     }
