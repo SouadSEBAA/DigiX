@@ -23,10 +23,12 @@ namespace WpfApp2
             this.ID = ID;
             this.dispo = disposi;
         }
+        public bool GetIsInput() { return IsInput; }
+        protected bool IsInput;
         public InputOutput(bool isInput)
         {
             InitializeComponent();
-
+            this.IsInput = isInput;
         }
         public InputOutput() { InitializeComponent(); }
         public void setDispo(Disposition dispo) { this.dispo = dispo; }

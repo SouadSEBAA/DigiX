@@ -14,7 +14,7 @@
             
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -415,6 +415,10 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
+<<<<<<< HEAD
         <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
+=======
+        <!--<Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" />-->
+>>>>>>> f3b5cd29e3d87cde0ede04505111a93a8cb4d4b7
     </Grid>
 </Window>

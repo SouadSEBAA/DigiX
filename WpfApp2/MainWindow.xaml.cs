@@ -58,6 +58,9 @@ namespace WpfApp2
         private bool isDrawing;
         Line line = null;
         Point mousePos;
+        //pour verifier le type des entrees/sorties
+        bool entry1;
+        bool entry2;
 
         public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
@@ -83,12 +86,6 @@ namespace WpfApp2
                     line.StrokeThickness = 2.5;
                     line.Stroke = Brushes.Black;
 
-                    line.X1 = mousePos.X ;
-                    line.Y1 = mousePos.Y ;
-
-                    line.X2 = mousePos.X ;
-                    line.Y2 = mousePos.Y ;
-
                     Point p = io.TranslatePoint(new Point(5, 5), Grille);
                     line.X1 = p.X;
                     line.Y1 = p.Y;
@@ -96,6 +93,9 @@ namespace WpfApp2
                     line.X2 = p.X;
                     line.Y2 = p.Y;
                     Panel.SetZIndex(line, -2);
+                    //tells us if its an input or output
+                    entry1 = io.GetIsInput();
+                    Console.WriteLine("entry1:" + entry1); //to make sure it works *success*
                     Grille.Children.Add(line);
                 }
             }
@@ -123,6 +123,7 @@ namespace WpfApp2
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaa");
             if (isDrawing)
             {
                 bool target = false;
@@ -136,14 +137,14 @@ namespace WpfApp2
                         Point p = IO.TranslatePoint(new Point(5, 5), Grille);
                         line.X2 = p.X;
                         line.Y2 = p.Y;
+                        entry2 = IO.GetIsInput(); //gets the type of input
+                        Console.WriteLine("entry2:" + entry2);
                         break;
                     }
 
-                    target = true;
                 }
 
-
-                if (target == false)
+                if (target == false || entry1.Equals(entry2) == true)
                     Grille.Children.Remove(line);
             }
         
@@ -166,7 +167,7 @@ namespace WpfApp2
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
             Chronogrammes chronoPage = new Chronogrammes();
-            Chronogrammes.Children.Add(chronoPage);
+            //Chronogrammes.Children.Add(chronoPage);
         }
         /******************************************************************************/
 
