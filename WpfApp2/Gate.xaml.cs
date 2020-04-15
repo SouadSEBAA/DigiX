@@ -13,6 +13,8 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour Gate.xaml
     /// </summary>
+    
+        [Serializable]
     public partial class Gate : UserControl
     {
         protected string data;
@@ -193,7 +195,7 @@ namespace WpfApp2
 
 
     //la partie portes logiques
-
+    [Serializable]
     class Et : Gate
     {
         public Et() : base(new ET(), "M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15") { InitializeComponent(); }

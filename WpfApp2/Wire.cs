@@ -10,6 +10,7 @@ using System.Windows.Media;
 
 namespace WpfApp2
 {
+    [Serializable]
     public class Wire : UserControl
     {
 

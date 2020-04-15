@@ -271,19 +271,47 @@ namespace WpfApp2
 
         private void open_file(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+            /*Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
             // Launch OpenFileDialog by calling ShowDialog method
             Nullable<bool> result = openFileDlg.ShowDialog();
             if (result == true)
             {
                 MessageBox.Show(openFileDlg.FileName, "Fichier Ouvert", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }*/
+
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+            // Process open file dialog box results
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                Canvas canvas = DeSerializeXAML(filename) as Canvas;
+                // Add all child elements (lines, rectangles etc) to canvas
+                while (canvas.Children.Count > 0)
+                {
+                    UIElement obj = canvas.Children[0]; // Get next child
+                    canvas.Children.Remove(obj); // Have to disconnect it from result before we can add it
+                    Grille.Children.Add(obj); // Add to canvas
+                }
             }
         }
+
+        public static UIElement DeSerializeXAML(string filename)
+        {
+            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            {
+                return System.Windows.Markup.XamlReader.Load(fs) as UIElement;
+            }
+        }
+
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
 
-            var saveFileDialog = new SaveFileDialog
+            /*var saveFileDialog = new SaveFileDialog
             {
                 Filter = "Text documents (.txt) | *.txt |Binary files (.bin) | *.bin"  //for the time being we will keep it at .txt until we agree on the extension to be used
             };
@@ -293,6 +321,22 @@ namespace WpfApp2
                 var fileName = saveFileDialog.FileName;
             }
             MessageBox.Show("Votre fichier a ete sauvegarder.", "Sauvegarder", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            */
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "UIElement File"; // Default file name
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                SerializeToXAML(Grille.Children, filename);
+            }
         }
 
 
@@ -340,6 +384,23 @@ namespace WpfApp2
 
             //to inform theuser that the screeshot was created successfully
             MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        // Serializes any UIElement object to XAML using a given filename.
+        public static void SerializeToXAML(UIElementCollection elements, string filename)
+        {
+            // Use XamlWriter object to serialize element
+            string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
+
+            // Write XAML to file. Use 'using' so objects are disposed of properly.
+            using (System.IO.FileStream fs = System.IO.File.Create(filename))
+            {
+                using (System.IO.StreamWriter streamwriter = new System.IO.StreamWriter(fs))
+                {
+                    streamwriter.Write(strXAML);
+                }
+            }
+
         }
         //END OF MENU BUTTONS
 

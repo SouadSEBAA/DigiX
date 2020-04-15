@@ -13,6 +13,8 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour InputOutput.xaml
     /// </summary>
+    /// 
+    [Serializable]
     public partial class InputOutput : UserControl
     {
         protected int ID;
