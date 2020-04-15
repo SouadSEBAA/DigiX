@@ -4,7 +4,6 @@ namespace logisimConsole
 {
     public class Sortie : InputOutput
     {
-        private bool etat;
         private List<OutStruct> Sorties;
         public Sortie() : base() { }
 
@@ -14,6 +13,7 @@ namespace logisimConsole
         {
             this.etat = etat;
             this.Sorties = Sorties;
+            IsInput = false;
         }
 
         public void set_Sorties(List<OutStruct> Sorties) { this.Sorties = Sorties; }
@@ -22,15 +22,6 @@ namespace logisimConsole
         public List<OutStruct> get_OutStruct() { return Sorties; }
 
 
-        public void setEtat(bool etat)
-        {
-            this.etat = etat;
-        }
-        public bool getEtat()
-        {
-            return this.etat;
-        }
-        public bool isEtat() { return etat; }
 
         public virtual OutStruct getSortieSpecifique(int i)
         {

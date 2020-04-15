@@ -17,6 +17,7 @@ namespace WpfApp2
     {
         protected int ID;
         protected Disposition dispo = Disposition.left;
+        protected bool etat;
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
@@ -65,5 +66,17 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Arrow;
 
         }
+
+        public void setEtat(bool etat)
+        {
+            this.etat = etat;
+        }
+        public bool getEtat()
+        {
+            return this.etat;
+        }
+
+        public bool isEtat() { return this.etat; }
+
     }
 }
