@@ -28,9 +28,12 @@ namespace WpfApp2
     public partial class MainWindow : Window
     {
         int gridGap = 10;
+        CircuitPersonnalise circuit;
+
         public MainWindow()
         {
             InitializeComponent();
+            circuit = new CircuitPersonnalise();
             /*   //pour essayer les gates creer
 
               List<ClasseEntree> list = new List<ClasseEntree>();
@@ -56,7 +59,7 @@ namespace WpfApp2
         //Liaison
         /*****************************************************************/
         private bool isDrawing;
-        Line line = null;
+        Wire line = null;
         Point mousePos;
         //pour verifier le type des entrees/sorties
         bool entry1;
@@ -82,20 +85,9 @@ namespace WpfApp2
 
                     isDrawing = true;
 
-                    line = new Line();
-                    line.StrokeThickness = 2.5;
-                    line.Stroke = Brushes.Black;
-
-                    Point p = io.TranslatePoint(new Point(5, 5), Grille);
-                    line.X1 = p.X;
-                    line.Y1 = p.Y;
-
-                    line.X2 = p.X;
-                    line.Y2 = p.Y;
+                    line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
                     Panel.SetZIndex(line, -2);
-                    //tells us if its an input or output
-                    entry1 = io.GetIsInput();
-                    Console.WriteLine("entry1:" + entry1); //to make sure it works *success*
+
                     Grille.Children.Add(line);
                 }
             }
@@ -109,21 +101,13 @@ namespace WpfApp2
             //mousePos = SnapToGrid(mousePos.X, mousePos.Y);
             if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
-                var bind1 = new Binding();
-                bind1.Source = mousePos.X ;
-
-                var bind2 = new Binding();
-                bind2.Source = mousePos.Y ;
-
-                line.SetBinding(Line.X2Property, bind1);
-                line.SetBinding(Line.Y2Property, bind2);
+                line.EndPoint = mousePos;
             }
 
         }
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaa");
             if (isDrawing)
             {
                 bool target = false;
@@ -134,17 +118,13 @@ namespace WpfApp2
                     if (IO.IsMouseOver)
                     {
                         target = true;
-                        Point p = IO.TranslatePoint(new Point(5, 5), Grille);
-                        line.X2 = p.X;
-                        line.Y2 = p.Y;
-                        entry2 = IO.GetIsInput(); //gets the type of input
-                        Console.WriteLine("entry2:" + entry2);
+                        if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
+                            Grille.Children.Remove(line);
                         break;
                     }
 
                 }
-
-                if (target == false || entry1.Equals(entry2) == true)
+                if (target == false)
                     Grille.Children.Remove(line);
             }
         
@@ -163,7 +143,7 @@ namespace WpfApp2
         /******************************************************************************/
 
         //Chronogrammes
-        /******************************************************************************
+        /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
             Chronogrammes chronoPage = new Chronogrammes();
@@ -225,6 +205,7 @@ namespace WpfApp2
             //Liaison
             gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
+          
             /*******/
 
             if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }

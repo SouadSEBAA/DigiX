@@ -87,6 +87,10 @@
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
+<<<<<<< HEAD
+=======
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
+>>>>>>> d5f92a6f6dfb1f5cf4ee7e2abcb2d69a2fc6f65e
                             </StackPanel>
                         </materialDesign:PopupBox>
 
@@ -94,8 +98,7 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-
-        <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
+            <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
             <Grid Width="250" Height="90" Background="#060629" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>
             </Grid>
@@ -413,9 +416,13 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
+<<<<<<< HEAD
 
         <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
         <!--<Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" />-->
 
+=======
+        <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
+>>>>>>> d5f92a6f6dfb1f5cf4ee7e2abcb2d69a2fc6f65e
     </Grid>
 </Window>
