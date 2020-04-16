@@ -168,3 +168,5 @@ C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\Chronogrammes.baml
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\StepLine.baml
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Wire.g.cs
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Wire.baml

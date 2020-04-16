@@ -34,16 +34,6 @@ namespace WpfApp2
         {
             InitializeComponent();
             circuit = new CircuitPersonnalise();
-            /*   //pour essayer les gates creer
-
-              List<ClasseEntree> list = new List<ClasseEntree>();
-              list.Add(new ClasseEntree(1,Disposition.left,true, true));
-              List<Sortie> list_s = new List<Sortie>();
-              CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
-              Gate g = new Decod(d);
-              Grille.Children.Add(g);
-              */
-
         }
 
 
@@ -82,12 +72,9 @@ namespace WpfApp2
                 }
                 if (io != null)
                 {
-
                     isDrawing = true;
-
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
                     Panel.SetZIndex(line, -2);
-
                     Grille.Children.Add(line);
                 }
             }
@@ -131,7 +118,7 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-    private void MouseReleased(object sender, MouseButtonEventArgs e)
+        private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing )
             {
@@ -141,7 +128,6 @@ namespace WpfApp2
         }
 
         /******************************************************************************/
-
         //Chronogrammes
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
@@ -160,8 +146,6 @@ namespace WpfApp2
         {
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
-
-
             e.Handled = true;
         }
 
@@ -169,8 +153,6 @@ namespace WpfApp2
         {
             base.OnDragOver(e);
             e.Effects = DragDropEffects.All;
-
-
             //e.Effects = DragDropEffects.None;
             Console.WriteLine("mouse111");
 
@@ -180,8 +162,6 @@ namespace WpfApp2
         {
             base.OnDragEnter(e);
             e.Effects = DragDropEffects.All;
-
-
         }
 
         protected override void OnDragLeave(DragEventArgs e)
@@ -207,8 +187,7 @@ namespace WpfApp2
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
           
             /*******/
-
-            if (!gate.added) { Grille.Children.Add(gate); gate.added = true; }
+            if (!gate.added) { Grille.Children.Add(gate); gate.added = true; circuit.AddComponent(gate.GetOutil()); Console.WriteLine(gate.GetOutil()); ; }
             e.Handled = true;
         }
 
@@ -217,7 +196,7 @@ namespace WpfApp2
         {
             e.Effects = DragDropEffects.All;
 
-            Console.WriteLine("Ecrit");
+            //Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
 
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
@@ -230,7 +209,7 @@ namespace WpfApp2
         }
 
 
-        //FOR THE MENU BUTTONS 
+        //************************************FOR THE MENU BUTTONS**********************************************// 
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
@@ -240,7 +219,27 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            //needs some work
+            // EnumVisual(Grille);
+            GetChildren<Gate>(Grille);
+        }
+
+        public static List<Gate> GetChildren<Gate>(this DependencyObject reference)
+        {
+            List<Gate> result = new List<Gate>();
+            // enumerate all of the children of the supplied element searching for all the   
+            // elements that match the supplied type  
+            for (int x = 0; x < VisualTreeHelper.GetChildrenCount(reference); x++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(reference, x);
+                if (child is Gate tChildInstance && child != null)
+                {
+                    result.Add(tChildInstance);
+                    Console.WriteLine("****************beginning**********");
+                    Console.WriteLine(tChildInstance);
+                    Console.WriteLine("****************ending**********");
+                }
+            }
+            return result;
         }
 
         private void open_tut(object sender, RoutedEventArgs e)
@@ -383,38 +382,7 @@ namespace WpfApp2
             }
 
         }
-        //END OF MENU BUTTONS
-
-
-
-        //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..
-
-        /*
-        // Zoom
-        private Double zoomMax = 5;
-        private Double zoomMin = 0.5;
-        private Double zoomSpeed = 0.001;
-        private Double zoom = 1;
-
-        // Zoom on Mouse wheel
-        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            zoom += zoomSpeed * e.Delta; // Ajust zooming speed (e.Delta = Mouse spin value )
-            if (zoom < zoomMin) { zoom = zoomMin; } // Limit Min Scale
-            if (zoom > zoomMax) { zoom = zoomMax; } // Limit Max Scale
-
-            Point mousePos = e.GetPosition(Grille);
-
-            if (zoom > 1)
-            {
-                Grille.RenderTransform = new ScaleTransform(zoom, zoom, mousePos.X, mousePos.Y); // transform Canvas size from mouse position
-            }
-            else
-            {
-                Grille.RenderTransform = new ScaleTransform(zoom, zoom); // transform Canvas size
-            }
-        }
-        */
+        //**************************************END OF MENU BUTTONS*******************************//
 
     }
 }

@@ -7,7 +7,7 @@
        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Name="DigitX"
-        Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg">
+        Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png">
 
     <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid x:Name="grid"  >
@@ -87,10 +87,7 @@
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
-<<<<<<< HEAD
-=======
                                 <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
->>>>>>> d5f92a6f6dfb1f5cf4ee7e2abcb2d69a2fc6f65e
                             </StackPanel>
                         </materialDesign:PopupBox>
 
@@ -100,7 +97,7 @@
         </StackPanel>
             <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
             <Grid Width="250" Height="90" Background="#060629" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Image Source="tumblr_inline_p9txgyd2Kb1ry6m3g_250.jpg"/>
+                <Image Source="ditix.png" Stretch="Uniform" Height="130" Width="130"/>
             </Grid>
 
             <Grid Margin="0 100" >
@@ -189,7 +186,7 @@
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="201">
+                                        <StackPanel Orientation="Horizontal" Height="64" Width="64">
                                             <TextBlock Text="Decodeur"  Padding="20 5" VerticalAlignment="Center"/>
                                             <local:Decod Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
@@ -198,14 +195,14 @@
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="64" Width="201">
                                             <TextBlock Text="Encodeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:Encod Canvas.Top="0" Canvas.Left="0" />
+                                            <local:Encod Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="64" Width="201">
                                             <TextBlock Text="Multiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:Mux Canvas.Top="0" Canvas.Left="0" />
+                                            <local:Mux Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
                                     </ListViewItem>
 
@@ -251,7 +248,10 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="100">
-                                            <TextBlock Text="Reg a decalage"  Padding="20 5"></TextBlock>
+                                            <StackPanel Orientation="Vertical" Width="80" Height="60">
+                                                <TextBlock Text="Registre a" HorizontalAlignment="Left"></TextBlock>
+                                                <TextBlock Text="decalages" HorizontalAlignment="Left"></TextBlock>
+                                            </StackPanel>
                                             <local:Reg> </local:Reg>
                                         </StackPanel>
                                     </ListViewItem>
@@ -365,7 +365,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="44" Width="201">
-                                            <TextBlock Text="Pin"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="diode"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
                                             <Canvas Height="40" Width="50" Margin="45 0">
                                                 <Path Canvas.Top="2"  Canvas.Left="2.44"  Data="M42.5,22 C42.5,33.321837 33.321837,42.5 22,42.5 10.678163,42.5 1.5,33.321837 1.5,22 1.5,10.678163 10.678163,1.5 22,1.5 33.321837,1.5 42.5,10.678163 42.5,22 z"  Height="35.666" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="35.56"/>
                                                 <Path Fill="#FFDCEBDC" Canvas.Top="7.944" Canvas.Left="8.273"  Data="M22.539979,12.635862 C22.539979,18.786027 17.830019,23.771723 12.01999,23.771723 6.2099599,23.771723 1.5000003,18.786027 1.5000003,12.635862 1.5000003,6.4856951 6.2099599,1.5 12.01999,1.5 17.830019,1.5 22.539979,6.4856951 22.539979,12.635862 z"  Height="22.939" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="23.374"/>
@@ -416,13 +416,13 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-<<<<<<< HEAD
+
 
         <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
         <!--<Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" />-->
 
-=======
+
         <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
->>>>>>> d5f92a6f6dfb1f5cf4ee7e2abcb2d69a2fc6f65e
+
     </Grid>
 </Window>
