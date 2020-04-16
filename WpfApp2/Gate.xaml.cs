@@ -65,7 +65,7 @@ namespace WpfApp2
 
                 }
 
-                AjouterIO(target, true, i);
+                AjouterIO(target, listEntre[nE], i);
 
                 nE++;
             }
@@ -96,7 +96,7 @@ namespace WpfApp2
 
                 }
 
-                AjouterIO(target, false, nS);
+                AjouterIO(target, sorties[nS], nS);
                 nS++;
             }
             double taille = 20;
@@ -118,15 +118,14 @@ namespace WpfApp2
             //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la foncyion ajouterio
         }
         //cette fonction pour ajouter et créer les i/o
-        public void AjouterIO(Grid grid, bool isInput, int n)
+        public void AjouterIO(Grid grid, InputOutput myt, int n)
         {
-            InputOutput myt = new InputOutput(isInput);//on crée l' i/o
             ColumnDefinition cd = new ColumnDefinition();
             cd.Width = new GridLength(1, GridUnitType.Star);
             grid.ColumnDefinitions.Add(cd);
             grid.Children.Add(myt);
             Grid.SetColumn(myt, n);
-
+            //on peut le supprimer et on verifie dans les deux listes d'entrées et de sorties 
             //Liaison
             InputOutputs.Add(myt);
         }
@@ -171,7 +170,7 @@ namespace WpfApp2
                 if (this.Parent.GetType().IsInstanceOfType(a))//le cas de la grille 
                 { gate = this; }
                 else { gate = new Gate(this.outil, this.data); }//le cas du menu  
-                //transfert de l'information
+                //transfert de l'information ************changer gate sselon le tableau 
                 DataObject data = new DataObject();
                 data.SetData("String", "Gate");
                 data.SetData("Object", gate);//l'outils à copier                                            
