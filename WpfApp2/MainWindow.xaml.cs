@@ -187,7 +187,14 @@ namespace WpfApp2
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
           
             /*******/
-            if (!gate.added) { Grille.Children.Add(gate); gate.added = true; circuit.AddComponent(gate.GetOutil()); Console.WriteLine(gate.GetOutil()); ; }
+            if (!gate.added) {
+                Grille.Children.Add(gate);
+                gate.added = true;
+                circuit.AddComponent(gate.GetOutil());
+                //circuit.GetCircuit provides us with the bidirectional graph we created 
+                foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
+                //.Vertices displays the nodes only
+            }
             e.Handled = true;
         }
 
@@ -210,6 +217,7 @@ namespace WpfApp2
 
 
         //************************************FOR THE MENU BUTTONS**********************************************// 
+
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
@@ -219,28 +227,10 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            // EnumVisual(Grille);
-            GetChildren<Gate>(Grille);
+            
+
         }
 
-        public static List<Gate> GetChildren<Gate>(this DependencyObject reference)
-        {
-            List<Gate> result = new List<Gate>();
-            // enumerate all of the children of the supplied element searching for all the   
-            // elements that match the supplied type  
-            for (int x = 0; x < VisualTreeHelper.GetChildrenCount(reference); x++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(reference, x);
-                if (child is Gate tChildInstance && child != null)
-                {
-                    result.Add(tChildInstance);
-                    Console.WriteLine("****************beginning**********");
-                    Console.WriteLine(tChildInstance);
-                    Console.WriteLine("****************ending**********");
-                }
-            }
-            return result;
-        }
 
         private void open_tut(object sender, RoutedEventArgs e)
         {
@@ -382,6 +372,7 @@ namespace WpfApp2
             }
 
         }
+
         //**************************************END OF MENU BUTTONS*******************************//
 
     }

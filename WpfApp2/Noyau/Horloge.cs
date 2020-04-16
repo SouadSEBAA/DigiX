@@ -8,6 +8,19 @@ namespace logisimConsole
 {
 	public class Horloge : Outils
 	{
+		//Constructeur 
+		public Horloge()
+		{
+			this.nb_entrees = 0;
+			this.nb_sorties = 1;
+			this.etiquette = "horloge";
+			this.liste_entrees = new List<ClasseEntree>();
+			this.liste_sorties = new List<Sortie>();
+			this.disposition = Disposition.right;
+			liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+		}
+
 		//  le Tour du signal d'horloge 
 
 		int T = 1000;

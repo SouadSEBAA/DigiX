@@ -305,104 +305,23 @@
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
                                             <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <Canvas Height="40" Width="50" Margin="25 0">
-                                                <Path Stroke="GhostWhite" StrokeThickness="2" Canvas.Left="3"  Canvas.Top="5" Height="25" Stretch="Fill" Width="30" >
-                                                    <Path.Data>
-                                                        <PathGeometry>
-                                                            <PathFigure IsClosed="True" StartPoint="93.5,31.5">
-                                                                <BezierSegment IsSmoothJoin="True" Point3="91.5,33.5" Point2="92.6045694996616,33.5" Point1="93.5,32.6045694996616"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="89.5,31.5" Point2="89.5,32.6045694996616" Point1="90.3954305003384,33.5"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="91.5,29.5" Point2="90.3954305003384,29.5" Point1="89.5,30.3954305003384"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="93.5,31.5" Point2="93.5,30.3954305003384" Point1="92.6045694996616,29.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure IsClosed="True" StartPoint="81.5,31.5">
-                                                                <PolyLineSegment Points="91.5,31.5 91.5,32.5 81.5,32.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure IsClosed="True" StartPoint="1.5,1.5">
-                                                                <PolyLineSegment Points="81.5,1.5 81.5,61.5 1.5,61.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="11.5,41.5">
-                                                                <LineSegment Point="21.5,41.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="21.5,41.5">
-                                                                <LineSegment Point="21.5,11.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="21.5,11.5">
-                                                                <LineSegment Point="31.5,11.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="31.5,11.5">
-                                                                <LineSegment Point="31.5,41.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="31.5,41.5">
-                                                                <LineSegment Point="41.5,41.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="41.5,41.5">
-                                                                <LineSegment Point="41.5,11.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="41.5,11.5">
-                                                                <LineSegment Point="51.5,11.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="51.5,11.5">
-                                                                <LineSegment Point="51.5,41.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="51.5,41.5">
-                                                                <LineSegment Point="61.5,41.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="61.5,41.5">
-                                                                <LineSegment Point="61.5,11.5"/>
-                                                            </PathFigure>
-                                                            <PathFigure StartPoint="61.5,11.5">
-                                                                <LineSegment Point="71.5,11.5"/>
-                                                            </PathFigure>
-                                                        </PathGeometry>
-                                                    </Path.Data>
-                                                </Path>
-                                            </Canvas>
+                                            <local:horloge Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
-                                            <TextBlock Text="diode"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
-                                            <Canvas Height="40" Width="50" Margin="45 0">
-                                                <Path Canvas.Top="2"  Canvas.Left="2.44"  Data="M42.5,22 C42.5,33.321837 33.321837,42.5 22,42.5 10.678163,42.5 1.5,33.321837 1.5,22 1.5,10.678163 10.678163,1.5 22,1.5 33.321837,1.5 42.5,10.678163 42.5,22 z"  Height="35.666" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="35.56"/>
-                                                <Path Fill="#FFDCEBDC" Canvas.Top="7.944" Canvas.Left="8.273"  Data="M22.539979,12.635862 C22.539979,18.786027 17.830019,23.771723 12.01999,23.771723 6.2099599,23.771723 1.5000003,18.786027 1.5000003,12.635862 1.5000003,6.4856951 6.2099599,1.5 12.01999,1.5 17.830019,1.5 22.539979,6.4856951 22.539979,12.635862 z"  Height="22.939" Stretch="Fill" Stroke="Green" StrokeThickness="2" Width="23.374"/>
-                                                <Path Stroke="#FFDCEBDC" StrokeThickness="1.5" Stretch="Fill" Canvas.Top="16.25" Width="10.604" Canvas.Left="37.5" >
-                                                    <Path.Data>
-                                                        <PathGeometry>
-                                                            <PathFigure IsClosed="True" StartPoint="15.3543330898287,3.07883337978803">
-                                                                <BezierSegment IsSmoothJoin="True" Point3="12.9741665382746,5.15766674353922" Point2="14.2886962267553,5.15766674353922" Point1="15.3543330898287,4.22694134402728"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="10.5939999867204,3.07883337978803" Point2="10.5939999867204,4.22694134402728" Point1="11.6596368497939,5.15766674353922"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="12.9741665382746,1.0000000160368" Point2="11.6596368497939,1.0000000160368" Point1="10.5939999867204,1.93072541554875"/>
-                                                                <BezierSegment IsSmoothJoin="True" Point3="15.3543330898287,3.07883337978803" Point2="15.3543330898287,1.93072541554875" Point1="14.2886962267553,1.0000000160368"/>
-                                                            </PathFigure>
-                                                            <PathFigure IsClosed="True" StartPoint="0.999999993403805,1.99100001696377">
-                                                                <PolyLineSegment Points="9.5933337,1.991 9.5933337,4.1526667 0.99999999,4.1526667"/>
-                                                            </PathFigure>
-                                                        </PathGeometry>
-                                                    </Path.Data>
-                                                </Path>
-                                            </Canvas>
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
+                                            <TextBlock Text="Pin entree"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
+                                            <local:pin_entree ></local:pin_entree>
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="44" Width="201">
-                                            <TextBlock Text="Pin" Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <Canvas Height="50" Width="50 " Margin="45 0">
-                                                <Path Name="Lampe"  Stroke="White" Canvas.Top="4"  Canvas.Left="2" StrokeThickness="2" Height="35.333" Stretch="Fill" Width="41.336" >
-                                                    <Path.Data>
-                                                        <GeometryGroup FillRule="Nonzero">
-                                                            <EllipseGeometry Center="170,260" RadiusX="2" RadiusY="2"  />
-                                                            <RectangleGeometry Rect="170,260 10 1"  />
-                                                            <RectangleGeometry Rect="180,230 60 60" />
-                                                            <EllipseGeometry Center="210,260" RadiusX="20" RadiusY="20"  />
-                                                        </GeometryGroup>
-                                                    </Path.Data>
-                                                </Path>
-                                            </Canvas>
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
+                                            <TextBlock Text="Pin sortie" Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <local:pin_sortie Canvas.Top="0" Canvas.Left="0"/>
 
                                         </StackPanel>
                                     </ListViewItem>

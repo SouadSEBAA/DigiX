@@ -1,4 +1,5 @@
 ﻿using QuickGraph;
+using System.Collections.Generic;
 using WpfApp2;
 
 namespace logisimConsole
@@ -7,6 +8,9 @@ namespace logisimConsole
     {
         private bool Sauvegardé;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
+
+        public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; }
+        
 
         public CircuitPersonnalise()
         {
@@ -38,7 +42,7 @@ namespace logisimConsole
 
         public bool Relate(Outils component1, Outils component2, InputOutput sortie, InputOutput entree)
         {
-            if (!((ClasseEntree) entree).getRelated() || sortie.GetIsInput() == entree.GetIsInput()) //Si l'entrée de component2 n'est pas reliée
+            if (!((ClasseEntree)entree).getRelated() || sortie.GetIsInput() == entree.GetIsInput()) //Si l'entrée de component2 n'est pas reliée
             {
                 Edge<Outils> edge = new Edge<Outils>(component1, component2);
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().BinarySearch((ClasseEntree)entree), component2);//Mise à jour des liaison
@@ -50,7 +54,6 @@ namespace logisimConsole
                 }
 
                 entree.setEtat(sortie.getEtat());//Mise à jour de l'état d'entree de component2
-
                 return true; // component1 et component2 liées avec succès
             }
             else
@@ -63,6 +66,8 @@ namespace logisimConsole
         {
             Circuit.AddVertex(outil);
         }
+
+       
     }
 
 
