@@ -15,6 +15,7 @@ namespace WpfApp2
     /// </summary>
     public partial class InputOutput : UserControl
     {
+        protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
@@ -78,6 +79,23 @@ namespace WpfApp2
         }
 
         public bool isEtat() { return this.etat; }
+        /*
+        private void elSelector_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Create the ToolTip and associate with the Form container.
+            System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
 
+            // Set up the delays for the ToolTip.
+            toolTip1.AutoPopDelay = 5000;
+            toolTip1.InitialDelay = 1000;
+            toolTip1.ReshowDelay = 500;
+            But
+            toolTip1.SetToolTip();
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            /*toolTip1.ShowAlways = true;
+            toolTip1.SetToolTip(e.Source,this.etiquette);*
+
+
+        }*/
     }
 }
