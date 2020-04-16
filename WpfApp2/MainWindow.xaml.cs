@@ -43,7 +43,41 @@ namespace WpfApp2
               Gate g = new Decod(d);
               Grille.Children.Add(g);
               */
+            int cpt = 0;
+            List<ClasseEntree> l = new List<ClasseEntree>(2);
+            l.Add(new ClasseEntree(cpt + 1, Disposition.left, true, true));
+            l.Add(new ClasseEntree(cpt + 1, Disposition.left, true, true));
 
+            ET et1 = new ET("et1");
+            et1.getEntreeSpecifique(0).setRelated(true);
+            et1.getEntreeSpecifique(1).setRelated(true);
+            et1.getEntreeSpecifique(0).setEtat(false);
+            et1.getEntreeSpecifique(1).setEtat(true);
+
+            NON non1 = new NON("non1");
+
+            OU ou1 = new OU("ou1");
+
+            ET et2 = new ET("et2");
+
+            Horloge clock = new Horloge(2000, 1000);
+
+            circuit.AddComponent(et1);
+            circuit.AddComponent(non1);
+            circuit.AddComponent(ou1);
+            circuit.AddComponent(et2);
+            circuit.AddComponent(clock);
+
+            circuit.Relate(et1, non1, 0, 0);
+            circuit.Relate(non1, ou1, 0, 0);
+            circuit.Relate(et1, ou1, 0, 1);
+            circuit.Relate(non1, et2, 0, 0);
+            circuit.Relate(et1, et2, 0, 1);
+
+            circuit.Evaluate(ou1);
+            circuit.Evaluate(et2);
+
+            Console.WriteLine(ou1.getSortieSpecifique(0).getEtat() + " " + et2.getSortieSpecifique(0).getEtat());
         }
 
 

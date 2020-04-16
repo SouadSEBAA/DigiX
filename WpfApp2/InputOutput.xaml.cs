@@ -31,7 +31,7 @@ namespace WpfApp2
             InitializeComponent();
             this.IsInput = isInput;
         }
-        public InputOutput() { InitializeComponent(); }
+        public InputOutput() { InitializeComponent(); etat = false;}
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
         public Disposition GetDisposition() { return dispo; }
            //****************la liaison
@@ -67,10 +67,11 @@ namespace WpfApp2
 
         }
 
-        public void setEtat(bool etat)
+        virtual public void setEtat(bool etat)
         {
             this.etat = etat;
         }
+
         public bool getEtat()
         {
             return this.etat;

@@ -14,6 +14,7 @@ namespace logisimConsole
             tab[1] = new Sortie(1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);
+
         }
         public Bascule() :base()
         {

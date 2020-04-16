@@ -72,7 +72,7 @@ namespace WpfApp2.Chronogramme
         private void Ajouter(object sender, RoutedEventArgs e)
         {
             //Ajouter un chronogramme
-            ChronoStack.Children.Add(new StepLine(watch, new Horloge(1000, 500, tf), tf));
+            //ChronoStack.Children.Add(new StepLine(watch, new Horloge(1000, 500, tf), tf));
         }
 
         private void AfficherAxe(object sender, RoutedEventArgs e)

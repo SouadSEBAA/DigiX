@@ -10,6 +10,8 @@ namespace logisimConsole
         public ET(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo) { }
         public ET() : base() { }
 
+        //essai
+        public ET(String s) : base(2, 1) { }
 
 
         //Methodes
@@ -40,7 +42,11 @@ namespace logisimConsole
             if (liste_sorties == null) { throw new EmptyListException(); }
             else
             {
-                liste_sorties.Add(new Sortie(1, dd, output, null));
+                //liste_sorties.Add(new Sortie(1, dd, output, null));
+                liste_sorties[0].setEtat(output);
+                Console.WriteLine("ET :");
+                Console.WriteLine(liste_entrees[0].getEtat());
+                Console.WriteLine(liste_entrees[1].getEtat());
                 Console.WriteLine(liste_sorties[0].getEtat());
             }
         }

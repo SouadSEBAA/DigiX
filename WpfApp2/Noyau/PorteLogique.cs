@@ -23,6 +23,9 @@ namespace logisimConsole
             this.liste_entrees = liste_e;
         }
 
+        public PorteLogique(int i, int n) : base(i, n) { }
+
+
         public override void calcul_sorties()
         {
             

@@ -12,8 +12,8 @@ namespace logisimConsole
 
 		int T = 1000;
 		int UP = 500;
-		//Thread mythread;
-		Task task;
+		Thread mythread;
+		//Task task;
 		bool stop = false;
 		//***********
 		public void auto()
@@ -54,17 +54,17 @@ namespace logisimConsole
 			//mythread.Start();
 		}
 		//**********/
-		public Horloge(int T, int UP, TaskFactory tf)
+		public Horloge(int T, int UP/*, TaskFactory tf*/)
 		{
 			liste_sorties = new List<Sortie>();
 			liste_sorties.Add(new Sortie());
 			liste_sorties.Add(new Sortie());
 
 			this.T = T; this.UP = UP;
-			//this.mythread = new Thread(new ThreadStart(this.auto));
+			this.mythread = new Thread(new ThreadStart(this.auto));
 			//task = Task.Run(new Action(auto));
-			//mythread.Start();
-			tf.StartNew(new Action(auto));
+			mythread.Start();
+			//tf.StartNew(new Action(auto));
 			//
 			// TODO: Add constructor logic here
 			//
