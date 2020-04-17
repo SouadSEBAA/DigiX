@@ -16,7 +16,7 @@ namespace WpfApp2
     public partial class Gate : UserControl
     {
         protected string data;
-        protected Outils outil;
+        public Outils outil;
         public Gate() { }
         public Gate(Gate gate) { }
         public Gate(Outils outil, String ph)

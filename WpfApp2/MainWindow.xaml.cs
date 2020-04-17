@@ -216,10 +216,10 @@ namespace WpfApp2
         private void Grille_Drop(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
-
+            
             Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
-
+            this.circuit.AddComponent(gate.outil);
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
             gate.currentPoint = e.GetPosition(Grille);
             gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
