@@ -17,7 +17,14 @@ namespace logisimConsole
             timer.AutoReset = false; //Indique que le task du timer ne va s'exécuter qu'une seule fois
             timer.Elapsed += Maj; //Associe la methode a exécuter une fois l'intervalle de temps dépassé
         }
-        public CircSequentielle() : base() { }
+        public CircSequentielle() : base()
+        {
+            Trigger = true; //Initialisé à etre déclenché sur un front montant (par défaut)
+            timer.AutoReset = false; //Indique que le task du timer ne va s'exécuter qu'une seule fois
+            timer.Elapsed += Maj; //Associe la methode a exécuter une fois l'intervalle de temps dépassé
+        }
+
+
         private void Maj(Object source, System.Timers.ElapsedEventArgs elapsedEventArgs)
         {
             front = false;
@@ -29,12 +36,12 @@ namespace logisimConsole
         {
             if (i == 0)
             {
-                if (etat == true && !liste_entrees[i].isEtat() && Trigger == true)
+                if (etat == true && !liste_entrees[0].isEtat() && Trigger == true)
                 {
                     front = true;
                     timer.Start();
                 }
-                else if (etat == false && liste_entrees[i].isEtat() && Trigger == false)
+                else if (etat == false && liste_entrees[0].isEtat() && Trigger == false)
                 {
                     front = true;
                     timer.Start();

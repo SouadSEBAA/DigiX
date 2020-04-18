@@ -23,6 +23,7 @@ namespace logisimConsole
             this.liste_entrees = liste_e;
         }
 
+        //essai
         public PorteLogique(int i, int n) : base(i, n) { }
 
 

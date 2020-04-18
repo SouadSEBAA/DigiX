@@ -14,8 +14,8 @@ namespace logisimConsole
             this.liste_entrees.Add(new ClasseEntree(0, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
         }
         public override void calcul_sorties()
         {

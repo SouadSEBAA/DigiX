@@ -126,17 +126,18 @@ namespace logisimConsole
             ClasseEntree entree;
             for ( int i = 0; i < nb_entrees; i++)
             {
-                entree = new ClasseEntree(1, Disposition.left, false, false);
+                entree = new ClasseEntree(i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
             }
 
             Sortie sortie;
             for (int i = 0; i < nb_sorties; i++)
             {
-                sortie = new Sortie();
+                sortie = new Sortie(0, Disposition.right, false, new List<OutStruct>());
                 liste_sorties.Add(sortie);
             }
         }
+
     }
 
     public class Outilspm

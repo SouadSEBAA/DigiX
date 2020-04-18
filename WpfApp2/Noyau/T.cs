@@ -12,15 +12,15 @@ namespace logisimConsole
         }
         public T() : base() 
         {
-            this.nb_entrees = 5;
+            this.nb_entrees = 4;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(4, Disposition.down, false, false));
+            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));//Horloge
+            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));//Preset
+            this.liste_entrees.Add(new ClasseEntree(2, Disposition.down, false, false));//Clear
+            //this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree(3, Disposition.left, false, false));//Entrée T
             this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
             this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
         }

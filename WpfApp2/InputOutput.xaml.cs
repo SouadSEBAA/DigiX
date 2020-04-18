@@ -1,7 +1,7 @@
 ﻿using logisimConsole;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -19,22 +19,25 @@ namespace WpfApp2
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
+        protected bool IsInput;
+
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
             this.ID = ID;
             this.dispo = disposi;
+            this.MouseDoubleClick += MouseClick;
         }
         public bool GetIsInput() { return IsInput; }
-        protected bool IsInput;
         public InputOutput(bool isInput)
         {
             InitializeComponent();
             this.IsInput = isInput;
         }
-        public InputOutput() { InitializeComponent(); etat = false;}
-        public void setDispo(Disposition dispo) { this.dispo = dispo; }
+        public InputOutput() { InitializeComponent(); etat = false;  }
+    public void setDispo(Disposition dispo) { this.dispo = dispo; }
         public Disposition GetDisposition() { return dispo; }
+
            //****************la liaison
         private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -65,12 +68,15 @@ namespace WpfApp2
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
             this.Cursor = System.Windows.Input.Cursors.Arrow;
-
         }
 
         virtual public void setEtat(bool etat)
         {
             this.etat = etat;
+            if (etat == true)
+                elSelector.Fill = Brushes.Red;
+            else
+                elSelector.Fill = Brushes.Black;
         }
 
         public bool getEtat()
@@ -79,6 +85,14 @@ namespace WpfApp2
         }
 
         public bool isEtat() { return this.etat; }
+
+        private void MouseClick(object sender, MouseEventArgs e)
+        {
+            if (IsInput)
+                setEtat(!this.etat);
+        }
+
+
         /*
         private void elSelector_MouseMove(object sender, MouseEventArgs e)
         {

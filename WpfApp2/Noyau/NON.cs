@@ -10,7 +10,7 @@ namespace logisimConsole
         {
             setnb_entrees(1);
         }
-        public NON() : base() { }
+        public NON() : base(1, 1) { nb_entrees = 1; }
 
         //essai
         public NON(String s) : base(1, 1) { }
@@ -24,11 +24,9 @@ namespace logisimConsole
                 if (liste_sorties == null) { throw new EmptyListException(); }
                 else
                 {
-                    //liste_sorties.Add(new Sortie(1, dd, !liste_entrees[0].isEtat(), null));
                     liste_sorties[0].setEtat(!liste_entrees[0].isEtat());
-                    Console.WriteLine("NON :");
-                    Console.WriteLine(liste_entrees[0].getEtat());
-                    Console.WriteLine(liste_sorties[0].getEtat());
+                    //liste_sorties.Add(new Sortie(1, dd, !liste_entrees[0].isEtat(), null));
+                    //Console.WriteLine(liste_sorties[0].getEtat());
                 }
             }
         }

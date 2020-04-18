@@ -58,12 +58,17 @@ namespace WpfApp2
             gateEnd = gate;
             _ls.Point = end;
             this.io2 = io2;
-            //Relate kernel
-            //circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1, io2);
-            if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput())
+            if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput() || io1.getEtat() != io2.getEtat())
                 return false;
             else
+            {
+                //Relate kernel
+                if (io1 is ClasseEntree)
+                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie) io2, (ClasseEntree) io1);
+                else
+                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
                 return true;
+            }
         }
 
         public Point StartPoint 
@@ -86,7 +91,7 @@ namespace WpfApp2
             {
                 _value = value;
                 if (value == true)
-                    wire.Stroke = Brushes.DarkBlue; //définir la couleur
+                    wire.Stroke = Brushes.Red; //définir la couleur
                 else
                     wire.Stroke = Brushes.Black;
             }

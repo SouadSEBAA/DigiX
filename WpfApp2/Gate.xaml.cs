@@ -16,7 +16,7 @@ namespace WpfApp2
     public partial class Gate : UserControl
     {
         protected string data;
-        protected Outils outil;
+        public Outils outil;
         public Gate() { }
         public Gate(Gate gate) { }
         public Gate(Outils outil, String ph)
@@ -169,8 +169,8 @@ namespace WpfApp2
                 Canvas a = new Canvas();
                 if (this.Parent.GetType().IsInstanceOfType(a))//le cas de la grille 
                 { gate = this; }
-                else { gate = new Gate(this.outil, this.data); }//le cas du menu  
-                //transfert de l'information ************changer gate sselon le tableau 
+                else { gate = new Gate(Copier(this.outil), this.data); }//le cas du menu  
+                //transfert de l'information
                 DataObject data = new DataObject();
                 data.SetData("String", "Gate");
                 data.SetData("Object", gate);//l'outils à copier                                            
@@ -179,6 +179,34 @@ namespace WpfApp2
             }
         }
 
+        private Outils Copier(Outils o)
+        {
+            Outils outils= new ET() ;
+            //porte logique
+            if (o is ET) { outils= new ET(); }
+            if (o is OU) { outils= new OU(); }
+            if (o is NON) { outils= new NON(); }
+            if (o is NAND) { outils= new NAND(); }
+            if (o is NOR) { outils = new NOR(); }
+            if (o is OUX) { outils= new OUX(); }
+            if (o is AddComplet) { outils = new AddComplet(); }
+            if(o is AddNbits) { outils = new AddNbits(); }
+            if(o is Compteur) { outils = new Compteur(); }
+            if (o is D) { outils = new D(); }
+            if(o is Decodeur) { outils = new Decodeur(); }
+            if(o is DemiAdd) { outils = new DemiAdd();}
+            if(o is Demultiplexeur) { outils = new Demultiplexeur(); }
+            if(o is Encodeur) { outils = new Encodeur(); }
+            //if(this is Horloge) { outils = new Horloge(2000,1000,new Thr); }
+            if(o  is JK) { outils = new JK(); }
+            if(o is Multiplexeur) { outils = new Multiplexeur(); }
+            if(o is Reg_Dec) { outils = new Reg_Dec(); }
+            if(o is RST) { outils = new RST(); }
+            if(o is T) { outils = new T(); }
+            //à ajouter less pins
+            //le circuits personalisé aussi 
+                return outils;
+        }
 
         public Outils GetOutil()
         {

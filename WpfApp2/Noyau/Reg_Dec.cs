@@ -17,6 +17,7 @@ namespace logisimConsole
             i = 0;
             while (i < this.nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
         }
+
         public Reg_Dec() : base() 
         {
             this.nb_entrees =8 ;

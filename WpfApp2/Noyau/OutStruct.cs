@@ -23,10 +23,10 @@ namespace logisimConsole
             return ((OutStruct)obj).num_entree.Equals(this.num_entree) && ((OutStruct)obj).outils.Equals(this.outils);
         }
 
-        //essai
+        /*essai
         public ClasseEntree getEntree()
         {
             return outils.getEntreeSpecifique(num_entree);
-        }
+        }*/
     }
 }
