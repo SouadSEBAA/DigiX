@@ -60,10 +60,12 @@ namespace WpfApp2
             this.io2 = io2;
             //Relate kernel
             //circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1, io2);
-            
             if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput())
                 return false;
             else
+             circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(),io1.GetID(), io2.GetID());
+            //circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1, io2);
+            Console.WriteLine(circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1.GetID(), io2.GetID()));
                 return true;
         }
 

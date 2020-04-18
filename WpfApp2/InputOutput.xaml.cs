@@ -1,7 +1,6 @@
 ﻿using logisimConsole;
 using System.Windows;
 using System.Windows.Controls;
-
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -20,22 +19,30 @@ namespace WpfApp2
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
+
+        public void SetID(int n) { this.ID = n; }//i added this to set the input/outputs id as the specific index of classentree/sortie
+        public int GetID() { return ID; }
+
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
             this.ID = ID;
             this.dispo = disposi;
         }
+
         public bool GetIsInput() { return IsInput; }
         protected bool IsInput;
+
         public InputOutput(bool isInput)
         {
             InitializeComponent();
             this.IsInput = isInput;
         }
+
         public InputOutput() { InitializeComponent(); }
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
         public Disposition GetDisposition() { return dispo; }
+
            //****************la liaison
         private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -55,7 +62,6 @@ namespace WpfApp2
 
             }
         }
-
 
 
         private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)

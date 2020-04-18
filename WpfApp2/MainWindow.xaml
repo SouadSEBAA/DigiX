@@ -67,7 +67,7 @@
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="simuler" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
+                    <Button x:Name="simuler" Width="90" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Simuler" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Play" Margin="5" />
@@ -307,14 +307,14 @@
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="75" Width="201">
                                             <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:horloge Canvas.Top="0" Canvas.Left="0"/>
+                                            <local:horloge Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="75" Width="201">
                                             <TextBlock Text="Pin entree"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
-                                            <local:pin_entree ></local:pin_entree>
+                                            <local:pin_entree/>
                                         </StackPanel>
                                     </ListViewItem>
 

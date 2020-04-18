@@ -6,11 +6,16 @@ namespace logisimConsole
     class NON : PorteLogique
     {
         Disposition dd = Disposition.down;
+
         public NON(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
         {
             setnb_entrees(1);
         }
-        public NON() : base() { }
+        public NON() : base()
+        {
+            setnb_entrees(1);
+            setnb_sorties(1);
+        }
 
 
         //Methodes
@@ -22,8 +27,9 @@ namespace logisimConsole
                 if (liste_sorties == null) { throw new EmptyListException(); }
                 else
                 {
-                    liste_sorties.Add(new Sortie(1, dd, !liste_entrees[0].isEtat(), null));
-                    Console.WriteLine(liste_sorties[0].getEtat());
+                    liste_sorties[0].setEtat(!liste_entrees[0].isEtat());
+                    //liste_sorties.Add(new Sortie(1, dd, !liste_entrees[0].isEtat(), null));
+                    //Console.WriteLine(liste_sorties[0].getEtat());
                 }
             }
         }

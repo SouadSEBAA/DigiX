@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using logisimConsole;
+using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
@@ -171,6 +172,7 @@ namespace WpfApp2
             // Undo the preview that was applied in OnDragEnter.
 
         }
+
         //nos controleurs de Drag &Drop 
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
@@ -190,10 +192,9 @@ namespace WpfApp2
             if (!gate.added) {
                 Grille.Children.Add(gate);
                 gate.added = true;
-                circuit.AddComponent(gate.GetOutil());
-                //circuit.GetCircuit provides us with the bidirectional graph we created 
-                foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
-                //.Vertices displays the nodes only
+
+                circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
+                //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
             }
             e.Handled = true;
         }
@@ -216,6 +217,8 @@ namespace WpfApp2
         }
 
 
+
+
         //************************************FOR THE MENU BUTTONS**********************************************// 
 
         private void aide_click(object sender, RoutedEventArgs e)
@@ -225,10 +228,61 @@ namespace WpfApp2
             System.Diagnostics.Process.Start(path);
         }
 
+
+
+        public bool Empty(Outils outil)  //to make sure an element is considered an ending element
+        {
+            bool empty = true;
+
+            foreach (Sortie s in outil.get_liste_sortie())
+            {
+                //Console.WriteLine("hello1");
+                //if (s.get_OutStruct() == null) { finish = false; break; }
+                if (s.get_OutStruct() != null)
+                {
+                    foreach (OutStruct o in s.get_OutStruct())
+                    {
+                        //Console.WriteLine("hello2");
+                        if (o.getOutils() != null) { empty = false; }
+                    }
+                }
+                else empty = true;
+            }
+            return empty;
+        }
+
+
+       // List<Outils> list_element_de_sortie;//holds a list of the lest elements
+        public void Last_Elements() 
+        {
+            foreach (var vertex in circuit.GetCircuit().Vertices)
+            {
+                //Console.WriteLine(vertex);
+                foreach (var edge in circuit.GetCircuit().InEdges(vertex))
+                {
+                    if (vertex is PinOut || Empty(vertex) == true)
+                    {
+                        //Console.WriteLine(vertex); 
+                        //list_element_de_sortie.Add(vertex);
+                        circuit.GetCompFinaux().Add(vertex);
+                    }
+                }
+            }
+           
+        }
+
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            
+            Console.WriteLine("--------------  Partie Simuler Click");
 
+            //foreach (Outils o in list_element_de_sortie) Console.WriteLine(o);
+
+            Last_Elements();
+            //il reste a regler le probleme des doublons dans la liste
+            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
+
+
+            Console.WriteLine("--------------  Fin Simuler Click");
         }
 
 
@@ -280,7 +334,6 @@ namespace WpfApp2
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
-
             /*var saveFileDialog = new SaveFileDialog
             {
                 Filter = "Text documents (.txt) | *.txt |Binary files (.bin) | *.bin"  //for the time being we will keep it at .txt until we agree on the extension to be used
@@ -373,6 +426,7 @@ namespace WpfApp2
 
         }
 
+  
         //**************************************END OF MENU BUTTONS*******************************//
 
     }

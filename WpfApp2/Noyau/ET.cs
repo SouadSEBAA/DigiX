@@ -41,8 +41,13 @@ namespace logisimConsole
             if (liste_sorties == null) { throw new EmptyListException(); }
             else
             {
-                liste_sorties.Add(new Sortie(1, dd, output, null));
-                Console.WriteLine(liste_sorties[0].getEtat());
+                liste_sorties[0].setEtat(output);
+                //this is where you set the outstruct and disposition also
+
+
+
+                // liste_sorties[0].(new Sortie(1, dd, output, null));
+                //Console.WriteLine(liste_sorties[0].getEtat());
             }
         }
     }

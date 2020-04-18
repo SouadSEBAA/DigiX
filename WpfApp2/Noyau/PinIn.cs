@@ -36,7 +36,7 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            throw new NotImplementedException();
+            liste_sorties[0].setEtat(liste_entrees[0].getEtat());
         }
     }
 }
