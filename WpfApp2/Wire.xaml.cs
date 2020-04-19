@@ -66,13 +66,9 @@ namespace WpfApp2
                 //partie Souad + it works avec la la fonction des compo finaux
 
                 if (io1 is ClasseEntree)
-<<<<<<< HEAD
                 {
                     circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1);
                 }
-=======
-                    circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie) io2, (ClasseEntree) io1);
->>>>>>> f063fd8fd7ca0af9557d1a02e46d4fb76afb887d
                 else
                 {
                     circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
