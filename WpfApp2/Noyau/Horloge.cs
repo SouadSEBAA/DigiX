@@ -19,6 +19,10 @@ namespace logisimConsole
 			this.disposition = Disposition.right;
 			liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
 			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+			//on demare le thread
+	/*		this.mythread = new Thread(new ThreadStart(this.auto));
+			mythread.Start();*/
+
 		}
 
 		//  le Tour du signal d'horloge 
