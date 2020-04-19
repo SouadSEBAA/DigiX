@@ -15,15 +15,15 @@ namespace logisimConsole
         }
         public Compteur() 
         {
-            this.nb_entrees = 3;
+            this.nb_entrees = 2;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
             this.liste_entrees.Add(new ClasseEntree(1, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.right, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+
         }
         public override void calcul_sorties()
         {

@@ -35,6 +35,18 @@ namespace WpfApp2
         {
             InitializeComponent();
             circuit = new CircuitPersonnalise();
+<<<<<<< HEAD
+=======
+            /*   //pour essayer les gates creer
+
+              List<ClasseEntree> list = new List<ClasseEntree>();
+              list.Add(new ClasseEntree(1,Disposition.left,true, true));
+              List<Sortie> list_s = new List<Sortie>();
+              CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
+              Gate g = new Decod(d);
+              Grille.Children.Add(g);
+              */
+>>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
         }
 
 
@@ -187,6 +199,7 @@ namespace WpfApp2
             //Liaison
             gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
+<<<<<<< HEAD
           
             /*******/
             if (!gate.added) {
@@ -196,6 +209,11 @@ namespace WpfApp2
                 circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
                 //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
             }
+=======
+
+            /*******/
+            if (!gate.added) { Grille.Children.Add(gate); gate.added = true;}
+>>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
             e.Handled = true;
         }
 
@@ -206,7 +224,7 @@ namespace WpfApp2
 
             //Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
-
+            this.circuit.AddComponent(gate.outil);
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
             gate.currentPoint = e.GetPosition(Grille);
             gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
@@ -273,6 +291,7 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             Console.WriteLine("--------------  Partie Simuler Click");
 
             //foreach (Outils o in list_element_de_sortie) Console.WriteLine(o);
@@ -283,6 +302,10 @@ namespace WpfApp2
 
 
             Console.WriteLine("--------------  Fin Simuler Click");
+=======
+            //needs some work
+            circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+>>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
         }
 
 

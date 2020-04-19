@@ -116,6 +116,30 @@ namespace logisimConsole
         {
             return liste_sorties[i];
         }
+
+        //essai
+        public Outils(int nb_entrees, int nb_sorties)
+        {
+            liste_sorties = new List<Sortie>(nb_sorties);
+            liste_entrees = new List<ClasseEntree>(nb_entrees);
+            this.nb_sorties = nb_sorties;
+            this.nb_entrees = nb_entrees;
+
+            ClasseEntree entree;
+            for ( int i = 0; i < nb_entrees; i++)
+            {
+                entree = new ClasseEntree(i, Disposition.left, false, false);
+                liste_entrees.Add(entree);
+            }
+
+            Sortie sortie;
+            for (int i = 0; i < nb_sorties; i++)
+            {
+                sortie = new Sortie(0, Disposition.right, false, new List<OutStruct>());
+                liste_sorties.Add(sortie);
+            }
+        }
+
     }
 
     public class Outilspm
@@ -125,4 +149,6 @@ namespace logisimConsole
             throw new System.NotImplementedException();
         }
     }
+
+
 }

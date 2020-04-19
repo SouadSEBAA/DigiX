@@ -13,11 +13,27 @@ namespace logisimConsole
             this.liste_sorties = new List<Sortie>();
             
             this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, null));
-            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, null));
+            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
         }
         public override void calcul_sorties()
         {
+            // Decodeur 1 -> 2
+            if (nb_entrees == 1)
+            {
+                if (liste_entrees[0].isEtat() == false)
+                {
+                    liste_sorties[0].setEtat(true);
+                    liste_sorties[1].setEtat(false);
+                }
+
+                if (liste_entrees[0].isEtat() == true)
+                {
+                    liste_sorties[0].setEtat(false);
+                    liste_sorties[1].setEtat(true);
+                }
+            }
+
             // Decodeur 2 -> 4
             if (nb_entrees == 2)
             {

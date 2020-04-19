@@ -11,12 +11,18 @@ namespace logisimConsole
         {
             setnb_entrees(1);
         }
+<<<<<<< HEAD
         public NON() : base()
         {
             setnb_entrees(1);
             setnb_sorties(1);
         }
+=======
+        public NON() : base(1, 1) { nb_entrees = 1; }
+>>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
 
+        //essai
+        public NON(String s) : base(1, 1) { }
 
         //Methodes
         public override void calcul_sorties()

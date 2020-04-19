@@ -5,7 +5,7 @@ namespace logisimConsole
     public class Sortie : InputOutput
     {
         private List<OutStruct> Sorties;
-        public Sortie() : base() { }
+        public Sortie() : base() { Sorties = new List<OutStruct>(); IsInput = false; }
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
@@ -16,7 +16,11 @@ namespace logisimConsole
             IsInput = false;
         }
 
-        public void set_Sorties(List<OutStruct> Sorties) { this.Sorties = Sorties; }
+        public void set_Sorties(List<OutStruct> Sorties) 
+        { 
+            this.Sorties = Sorties; 
+        }
+
         //public  void set_Etat_Class_Sortie(bool etat) { this.etat = etat; }
         //public  bool get_Etat_Class_Sortie() { return etat; }
         public List<OutStruct> get_OutStruct() { return Sorties; }
@@ -26,6 +30,17 @@ namespace logisimConsole
         public virtual OutStruct getSortieSpecifique(int i)
         {
             return Sorties[i];
+        }
+
+        //essai
+        public override void setEtat(bool etat)  
+        {
+            base.setEtat(etat);
+            foreach (OutStruct outstruct in Sorties)
+            {
+                //outstruct.getEntree().setEtat(etat);
+                outstruct.getOutils().setEntreeSpe(outstruct.getNum_entree(), etat);
+            }
         }
     }
 }
