@@ -89,7 +89,7 @@ namespace logisimConsole
         {
             bool empty = true;
 
-            foreach (Sortie s in outil.get_liste_sortie()) //error in type of liste
+            foreach (Sortie s in outil.get_liste_sortie()) 
             {
                 if (s.get_OutStruct() != null)
                 {
