@@ -42,5 +42,6 @@ namespace logisimConsole
                 outstruct.getOutils().setEntreeSpe(outstruct.getNum_entree(), etat);
             }
         }
+
     }
 }

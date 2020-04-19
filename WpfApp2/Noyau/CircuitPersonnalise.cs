@@ -22,8 +22,11 @@ namespace logisimConsole
             if (!component2.getEntreeSpecifique(num_entree).getRelated() ) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(num_entree, component2);
-                component1.getSortieSpecifique(num_sortie).get_OutStruct().Add(outstruct);//Mise à jour des liaison
-                component2.getEntreeSpecifique(num_entree).setRelated(true);//Mise à jour de related
+                if (!component1.getSortieSpecifique(num_sortie).get_OutStruct().Contains(outstruct))
+                {
+                    component1.getSortieSpecifique(num_sortie).get_OutStruct().Add(outstruct);//Mise à jour des liaison
+                    component2.getEntreeSpecifique(num_entree).setRelated(true);//Mise à jour de related
+                }
 
                 if (!Circuit.ContainsEdge(component1, component2))//Si il n'y a pas un edge déja présent liant component1 et component2
                 {
@@ -46,8 +49,11 @@ namespace logisimConsole
             if (!entree.getRelated() || entree.getEtat() != sortie.getEtat() || !component1.getListesorties().Contains(sortie) || !component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
-                sortie.getSortie().Add(outstruct);
-                entree.setRelated(true);//Mise à jour de related
+                if (!sortie.getSortie().Contains(outstruct))
+                {
+                    sortie.getSortie().Add(outstruct);
+                    entree.setRelated(true);//Mise à jour de related
+                }
 
                 if (!Circuit.ContainsEdge(component1, component2)) //Si il n'y a pas un edge déja présent liant component1 et component2
                 {
