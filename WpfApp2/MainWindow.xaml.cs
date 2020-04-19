@@ -35,18 +35,7 @@ namespace WpfApp2
         {
             InitializeComponent();
             circuit = new CircuitPersonnalise();
-<<<<<<< HEAD
-=======
-            /*   //pour essayer les gates creer
 
-              List<ClasseEntree> list = new List<ClasseEntree>();
-              list.Add(new ClasseEntree(1,Disposition.left,true, true));
-              List<Sortie> list_s = new List<Sortie>();
-              CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
-              Gate g = new Decod(d);
-              Grille.Children.Add(g);
-              */
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
         }
 
 
@@ -199,7 +188,7 @@ namespace WpfApp2
             //Liaison
             gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
-<<<<<<< HEAD
+
           
             /*******/
             if (!gate.added) {
@@ -209,11 +198,6 @@ namespace WpfApp2
                 circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
                 //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
             }
-=======
-
-            /*******/
-            if (!gate.added) { Grille.Children.Add(gate); gate.added = true;}
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
             e.Handled = true;
         }
 
@@ -254,13 +238,10 @@ namespace WpfApp2
 
             foreach (Sortie s in outil.get_liste_sortie())
             {
-                //Console.WriteLine("hello1");
-                //if (s.get_OutStruct() == null) { finish = false; break; }
                 if (s.get_OutStruct() != null)
                 {
                     foreach (OutStruct o in s.get_OutStruct())
                     {
-                        //Console.WriteLine("hello2");
                         if (o.getOutils() != null) { empty = false; }
                     }
                 }
@@ -271,41 +252,41 @@ namespace WpfApp2
 
 
        // List<Outils> list_element_de_sortie;//holds a list of the lest elements
+
+       //Fonction elements de sortie version 2
         public void Last_Elements() 
         {
+            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  
+
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
-                //Console.WriteLine(vertex);
                 foreach (var edge in circuit.GetCircuit().InEdges(vertex))
                 {
                     if (vertex is PinOut || Empty(vertex) == true)
                     {
-                        //Console.WriteLine(vertex); 
                         //list_element_de_sortie.Add(vertex);
                         circuit.GetCompFinaux().Add(vertex);
                     }
                 }
             }
-           
+            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
         }
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
+
             Console.WriteLine("--------------  Partie Simuler Click");
 
             //foreach (Outils o in list_element_de_sortie) Console.WriteLine(o);
-
             Last_Elements();
             //il reste a regler le probleme des doublons dans la liste
-            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
 
 
             Console.WriteLine("--------------  Fin Simuler Click");
-=======
             //needs some work
-            circuit.Evaluate(circuit.getCircuit().Vertices.Last());
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+            //souad
+            ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+
         }
 
 
@@ -448,8 +429,6 @@ namespace WpfApp2
             }
 
         }
-
-  
         //**************************************END OF MENU BUTTONS*******************************//
 
     }

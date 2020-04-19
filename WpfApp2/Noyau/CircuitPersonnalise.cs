@@ -1,12 +1,10 @@
 ﻿using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
-<<<<<<< HEAD
 using WpfApp2.Noyau;
-=======
 using System.Collections.Generic;
 using System;
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
 
 namespace logisimConsole
 {
@@ -55,12 +53,7 @@ namespace logisimConsole
         //Relate for graphique
         public bool Relate(Outils component1, Outils component2, Sortie sortie, ClasseEntree entree)
         {
-<<<<<<< HEAD
-            //the original procedure
-            if (!((ClasseEntree)entree).getRelated() || sortie.GetIsInput() == entree.GetIsInput()) //Si l'entrée de component2 n'est pas reliée
-=======
             if (!entree.getRelated() || entree.getEtat() != sortie.getEtat() || !component1.getListesorties().Contains(sortie) || !component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
             {
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
                 sortie.getSortie().Add(outstruct);
@@ -86,7 +79,7 @@ namespace logisimConsole
             Circuit.AddVertex(outil);
         }
 
-<<<<<<< HEAD
+
         public bool Empty(Outils outil)  //to make sure an element is considered an ending element
         {
             bool empty = true;
@@ -108,7 +101,7 @@ namespace logisimConsole
             return empty;
         }
 
-        //pour trouver les eements dor sortie Fonction 1
+        //pour trouver les eements dor sortie Fonction version  1
         public void EndComponents()
         {
             foreach (var outil in Circuit.Vertices)
@@ -121,7 +114,9 @@ namespace logisimConsole
                     }
                 }
             }
-=======
+
+        }
+
         public void Evaluate(Outils outil)
         {
             if (!Circuit.IsInEdgesEmpty(outil))
@@ -138,7 +133,6 @@ namespace logisimConsole
         public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
         {
             return Circuit;
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
         }
 
     }

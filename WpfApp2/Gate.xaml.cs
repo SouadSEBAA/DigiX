@@ -12,8 +12,8 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour Gate.xaml
     /// </summary>
-    
-        [Serializable]
+
+    [Serializable]
     public partial class Gate : UserControl
     {
 
@@ -68,11 +68,8 @@ namespace WpfApp2
 
                 }
 
-<<<<<<< HEAD
-                AjouterIO(target, listEntre[nE], i,nE);
-=======
+                //AjouterIO(target, listEntre[nE], i, nE);
                 AjouterIO(target, listEntre[nE], i);
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
 
                 nE++;
             }
@@ -103,11 +100,10 @@ namespace WpfApp2
 
                 }
 
-<<<<<<< HEAD
-                AjouterIO(target, sorties[nS], nS,nS);
-=======
+                //AjouterIO(target, sorties[nS], nS, nS);
+
                 AjouterIO(target, sorties[nS], nS);
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
                 nS++;
             }
             double taille = 20;
@@ -129,14 +125,9 @@ namespace WpfApp2
             //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la foncyion ajouterio
         }
         //cette fonction pour ajouter et créer les i/o
-<<<<<<< HEAD
-        public void AjouterIO(Grid grid, InputOutput myt, int n,int nn)
-        {
-            myt.SetID(nn);
-=======
+
         public void AjouterIO(Grid grid, InputOutput myt, int n)
         {
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
             ColumnDefinition cd = new ColumnDefinition();
             cd.Width = new GridLength(1, GridUnitType.Star);
             grid.ColumnDefinitions.Add(cd);
@@ -144,6 +135,7 @@ namespace WpfApp2
             Grid.SetColumn(myt, n);
             //on peut le supprimer et on verifie dans les deux listes d'entrées et de sorties 
             //Liaison
+           // myt.SetID(nn);
             InputOutputs.Add(myt);
         }
         //Drag Drop 
@@ -198,7 +190,6 @@ namespace WpfApp2
 
         private Outils Copier(Outils o)
         {
-<<<<<<< HEAD
             Outils outils = new ET();
             //porte logique
             if (o is ET) { outils = new ET(); }
@@ -227,36 +218,10 @@ namespace WpfApp2
             //le circuits personalisé aussi 
             return outils;
         }
+    
 
 
-=======
-            Outils outils= new ET() ;
-            //porte logique
-            if (o is ET) { outils= new ET(); }
-            if (o is OU) { outils= new OU(); }
-            if (o is NON) { outils= new NON(); }
-            if (o is NAND) { outils= new NAND(); }
-            if (o is NOR) { outils = new NOR(); }
-            if (o is OUX) { outils= new OUX(); }
-            if (o is AddComplet) { outils = new AddComplet(); }
-            if(o is AddNbits) { outils = new AddNbits(); }
-            if(o is Compteur) { outils = new Compteur(); }
-            if (o is D) { outils = new D(); }
-            if(o is Decodeur) { outils = new Decodeur(); }
-            if(o is DemiAdd) { outils = new DemiAdd();}
-            if(o is Demultiplexeur) { outils = new Demultiplexeur(); }
-            if(o is Encodeur) { outils = new Encodeur(); }
-            //if(this is Horloge) { outils = new Horloge(2000,1000,new Thr); }
-            if(o  is JK) { outils = new JK(); }
-            if(o is Multiplexeur) { outils = new Multiplexeur(); }
-            if(o is Reg_Dec) { outils = new Reg_Dec(); }
-            if(o is RST) { outils = new RST(); }
-            if(o is T) { outils = new T(); }
-            //à ajouter less pins
-            //le circuits personalisé aussi 
-                return outils;
-        }
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
 
         public Outils GetOutil()
         {

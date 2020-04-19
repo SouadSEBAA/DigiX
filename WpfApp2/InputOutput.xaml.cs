@@ -1,10 +1,7 @@
 ﻿using logisimConsole;
 using System.Windows;
 using System.Windows.Controls;
-<<<<<<< HEAD
-=======
 using System.Windows.Media;
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -24,13 +21,13 @@ namespace WpfApp2
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
-<<<<<<< HEAD
+
 
         public void SetID(int n) { this.ID = n; }//i added this to set the input/outputs id as the specific index of classentree/sortie
         public int GetID() { return ID; }
-=======
+
         protected bool IsInput;
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
 
         public InputOutput(int ID, Disposition disposi)
         {
@@ -41,24 +38,20 @@ namespace WpfApp2
         }
 
         public bool GetIsInput() { return IsInput; }
-<<<<<<< HEAD
-        protected bool IsInput;
 
-=======
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
+
         public InputOutput(bool isInput)
         {
             InitializeComponent();
             this.IsInput = isInput;
         }
-<<<<<<< HEAD
 
-        public InputOutput() { InitializeComponent(); }
+     
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
-=======
+
         public InputOutput() { InitializeComponent(); etat = false;  }
-    public void setDispo(Disposition dispo) { this.dispo = dispo; }
->>>>>>> 604e371295169631ba4b66d42fe46c4e08821ce7
+
         public Disposition GetDisposition() { return dispo; }
 
            //****************la liaison
@@ -114,24 +107,5 @@ namespace WpfApp2
                 setEtat(!this.etat);
         }
 
-
-        /*
-        private void elSelector_MouseMove(object sender, MouseEventArgs e)
-        {
-            // Create the ToolTip and associate with the Form container.
-            System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
-
-            // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 500;
-            But
-            toolTip1.SetToolTip();
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            /*toolTip1.ShowAlways = true;
-            toolTip1.SetToolTip(e.Source,this.etiquette);*
-
-
-        }*/
     }
 }
