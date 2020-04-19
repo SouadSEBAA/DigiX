@@ -27,8 +27,7 @@ namespace logisimConsole
 
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
-        {
-            
+        { 
             if (!component2.getEntreeSpecifique(num_entree).getRelated() ) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(num_entree, component2);
@@ -84,15 +83,12 @@ namespace logisimConsole
         {
             bool empty = true;
 
-            foreach (Sortie s in outil.get_liste_sortie())
+            foreach (Sortie s in outil.get_liste_sortie()) //error in type of liste
             {
-                //Console.WriteLine("hello1");
-                //if (s.get_OutStruct() == null) { finish = false; break; }
                 if (s.get_OutStruct() != null)
                 {
                     foreach (OutStruct o in s.get_OutStruct())
                     {
-                        //Console.WriteLine("hello2");
                         if (o.getOutils() != null) { empty = false; }
                     }
                 }
@@ -101,7 +97,7 @@ namespace logisimConsole
             return empty;
         }
 
-        //pour trouver les eements dor sortie Fonction version  1
+        //pour trouver les elements dor sortie Fonction version  1
         public void EndComponents()
         {
             foreach (var outil in Circuit.Vertices)

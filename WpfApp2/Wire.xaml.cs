@@ -62,18 +62,17 @@ namespace WpfApp2
                 return false;
             else
             {
-                //partie essaie Jimin 
-               // circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1.GetID(), io2.GetID());
-                //circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1, io2);
-                //Console.WriteLine("this is what u see :"+circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), io1.GetID(), io2.GetID()));
-
                 //Relate kernel
                 //partie Souad + it works avec la la fonction des compo finaux
 
-               if (io1 is ClasseEntree)
-                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie) io2, (ClasseEntree) io1);
+                if (io1 is ClasseEntree)
+                {
+                    circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1);
+                }
                 else
+                {
                     circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
+                }
                 return true;
             }
         }

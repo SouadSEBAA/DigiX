@@ -251,39 +251,33 @@ namespace WpfApp2
         }
 
 
-       // List<Outils> list_element_de_sortie;//holds a list of the lest elements
 
        //Fonction elements de sortie version 2
         public void Last_Elements() 
         {
-            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  
+            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
 
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
-                foreach (var edge in circuit.GetCircuit().InEdges(vertex))
-                {
-                    if (vertex is PinOut || Empty(vertex) == true)
-                    {
-                        //list_element_de_sortie.Add(vertex);
-                        circuit.GetCompFinaux().Add(vertex);
-                    }
+                if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
+                { 
+                //list_element_de_sortie.Add(vertex);
+                circuit.GetCompFinaux().Add(vertex);
                 }
+                
             }
             foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
         }
+
+
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
 
             Console.WriteLine("--------------  Partie Simuler Click");
-
-            //foreach (Outils o in list_element_de_sortie) Console.WriteLine(o);
             Last_Elements();
-            //il reste a regler le probleme des doublons dans la liste
-
-
             Console.WriteLine("--------------  Fin Simuler Click");
-            //needs some work
+          
             //souad
             ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
 
