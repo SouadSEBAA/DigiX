@@ -31,7 +31,7 @@ namespace WpfApp2
         public Gate gateEnd;
         private bool _value;
 
-        public Wire(Point start, Gate gatePrinciple, InputOutput input)
+        public Wire(Point start, Gate gatePrinciple, InputOutput io)
         {
             InitializeComponent();
 
@@ -47,24 +47,24 @@ namespace WpfApp2
 
             wire.Data = new PathGeometry(new PathFigure[]{ _fil });
 
-            this.io1 = input;
+            this.io1 = io;
             this.gateStart = gatePrinciple;
             Value = false;
             DataContext = this;
         }
 
-        public bool Connect(Point end, Gate gate, InputOutput io2, CircuitPersonnalise circuit)
+        public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
             _ls.Point = end;
-            this.io2 = io2;
+            this.io2 = io;
             if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput() || io1.getEtat() != io2.getEtat())
                 return false;
             else
             {
                 //Relate kernel
                 if (io1 is ClasseEntree)
-                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie) io2, (ClasseEntree) io1);
+                    circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie) io2, (ClasseEntree) io1);
                 else
                     circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
                 return true;
