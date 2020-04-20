@@ -187,7 +187,7 @@
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="64">
+                                        <StackPanel Orientation="Horizontal" Height="64" Width="201">
                                             <TextBlock Text="Decodeur"  Padding="20 5" VerticalAlignment="Center"/>
                                             <local:Decod Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
