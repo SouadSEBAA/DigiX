@@ -180,7 +180,7 @@ namespace WpfApp2
                 Canvas a = new Canvas();
                 if (this.Parent.GetType().IsInstanceOfType(a))//le cas de la grille 
                 { gate = this; }
-                else { gate = new Gate(Copier(this.outil), this.data); }//le cas du menu  
+                else { gate = this.Copier(); }//le cas du menu  
                 //transfert de l'information
                 DataObject data = new DataObject();
                 data.SetData("String", "Gate");
@@ -190,33 +190,34 @@ namespace WpfApp2
             }
         }
 
-        private Outils Copier(Outils o)
+        private Gate Copier()
         {
-            Outils outils = new ET();
+            Gate o = this;
+            Gate outils = new Et();
             //porte logique
-            if (o is ET) { outils = new ET(); }
-            if (o is OU) { outils = new OU(); }
-            if (o is NON) { outils = new NON(); }
-            if (o is NAND) { outils = new NAND(); }
-            if (o is NOR) { outils = new NOR(); }
-            if (o is OUX) { outils = new OUX(); }
-            if (o is AddComplet) { outils = new AddComplet(); }
-            if (o is AddNbits) { outils = new AddNbits(); }
-            if (o is Compteur) { outils = new Compteur(); }
-            if (o is D) { outils = new D(); }
-            if (o is Decodeur) { outils = new Decodeur(); }
-            if (o is DemiAdd) { outils = new DemiAdd(); }
-            if (o is Demultiplexeur) { outils = new Demultiplexeur(); }
-            if (o is Encodeur) { outils = new Encodeur(); }
-            //if(this is Horloge) { outils = new Horloge(2000,1000,new Thr); }
-            if (o is JK) { outils = new JK(); }
-            if (o is Multiplexeur) { outils = new Multiplexeur(); }
-            if (o is Reg_Dec) { outils = new Reg_Dec(); }
-            if (o is RST) { outils = new RST(); }
-            if (o is T) { outils = new T(); }
+            if (o is Et) { outils = new Et(); }
+            if (o is Ou) { outils = new Ou(); }
+            if (o is Non) { outils = new Non(); }
+            if (o is Nand) { outils = new Nand(); }
+            if (o is Nor) { outils = new Nor(); }
+            if (o is Oux) { outils = new Oux(); }
+            if (o is Add_C) { outils = new Add_C(); }
+            if (o is Add_N) { outils = new Add_N(); }
+            if (o is Cpt) { outils = new Cpt(); }
+            if (o is BasculeD) { outils = new BasculeD(); }
+            if (o is Decod) { outils = new Decod(); }
+            if (o is D_Add) { outils = new D_Add(); }
+            if (o is Demux) { outils = new Demux(); }
+            if (o is Encod) { outils = new Encod(); }
+            if (o is horloge) { outils = new horloge(); }
+            if (o is BasculeJk) { outils = new BasculeJk(); }
+            if (o is Mux) { outils = new Mux(); }
+            if (o is Reg) { outils = new Reg(); }
+            if (o is BasculeRst) { outils = new BasculeRst(); }
+            if (o is BasculeT) { outils = new BasculeT(); }
             //à ajouter less pins
-            if (o is PinIn) { outils = new PinIn(); }
-            if (o is PinOut) { outils = new PinOut(); }
+            if (o is pin_entree) { outils = new pin_entree(); }
+            if (o is pin_sortie) { outils = new pin_sortie(); }
             //le circuits personalisé aussi 
             return outils;
         }
