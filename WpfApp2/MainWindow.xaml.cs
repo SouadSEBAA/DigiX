@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using logisimConsole;
 using WpfApp2.Noyau;
+using WpfApp2.TTPack;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
@@ -138,7 +139,14 @@ namespace WpfApp2
             //Chronogrammes.Children.Add(chronoPage);
         }
         /******************************************************************************/
+        private void TVClick(object sender, RoutedEventArgs e)
+        {
+            //Chronogrammes chronoPage = new Chronogrammes();
+            //Chronogrammes.Children.Add(chronoPage);
+            TableVerites tv = new TableVerites(circuit.GetCircuit());
+            tv.Show();
 
+        }
 
 
         /*****************/

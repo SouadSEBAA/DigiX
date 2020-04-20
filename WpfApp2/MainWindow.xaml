@@ -88,6 +88,7 @@
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
                                 <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
+                                <Button Content="TableVerite" Click="TVClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
 
