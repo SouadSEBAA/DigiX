@@ -6,6 +6,8 @@ namespace logisimConsole
     [Serializable]
     public abstract class Outils
     {
+        public CircuitPersonnalise circuit;
+        public bool added;
         protected int nb_entrees;
         protected int nb_sorties;
         protected string etiquette;

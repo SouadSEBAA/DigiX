@@ -306,13 +306,6 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="75" Width="201">
-                                            <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:horloge Canvas.Top="0" Canvas.Left="0" />
-                                        </StackPanel>
-                                    </ListViewItem>
-
-                                    <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
                                             <TextBlock Text="Pin entree"  Padding="20 5 " VerticalAlignment="Center"></TextBlock>
                                             <local:pin_entree/>
                                         </StackPanel>
@@ -325,7 +318,12 @@
 
                                         </StackPanel>
                                     </ListViewItem>
-
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
+                                            <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <local:horloge Canvas.Top="0" Canvas.Left="0" />
+                                        </StackPanel>
+                                    </ListViewItem>
 
                                 </ListView>
                             </Expander>

@@ -381,7 +381,17 @@ namespace WpfApp2
 
     class horloge : Gate
     {
-        public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993") { }
+        public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993")
+        { 
+            this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
+        }
+        public void OnClick(object sender, MouseEventArgs e)
+        {Console.WriteLine("Demmarer");
+            
+            ((Horloge)this.outil).Demmarer();
+            
+
+        }
     }
 
 

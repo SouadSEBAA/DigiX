@@ -33,8 +33,32 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
             circuit = new CircuitPersonnalise();
+            ///test sequentiel
+           //T
+           /*
+            T basculeT = new T(); circuit.AddComponent(basculeT);
+            basculeT.getEntreeSpecifique(3).setEtat(true);//T
+            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
+            //D
+            D basculeD = new D(); circuit.AddComponent(basculeD);
+            basculeD.getEntreeSpecifique(3).setEtat(true);//T
+            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
+            //Et
+            ET et = new ET();circuit.AddComponent(et);
+            //horloge
+            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
+            horloge.circuit = circuit;
+            //relation
+            circuit.Relate(horloge, basculeT, 0, 0);
+            circuit.Relate(horloge, basculeD, 0, 0);
+            circuit.Relate(basculeT, et, 0, 0);
+            circuit.Relate(basculeD, et, 0, 1);
+            horloge.fin = et;
+            horloge.Demmarer();*/
 
         }
 
@@ -279,7 +303,7 @@ namespace WpfApp2
             Console.WriteLine("--------------  Fin Simuler Click");
           
             //souad
-            ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            circuit.Evaluate(circuit.getCircuit().Vertices.Last());
 
         }
 
