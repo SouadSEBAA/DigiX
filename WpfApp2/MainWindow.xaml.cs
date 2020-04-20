@@ -238,7 +238,7 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            //needs some work
+            //Simulate
             circuit.Evaluate(circuit.getCircuit().Vertices.Last());
         }
 

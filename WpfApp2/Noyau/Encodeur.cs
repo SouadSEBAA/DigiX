@@ -17,6 +17,21 @@ namespace logisimConsole
         }
         public override void calcul_sorties()
         {
+            // 2 -> 1
+
+            if (nb_entrees == 2)
+            {
+                if (liste_entrees[0].isEtat() == true && liste_entrees[1].isEtat() == false)
+                {
+                    liste_sorties[0].setEtat(false);
+                }
+
+                if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == true)
+                {
+                    liste_sorties[0].setEtat(true);
+                }
+            }
+
             // 4 -> 2
             if (nb_entrees == 4)
             {
