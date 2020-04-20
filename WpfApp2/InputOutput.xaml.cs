@@ -21,11 +21,6 @@ namespace WpfApp2
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
-
-
-        public void SetID(int n) { this.ID = n; }//i added this to set the input/outputs id as the specific index of classentree/sortie
-        public int GetID() { return ID; }
-
         protected bool IsInput;
 
 

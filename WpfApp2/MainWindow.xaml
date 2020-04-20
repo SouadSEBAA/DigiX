@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp2"
        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" Name="DigitX"
+        mc:Ignorable="d" Name="DigiX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png">
 
     <!--MouseWheel="Canvas_MouseWheel"-->
@@ -55,7 +55,7 @@
 
                     <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Capture d'ecran" Foreground="#239E78" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="CellphoneScreenshot" Margin="5" />
                         </StackPanel>
                     </Button>
@@ -120,12 +120,9 @@
                                     <ListViewItem >
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="65">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
-                                            
-                                                <local:Et Canvas.Top="0" Canvas.Left="0" />
-                                            
-                                            <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
-                                                    <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
-                                            </-->
+                                            <local:Et Canvas.Top="0" Canvas.Left="0" >
+                                                
+                                            </local:Et>
                                         </StackPanel>
 
                                     </ListViewItem>

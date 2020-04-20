@@ -122,10 +122,11 @@ namespace WpfApp2
             //mettre à jour la taille de la canavas parente 
             OutilShape.Width = path.Width + 44;
             OutilShape.Height = path.Height + 44;
-            //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la foncyion ajouterio
+            //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la fonction ajouterio
         }
-        //cette fonction pour ajouter et créer les i/o
 
+
+        //cette fonction pour ajouter et créer les i/o
         public void AjouterIO(Grid grid, InputOutput myt, int n)
         {
             ColumnDefinition cd = new ColumnDefinition();
@@ -135,9 +136,10 @@ namespace WpfApp2
             Grid.SetColumn(myt, n);
             //on peut le supprimer et on verifie dans les deux listes d'entrées et de sorties 
             //Liaison
-           // myt.SetID(nn);
             InputOutputs.Add(myt);
         }
+
+
         //Drag Drop 
         //les attributs
         public bool added;
