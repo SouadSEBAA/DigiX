@@ -13,6 +13,10 @@ namespace logisimConsole
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
         }
 
+
+        public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; }
+
+
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
         {
             if (!component2.getEntreeSpecifique(num_entree).getRelated()) //Si l'entrée de component2 n'est pas reliée

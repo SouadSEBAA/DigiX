@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using logisimConsole;
 using WpfApp2.Chronogramme;
+using WpfApp2.TableVerite;
 using Microsoft.Win32;
 using Path = System.IO.Path;
 
@@ -149,7 +150,17 @@ namespace WpfApp2
             Chronogrammes chronoPage = new Chronogrammes();
             //Chronogrammes.Children.Add(chronoPage);
         }
+
         /******************************************************************************/
+        private void tableveriteClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("hello");
+            //TableVerites tv = new TableVerites();
+            
+          TabVerites tv = new TabVerites(circuit.GetCircuit());
+            
+            tv.Show();
+        }
 
 
 
@@ -322,6 +333,8 @@ namespace WpfApp2
             //to inform theuser that the screeshot was created successfully
             MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
+
+
         //END OF MENU BUTTONS
 
 
