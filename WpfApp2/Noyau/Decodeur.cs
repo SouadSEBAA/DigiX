@@ -4,18 +4,21 @@ namespace logisimConsole
     class Decodeur : CircCombinatoire
     {
         public Decodeur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
+
+
         public Decodeur()
         {
-
             this.nb_entrees = 1;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
+
+            this.liste_entrees.Add(new ClasseEntree("Entrée 1", 0, Disposition.left, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie 1", 0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 2", 1, Disposition.right, false, new List<OutStruct>()));
         }
+
+
         public override void calcul_sorties()
         {
             // Decodeur 1 -> 2

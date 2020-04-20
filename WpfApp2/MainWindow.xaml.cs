@@ -276,9 +276,10 @@ namespace WpfApp2
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             Console.WriteLine("--------------  Fin Simuler Click");
-          
+
             //souad
             ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            foreach (var gate in circuit.GetCompFinaux()) { circuit.Evaluate(gate); }
 
         }
 
@@ -360,6 +361,7 @@ namespace WpfApp2
         }
 
 
+
         private void CreateScreenShot(UIElement visual, string file)
         {
             double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
@@ -384,6 +386,8 @@ namespace WpfApp2
             }
         }
 
+
+
         private void CaptEcran_Click(object sender, RoutedEventArgs e)
         {
             //Console.WriteLine("hello");
@@ -403,8 +407,11 @@ namespace WpfApp2
             CreateScreenShot(this, strRes);
 
             //to inform theuser that the screeshot was created successfully
-            MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+           
         }
+
+
 
         // Serializes any UIElement object to XAML using a given filename.
         public static void SerializeToXAML(UIElementCollection elements, string filename)
@@ -422,9 +429,11 @@ namespace WpfApp2
             }
 
         }
-        //**************************************END OF MENU BUTTONS*******************************//
 
         
+        //**************************************END OF MENU BUTTONS*******************************//
+
+
 
     }
 }

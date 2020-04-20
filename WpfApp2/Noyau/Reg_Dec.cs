@@ -13,7 +13,7 @@ namespace logisimConsole
             this.nb_sorties = nb_sorties + 2;
             this.nb_entrees = nb_entrees + 7;
             int i = 0;
-            while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
+            while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree("entree",1, dd, false, false)); i++; }
             i = 0;
             while (i < this.nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
         }
@@ -24,18 +24,18 @@ namespace logisimConsole
             this.nb_sorties = 4;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree(3, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree(4, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(5, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(6, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(7, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(3, Disposition.down, false, null));
+            this.liste_entrees.Add(new ClasseEntree("entree 1",0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 2",1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 3",2, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 4",3, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 5",4, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 6",5, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 7",6, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("entree 8",7, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("sortie 1",0, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("sorte 2",1, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("sortie 3",2, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("sortie 4",3, Disposition.down, false, null));
         }
         /*
 		public override bool verifiRelie(){//verifier le  nombre d'entrées paralleles est egale aunombre de sorties

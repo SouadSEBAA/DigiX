@@ -14,11 +14,11 @@ namespace logisimConsole
             this.nb_sorties = 3;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("A",0, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("B",1, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("Somme",2, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Retenue",2, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Retenue Sortante",1, Disposition.down, false, new List<OutStruct>()));
         }
         public override void calcul_sorties()
         {

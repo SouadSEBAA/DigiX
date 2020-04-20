@@ -1,4 +1,5 @@
-﻿using WpfApp2;
+﻿using System;
+using WpfApp2;
 
 namespace logisimConsole
 {
@@ -6,7 +7,7 @@ namespace logisimConsole
     {
         private bool related;
 
-        public ClasseEntree(int ID, Disposition disposi, bool rel, bool etat) : base(ID, disposi)
+        public ClasseEntree(String e, int ID, Disposition disposi, bool rel, bool etat) : base(e,ID, disposi)
         {
             this.related = rel;
             this.etat = etat;
