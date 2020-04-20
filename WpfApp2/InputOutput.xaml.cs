@@ -13,13 +13,21 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour InputOutput.xaml
     /// </summary>
+    /// 
+    [Serializable]
     public partial class InputOutput : UserControl
     {
         protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
+
+
+        public void SetID(int n) { this.ID = n; }//i added this to set the input/outputs id as the specific index of classentree/sortie
+        public int GetID() { return ID; }
+
         protected bool IsInput;
+
 
         public InputOutput(int ID, Disposition disposi)
         {
@@ -28,14 +36,22 @@ namespace WpfApp2
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
         }
+
         public bool GetIsInput() { return IsInput; }
+
+
+
         public InputOutput(bool isInput)
         {
             InitializeComponent();
             this.IsInput = isInput;
         }
+
+     
+        public void setDispo(Disposition dispo) { this.dispo = dispo; }
+
         public InputOutput() { InitializeComponent(); etat = false;  }
-    public void setDispo(Disposition dispo) { this.dispo = dispo; }
+
         public Disposition GetDisposition() { return dispo; }
 
            //****************la liaison
@@ -57,7 +73,6 @@ namespace WpfApp2
 
             }
         }
-
 
 
         private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
@@ -92,24 +107,5 @@ namespace WpfApp2
                 setEtat(!this.etat);
         }
 
-
-        /*
-        private void elSelector_MouseMove(object sender, MouseEventArgs e)
-        {
-            // Create the ToolTip and associate with the Form container.
-            System.Windows.Forms.ToolTip toolTip1 = new System.Windows.Forms.ToolTip();
-
-            // Set up the delays for the ToolTip.
-            toolTip1.AutoPopDelay = 5000;
-            toolTip1.InitialDelay = 1000;
-            toolTip1.ReshowDelay = 500;
-            But
-            toolTip1.SetToolTip();
-            // Force the ToolTip text to be displayed whether or not the form is active.
-            /*toolTip1.ShowAlways = true;
-            toolTip1.SetToolTip(e.Source,this.etiquette);*
-
-
-        }*/
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class ET : PorteLogique
     {
         Disposition dd = Disposition.down;

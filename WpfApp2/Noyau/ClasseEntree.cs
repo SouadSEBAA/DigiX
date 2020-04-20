@@ -1,5 +1,4 @@
-﻿//using logisimConsole;
-using WpfApp2;
+﻿using WpfApp2;
 
 namespace logisimConsole
 {

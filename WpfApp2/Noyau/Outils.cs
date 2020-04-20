@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     public abstract class Outils
     {
         protected int nb_entrees;
@@ -24,6 +25,7 @@ namespace logisimConsole
             this.nb_sorties = nb_sorties;
             this.nb_entrees = nb_entrees;
             this.etiquette = etiquette;
+
         }
 
         public Outils() { }

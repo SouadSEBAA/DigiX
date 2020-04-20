@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using logisimConsole;
+using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
@@ -34,15 +35,7 @@ namespace WpfApp2
         {
             InitializeComponent();
             circuit = new CircuitPersonnalise();
-            /*   //pour essayer les gates creer
 
-              List<ClasseEntree> list = new List<ClasseEntree>();
-              list.Add(new ClasseEntree(1,Disposition.left,true, true));
-              List<Sortie> list_s = new List<Sortie>();
-              CircCombinatoire d = new Decodeur(2,2,"lol",Disposition.down);
-              Gate g = new Decod(d);
-              Grille.Children.Add(g);
-              */
         }
 
 
@@ -81,12 +74,9 @@ namespace WpfApp2
                 }
                 if (io != null)
                 {
-
                     isDrawing = true;
-
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
                     Panel.SetZIndex(line, -2);
-
                     Grille.Children.Add(line);
                 }
             }
@@ -130,7 +120,7 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-    private void MouseReleased(object sender, MouseButtonEventArgs e)
+        private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing )
             {
@@ -140,7 +130,6 @@ namespace WpfApp2
         }
 
         /******************************************************************************/
-
         //Chronogrammes
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
@@ -159,8 +148,6 @@ namespace WpfApp2
         {
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
-
-
             e.Handled = true;
         }
 
@@ -168,8 +155,6 @@ namespace WpfApp2
         {
             base.OnDragOver(e);
             e.Effects = DragDropEffects.All;
-
-
             //e.Effects = DragDropEffects.None;
             Console.WriteLine("mouse111");
 
@@ -179,8 +164,6 @@ namespace WpfApp2
         {
             base.OnDragEnter(e);
             e.Effects = DragDropEffects.All;
-
-
         }
 
         protected override void OnDragLeave(DragEventArgs e)
@@ -190,6 +173,7 @@ namespace WpfApp2
             // Undo the preview that was applied in OnDragEnter.
 
         }
+
         //nos controleurs de Drag &Drop 
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
@@ -205,8 +189,15 @@ namespace WpfApp2
             gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
 
+          
             /*******/
-            if (!gate.added) { Grille.Children.Add(gate); gate.added = true;}
+            if (!gate.added) {
+                Grille.Children.Add(gate);
+                gate.added = true;
+
+                circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
+                //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
+            }
             e.Handled = true;
         }
 
@@ -215,7 +206,7 @@ namespace WpfApp2
         {
             e.Effects = DragDropEffects.All;
 
-            Console.WriteLine("Ecrit");
+            //Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
             this.circuit.AddComponent(gate.outil);
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
@@ -228,7 +219,10 @@ namespace WpfApp2
         }
 
 
-        //FOR THE MENU BUTTONS 
+
+
+        //************************************FOR THE MENU BUTTONS**********************************************// 
+
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
@@ -236,11 +230,59 @@ namespace WpfApp2
             System.Diagnostics.Process.Start(path);
         }
 
+
+
+        public bool Empty(Outils outil)  //to make sure an element is considered an ending element
+        {
+            bool empty = true;
+
+            foreach (Sortie s in outil.get_liste_sortie())
+            {
+                if (s.get_OutStruct() != null)
+                {
+                    foreach (OutStruct o in s.get_OutStruct())
+                    {
+                        if (o.getOutils() != null) { empty = false; }
+                    }
+                }
+                else empty = true;
+            }
+            return empty;
+        }
+
+
+
+       //Fonction elements de sortie version 2
+        public void Last_Elements() 
+        {
+            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
+
+            foreach (var vertex in circuit.GetCircuit().Vertices)
+            {
+                if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
+                { 
+                //list_element_de_sortie.Add(vertex);
+                circuit.GetCompFinaux().Add(vertex);
+                }
+                
+            }
+            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
+        }
+
+
+
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            //Simulate
-            circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+
+            Console.WriteLine("--------------  Partie Simuler Click");
+            Last_Elements();
+            Console.WriteLine("--------------  Fin Simuler Click");
+          
+            //souad
+            ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+
         }
+
 
         private void open_tut(object sender, RoutedEventArgs e)
         {
@@ -251,19 +293,46 @@ namespace WpfApp2
 
         private void open_file(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+            /*Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
             // Launch OpenFileDialog by calling ShowDialog method
             Nullable<bool> result = openFileDlg.ShowDialog();
             if (result == true)
             {
                 MessageBox.Show(openFileDlg.FileName, "Fichier Ouvert", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }*/
+
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+            // Process open file dialog box results
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                Canvas canvas = DeSerializeXAML(filename) as Canvas;
+                // Add all child elements (lines, rectangles etc) to canvas
+                while (canvas.Children.Count > 0)
+                {
+                    UIElement obj = canvas.Children[0]; // Get next child
+                    canvas.Children.Remove(obj); // Have to disconnect it from result before we can add it
+                    Grille.Children.Add(obj); // Add to canvas
+                }
             }
         }
 
+        public static UIElement DeSerializeXAML(string filename)
+        {
+            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            {
+                return System.Windows.Markup.XamlReader.Load(fs) as UIElement;
+            }
+        }
+
+
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
-
-            var saveFileDialog = new SaveFileDialog
+            /*var saveFileDialog = new SaveFileDialog
             {
                 Filter = "Text documents (.txt) | *.txt |Binary files (.bin) | *.bin"  //for the time being we will keep it at .txt until we agree on the extension to be used
             };
@@ -273,6 +342,22 @@ namespace WpfApp2
                 var fileName = saveFileDialog.FileName;
             }
             MessageBox.Show("Votre fichier a ete sauvegarder.", "Sauvegarder", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            */
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "UIElement File"; // Default file name
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+                SerializeToXAML(Grille.Children, filename);
+            }
         }
 
 
@@ -321,38 +406,24 @@ namespace WpfApp2
             //to inform theuser that the screeshot was created successfully
             MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
-        //END OF MENU BUTTONS
 
-
-
-        //the code below was added while we wanted to add zooming part, but now we will use the scrollviewer ..
-
-        /*
-        // Zoom
-        private Double zoomMax = 5;
-        private Double zoomMin = 0.5;
-        private Double zoomSpeed = 0.001;
-        private Double zoom = 1;
-
-        // Zoom on Mouse wheel
-        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        // Serializes any UIElement object to XAML using a given filename.
+        public static void SerializeToXAML(UIElementCollection elements, string filename)
         {
-            zoom += zoomSpeed * e.Delta; // Ajust zooming speed (e.Delta = Mouse spin value )
-            if (zoom < zoomMin) { zoom = zoomMin; } // Limit Min Scale
-            if (zoom > zoomMax) { zoom = zoomMax; } // Limit Max Scale
+            // Use XamlWriter object to serialize element
+            string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
 
-            Point mousePos = e.GetPosition(Grille);
+            // Write XAML to file. Use 'using' so objects are disposed of properly.
+            using (System.IO.FileStream fs = System.IO.File.Create(filename))
+            {
+                using (System.IO.StreamWriter streamwriter = new System.IO.StreamWriter(fs))
+                {
+                    streamwriter.Write(strXAML);
+                }
+            }
 
-            if (zoom > 1)
-            {
-                Grille.RenderTransform = new ScaleTransform(zoom, zoom, mousePos.X, mousePos.Y); // transform Canvas size from mouse position
-            }
-            else
-            {
-                Grille.RenderTransform = new ScaleTransform(zoom, zoom); // transform Canvas size
-            }
         }
-        */
+        //**************************************END OF MENU BUTTONS*******************************//
 
     }
 }

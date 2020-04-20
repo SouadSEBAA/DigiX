@@ -1,7 +1,10 @@
 ﻿using QuickGraph;
+using System.Collections.Generic;
 using WpfApp2;
+using WpfApp2.Noyau;
 using System.Collections.Generic;
 using System;
+
 
 namespace logisimConsole
 {
@@ -9,16 +12,22 @@ namespace logisimConsole
     {
         private bool Sauvegardé;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
+        private List<Outils> CompFinaux;
+
+        public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; } //to iterate through vertices and edges of the graph created in the constructor
+        public List<Outils> GetCompFinaux() { return CompFinaux; }
+        public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
+        
 
         public CircuitPersonnalise()
         {
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
+            CompFinaux = new List<Outils>();
         }
 
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
-        {
-            
+        { 
             if (!component2.getEntreeSpecifique(num_entree).getRelated() ) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(num_entree, component2);
@@ -62,7 +71,6 @@ namespace logisimConsole
                 }
 
                 entree.setEtat(sortie.getEtat());//Mise à jour de l'état d'entree de component2
-
                 return true; // component1 et component2 liées avec succès
             }
             else
@@ -74,6 +82,41 @@ namespace logisimConsole
         public void AddComponent(Outils outil)
         {
             Circuit.AddVertex(outil);
+        }
+
+
+        public bool Empty(Outils outil)  //to make sure an element is considered an ending element
+        {
+            bool empty = true;
+
+            foreach (Sortie s in outil.get_liste_sortie()) 
+            {
+                if (s.get_OutStruct() != null)
+                {
+                    foreach (OutStruct o in s.get_OutStruct())
+                    {
+                        if (o.getOutils() != null) { empty = false; }
+                    }
+                }
+                else empty = true;
+            }
+            return empty;
+        }
+
+        //pour trouver les elements dor sortie Fonction version  1
+        public void EndComponents()
+        {
+            foreach (var outil in Circuit.Vertices)
+            {
+                foreach (var edge in Circuit.InEdges(outil))
+                {
+                    if ((outil is PinOut) || Empty(outil))
+                    {
+                        CompFinaux.Add(outil);
+                    }
+                }
+            }
+
         }
 
         public void Evaluate(Outils outil)
