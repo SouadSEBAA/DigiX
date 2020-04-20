@@ -17,6 +17,8 @@ namespace logisimConsole
         //Methodes:
         public abstract void calcul_sorties();
 
+        public string getname() { return this.etiquette; }
+
         public Outils(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo)
         {
             this.disposition = dispo;

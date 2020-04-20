@@ -285,10 +285,11 @@ namespace WpfApp2
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             Console.WriteLine("--------------  Fin Simuler Click");
-          
-            //souad
-            ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
 
+            //souad
+            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            foreach (var gate in circuit.GetCompFinaux())
+                circuit.Evaluate(gate);
         }
 
 
