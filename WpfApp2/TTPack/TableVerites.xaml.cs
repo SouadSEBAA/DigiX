@@ -56,7 +56,7 @@ namespace WpfApp2.TTPack
         private void InitialiseTable()
         {
             
-            this.Width = 700;
+            this.Width = 800;
             FlowDocument oDoc = new FlowDocument();
 
 
@@ -69,7 +69,7 @@ namespace WpfApp2.TTPack
 
             oDoc.Blocks.Add(oTable);
 
-            oTable.CellSpacing = 20;
+            
             oTable.Background = Brushes.Red;
 
 
@@ -85,6 +85,7 @@ namespace WpfApp2.TTPack
             int nbrDiodSortie = 0;
             string ch1 = "WpfApp2.Noyau.PinOut";
             string ch2 = "WpfApp2.Noyau.PinIn";
+            List<Outils> LLC = new List<Outils>();
             List<Outils> PinEntreeLLC = new List<Outils>();
             List<Outils> DiodSortieLLC = new List<Outils>();
             foreach (Outils noeud in liste)
@@ -93,6 +94,7 @@ namespace WpfApp2.TTPack
                 {
                     Console.WriteLine("il existe une sortie diode,il s'appelle : "+noeud.getname());
                     nbrDiodSortie++;
+                    LLC.Add(noeud);
                     DiodSortieLLC.Add(noeud);
                 }
                 else
@@ -101,13 +103,23 @@ namespace WpfApp2.TTPack
                     {
                         Console.WriteLine("il existe un Pin entreeil s'appelle : " + noeud.getname());
                         nbrPinEntree++;
+                        LLC.Add(noeud);
                         PinEntreeLLC.Add(noeud);
                     }
                 }
             }
 
+
             Console.WriteLine("il esxiste :  " + nbrDiodSortie + "Sorties   " + nbrPinEntree + "entrees ");
             int numberOfColumns = nbrPinEntree+nbrDiodSortie;
+            oTable.CellSpacing = 10;
+            // LLC = PinEntreeLLC.GetRange(0,nbrPinEntree);
+            /*
+             foreach(Outils ees in PinEntreeLLC) { LLC.Add(ees); }
+             for (int i=0; i<nbrDiodSortie;i++)
+             {
+                 LLC[nbrPinEntree + i] = DiodSortieLLC[i];
+             }*/
             //string max = Console.ReadLine();
             //string min = Console.ReadLine();
             //string equidistance = Console.ReadLine();
@@ -127,21 +139,49 @@ namespace WpfApp2.TTPack
             currentRow.Background = System.Windows.Media.Brushes.Navy;
 
             currentRow.Foreground = System.Windows.Media.Brushes.White;
+            int x = 0;
+            
+            foreach(Outils elmnt in PinEntreeLLC)
+            {
+                oTable.Columns.Add(new TableColumn());
+               // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+
+                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+
+                oTable.Columns[x].Width = new GridLength(130);
+                x++;
+            }
+            
+            foreach(Outils elmnt in DiodSortieLLC)
+            {
+                oTable.Columns.Add(new TableColumn());
+                // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+
+                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+
+                oTable.Columns[x].Width = new GridLength(130) ;
+                x++;
+            }
 
 
-
+            /*
+             * 
+            
             for (int x = 0; x < numberOfColumns; x++)
-
             {
 
                 oTable.Columns.Add(new TableColumn());
-                currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdf"))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(ch1))));
 
                 //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
 
                 oTable.Columns[x].Width = new GridLength(130);
 
             }
+            */
+
 
             /*
             // Add the header row with content,
@@ -156,7 +196,7 @@ namespace WpfApp2.TTPack
 
 
             //Add Libya data row
-
+            /*
             oTable.RowGroups[0].Rows.Add(new TableRow());
 
             currentRow = oTable.RowGroups[0].Rows[1];
@@ -169,12 +209,12 @@ namespace WpfApp2.TTPack
 
             //Add the country name in the first cell
 
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("200"))));
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run(true.ToString()))));
 
             //Add the country flag in the second cell
 
 
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("100"))));
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run(true.ToString()))));
 
             //  Paragraph oParagraph0 = new Paragraph();
 
@@ -184,11 +224,11 @@ namespace WpfApp2.TTPack
 
             //Add the calling code
 
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("50"))));
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run(true.ToString()))));
 
             //Add the internet TLD
 
-
+            */
 
             //Add the Time Zone
 
@@ -196,11 +236,31 @@ namespace WpfApp2.TTPack
 
 
             //Add Tunisia data row
-
+            for (int k=1;k<40;k++)
+            { 
             oTable.RowGroups[0].Rows.Add(new TableRow());
 
-            currentRow = oTable.RowGroups[0].Rows[2];
+            currentRow = oTable.RowGroups[0].Rows[k];
 
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("2ZER00"))));
+
+            //Add the country flag in the second cell
+
+
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("100ERE"))));
+
+            //  Paragraph oParagraph0 = new Paragraph();
+
+
+
+            // currentRow.Cells.Add(new TableCell(oParagraph0));
+
+            //Add the calling code
+
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("5ERER0"))));
+            
+            }
+            oTable.RowGroups[0].Rows.Add(new TableRow());
             //Configure the row layout
 
             currentRow.Background = System.Windows.Media.Brushes.Azure;
