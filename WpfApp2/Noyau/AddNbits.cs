@@ -19,20 +19,27 @@ namespace logisimConsole
         }
         public override void calcul_sorties()
         {
-            if (nb_entrees == 4)
+            if (nb_entrees == 3)
             {
                 AddComplet add1 = new AddComplet();
                 add1.setEntree(0, liste_entrees[0].isEtat());
                 add1.setEntree(1, liste_entrees[2].isEtat());
                 add1.setEntree(2, false);
+            }
+            if (nb_entrees == 5)
+            {
+                AddComplet add1 = new AddComplet();
+                add1.setEntree(0, liste_entrees[1].isEtat());
+                add1.setEntree(1, liste_entrees[3].isEtat());
+                add1.setEntree(2, liste_entrees[0].isEtat());
 
                 add1.calcul_sorties();
                 liste_sorties[0].setEtat(add1.getSortie());
                 bool retenue1 = add1.getRetenue();
 
                 AddComplet add2 = new AddComplet();
-                add1.setEntree(0, liste_entrees[1].isEtat());
-                add1.setEntree(1, liste_entrees[3].isEtat());
+                add1.setEntree(0, liste_entrees[2].isEtat());
+                add1.setEntree(1, liste_entrees[4].isEtat());
                 add1.setEntree(2, retenue1);
 
                 add1.calcul_sorties();
@@ -43,9 +50,9 @@ namespace logisimConsole
             if (nb_entrees == 6)
             {
                 AddComplet add1 = new AddComplet();
-                add1.setEntree(0, liste_entrees[0].isEtat());
-                add1.setEntree(1, liste_entrees[3].isEtat());
-                add1.setEntree(2, false);
+                add1.setEntree(0, liste_entrees[1].isEtat());
+                add1.setEntree(1, liste_entrees[4].isEtat());
+                add1.setEntree(2, liste_entrees[0].isEtat());
 
                 add1.calcul_sorties();
                 liste_sorties[0].setEtat(add1.getSortie());

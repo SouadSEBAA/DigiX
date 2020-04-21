@@ -1,4 +1,5 @@
 ﻿using QuickGraph;
+using System.Collections.Generic;
 using WpfApp2;
 
 namespace logisimConsole
@@ -8,9 +9,15 @@ namespace logisimConsole
         private bool Sauvegardé;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
 
+        ///Attribut
+
+        private List<Outils> CompFinaux;
+
+
         public CircuitPersonnalise()
         {
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
+            CompFinaux = new List<Outils>();
         }
 
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
@@ -62,6 +69,26 @@ namespace logisimConsole
         public void AddComponent(Outils outil)
         {
             Circuit.AddVertex(outil);
+        }
+
+        public void EndComponents()
+        {
+
+            foreach (var outil in Circuit.Vertices)
+            {
+                foreach (var edge in Circuit.InEdges(outil))
+                {
+                    if ((outil is PinOut) || outil.SortieVide())
+                    {
+                        CompFinaux.Add(outil);
+                    }
+                }
+            }
+        }
+
+        public void DeleteComponent(Outils outil)
+        {
+
         }
     }
 
