@@ -29,7 +29,7 @@ namespace WpfApp2.Noyau
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             this.disposition = Disposition.right;
-            liste_sorties.Add(new Sortie("sortie",0, Disposition.down, false, null));
+            liste_sorties.Add(new Sortie("sortie",0, Disposition.down, false, new List<OutStruct>()));
             liste_entrees.Add(new ClasseEntree("entree",1, Disposition.left, false, false));
 
 
