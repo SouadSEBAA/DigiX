@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class AddComplet : CircCombinatoire
     {
         // les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente

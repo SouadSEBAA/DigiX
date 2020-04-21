@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;

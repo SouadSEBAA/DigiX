@@ -1,8 +1,8 @@
-
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 namespace logisimConsole
-
 {
+    [Serializable]
     class D : Bascule
     {//liste des entrées :[clock,Pr,Clr,D]
      //liste des sorties :[Q,-Q]

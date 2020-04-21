@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class JK : Bascule
     {
         Disposition dd = Disposition.down;

@@ -2,6 +2,7 @@
 
 namespace logisimConsole
 {
+    [Serializable]
     public class OutStruct 
     {
         private int num_entree;

@@ -6,6 +6,7 @@ using System.Text;
 
 namespace logisimConsole
 {
+	[Serializable]
 	public class Horloge : Outils
 	{
 		//Constructeur 

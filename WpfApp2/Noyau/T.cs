@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace logisimConsole
 {
+    [Serializable]
     class T : Bascule
     {
         //liste_entrees[3] = T

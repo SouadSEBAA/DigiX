@@ -8,6 +8,7 @@ using System;
 
 namespace logisimConsole
 {
+    [Serializable]
     public class CircuitPersonnalise
     {
         private bool Sauvegardé;

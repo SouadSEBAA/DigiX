@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using WpfApp2;
+
 namespace logisimConsole
 {
+    [Serializable]
     public class Sortie : InputOutput
     {
         private List<OutStruct> Sorties;

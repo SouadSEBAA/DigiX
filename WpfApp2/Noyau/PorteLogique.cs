@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
-     class PorteLogique : Outils
-    {
+    [Serializable]
+    class PorteLogique : Outils
+     {
 
         protected const int entreeMax = 5;
 

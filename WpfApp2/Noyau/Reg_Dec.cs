@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class Reg_Dec : CircSequentielle
     {//liste des sorties : [SD*SG*mem...]
      //liste des entrées : [clock*raz*chg*dd*dg*esd*esg*les entrees paraleles ]]

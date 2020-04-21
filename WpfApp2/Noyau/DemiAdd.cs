@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class DemiAdd : CircCombinatoire
     {
         // les demi additionneurs n'existe que sur 1 bit

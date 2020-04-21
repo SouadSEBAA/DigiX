@@ -3,6 +3,7 @@ using WpfApp2;
 
 namespace logisimConsole
 {
+    [Serializable]
     public class ClasseEntree : InputOutput
     {
         private bool related;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Noyau
 {
+    [Serializable]
     class PinIn : Outils
     {
         public PinIn(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)

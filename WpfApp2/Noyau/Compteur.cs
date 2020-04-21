@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class Compteur : CircSequentielle
     {//liste des entrées : [clock ,raz]
      //liste des sorties : [les sories du compteur]

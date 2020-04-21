@@ -1,5 +1,8 @@
-﻿namespace logisimConsole
+﻿using System;
+
+namespace logisimConsole
 {
+    [Serializable]
     class Program
     {/*
         static void Main(string[] args)

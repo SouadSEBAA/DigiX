@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class Demultiplexeur : CircCombinatoire
     {
         //protected List<ClasseEntree> liste_controlleurs;

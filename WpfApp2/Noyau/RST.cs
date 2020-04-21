@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System;
 namespace logisimConsole
 {
+    [Serializable]
     class RST : Bascule
     {
         //liste_entrees[3] == R
