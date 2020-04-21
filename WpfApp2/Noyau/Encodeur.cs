@@ -18,7 +18,7 @@ namespace logisimConsole
         public override void calcul_sorties()
         {
             // 2 -> 1
-
+            //Remarque
             if (nb_entrees == 2)
             {
                 if (liste_entrees[0].isEtat() == true && liste_entrees[1].isEtat() == false)

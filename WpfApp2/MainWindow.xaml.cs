@@ -195,7 +195,6 @@ namespace WpfApp2
                 Grille.Children.Add(gate);
                 gate.added = true;
 
-                circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
                 //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
             }
             e.Handled = true;
@@ -208,7 +207,7 @@ namespace WpfApp2
 
             //Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
-            this.circuit.AddComponent(gate.outil);
+            this.circuit.AddComponent(gate.outil); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
             gate.currentPoint = e.GetPosition(Grille);
             gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
@@ -276,10 +275,26 @@ namespace WpfApp2
 
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
+            
             Console.WriteLine("--------------  Fin Simuler Click");
-          
-            //souad
-            ///circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+
+            if (circuit.getUnrelatedGates().Count != 0)
+            {
+                try
+                {
+                    throw new RelatedException(Grille);
+                }
+                catch (RelatedException exception)
+                {
+                    exception.Gerer();
+                }
+            }
+            else
+            {
+                //souad
+                foreach (var gate in circuit.GetCompFinaux())
+                    circuit.Evaluate(gate);
+            }
 
         }
 

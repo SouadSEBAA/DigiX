@@ -87,6 +87,9 @@
     </ApplicationDefinition>
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
+    <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
+      <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wire.xaml.cs">
       <DependentUpon>Wire.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Noyau\UnrelatedGatesMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Wire.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

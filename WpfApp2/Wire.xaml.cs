@@ -67,11 +67,13 @@ namespace WpfApp2
 
                 if (io1 is ClasseEntree)
                 {
-                    circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1);
+                    if (!circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1))
+                        return false;
                 }
                 else
                 {
-                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
+                    if (!circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2))
+                        return false;
                 }
                 return true;
             }

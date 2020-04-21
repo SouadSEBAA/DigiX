@@ -1,4 +1,4 @@
-﻿using QuickGraph;
+﻿    using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
@@ -135,6 +135,23 @@ namespace logisimConsole
         public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
         {
             return Circuit;
+        }
+
+        public List<Outils> getUnrelatedGates()
+        {
+            List<Outils> UnrelatedList = new List<Outils>();
+            foreach (var outil in Circuit.Vertices)
+                if (outil.getnbrentrees() != 0 )
+                {
+                    List<ClasseEntree> listentree = outil.getListeentrees();
+                    foreach (var entree in listentree)
+                        if (!entree.getRelated())
+                        {
+                            UnrelatedList.Add(outil);
+                            break;
+                        }
+                }
+            return UnrelatedList;
         }
 
     }
