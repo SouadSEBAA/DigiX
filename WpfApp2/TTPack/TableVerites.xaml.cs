@@ -234,40 +234,45 @@ namespace WpfApp2.TTPack
 
 
 
-
+            double totale = Math.Pow(2, nbrPinEntree);
             //Add Tunisia data row
-            for (int k=1;k<40;k++)
+            for (int k=1;k<=totale;k++)
             { 
             oTable.RowGroups[0].Rows.Add(new TableRow());
 
             currentRow = oTable.RowGroups[0].Rows[k];
 
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("2ZER00"))));
-
-            //Add the country flag in the second cell
-
-
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("100ERE"))));
-
-            //  Paragraph oParagraph0 = new Paragraph();
-
-
-
-            // currentRow.Cells.Add(new TableCell(oParagraph0));
-
-            //Add the calling code
-
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("5ERER0"))));
-            
+                foreach (Outils elmnt in PinEntreeLLC)
+                {
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getSortie().ToString()))));
+                }
             }
-            oTable.RowGroups[0].Rows.Add(new TableRow());
-            //Configure the row layout
+            /*
+        //Add the country flag in the second cell
 
-            currentRow.Background = System.Windows.Media.Brushes.Azure;
 
-            currentRow.Foreground = System.Windows.Media.Brushes.Navy;
+        currentRow.Cells.Add(new TableCell(new Paragraph(new Run("100ERE"))));
 
-            //Add the country name in the first cell
+        //  Paragraph oParagraph0 = new Paragraph();
+
+
+
+        // currentRow.Cells.Add(new TableCell(oParagraph0));
+
+        //Add the calling code
+
+        currentRow.Cells.Add(new TableCell(new Paragraph(new Run("5ERER0"))));
+
+
+        oTable.RowGroups[0].Rows.Add(new TableRow());
+        //Configure the row layout
+
+        currentRow.Background = System.Windows.Media.Brushes.Azure;
+
+        currentRow.Foreground = System.Windows.Media.Brushes.Navy;
+
+        //Add the country name in the first cell 
+        */
 
 
             this.Content = oDoc;

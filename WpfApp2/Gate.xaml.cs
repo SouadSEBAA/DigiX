@@ -359,6 +359,7 @@ namespace WpfApp2
             {
                 Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(false);
+               
                 path.Fill = Brushes.Red;
                 Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
