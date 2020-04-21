@@ -1,4 +1,4 @@
-﻿    using QuickGraph;
+using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
@@ -18,6 +18,11 @@ namespace logisimConsole
         public List<Outils> GetCompFinaux() { return CompFinaux; }
         public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
         
+
+        ///Attribut
+
+        private List<Outils> CompFinaux;
+
 
         public CircuitPersonnalise()
         {
@@ -111,6 +116,7 @@ namespace logisimConsole
                 foreach (var edge in Circuit.InEdges(outil))
                 {
                     if ((outil is PinOut) || Empty(outil))
+                    //if ((outil is PinOut) || outil.SortieVide())
                     {
                         CompFinaux.Add(outil);
                     }
@@ -154,6 +160,12 @@ namespace logisimConsole
             return UnrelatedList;
         }
 
+        }
+
+        public void DeleteComponent(Outils outil)
+        {
+
+        }
     }
 
 

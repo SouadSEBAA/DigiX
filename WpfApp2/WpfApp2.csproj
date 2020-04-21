@@ -85,14 +85,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
     <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
       <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
     </Compile>
+=======
+    <Compile Include="AjoutLabel.xaml.cs">
+      <DependentUpon>AjoutLabel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Noyau\PinIn.cs" />
+    <Compile Include="Noyau\PinOut.cs" />
+>>>>>>> 1be74f52d54e3bfcdaaa9e777a536c2c5ff9c508
     <Compile Include="Wire.xaml.cs">
       <DependentUpon>Wire.xaml</DependentUpon>
     </Compile>
+    <Page Include="AjoutLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Chronogramme\Chronogrammes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
