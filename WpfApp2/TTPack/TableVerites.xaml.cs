@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Navigation;
 using logisimConsole;
 using QuickGraph;
 using System.ComponentModel;
@@ -49,8 +51,117 @@ namespace WpfApp2.TTPack
                 //circuit.
 
             }
-            InitialiseTable();
+            //InitialiseTable();
+            TT_start();
         }
+
+        private void TT_start()
+        {
+            DataTable dt = new DataTable();
+            int nbrPinEntree = 0;
+            int nbrDiodSortie = 0;
+            string ch1 = "WpfApp2.Noyau.PinOut";
+            string ch2 = "WpfApp2.Noyau.PinIn";
+            List<Outils> PinEntreeLLC = new List<Outils>();
+            List<Outils> DiodSortieLLC = new List<Outils>();
+
+            foreach (Outils noeud in circuit.Vertices)
+            {
+                if (noeud.GetType().ToString().CompareTo(ch1) == 0)
+                {
+                    Console.WriteLine("il existe une sortie diode,il s'appelle : " + noeud.getname());
+                    nbrDiodSortie++;
+                    //LLC.Add(noeud);
+                    DiodSortieLLC.Add(noeud);
+                }
+                else
+                {
+                    if (noeud.GetType().ToString().CompareTo(ch2) == 0)
+                    {
+                        Console.WriteLine("il existe un Pin entreeil s'appelle : " + noeud.getname());
+                        nbrPinEntree++;
+                        //LLC.Add(noeud);
+                        PinEntreeLLC.Add(noeud);
+                    }
+                }
+            }
+
+            int numberOfVariables = nbrPinEntree;
+            int biggestvalue = Convert.ToInt32(Math.Pow(2, numberOfVariables))-1;
+            int biggestDigitLength = Convert.ToString(biggestvalue, 2).Length;
+            
+           
+            /*
+            for (int i = 1;i<=numberOfVariables;i++ )
+            {
+                dt.Columns.Add(new DataColumn(i.ToString(), typeof(string)));
+            }*/
+            int cpt = 1;
+            foreach(Outils elmnt in circuit.Vertices)
+            {
+                if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
+                { 
+                    string nom = elmnt.getname() + cpt.ToString();
+                    dt.Columns.Add(new DataColumn(nom, typeof(string)));
+                    cpt++;
+                }
+            }
+            DataColumn output = new DataColumn("output", typeof(string));
+
+            dt.Columns.Add(output);
+
+            Console.WriteLine("rani kemlthaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            for (int i = 0; i < Math.Pow(2, numberOfVariables); i++)
+            {
+                string binary = Convert.ToString(i, 2);
+                binary = binary.PadLeft(biggestDigitLength, '0');
+                bool[] binaryExpression = binary.Select(c => c == '1').ToArray();
+
+                DataRow inputRow = dt.NewRow();
+
+                //Add
+                for (int j = 0; j < binaryExpression.Length; j++)
+                {
+                    if (binaryExpression[j] == true)
+                    {
+                        inputRow[j] = "True";
+                    }
+                    else if (binaryExpression[j] == false)
+                    {
+                        inputRow[j] = "False";
+                    }
+                }
+
+
+                dt.Rows.Add(inputRow);
+            }
+
+
+
+
+
+            tVerite.ItemsSource = dt.DefaultView;
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
 
 
         private void InitialiseTable()
@@ -136,11 +247,12 @@ namespace WpfApp2.TTPack
 
             TableRow currentRow = oTable.RowGroups[0].Rows[0];
 
-            currentRow.Background = System.Windows.Media.Brushes.Navy;
+            currentRow.Background = System.Windows.Media.Brushes.Green;
 
             currentRow.Foreground = System.Windows.Media.Brushes.White;
             int x = 0;
-            
+            /*
+             
             foreach(Outils elmnt in PinEntreeLLC)
             {
                 oTable.Columns.Add(new TableColumn());
@@ -164,7 +276,35 @@ namespace WpfApp2.TTPack
                 oTable.Columns[x].Width = new GridLength(130) ;
                 x++;
             }
+            */
 
+            foreach (Outils elmnt in circuit.Vertices)
+            {
+                if (elmnt.GetType().ToString().CompareTo(ch2) == 0) { 
+                oTable.Columns.Add(new TableColumn());
+                // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+
+                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+
+                oTable.Columns[x].Width = new GridLength(130);
+                x++;
+                }
+            }
+
+            foreach (Outils elmnt in circuit.Vertices)
+            {
+                if (elmnt.GetType().ToString().CompareTo(ch1) == 0) { 
+                    oTable.Columns.Add(new TableColumn());
+                // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+
+                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+
+                oTable.Columns[x].Width = new GridLength(130);
+                x++;
+                }
+            }
 
             /*
              * 
@@ -233,18 +373,47 @@ namespace WpfApp2.TTPack
             //Add the Time Zone
 
 
-
+            int iterr = 0;
             double totale = Math.Pow(2, nbrPinEntree);
             //Add Tunisia data row
             for (int k=1;k<=totale;k++)
             { 
-            oTable.RowGroups[0].Rows.Add(new TableRow());
+                oTable.RowGroups[0].Rows.Add(new TableRow());
 
-            currentRow = oTable.RowGroups[0].Rows[k];
+                currentRow = oTable.RowGroups[0].Rows[k];
+                //int value = 3;
+                //string binary = Convert.ToString(value, 2);
+                //Console.WriteLine("dfdsfsdfsdfsdf" + binary);
+                //elmnt.getSortie().ToString()
 
-                foreach (Outils elmnt in PinEntreeLLC)
+                int m = 0;
+                foreach (Outils elmnt in circuit.Vertices)
                 {
-                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getSortie().ToString()))));
+                    
+                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0) 
+                    {
+                        
+                        string binary = Convert.ToString(iterr, 2);
+                        int j = nbrPinEntree - m;
+                        try { 
+                        currentRow.Cells.Add(new TableCell(new Paragraph(new Run(binary[j].ToString()))));
+                        }
+                        catch
+                        {
+                            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("err"))));
+                        }
+                        //Console.WriteLine("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"+binary[m]);
+                        m++;
+
+                    }
+                }
+                iterr++;
+                foreach (Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0) 
+                    { 
+                        currentRow.Cells.Add(new TableCell(new Paragraph(new Run("hadi sor"))));
+                    }
                 }
             }
             /*
