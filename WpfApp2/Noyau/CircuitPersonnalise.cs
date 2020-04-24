@@ -25,6 +25,12 @@ namespace logisimConsole
             CompFinaux = new List<Outils>();
         }
 
+        public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> Circuit)
+        {
+            this.Circuit = Circuit;
+            CompFinaux = new List<Outils>();
+        }
+
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
         { 

@@ -181,6 +181,20 @@ namespace WpfApp2.TTPack
 
                 Console.WriteLine("la valeur maximale du l est  :    " + l);
 
+                CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
+                simuler_click(essaie);
+                foreach (Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                    {
+                        Console.WriteLine("kayena une sortieeeeee");
+                    }
+                }
+
+
+
+
+
 
                 dt.Rows.Add(inputRow);
             }
@@ -192,14 +206,15 @@ namespace WpfApp2.TTPack
             tVerite.ItemsSource = dt.DefaultView;
         }
 
-        /*
-        public void Last_Elements()
+        
+        public void Last_Elements(CircuitPersonnalise circuit)
         {
+            string ch1 = "WpfApp2.Noyau.PinOut";
             circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
             
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
-                if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
+                if (vertex.GetType().ToString().CompareTo(ch1) == 0 || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
                 {
                     //list_element_de_sortie.Add(vertex);
                     circuit.GetCompFinaux().Add(vertex);
@@ -211,11 +226,11 @@ namespace WpfApp2.TTPack
 
 
 
-        private void simuler_click(object sender, RoutedEventArgs e)
+        private void simuler_click(CircuitPersonnalise circuit)
         {
 
             Console.WriteLine("--------------  Partie Simuler Click");
-            Last_Elements();
+            Last_Elements(circuit);
             Console.WriteLine("--------------  Fin Simuler Click");
 
             //souad
@@ -223,7 +238,7 @@ namespace WpfApp2.TTPack
             foreach (var gate in circuit.GetCompFinaux())
                 circuit.Evaluate(gate);
         }
-        */
+        
 
 
 
