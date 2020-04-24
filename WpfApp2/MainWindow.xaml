@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp2"
        
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" Name="DigitX"
+        mc:Ignorable="d" Name="DigiX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png">
 
     <!--MouseWheel="Canvas_MouseWheel"-->
@@ -90,8 +90,14 @@
                                 <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
+                    </StackPanel>
 
-                </StackPanel>
+                    <!--
+                    <Button x:Name="close" Width="40" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_window">
+                        <materialDesign:PackIcon Kind="Close" Height="30" Width="30"  Background="Red"/>
+                    </Button>
+                    -->
+                    
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -120,12 +126,9 @@
                                     <ListViewItem >
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="65">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
-                                            
-                                                <local:Et Canvas.Top="0" Canvas.Left="0" />
-                                            
-                                            <!--Canvas Height="40" Width="45" x:Name="canvas" Margin="24 0"  >
-                                                    <Path x:Name="et"  StrokeThickness="3" Stroke="DarkViolet" Fill="AliceBlue" Data="M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15" Height="34.5" Stretch="Fill" Canvas.Left="3" Canvas.Top="1.5"/>
-                                            </-->
+                                            <local:Et Canvas.Top="0" Canvas.Left="0" >
+                                                
+                                            </local:Et>
                                         </StackPanel>
 
                                     </ListViewItem>
@@ -186,43 +189,43 @@
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="64">
+                                        <StackPanel Orientation="Horizontal" Height="70" Width="201">
                                             <TextBlock Text="Decodeur"  Padding="20 5" VerticalAlignment="Center"/>
-                                            <local:Decod Canvas.Top="0" Canvas.Left="0" />
+                                            <local:Decod  Canvas.Top="0" />
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="201">
+                                        <StackPanel Orientation="Horizontal" Height="70" Width="201">
                                             <TextBlock Text="Encodeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
                                             <local:Encod Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="201">
-                                            <TextBlock Text="Multiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                        <StackPanel Orientation="Horizontal" Height="70" Width="201">
+                                            <TextBlock Text="Multiplexeur"  Padding="15 5"  VerticalAlignment="Center"></TextBlock>
                                             <local:Mux Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="64" Width="201">
-                                            <TextBlock Text="Demultiplexeur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                        <StackPanel Orientation="Horizontal" Height="70" Width="201">
+                                            <TextBlock Text="Demultiplexeur" Padding="15 5"  VerticalAlignment="Center"></TextBlock>
                                             <local:Demux Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="100" Width="210">
-                                            <TextBlock Text="Add N Bits"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Add N Bits" Padding="15 5"  VerticalAlignment="Center"></TextBlock>
                                             <local:Add_N Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="210" Height="100">
-                                            <TextBlock Text="Add Complet"  Padding="19 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Add Complet" Padding="15 5" VerticalAlignment="Center"></TextBlock>
                                             <local:Add_C Canvas.Top="0" Canvas.Left="0"/>
                                         </StackPanel>
 
@@ -230,7 +233,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="100">
-                                            <TextBlock Text="Demi Add"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Demi Add"  Padding="15 5" VerticalAlignment="Center"></TextBlock>
                                             <local:D_Add></local:D_Add>
                                         </StackPanel>
                                         
@@ -281,7 +284,7 @@
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="100" Width="201">
-                                            <TextBlock Text="Bascule T"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <TextBlock Text="Bascule T"  Padding="25 5" VerticalAlignment="Center"></TextBlock>
                                             
                                             <local:BasculeT Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>

@@ -17,6 +17,8 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour Wire.xaml
     /// </summary>
+
+    [Serializable]
     public partial class Wire : UserControl
     {
 

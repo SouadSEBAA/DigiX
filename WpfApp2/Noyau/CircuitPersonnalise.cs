@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Controls;
 namespace logisimConsole
 {
+    [Serializable]
     public class CircuitPersonnalise :Outils
     {
         private bool Sauvegardé;

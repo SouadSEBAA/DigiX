@@ -22,24 +22,22 @@ namespace WpfApp2
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
-
-
-        public void SetID(int n) { this.ID = n; }//i added this to set the input/outputs id as the specific index of classentree/sortie
-        public int GetID() { return ID; }
-
         protected bool IsInput;
 
 
-        public InputOutput(int ID, Disposition disposi)
+        public InputOutput(String etiq,int ID, Disposition disposi)
         {
             InitializeComponent();
+            this.etiquette = etiq;
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
+           // this.MouseEnter += MouseOver2; // for our labels
         }
 
         public bool GetIsInput() { return IsInput; }
-
+        public String GetEtiquette() { return etiquette; }
+        public void SetEtiquette(String e) { etiquette = e; }
 
 
         public InputOutput(bool isInput)
@@ -78,8 +76,16 @@ namespace WpfApp2
 
         private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
         {
+            //for the labels
+            my_label.Content = this.GetEtiquette();
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
+
+
+       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            my_label.Content = this.GetEtiquette();
+        }*/
 
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {

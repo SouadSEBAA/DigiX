@@ -23,11 +23,11 @@ namespace logisimConsole
         //*************************
         public void Calcul()
         {
-            if (this.circuit.getSimulation())
-            {
+           // if (this.circuit.getSimulation())
+           // {
                 this.EndCircuit(this);
                 this.circuit.EvaluateCircuit(this);
-            }
+           // }
         }
 
     }
