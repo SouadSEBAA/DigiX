@@ -105,10 +105,22 @@ namespace WpfApp2.TTPack
                     dt.Columns.Add(new DataColumn(nom, typeof(string)));
                     cpt++;
                 }
+                
             }
-            DataColumn output = new DataColumn("output", typeof(string));
+            cpt = 1;
+            foreach (Outils elmnt in circuit.Vertices)
+            {
+                if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                {
+                    DataColumn output = new DataColumn("output"+cpt.ToString(), typeof(string));
+                    dt.Columns.Add(output);
+                    cpt++;
+                }
 
-            dt.Columns.Add(output);
+            }
+                //DataColumn output = new DataColumn("output", typeof(string));
+
+                //dt.Columns.Add(output);
 
             Console.WriteLine("rani kemlthaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             for (int i = 0; i < Math.Pow(2, numberOfVariables); i++)
@@ -116,7 +128,7 @@ namespace WpfApp2.TTPack
                 string binary = Convert.ToString(i, 2);
                 binary = binary.PadLeft(biggestDigitLength, '0');
                 bool[] binaryExpression = binary.Select(c => c == '1').ToArray();
-
+               // Console.WriteLine("sdfklefozekfozerkf^zeof           " + binaryExpression[i]);
                 DataRow inputRow = dt.NewRow();
 
                 //Add
@@ -124,13 +136,50 @@ namespace WpfApp2.TTPack
                 {
                     if (binaryExpression[j] == true)
                     {
-                        inputRow[j] = "True";
+                        inputRow[j] = "True"+i.ToString();
                     }
                     else if (binaryExpression[j] == false)
                     {
                         inputRow[j] = "False";
                     }
                 }
+                Console.WriteLine("*****************************************************************");
+
+                Console.WriteLine("la ligne numero : " + i);
+
+
+                Console.WriteLine("*****************************************************************");
+                int l = 0;
+                foreach(Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
+                    {
+                        //Console.Write("fdofkd");
+                        int mk = l + 1;
+                        elmnt.setSortieSpe(0, binaryExpression[l]);
+                        Console.WriteLine("elmnt : " + mk + "etat : " + elmnt.getSortie());
+                        l++;
+                    }
+                }
+                Console.WriteLine("*****************************************************************");
+
+                Console.WriteLine("je vais afficher le graph seulement les inputs : ");
+                l = 0;
+                foreach (Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
+                    {
+                        //Console.Write("fdofkd");
+                        int mk = l + 1;
+                        //elmnt.setSortieSpe(0, binaryExpression[l]);
+                        Console.WriteLine("elmnt : " + mk + "etat : " + elmnt.getSortie());
+                        l++;
+                    }
+                }
+
+                Console.WriteLine("*****************************************************************");
+
+                Console.WriteLine("la valeur maximale du l est  :    " + l);
 
 
                 dt.Rows.Add(inputRow);
@@ -141,22 +190,40 @@ namespace WpfApp2.TTPack
 
 
             tVerite.ItemsSource = dt.DefaultView;
+        }
 
+        /*
+        public void Last_Elements()
+        {
+            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
+            
+            foreach (var vertex in circuit.GetCircuit().Vertices)
+            {
+                if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
+                {
+                    //list_element_de_sortie.Add(vertex);
+                    circuit.GetCompFinaux().Add(vertex);
+                }
 
-
-
-
-
-
-
-
-
-
-
-
+            }
+            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
         }
 
 
+
+        private void simuler_click(object sender, RoutedEventArgs e)
+        {
+
+            Console.WriteLine("--------------  Partie Simuler Click");
+            Last_Elements();
+            Console.WriteLine("--------------  Fin Simuler Click");
+
+            //souad
+            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            foreach (var gate in circuit.GetCompFinaux())
+                circuit.Evaluate(gate);
+        }
+        */
 
 
 

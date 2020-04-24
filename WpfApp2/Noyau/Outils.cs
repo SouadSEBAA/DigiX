@@ -108,6 +108,11 @@ namespace logisimConsole
         {
             liste_entrees[i].setEtat(etat);
         }
+        
+        public void setSortieSpe(int i,bool etat)
+        {
+            liste_sorties[i].setEtat(etat);
+        }
 
         public virtual ClasseEntree getEntreeSpecifique(int i)
         {
