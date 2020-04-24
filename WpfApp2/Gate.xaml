@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfApp2"
-             
+             xmlns:local="clr-namespace:WpfApp2"  
              mc:Ignorable="d" >
 
     <Canvas x:Name="OutilShape" Width="74" Height="74" >
@@ -18,7 +17,7 @@
                     <ListBoxItem Content="Ajouter entrée" MouseUp="AjouterEntrée" />
                     <ListBoxItem Content="Supprimer entrée" MouseUp="SupprimerEntrée"/>
                     <ListBoxItem Content="Ajouter Label" MouseUp="AjouterLabel"/>
-                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer"/>
+                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer" />
                 </ContextMenu>
             </Path.ContextMenu>
         </Path>

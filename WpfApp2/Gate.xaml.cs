@@ -8,8 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-
-
+using WpfApp2.Noyau;
 
 namespace WpfApp2
 {
@@ -27,16 +26,15 @@ namespace WpfApp2
         public Gate(Outils outil, String ph)
         {
             InputOutputs = new List<InputOutput>();
-
             this.data = ph;
             this.outil = outil;
             this.InitializeComponent();
             path.Data = StreamGeometry.Parse(ph);
+            path.StrokeThickness = 1;
             List<ClasseEntree> listEntre = outil.getListeentrees();
             List<Sortie> sorties = outil.getListesorties();
 
             Grid target = LeftGate;
-
 
             int nE = 0, nS = 0, up = 0, left = 0, right = 0, down = 0, i = 0;
 
@@ -341,10 +339,25 @@ namespace WpfApp2
             path.ToolTip = tt;      
         }
 
+
+        //Suppression
+        //**************************************************************/
         private void Supprimer(object sender, MouseButtonEventArgs e)
         {
-            path.Data = null;
+            RaiseEvent(new RoutedEventArgs(DeletingGateEvent));
+            //TO-DO : Supprimer Wires
         }
+        
+        public static readonly RoutedEvent DeletingGateEvent = EventManager.RegisterRoutedEvent(
+            "DeletingGate", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler DeletingGate
+        {
+            add { AddHandler(DeletingGateEvent, value); }
+            remove { RemoveHandler(DeletingGateEvent, value); }
+        }
+        //Fin Suppression
+        //*************************************************************/
 
         private Outils Copier(Outils o)
         {
@@ -364,13 +377,16 @@ namespace WpfApp2
             if (o is DemiAdd) { outils = new DemiAdd(); }
             if (o is Demultiplexeur) { outils = new Demultiplexeur(); }
             if (o is Encodeur) { outils = new Encodeur(); }
-            //if(this is Horloge) { outils = new Horloge(2000,1000,new Thr); }
+            if (o is Horloge) { outils = new Horloge(1000, 500); }
             if (o is JK) { outils = new JK(); }
             if (o is Multiplexeur) { outils = new Multiplexeur(); }
             if (o is Reg_Dec) { outils = new Reg_Dec(); }
             if (o is RST) { outils = new RST(); }
             if (o is T) { outils = new T(); }
             //à ajouter less pins
+            if (o is PinIn) { outils = new PinIn(); }
+            if (o is PinOut) { outils = new PinOut(); }
+
             //le circuits personalisé aussi 
             return outils;
         }
@@ -503,8 +519,11 @@ namespace WpfApp2
 
         class horloge : Gate
         {
-            public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993") { }
-        }
+            public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993") 
+        {  }
+            
+    
+    }
     }
 
 

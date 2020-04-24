@@ -18,8 +18,13 @@ using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
-
-
+using Microsoft.Research.DynamicDataDisplay;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
+using Microsoft.Research.DynamicDataDisplay.Charts;
+using System.Windows.Threading;
+using System.Diagnostics;
+using System.Threading;
+using System.ComponentModel;
 
 namespace WpfApp2
 {
@@ -36,6 +41,12 @@ namespace WpfApp2
             InitializeComponent();
             circuit = new CircuitPersonnalise();
 
+            //Suppression d'un Gate
+            Grille.AddHandler(Gate.DeletingGateEvent, new RoutedEventHandler(Supprimer));
+
+            //Affichage d'un chronogramme
+            Grille.AddHandler(InputOutput.ChronogrammeEvent, new RoutedEventHandler(ChronogrammeAffiche));
+
         }
 
 
@@ -47,15 +58,23 @@ namespace WpfApp2
             return new Point(x, y);
         }
 
+        //Suppression d'un outil graphiquement et en noyau
+        /***********************************************************/
+        private void Supprimer(object sender, RoutedEventArgs e)
+        {
+            
+            circuit.DeleteComponent(((Gate)e.Source).outil);
+            Grille.Children.Remove(((Gate)e.Source));
+            e.Handled = true;
+        }
+        /*************************************************************/
+
 
         //Liaison
         /*****************************************************************/
         private bool isDrawing;
         Wire line = null;
         Point mousePos;
-        //pour verifier le type des entrees/sorties
-        bool entry1;
-        bool entry2;
 
         public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
@@ -130,13 +149,41 @@ namespace WpfApp2
         }
 
         /******************************************************************************/
+
+
         //Chronogrammes
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
-            Chronogrammes chronoPage = new Chronogrammes();
+            //Chronogrammes chronoPage = new Chronogrammes();
             //Chronogrammes.Children.Add(chronoPage);
         }
+        public static bool isChrono;
+        private void ChronogrammeAffiche(object sender, RoutedEventArgs e)
+        {
+            if (!isChrono)
+            {
+                isChrono = true;
+                Chrono chronogrammeWindow = new Chrono((InputOutput)e.OriginalSource, ((InputOutput)e.OriginalSource).getEtiquette() + ((Gate)e.Source).outil.getLabel());
+                chronogrammeWindow.Show();
+                chronogrammeWindow.Topmost = true;
+            }
+            else
+            {
+                try
+                {
+                    throw new OneChronogrammeException(StackExceptions);
+                }
+                catch(OneChronogrammeException expt)
+                {
+                    StackExceptions.Children.Clear();
+                    expt.Gerer();
+                }
+            }
+            e.Handled = true;
+        }
+
+
         /******************************************************************************/
 
 
@@ -278,23 +325,26 @@ namespace WpfApp2
             
             Console.WriteLine("--------------  Fin Simuler Click");
 
+            //Vérifier si les éléments sont reliés
+            /*
             if (circuit.getUnrelatedGates().Count != 0)
             {
                 try
                 {
-                    throw new RelatedException(Grille);
+                    throw new RelatedException(StackExceptions);
                 }
                 catch (RelatedException exception)
                 {
+                    StackExceptions.Children.Clear();
                     exception.Gerer();
                 }
             }
             else
-            {
-                //souad
-                foreach (var gate in circuit.GetCompFinaux())
+            {*/
+            //souad
+            foreach (var gate in circuit.GetCompFinaux())
                     circuit.Evaluate(gate);
-            }
+            //}
 
         }
 

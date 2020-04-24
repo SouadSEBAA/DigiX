@@ -47,14 +47,19 @@ namespace WpfApp2
             this.IsInput = isInput;
         }
 
-     
+
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
 
-        public InputOutput() { InitializeComponent(); etat = false;  }
+        public InputOutput() 
+        { 
+            InitializeComponent(); etat = false; 
+             //   item.Content = "Chrono";
+              //  item.MouseUp += AfficherChronogrammeClick;
+        }
 
         public Disposition GetDisposition() { return dispo; }
 
-           //****************la liaison
+        //****************la liaison
         private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -64,9 +69,9 @@ namespace WpfApp2
 
                 line.StrokeThickness = 2;
                 line.Stroke = System.Windows.Media.Brushes.Black;
-               
+
                 //la ligne à copier 
-                data.SetData("Object",line);
+                data.SetData("Object", line);
                 data.SetData("String", "inputoutput");
                 // Inititate the drag-and-drop operation.
                 DragDrop.DoDragDrop(this, data, DragDropEffects.All);
@@ -87,11 +92,14 @@ namespace WpfApp2
 
         virtual public void setEtat(bool etat)
         {
-            this.etat = etat;
-            if (etat == true)
-                elSelector.Fill = Brushes.Red;
-            else
-                elSelector.Fill = Brushes.Black;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.etat = etat;
+                if (etat == true)
+                    elSelector.Fill = Brushes.Red;
+                else
+                    elSelector.Fill = Brushes.Black;
+            });
         }
 
         public bool getEtat()
@@ -101,11 +109,30 @@ namespace WpfApp2
 
         public bool isEtat() { return this.etat; }
 
+        public String getEtiquette() { return etiquette; }
+
         private void MouseClick(object sender, MouseEventArgs e)
         {
             if (IsInput)
                 setEtat(!this.etat);
         }
 
+        //Chronogrammes
+        /**************************************************************************************/
+
+        private void AfficherChronogrammeClick(Object sender, MouseButtonEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(ChronogrammeEvent));
+        }
+
+        public static readonly RoutedEvent ChronogrammeEvent = EventManager.RegisterRoutedEvent(
+            "AfficherChronogramme", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler AfficherChronogramme
+        {
+            add { AddHandler(ChronogrammeEvent, value); }
+            remove { RemoveHandler(ChronogrammeEvent, value); }
+        }
+        /***************************************************************************************/
     }
 }

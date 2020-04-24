@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="WpfApp2.ChronogrammeException"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Canvas Height="40" Width="650" Background="#990000" >
+        <materialDesign:PackIcon Kind="Error" Height="28" Width="28" Foreground="White" Canvas.Left="15" Canvas.Top="5"/>
+
+        <TextBlock Height="25" Width="570" x:Name="textMessage" 
+                   TextWrapping="Wrap"
+                   TextAlignment="Justify" FontSize="18" Foreground="White" Canvas.Left="35" Canvas.Top="5"><InlineUIContainer>
+            </InlineUIContainer><Run Text="     Il existe déjà un chronogramme en cours, quittez-le d'abord !"/>
+        </TextBlock>
+        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" Foreground="White" x:Name="CloseButton" Canvas.Left="625" Canvas.Top="1"/>
+    </Canvas>
+</UserControl>

@@ -7,7 +7,6 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using LiveCharts.Geared;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -35,8 +34,8 @@ namespace WpfApp2.Chronogramme
         Task task;
         Stopwatch watch;
 
-        public GearedValues<MeasureModel> ChartValues { get; set; }
-        //public ChartValues<MeasureModel> ChartValues { get; set; }
+        //public GearedValues<MeasureModel> ChartValues { get; set; }
+        public ChartValues<MeasureModel> ChartValues { get; set; }
         public Func<double, string> DateTimeFormatter { get; set; }
         public double AxisStep { get; set; }
         public double AxisUnit { get; set; }
@@ -81,12 +80,12 @@ namespace WpfApp2.Chronogramme
 
             var mapper = Mappers.Xy<MeasureModel>()
             .X(model => model.interval.Ticks)   //use DateTime.Ticks as X
-            .Y(model => model.Value);           //use the value property as Y
+            .Y((model) => { if (model.Value == true) return 1; else return 0; });           //use the value property as Y
 
             Charting.For<MeasureModel>(mapper);//lets save the mapper globally.
-            //ChartValues = new ChartValues<MeasureModel>();
-            ChartValues = new GearedValues<MeasureModel>();
-            //line.AlternativeStroke = Brushes.Black;
+            ChartValues = new ChartValues<MeasureModel>();
+            //ChartValues = new GearedValues<MeasureModel>();
+            line.AlternativeStroke = Brushes.Black;
             line.PointGeometry = null;
 
             From = 0;
@@ -97,7 +96,7 @@ namespace WpfApp2.Chronogramme
             timer = new Thread(new ThreadStart(Read));
             
             tf.StartNew(new Action(Read));
-            //Parallel.Invoke(Read);
+            
         }
         double d;
         public int param;
@@ -105,21 +104,19 @@ namespace WpfApp2.Chronogramme
         {
             while (/*IsReading*/IsReading)
             {
-            Thread.Sleep(10);
+            Thread.Sleep(100);
              d = 0;
            lock (horloge)
             {
-                if (horloge.getSortieSpecifique(0).getEtat() == true)
-                    d = 1;
             }
             lock (watch)
             {
 
-                ChartValues.Add(new MeasureModel
-                {
-                    interval = watch.Elapsed,
-                    Value = d,
-                });
+                    ChartValues.Add(new MeasureModel
+                    {
+                        interval = watch.Elapsed,
+                        Value = horloge.getSortieSpecifique(0).getEtat()
+                    }) ;
 
 
                 //if ((double)watch.ElapsedTicks > To)
@@ -181,7 +178,7 @@ namespace WpfApp2.Chronogramme
         public class MeasureModel
         {
             public TimeSpan interval { get; set; }
-            public double Value { get; set; }
+            public bool Value { get; set; }
         }
     }
 }

@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp2.Chronogramme"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
-             xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--    xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared" -->
     <Grid x:Name="myGrid">
 
         <Grid.ColumnDefinitions>
@@ -26,8 +26,8 @@
 
         <lvc:CartesianChart  Grid.Column="1" Grid.Row="0" Hoverable="False" DataTooltip="{x:Null}" DisableAnimations="True" x:Name="Chart">
             <lvc:CartesianChart.Series>
-                <!--<lvc:StepLineSeries x:Name="line"  Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>-->
-                <geared:GStepLineSeries  x:Name="line" Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>
+                <lvc:StepLineSeries x:Name="line"  Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>
+                <!-- <geared:GStepLineSeries  x:Name="line" Stroke="Black" StrokeThickness="2" Values="{Binding ChartValues}"/>-->
             </lvc:CartesianChart.Series>
 
             <lvc:CartesianChart.AxisX>

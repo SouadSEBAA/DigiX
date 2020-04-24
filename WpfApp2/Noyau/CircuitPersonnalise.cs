@@ -2,13 +2,12 @@ using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
-using System.Collections.Generic;
 using System;
 
 
 namespace logisimConsole
 {
-    public class CircuitPersonnalise
+    public class CircuitPersonnalise 
     {
         private bool Sauvegardé;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
@@ -18,10 +17,6 @@ namespace logisimConsole
         public List<Outils> GetCompFinaux() { return CompFinaux; }
         public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
         
-
-        ///Attribut
-
-        private List<Outils> CompFinaux;
 
 
         public CircuitPersonnalise()
@@ -84,9 +79,17 @@ namespace logisimConsole
             }
         }
 
-        public void AddComponent(Outils outil)
+        public bool AddComponent(Outils outil)
         {
-            Circuit.AddVertex(outil);
+            if (!Circuit.ContainsVertex(outil))
+            {
+                Circuit.AddVertex(outil);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -122,19 +125,20 @@ namespace logisimConsole
                     }
                 }
             }
-
         }
+
+        
 
         public void Evaluate(Outils outil)
         {
-            if (!Circuit.IsInEdgesEmpty(outil))
-            {
+            //if (!Circuit.IsInEdgesEmpty(outil))
+            //{
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
                 foreach (Edge<Outils> edge in inEdges)
                 {
                     Evaluate(edge.Source);
                 }
-            }
+            //}
             outil.calcul_sorties();
         }
 
@@ -160,12 +164,23 @@ namespace logisimConsole
             return UnrelatedList;
         }
 
-        }
-
-        public void DeleteComponent(Outils outil)
+        
+        //Suppression d'un outil
+        public bool DeleteComponent(Outils outil)
         {
+            if (Circuit.ContainsVertex(outil))
+            {
+                Circuit.ClearEdges(outil);
+                Circuit.RemoveVertex(outil);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
+
     }
 
 

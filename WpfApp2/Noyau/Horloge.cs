@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Text;
+using System.Windows.Threading;
 
 namespace logisimConsole
 {
@@ -33,18 +34,6 @@ namespace logisimConsole
 		//Task task;
 		bool stop = false;
 
-		public Horloge()
-		{
-			this.nb_entrees = 0;
-			this.nb_sorties = 1;
-			this.etiquette = "horloge";
-			this.liste_entrees = new List<ClasseEntree>();
-			this.liste_sorties = new List<Sortie>();
-			this.disposition = Disposition.right;
-			liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
-			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-		}
-
 
 		//***********
 		public void auto()
@@ -57,12 +46,12 @@ namespace logisimConsole
 				{
 					if (parti)//etat haut 
 					{
-						(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
+							(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
-						(this.liste_sorties[0]).setEtat(false); this.appelCalcul(); 
+							(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
 						Thread.Sleep(T - UP);
 					}
 					parti = !parti;
@@ -71,6 +60,28 @@ namespace logisimConsole
 			}
 
 		}
+
+		//Chronogramme
+		public void auto(object sender, EventArgs e )
+		{
+			bool parti = false;
+			while (!this.stop)
+			{
+					if (parti)//etat haut 
+					{
+						(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
+						Thread.Sleep(UP);
+					}
+					else//etat bas 
+					{
+						(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
+						Thread.Sleep(T - UP);
+					}
+					parti = !parti;
+			}
+
+		}
+
 		//*********
 
 		public void arreter()
@@ -85,18 +96,26 @@ namespace logisimConsole
 			//mythread.Start();
 		}
 		//**********/
-		public Horloge(int T, int UP/*, TaskFactory tf*/)
+		public Horloge(int T, int UP)
 		{
-			liste_sorties = new List<Sortie>();
-			liste_sorties.Add(new Sortie());
-			liste_sorties.Add(new Sortie());
+
+			this.nb_entrees = 0;
+			this.nb_sorties = 1;
+			this.etiquette = "horloge";
+			this.liste_entrees = new List<ClasseEntree>();
+			this.liste_sorties = new List<Sortie>();
+			this.disposition = Disposition.right;
+			liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
 
 			this.T = T; this.UP = UP;
 			this.mythread = new Thread(new ThreadStart(this.auto));
+			
+
 			//task = Task.Run(new Action(auto));
 			mythread.Start();
 			//tf.StartNew(new Action(auto));
-			//
+
 			// TODO: Add constructor logic here
 			//
 		}

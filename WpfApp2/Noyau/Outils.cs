@@ -126,7 +126,7 @@ namespace logisimConsole
             this.nb_entrees = nb_entrees;
 
             ClasseEntree entree;
-            for ( int i = 0; i < nb_entrees; i++)
+            for (int i = 0; i < nb_entrees; i++)
             {
                 entree = new ClasseEntree(i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
@@ -138,6 +138,7 @@ namespace logisimConsole
                 sortie = new Sortie(0, Disposition.right, false, new List<OutStruct>());
                 liste_sorties.Add(sortie);
             }
+        }
         public void AjoutEntree( ClasseEntree entree)
         {
             this.liste_entrees.Add(entree);
@@ -175,6 +176,11 @@ namespace logisimConsole
         public void setLabel(string label)
         {
             this.etiquette = label;
+        }
+
+        public String getLabel()
+        {
+            return etiquette;
         }
 
     }
