@@ -59,6 +59,7 @@ namespace WpfApp2
             circuit.Relate(basculeD, et, 0, 1);
             horloge.fin = et;
             horloge.Demmarer();*/
+            //seriaisation 
 
         }
 
@@ -297,13 +298,18 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
+            circuit.setSimulation(false);
 
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             Console.WriteLine("--------------  Fin Simuler Click");
-          
+
             //souad
-            circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            //melissa
+            
+            circuit.EvaluateCircuit();
+            circuit.setSimulation(true);
 
         }
 

@@ -4,13 +4,14 @@ using WpfApp2;
 using WpfApp2.Noyau;
 using System.Collections.Generic;
 using System;
-
-
+using System.Threading;
+using System.Windows.Controls;
 namespace logisimConsole
 {
-    public class CircuitPersonnalise
+    public class CircuitPersonnalise :Outils
     {
         private bool Sauvegardé;
+        private bool simulation;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
         private List<Outils> CompFinaux;
 
@@ -121,7 +122,7 @@ namespace logisimConsole
 
         }
 
-        public void Evaluate(Outils outil)
+        public  void Evaluate(Outils outil)
         {
             
             if (!Circuit.IsInEdgesEmpty(outil))
@@ -139,13 +140,39 @@ namespace logisimConsole
             Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
             Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
+        public void EvaluateCircuit()
+        {
+            this.CompFinaux = new List<Outils>();
+            this.EndComponents();
+            foreach(Outils outil in this.CompFinaux)
+            {
+               //new Thread(() => Evaluate(outil)).Start();
+                Console.WriteLine("********Evaluate circuit *******");
+                this.Evaluate(outil);
+            }
+        }
+        public void EvaluateCircuit(IN iN)
+        {
+            
+            foreach (Outils outil in iN.getEndListe())
+            {
+               // new Thread(() => Evaluate(outil)).Start();
+                Console.WriteLine("********Evaluate circuit *******"+ outil);
+                this.Evaluate(outil);
+            }
+        }
 
         public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
         {
             return Circuit;
         }
-        //construiction de la liste des elementss finaux d'un mini circuit relié à un element de depart
-       
+        public bool getSimulation() { return simulation; }
+        public void setSimulation(bool s) { this.simulation = s; }
+
+        public override void calcul_sorties()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

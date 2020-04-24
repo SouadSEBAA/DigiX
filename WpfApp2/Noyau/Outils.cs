@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using QuickGraph;
+using System.Collections.Generic;
+using WpfApp2;
+using WpfApp2.Noyau;
 namespace logisimConsole
 {
     [Serializable]
@@ -128,7 +134,7 @@ namespace logisimConsole
             this.nb_entrees = nb_entrees;
 
             ClasseEntree entree;
-            for ( int i = 0; i < nb_entrees; i++)
+            for (int i = 0; i < nb_entrees; i++)
             {
                 entree = new ClasseEntree(i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
@@ -142,8 +148,46 @@ namespace logisimConsole
             }
         }
 
-    }
+        //construiction de la liste de fin d'un element
+        public void EndCircuit(IN iN)
+        {
+            Outils o = this;
+            Console.WriteLine("+++++++++entree end circuit ********");
+            foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
+                {
+                    Console.WriteLine("bouce"+edge.Target);
+                    if ((edge.Target is PinOut) || edge.Target.Empty())
+                    {
+                        Console.WriteLine("if");
+                        iN.getEndListe().Add(edge.Target);
 
+
+                    }
+                    else { edge.Target.EndCircuit(iN); }
+
+                }
+            
+        }
+
+
+        public bool Empty()  //to make sure an element is considered an ending element
+        {
+            bool empty = true;
+
+            foreach (Sortie s in this.get_liste_sortie())
+            {
+                if (s.get_OutStruct() != null)
+                {
+                    foreach (OutStruct o in s.get_OutStruct())
+                    {
+                        if (o.getOutils() != null) { empty = false; }
+                    }
+                }
+                else empty = true;
+            }
+            return empty;
+        }
+    }
     public class Outilspm
     {
         public void calcul_sorties()
@@ -151,6 +195,6 @@ namespace logisimConsole
             throw new System.NotImplementedException();
         }
     }
-
+ 
 
 }

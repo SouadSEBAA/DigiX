@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace logisimConsole
 {
-	public class Horloge : Outils
+	public class Horloge : IN
 	{
 		public Outils fin;
 		//Constructeur 
@@ -53,12 +53,14 @@ namespace logisimConsole
 				{
 					if (parti)//etat haut 
 					{
-						(this.liste_sorties[0]).setEtat(true); this.appelCalcul();this.circuit.Evaluate(fin);
+						(this.liste_sorties[0]).setEtat(true);/*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul();
+						this.Calcul();
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
-						(this.liste_sorties[0]).setEtat(false); this.appelCalcul(); this.circuit.Evaluate(fin);
+						(this.liste_sorties[0]).setEtat(false); /*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul(); //this.circuit.EvaluateCircuit();
+						this.Calcul();
 						Thread.Sleep(T - UP);
 					}
 					parti = !parti;
@@ -68,6 +70,8 @@ namespace logisimConsole
 
 		}
 		//*********
+		
+		public override void calcul_sorties() { }
 
 		public void arreter()
 		{
@@ -97,7 +101,7 @@ namespace logisimConsole
 			//
 		}
 
-		public override void calcul_sorties() { }
+		
 
 		public int getUP()
 		{
