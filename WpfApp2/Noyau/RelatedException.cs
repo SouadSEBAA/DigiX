@@ -6,6 +6,7 @@ using WpfApp2.Noyau;
 
 namespace logisimConsole
 {
+    [Serializable]
     class RelatedException : Exception
     {
         StackPanel panel;

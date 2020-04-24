@@ -97,6 +97,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
     <Compile Include="Chronogramme\ChronogrammeException.xaml.cs">
       <DependentUpon>ChronogrammeException.xaml</DependentUpon>
     </Compile>
@@ -109,6 +110,9 @@
     <Compile Include="AjoutLabel.xaml.cs">
       <DependentUpon>AjoutLabel.xaml</DependentUpon>
     </Compile>
+=======
+    <Compile Include="Noyau\IN.cs" />
+>>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
     <Compile Include="Chronogramme\OneChronogrammeException.cs" />

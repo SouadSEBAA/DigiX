@@ -31,6 +31,8 @@ namespace WpfApp2
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+    [Serializable]
     public partial class MainWindow : Window
     {
         int gridGap = 10;
@@ -38,8 +40,33 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
             circuit = new CircuitPersonnalise();
+            ///test sequentiel
+           //T
+           /*
+            T basculeT = new T(); circuit.AddComponent(basculeT);
+            basculeT.getEntreeSpecifique(3).setEtat(true);//T
+            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
+            //D
+            D basculeD = new D(); circuit.AddComponent(basculeD);
+            basculeD.getEntreeSpecifique(3).setEtat(true);//T
+            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
+            //Et
+            ET et = new ET();circuit.AddComponent(et);
+            //horloge
+            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
+            horloge.circuit = circuit;
+            //relation
+            circuit.Relate(horloge, basculeT, 0, 0);
+            circuit.Relate(horloge, basculeD, 0, 0);
+            circuit.Relate(basculeT, et, 0, 0);
+            circuit.Relate(basculeD, et, 0, 1);
+            horloge.fin = et;
+            horloge.Demmarer();*/
+            //seriaisation 
 
             //Suppression d'un Gate
             Grille.AddHandler(Gate.DeletingGateEvent, new RoutedEventHandler(Supprimer));
@@ -187,7 +214,6 @@ namespace WpfApp2
         /******************************************************************************/
 
 
-
         /*****************/
         //drag and drop 
 
@@ -277,27 +303,6 @@ namespace WpfApp2
         }
 
 
-
-        public bool Empty(Outils outil)  //to make sure an element is considered an ending element
-        {
-            bool empty = true;
-
-            foreach (Sortie s in outil.get_liste_sortie())
-            {
-                if (s.get_OutStruct() != null)
-                {
-                    foreach (OutStruct o in s.get_OutStruct())
-                    {
-                        if (o.getOutils() != null) { empty = false; }
-                    }
-                }
-                else empty = true;
-            }
-            return empty;
-        }
-
-
-
        //Fonction elements de sortie version 2
         public void Last_Elements() 
         {
@@ -319,14 +324,14 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-
+            circuit.setSimulation(false);
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             
             Console.WriteLine("--------------  Fin Simuler Click");
 
             //Vérifier si les éléments sont reliés
-            /*
+            
             if (circuit.getUnrelatedGates().Count != 0)
             {
                 try
@@ -340,12 +345,15 @@ namespace WpfApp2
                 }
             }
             else
-            {*/
-            //souad
-            foreach (var gate in circuit.GetCompFinaux())
-                    circuit.Evaluate(gate);
-            //}
+            {
+            
 
+            //souad
+            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            //melissa
+            circuit.EvaluateCircuit();
+            circuit.setSimulation(true);
+            }
         }
 
 
@@ -355,17 +363,9 @@ namespace WpfApp2
             string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
-
+        
         private void open_file(object sender, RoutedEventArgs e)
         {
-            /*Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
-            // Launch OpenFileDialog by calling ShowDialog method
-            Nullable<bool> result = openFileDlg.ShowDialog();
-            if (result == true)
-            {
-                MessageBox.Show(openFileDlg.FileName, "Fichier Ouvert", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            }*/
-
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
@@ -385,29 +385,19 @@ namespace WpfApp2
                 }
             }
         }
-
+        
         public static UIElement DeSerializeXAML(string filename)
-        {
+        {/*
             using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
-                return System.Windows.Markup.XamlReader.Load(fs) as UIElement;
-            }
+                return (UIElementCollection)System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
+            }*/
+            return new UIElement();
         }
-
+        
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
-            /*var saveFileDialog = new SaveFileDialog
-            {
-                Filter = "Text documents (.txt) | *.txt |Binary files (.bin) | *.bin"  //for the time being we will keep it at .txt until we agree on the extension to be used
-            };
-            var dialogResult = saveFileDialog.ShowDialog();
-            if (dialogResult == true)
-            {
-                var fileName = saveFileDialog.FileName;
-            }
-            MessageBox.Show("Votre fichier a ete sauvegarder.", "Sauvegarder", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            */
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "UIElement File"; // Default file name
             dlg.DefaultExt = ".xaml"; // Default file extension
@@ -424,6 +414,23 @@ namespace WpfApp2
                 SerializeToXAML(Grille.Children, filename);
             }
         }
+
+        // Serializes any UIElement object to XAML using a given filename.
+        public static void SerializeToXAML(UIElementCollection elements, string filename)
+        {
+            // Use XamlWriter object to serialize element
+            string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
+
+            // Write XAML to file. Use 'using' so objects are disposed of properly.
+            using (System.IO.FileStream fs = System.IO.File.Create(filename))
+            {
+                using (System.IO.StreamWriter streamwriter = new System.IO.StreamWriter(fs))
+                {
+                    streamwriter.Write(strXAML);
+                }
+            }
+        }
+
 
 
         private void CreateScreenShot(UIElement visual, string file)
@@ -450,6 +457,8 @@ namespace WpfApp2
             }
         }
 
+
+
         private void CaptEcran_Click(object sender, RoutedEventArgs e)
         {
             //Console.WriteLine("hello");
@@ -469,26 +478,13 @@ namespace WpfApp2
             CreateScreenShot(this, strRes);
 
             //to inform theuser that the screeshot was created successfully
-            MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+           
         }
 
-        // Serializes any UIElement object to XAML using a given filename.
-        public static void SerializeToXAML(UIElementCollection elements, string filename)
-        {
-            // Use XamlWriter object to serialize element
-            string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
-
-            // Write XAML to file. Use 'using' so objects are disposed of properly.
-            using (System.IO.FileStream fs = System.IO.File.Create(filename))
-            {
-                using (System.IO.StreamWriter streamwriter = new System.IO.StreamWriter(fs))
-                {
-                    streamwriter.Write(strXAML);
-                }
-            }
-
-        }
         //**************************************END OF MENU BUTTONS*******************************//
+
+
 
     }
 }

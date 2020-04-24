@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using WpfApp2;
+
 namespace logisimConsole
 {
+    [Serializable]
     public class Sortie : InputOutput
     {
         private List<OutStruct> Sorties;
@@ -9,7 +12,7 @@ namespace logisimConsole
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
-        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(ID, disposi)
+        public Sortie(String e,int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(e,ID, disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;

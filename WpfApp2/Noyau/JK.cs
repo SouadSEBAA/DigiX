@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class JK : Bascule
     {
         Disposition dd = Disposition.down;
@@ -11,8 +13,8 @@ namespace logisimConsole
         public JK(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
         {
             Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie(1, dd, false, null);
-            tab[1] = new Sortie(1, dd, false, null);
+            tab[0] = new Sortie("Q",1, dd, false, null);
+            tab[1] = new Sortie("|Q",1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);
         }
@@ -22,13 +24,13 @@ namespace logisimConsole
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(3, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(4, Disposition.left, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(1, Disposition.right, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("K",0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Preset",1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear",2, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clock",3, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("J",4, Disposition.left, false, false));
+            this.liste_sorties.Add(new Sortie("Q",0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("|Q",1, Disposition.right, false, new List<OutStruct>()));
         }
 
         public override void calcul_sorties()
