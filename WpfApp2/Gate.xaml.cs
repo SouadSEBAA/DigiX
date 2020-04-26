@@ -20,8 +20,18 @@ namespace WpfApp2
 
         protected string data;
         public Outils outil;
-        public Gate() { }
-        public Gate(Gate gate) { }
+        public Gate(Outils outils) 
+        {
+            this.outil = outils;
+            //on supprime tt les children 
+            this.OutilShape.Children.Remove(path);
+            this.OutilShape.Children.Remove(TopGate);
+            this.OutilShape.Children.Remove(BottomGate);
+            this.OutilShape.Children.Remove(LeftGate);
+            this.OutilShape.Children.Remove(RightGate);
+            this.OutilShape.AllowDrop = true;//e drop autorisé
+        }
+        
         public Gate(Outils outil, String ph)
         {
             InputOutputs = new List<InputOutput>();
@@ -382,7 +392,9 @@ namespace WpfApp2
             {
                 Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(false);
+                //le calcul automatique 
                 path.Fill = Brushes.Red;
+                ((PinIn)(this.outil)).Calcul();
                 Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
             else
@@ -390,6 +402,7 @@ namespace WpfApp2
                 Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(true);
                 path.Fill = Brushes.Green;
+                ((PinIn)(this.outil)).Calcul();
                 Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
 
@@ -405,7 +418,22 @@ namespace WpfApp2
     [Serializable]
     public class horloge : Gate
     {
-        public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993") { }
+        public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993")
+        { 
+            this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
+        }
+        public void OnClick(object sender, MouseEventArgs e)
+        {Console.WriteLine("Demmarer");
+            
+            ((Horloge)this.outil).Demmarer();
+            
+
+        }
+    }
+    //le circuit perssonalisé 
+    public class CircuitComplet :Gate
+    {
+        public CircuitComplet() : base(new CircuitPersonnalise()) { }
     }
 
 

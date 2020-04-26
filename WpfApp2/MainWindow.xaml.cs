@@ -38,8 +38,33 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
             circuit = new CircuitPersonnalise();
+            ///test sequentiel
+           //T
+           /*
+            T basculeT = new T(); circuit.AddComponent(basculeT);
+            basculeT.getEntreeSpecifique(3).setEtat(true);//T
+            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
+            //D
+            D basculeD = new D(); circuit.AddComponent(basculeD);
+            basculeD.getEntreeSpecifique(3).setEtat(true);//T
+            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
+            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
+            //Et
+            ET et = new ET();circuit.AddComponent(et);
+            //horloge
+            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
+            horloge.circuit = circuit;
+            //relation
+            circuit.Relate(horloge, basculeT, 0, 0);
+            circuit.Relate(horloge, basculeD, 0, 0);
+            circuit.Relate(basculeT, et, 0, 0);
+            circuit.Relate(basculeD, et, 0, 1);
+            horloge.fin = et;
+            horloge.Demmarer();*/
+            //seriaisation 
 
         }
 
@@ -255,12 +280,15 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
+            circuit.setSimulation(false);
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             Console.WriteLine("--------------  Fin Simuler Click");
-
             //souad
-            foreach (var gate in circuit.GetCompFinaux()) { circuit.Evaluate(gate); }
+            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+            //melissa
+            circuit.EvaluateCircuit();
+            circuit.setSimulation(true);
         }
 
 
@@ -270,8 +298,12 @@ namespace WpfApp2
             string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
+<<<<<<< HEAD
 
 
+=======
+        
+>>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
         private void open_file(object sender, RoutedEventArgs e)
         {      
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -296,6 +328,7 @@ namespace WpfApp2
                 }
             }
         }
+<<<<<<< HEAD
 
         /* public static void DeSerializeXAML(UIElementCollection elements, string filename)
          {
@@ -323,8 +356,18 @@ namespace WpfApp2
                 Canvas readerLoadChildren = (Canvas)XamlReader.Load(xmlReader);
                 return (readerLoadChildren);
             }
+=======
+        
+        public static UIElement DeSerializeXAML(string filename)
+        {/*
+            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            {
+                return (UIElementCollection)System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
+            }*/
+            return new UIElement();
+>>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
         }
-
+        
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {

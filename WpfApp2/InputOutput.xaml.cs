@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Shapes;
-
+using System.Threading;
 using System;
 
 
@@ -17,6 +17,7 @@ namespace WpfApp2
     [Serializable]
     public partial class InputOutput : UserControl
     {
+
         protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
@@ -93,11 +94,23 @@ namespace WpfApp2
 
         virtual public void setEtat(bool etat)
         {
-            this.etat = etat;
-            if (etat == true)
-                elSelector.Fill = Brushes.Red;
-            else
-                elSelector.Fill = Brushes.Black;
+            //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
+            //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Code causing the exception or requires UI thread access
+                this.etat = etat;
+                if (etat == true)
+                    elSelector.Fill = Brushes.Red;
+                else
+                    elSelector.Fill = Brushes.Black;
+            });
+
+
+           
+            
+           
         }
 
         public bool getEtat()

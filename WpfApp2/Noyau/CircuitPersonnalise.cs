@@ -4,14 +4,15 @@ using WpfApp2;
 using WpfApp2.Noyau;
 using System.Collections.Generic;
 using System;
-
-
+using System.Threading;
+using System.Windows.Controls;
 namespace logisimConsole
 {
     [Serializable]
-    public class CircuitPersonnalise
+    public class CircuitPersonnalise :Outils
     {
         private bool Sauvegardé;
+        private bool simulation;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
         private List<Outils> CompFinaux;
 
@@ -56,6 +57,8 @@ namespace logisimConsole
         //Relate for graphique
         public bool Relate(Outils component1, Outils component2, Sortie sortie, ClasseEntree entree)
         {
+            component1.circuit = this;
+            component2.circuit = this;
             if (!entree.getRelated() || entree.getEtat() != sortie.getEtat() || !component1.getListesorties().Contains(sortie) || !component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
@@ -120,8 +123,9 @@ namespace logisimConsole
 
         }
 
-        public void Evaluate(Outils outil)
+        public  void Evaluate(Outils outil)
         {
+            
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
@@ -130,14 +134,46 @@ namespace logisimConsole
                     Evaluate(edge.Source);
                 }
             }
+            
             outil.calcul_sorties();
+            Console.WriteLine("--------------------------");
+            Console.WriteLine(outil.GetType());
+            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
+            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
+        }
+        public void EvaluateCircuit()
+        {
+            this.CompFinaux = new List<Outils>();
+            this.EndComponents();
+            foreach(Outils outil in this.CompFinaux)
+            {
+               //new Thread(() => Evaluate(outil)).Start();
+                Console.WriteLine("********Evaluate circuit *******");
+                this.Evaluate(outil);
+            }
+        }
+        public void EvaluateCircuit(IN iN)
+        {
+            
+            foreach (Outils outil in iN.getEndListe())
+            {
+               // new Thread(() => Evaluate(outil)).Start();
+                Console.WriteLine("********Evaluate circuit *******"+ outil);
+                this.Evaluate(outil);
+            }
         }
 
         public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
         {
             return Circuit;
         }
+        public bool getSimulation() { return simulation; }
+        public void setSimulation(bool s) { this.simulation = s; }
 
+        public override void calcul_sorties()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 
