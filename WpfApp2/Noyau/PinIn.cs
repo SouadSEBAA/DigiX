@@ -31,8 +31,8 @@ namespace WpfApp2.Noyau
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             disposition = Disposition.right;
-            liste_sorties.Add(new Sortie("sortie",0, Disposition.down, false, new List<OutStruct>()));
-            liste_entrees.Add(new ClasseEntree("entree",0, Disposition.left, false, false));
+            liste_sorties.Add(new Sortie("Sortie",0, Disposition.down, false, new List<OutStruct>()));
+            liste_entrees.Add(new ClasseEntree("Entrée", 0, Disposition.left, false, false));
         }
 
         public override void calcul_sorties()

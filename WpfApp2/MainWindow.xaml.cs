@@ -18,8 +18,11 @@ using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
-
-
+using System.Xml.Serialization;
+using System.Collections;
+using System.Windows.Markup;
+using System.Xml;
+using System.Windows.Controls.Primitives;
 
 namespace WpfApp2
 {
@@ -28,7 +31,7 @@ namespace WpfApp2
     /// </summary>
 
     [Serializable]
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, System.Collections.IEnumerable
     {
         int gridGap = 10;
         CircuitPersonnalise circuit;
@@ -268,18 +271,22 @@ namespace WpfApp2
             System.Diagnostics.Process.Start(path);
         }
 
+
         private void open_file(object sender, RoutedEventArgs e)
-        {
+        {      
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
             // Show open file dialog box
             Nullable<bool> result = dlg.ShowDialog();
             // Process open file dialog box results
+            
             if (result == true)
             {
+                Grille.Children.Clear();
+
                 string filename = dlg.FileName;
-                Canvas canvas = DeSerializeXAML(filename) as Canvas;
+                Canvas canvas = DeSerializeXAML(filename) as Canvas; 
                 // Add all child elements (lines, rectangles etc) to canvas
                 while (canvas.Children.Count > 0)
                 {
@@ -290,11 +297,31 @@ namespace WpfApp2
             }
         }
 
-        public static UIElement DeSerializeXAML(string filename)
+        /* public static void DeSerializeXAML(UIElementCollection elements, string filename)
+         {
+             var context = System.Windows.Markup.XamlReader.GetWpfSchemaContext();
+             var settings = new System.Xaml.XamlObjectWriterSettings
+             {
+                 RootObjectInstance = elements
+             };
+
+             using (var reader = new System.Xaml.XamlXmlReader(filename))
+             using (var writer = new System.Xaml.XamlObjectWriter(context, settings))
+             {
+                 System.Xaml.XamlServices.Transform(reader, writer);
+             }
+         }*/
+
+
+        public static Canvas DeSerializeXAML(string filename)
         {
             using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
-                return System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
+                // return System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
+                StringReader strreader = new StringReader(mystrXAML);
+                XmlReader xmlReader = XmlReader.Create(strreader);
+                Canvas readerLoadChildren = (Canvas)XamlReader.Load(xmlReader);
+                return (readerLoadChildren);
             }
         }
 
@@ -313,13 +340,32 @@ namespace WpfApp2
             if (result == true)
             {
                 // Save document
-                string filename = dlg.FileName;
-                SerializeToXAML(Grille.Children, filename);
+                //string filename = dlg.FileName;
+                //SerializeToXAML(Grille.Children, filename);
+                SerializeToXML(Grille, dlg.FileName);
             }
         }
 
-        // Serializes any UIElement object to XAML using a given filename.
-        public static void SerializeToXAML(UIElementCollection elements, string filename)
+
+        public static string mystrXAML;
+        public static void SetStr(string s) { mystrXAML = s; }
+
+        // Serializes any UIElement object to XAML using a given filename. // function version 2
+        public static void SerializeToXML(Canvas canvas, string filename)
+        {
+            mystrXAML = XamlWriter.Save(canvas);
+            SetStr(mystrXAML);
+            FileStream filestream = File.Create(filename);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.Write(mystrXAML);
+            streamwriter.Close();
+            filestream.Close();
+        }
+
+
+       
+        // Serializes any UIElement object to XAML using a given filename. //Function version 1
+        public static void SerializeToXAML(UIElementCollection elements, string filename) //UIElementCollection elements
         {
             // Use XamlWriter object to serialize element
             string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
@@ -383,6 +429,34 @@ namespace WpfApp2
             //to inform theuser that the screeshot was created successfully
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
            
+            
+           
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        //For the top bar
+        private void close_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void minimize_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void normal_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;  
+        }
+
+        private void maximize_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
         }
 
         //**************************************END OF MENU BUTTONS*******************************//
