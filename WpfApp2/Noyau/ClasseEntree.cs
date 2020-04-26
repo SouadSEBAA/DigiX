@@ -14,7 +14,7 @@ namespace logisimConsole
             this.etat = etat;
             IsInput = true;
         }
-
+        public ClasseEntree() { }
         public void setRelated(bool e) { this.related = e; }
 
         public bool getRelated() { return this.related; }

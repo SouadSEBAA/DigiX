@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,8 +19,8 @@ using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
-
-
+using System.Windows.Markup;
+using System.Xml;
 
 namespace WpfApp2
 {
@@ -217,6 +218,7 @@ namespace WpfApp2
 
           
             /*******/
+            //a reffaire pour le drag & drop
             if (!gate.added) {
                 Grille.Children.Add(gate);
                 gate.added = true;
@@ -307,26 +309,49 @@ namespace WpfApp2
             if (result == true)
             {
                 string filename = dlg.FileName;
-                Canvas canvas = DeSerializeXAML(filename) as Canvas;
-                // Add all child elements (lines, rectangles etc) to canvas
-                while (canvas.Children.Count > 0)
-                {
-                    UIElement obj = canvas.Children[0]; // Get next child
-                    canvas.Children.Remove(obj); // Have to disconnect it from result before we can add it
-                    Grille.Children.Add(obj); // Add to canvas
-                }
+                DeSerializeXAML(filename) ;
+               
             }
         }
         
-        public static UIElement DeSerializeXAML(string filename)
-        {/*
-            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+        public void DeSerializeXAML(string filename)
+        {
+            XElement root = XElement.Load(filename);
+            foreach(XElement gate in root.Element("Gates").Elements())
             {
-                return (UIElementCollection)System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
-            }*/
-            return new UIElement();
+                Gate abgate = CreateGate(gate);
+                Grille.Children.Add(abgate);
+                abgate.added = true;
+                //gid.Add(int.Parse(gate.Attribute("ID").Value), abgate);
+                //l'emplacement
+                //anchorpoint
+                double x = double.Parse(gate.Element("anchorPoint").Attribute("X").Value);
+                double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value);
+                abgate.anchorPoint = new Point(x, y);
+                //transform point 
+                 x = double.Parse(gate.Element("transform").Attribute("X").Value);
+                 y = double.Parse(gate.Element("transform").Attribute("Y").Value);
+                abgate.transform.X += x;
+                abgate.transform.Y += y;
+                abgate.RenderTransform = abgate.transform;
+                //gpt.Add(abgate, new GateLocation() { X = x, Y = y, Angle = angle });
+
+            }
+
         }
-        
+        public Gate CreateGate(XElement gate)
+        {
+            switch (gate.Attribute("Type").Value)
+            {
+                case "Et":
+                    return new Et();
+                case "Ou":
+                    return new Ou();
+                
+            }
+            Console.WriteLine("----"+gate.Attribute("Type").Value);
+            return null;
+        }
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
@@ -342,25 +367,46 @@ namespace WpfApp2
             if (result == true)
             {
                 // Save document
+                
                 string filename = dlg.FileName;
-                SerializeToXAML(Grille.Children, filename);
+                SerializeToXAML(filename);
+                
+                //melissa 
+
             }
         }
 
         // Serializes any UIElement object to XAML using a given filename.
-        public static void SerializeToXAML(UIElementCollection elements, string filename)
+        public void SerializeToXAML(string filename)
         {
-            // Use XamlWriter object to serialize element
-            string strXAML = System.Windows.Markup.XamlWriter.Save(elements);
+           
+            XElement grille = new XElement("Grille");//pour contenir tt le circuit 
+            XElement gates = new XElement("Gates");//pour contenir les composants
+            //parcourire les gates
+            foreach(Gate g in Grille.Children)
+            {//on ajoute le nbr d'entrées et sorties 
+                XElement gt = new XElement("Gate");
+                gt.SetAttributeValue("Type", g.GetType().Name);
+                //********
+                gt.Add(new XElement("anchorPoint"));//position 
+                gt.Element("anchorPoint").SetAttributeValue("X", g.anchorPoint.X);
+                gt.Element("anchorPoint").SetAttributeValue("Y", g.anchorPoint.Y);
+                //****transform 
+                gt.Add(new XElement("transform"));//position 
+                gt.Element("transform").SetAttributeValue("X", g.transform.X);
+                gt.Element("transform").SetAttributeValue("Y", g.transform.Y);
+                //*****nombre d'entrée et de sorties
+                gt.SetAttributeValue("Entree", g.outil.getnbrentrees());
+                gt.SetAttributeValue("Sortie", g.outil.getnbrsoryies());
 
-            // Write XAML to file. Use 'using' so objects are disposed of properly.
-            using (System.IO.FileStream fs = System.IO.File.Create(filename))
-            {
-                using (System.IO.StreamWriter streamwriter = new System.IO.StreamWriter(fs))
-                {
-                    streamwriter.Write(strXAML);
-                }
+
+                //on ajoute le id pour recréer le circuit 
+                gates.Add(gt);
             }
+            //on ajoute wires
+            grille.Add(gates);
+            //on sauvegarde le tt 
+            grille.Save(filename);
         }
 
 

@@ -12,6 +12,8 @@ namespace logisimConsole
     [Serializable]
     public abstract class Outils
     {
+        public static int nbrOutils=0;
+        public int id=0;
         public CircuitPersonnalise circuit;
         public bool added;
         protected int nb_entrees;
@@ -36,7 +38,11 @@ namespace logisimConsole
 
         }
 
-        public Outils() { }
+        public Outils() 
+        {
+            id = nbrOutils;
+            nbrOutils++;
+        }
 
 
         //Constructeur pour les portes logiques (le nobre de sorties est fixee a 1)
