@@ -92,6 +92,8 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
+
+
         virtual public void setEtat(bool etat)
         {
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)

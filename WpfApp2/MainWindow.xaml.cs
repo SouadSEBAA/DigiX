@@ -281,9 +281,8 @@ namespace WpfApp2
         private void simuler_click(object sender, RoutedEventArgs e)
         {
             circuit.setSimulation(false);
-            Console.WriteLine("--------------  Partie Simuler Click");
-            Last_Elements();
-            Console.WriteLine("--------------  Fin Simuler Click");
+            //jimin
+            Last_Elements(); //idk if this is needed based on what has been done below
             //souad
             //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
             //melissa
@@ -298,12 +297,8 @@ namespace WpfApp2
             string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
-<<<<<<< HEAD
 
 
-=======
-        
->>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
         private void open_file(object sender, RoutedEventArgs e)
         {      
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -328,7 +323,7 @@ namespace WpfApp2
                 }
             }
         }
-<<<<<<< HEAD
+
 
         /* public static void DeSerializeXAML(UIElementCollection elements, string filename)
          {
@@ -356,18 +351,7 @@ namespace WpfApp2
                 Canvas readerLoadChildren = (Canvas)XamlReader.Load(xmlReader);
                 return (readerLoadChildren);
             }
-=======
-        
-        public static UIElement DeSerializeXAML(string filename)
-        {/*
-            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
-            {
-                return (UIElementCollection)System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
-            }*/
-            return new UIElement();
->>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
         }
-        
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {

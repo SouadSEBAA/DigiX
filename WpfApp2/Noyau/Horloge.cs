@@ -21,14 +21,13 @@ namespace logisimConsole
 			this.liste_entrees = new List<ClasseEntree>();
 			this.liste_sorties = new List<Sortie>();
 			this.disposition = Disposition.right;
-<<<<<<< HEAD
-			liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, null));
+			//liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, null));
 			//liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
 			//on demare le thread
-	/*		this.mythread = new Thread(new ThreadStart(this.auto));
+	        /*this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();*/
-=======
-			liste_sorties.Add(new Sortie("sortie horloge",1, Disposition.down, false, new List<OutStruct>()));
+
+			liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, new List<OutStruct>()));
 			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
 
 
@@ -37,7 +36,6 @@ namespace logisimConsole
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();
->>>>>>> 29608c115190de007502b017e75fc7ccae1826ad
 
 		}
 
