@@ -10,7 +10,7 @@
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png">
 
     <!--MouseWheel="Canvas_MouseWheel"-->
-    <Grid x:Name="grid"  >
+    <Grid x:Name="grid"   >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -100,7 +100,6 @@
                     </Button>
                     -->
                     
-                </StackPanel>
             </Grid>
         </StackPanel>
         <Grid Width="250" Background="#060629" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2">
@@ -342,7 +341,7 @@
             </Grid>
         </Grid>
 
-        <!--<Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" ></Canvas>-->
+        <Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" ></Canvas>
 
     </Grid>
 </Window>

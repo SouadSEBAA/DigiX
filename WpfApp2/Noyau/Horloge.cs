@@ -14,7 +14,6 @@ namespace logisimConsole
 		//Constructeur 
 		public Horloge()
 		{
-			
 			this.nb_entrees = 0;
 			this.nb_sorties = 1;
 			this.etiquette = "horloge";
@@ -23,9 +22,8 @@ namespace logisimConsole
 			this.disposition = Disposition.right;
 			liste_sorties.Add(new Sortie("sortie horloge",1, Disposition.down, false, new List<OutStruct>()));
 			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
-
-
 		}
+
 		public void Demmarer()
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
@@ -45,7 +43,7 @@ namespace logisimConsole
 		//***********
 		public void auto()
 		{
-			fin = circuit.getCircuit().Vertices.Last();
+			//fin = circuit.getCircuit().Vertices.Last();
 			bool parti = false;
 			while (!this.stop)
 			{

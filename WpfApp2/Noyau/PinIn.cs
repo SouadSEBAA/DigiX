@@ -35,9 +35,10 @@ namespace WpfApp2.Noyau
             liste_entrees.Add(new ClasseEntree("entree",0, Disposition.left, false, false));
         }
 
+
         public override void calcul_sorties()//on l'ajoute au graphique
         {
-            liste_sorties[0].setEtat(liste_entrees[0].getEtat());
+           // liste_sorties[0].setEtat(liste_entrees[0].getEtat());
         }
     }
 }

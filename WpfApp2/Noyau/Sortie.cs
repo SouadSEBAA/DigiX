@@ -19,6 +19,14 @@ namespace logisimConsole
             IsInput = false;
         }
 
+        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base( ID, disposi)
+        {
+            this.etat = etat;
+            this.Sorties = Sorties;
+            IsInput = false;
+        }
+
+
         public void set_Sorties(List<OutStruct> Sorties) 
         { 
             this.Sorties = Sorties; 

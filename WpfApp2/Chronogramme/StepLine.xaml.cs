@@ -60,42 +60,43 @@ namespace WpfApp2.Chronogramme
         }
         public bool IsReading { get; set; }
 
-        public StepLine(Stopwatch watch, Horloge h, TaskFactory tf)
+        public StepLine(/*Stopwatch watch, Horloge h, TaskFactory tf*/ ChartValues<MeasureModel> chv, String s)
         {
             InitializeComponent();
 
-            horloge = h;
-            this.watch = watch;
-            diff = 8000; //8 seconds
-            param = h.getUP();
+            //horloge = h;
+            //this.watch = watch;
+            //diff = 8000; //8 seconds
+            //param = h.getUP();
 
             //timer = new Thread(new ThreadStart(this.Read));
             //timer.Interval = TimeSpan.FromMilliseconds(100);
             //timer.Tick += Read;
             //timer.Start();
 
-            DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");//lets set how to display the X Labels
-            AxisStep = TimeSpan.FromMilliseconds(100).Ticks;//AxisStep forces the distance between each separator in the X axis
-            AxisUnit = TimeSpan.TicksPerMillisecond;//AxisUnit forces lets the axis know that we are plotting seconds
+            //DateTimeFormatter = value => new DateTime((long)value).ToString("mm:ss");//lets set how to display the X Labels
+            //AxisStep = TimeSpan.FromMilliseconds(100).Ticks;//AxisStep forces the distance between each separator in the X axis
+            //AxisUnit = TimeSpan.TicksPerMillisecond;//AxisUnit forces lets the axis know that we are plotting seconds
 
             var mapper = Mappers.Xy<MeasureModel>()
-            .X(model => model.interval.Ticks)   //use DateTime.Ticks as X
-            .Y((model) => { if (model.Value == true) return 1; else return 0; });           //use the value property as Y
+            .X(model => model.stateNum)   //use DateTime.Ticks as X
+            .Y((model) => { if (model.io) return 1; else return 0; });           //use the value property as Y
 
             Charting.For<MeasureModel>(mapper);//lets save the mapper globally.
-            ChartValues = new ChartValues<MeasureModel>();
+            ChartValues = chv;
+            ChronoLabel.Text = s;
             //ChartValues = new GearedValues<MeasureModel>();
             line.AlternativeStroke = Brushes.Black;
             line.PointGeometry = null;
 
-            From = 0;
-            To = TimeSpan.FromMilliseconds(diff).Ticks;
+            //From = 0;
+            //To = 20;
 
             IsReading = true;
             DataContext = this;
-            timer = new Thread(new ThreadStart(Read));
+            //timer = new Thread(new ThreadStart(Read));
             
-            tf.StartNew(new Action(Read));
+            //tf.StartNew(new Action(Read));
             
         }
         double d;
@@ -111,14 +112,14 @@ namespace WpfApp2.Chronogramme
             }
             lock (watch)
             {
-
+                    /*
                     ChartValues.Add(new MeasureModel
                     {
                         interval = watch.Elapsed,
                         Value = horloge.getSortieSpecifique(0).getEtat()
                     }) ;
 
-
+    */
                 //if ((double)watch.ElapsedTicks > To)
                   //NextClick(diff);
             }
@@ -159,7 +160,7 @@ namespace WpfApp2.Chronogramme
 
         public void AfficherAxe()
         {
-            XAxes.ShowLabels = true;
+            //XAxes.ShowLabels = true;
         }
 
         #region INotifyPropertyChanged implementation
@@ -175,11 +176,6 @@ namespace WpfApp2.Chronogramme
         #endregion
 
 
-        public class MeasureModel
-        {
-            public TimeSpan interval { get; set; }
-            public bool Value { get; set; }
-        }
     }
 }
 

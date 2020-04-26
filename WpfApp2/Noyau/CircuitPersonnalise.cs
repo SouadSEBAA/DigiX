@@ -8,7 +8,7 @@ using System.Windows.Controls;
 namespace logisimConsole
 {
     [Serializable]
-    public class CircuitPersonnalise :Outils
+    public class CircuitPersonnalise :Outils, ICloneable
     {
         private bool Sauvegardé;
         private bool simulation;
@@ -26,6 +26,7 @@ namespace logisimConsole
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
             CompFinaux = new List<Outils>();
         }
+
 
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
@@ -116,19 +117,20 @@ namespace logisimConsole
         }
 
         //pour trouver les elements dor sortie Fonction version  1
-        public void EndComponents()
+        public List<Outils> EndComponents()
         {
             foreach (var outil in Circuit.Vertices)
             {
-                foreach (var edge in Circuit.InEdges(outil))
-                {
-                    if ((outil is PinOut) || Empty(outil))
+                //foreach (var edge in Circuit.InEdges(outil))
+                //{
+                    if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
                     //if ((outil is PinOut) || outil.SortieVide())
                     {
                         CompFinaux.Add(outil);
                     }
-                }
+                //}
             }
+            return CompFinaux;
         }
 
         public  void Evaluate(Outils outil)
@@ -146,7 +148,7 @@ namespace logisimConsole
             outil.calcul_sorties();
             Console.WriteLine("--------------------------");
             Console.WriteLine(outil.GetType());
-            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
+            //Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat() );
             Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
         public void EvaluateCircuit()
@@ -201,6 +203,10 @@ namespace logisimConsole
         {
             if (Circuit.ContainsVertex(outil))
             {
+                foreach(var sortie in outil.getListesorties())
+                {
+                    sortie.getSortie().ForEach((outstruct) => { outstruct.getOutils().getEntreeSpecifique(outstruct.getNum_entree()).setRelated(false); });
+                }
                 Circuit.ClearEdges(outil);
                 Circuit.RemoveVertex(outil);
                 return true;
@@ -216,6 +222,36 @@ namespace logisimConsole
         {
             throw new NotImplementedException();
         }
+
+        //For chrnogramme
+        /******************************************************/
+        public List<Outils> StartComponents()
+        {
+            Console.WriteLine("Addind start components :");
+            List<Outils> l = new List<Outils>();
+            foreach (var outil in Circuit.Vertices)
+            {
+                if (Circuit.IsInEdgesEmpty(outil))
+                {
+                    Console.WriteLine(outil.GetType().Name);
+                    l.Add(outil);
+                }
+            }
+            return l;
+        }
+
+        public CircuitPersonnalise(CircuitPersonnalise circuit)
+        {
+            Circuit = circuit.Circuit.Clone();
+            simulation = circuit.simulation;
+            CompFinaux = new List<Outils>();
+        }
+
+        public object Clone()
+        {
+            return new CircuitPersonnalise(this);
+        }
+
     }
 
 

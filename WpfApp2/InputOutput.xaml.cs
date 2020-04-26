@@ -35,6 +35,16 @@ namespace WpfApp2
            // this.MouseEnter += MouseOver2; // for our labels
         }
 
+        public InputOutput(int ID, Disposition disposi)
+        {
+            InitializeComponent();
+            this.ID = ID;
+            this.dispo = disposi;
+            this.MouseDoubleClick += MouseClick;
+            // this.MouseEnter += MouseOver2; // for our labels
+        }
+
+
         public bool GetIsInput() { return IsInput; }
         public String GetEtiquette() { return etiquette; }
         public void SetEtiquette(String e) { etiquette = e; }
@@ -52,8 +62,6 @@ namespace WpfApp2
         public InputOutput() 
         { 
             InitializeComponent(); etat = false; 
-             //   item.Content = "Chrono";
-              //  item.MouseUp += AfficherChronogrammeClick;
         }
 
         public Disposition GetDisposition() { return dispo; }

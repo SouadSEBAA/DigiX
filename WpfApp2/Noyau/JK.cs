@@ -7,6 +7,7 @@ namespace logisimConsole
     class JK : Bascule
     {
         Disposition dd = Disposition.down;
+        private bool EtatAvant_J, EtatAvant_K;
         //liste_entrees[3] == J
         //liste_entrees[4] == K
         
@@ -41,21 +42,34 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
-                    if (liste_entrees[3].isEtat() && liste_entrees[4].isEtat())//J=1 K=1
+                    if (EtatAvant_J && EtatAvant_K)//J=1 K=1
                         liste_sorties[0].setEtat(!liste_sorties[0].isEtat());
-                    else if (liste_entrees[3].isEtat() && !liste_entrees[4].isEtat())//J=1 K=0
+                    else if (EtatAvant_J && !EtatAvant_K)//J=1 K=0
                         liste_sorties[0].setEtat(true);
-                    else if (!liste_entrees[3].isEtat() && liste_entrees[4].isEtat())//J=0 K=1
+                    else if (!EtatAvant_J && EtatAvant_K)//J=0 K=1
                         liste_sorties[0].setEtat(false);
-                    else if (!liste_entrees[3].isEtat() && !liste_entrees[4].isEtat())//J=0 K=0
+                    else if (!EtatAvant_J && !EtatAvant_K)//J=0 K=0
                     {
                         //Effet Mémoire
                     }
-                    liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+                    front = false;
                 }
+                liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+
             }
             else //Asynchrone
                 calcul_sorties_asynch();
         }
+
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            if (i == 3)
+                EtatAvant_J = liste_entrees[3].getEtat(); //J
+            else if (i == 4)
+                EtatAvant_K = liste_entrees[4].getEtat();// K
+
+            base.setEntreeSpe(i, etat);
+        }
+
     }
 }

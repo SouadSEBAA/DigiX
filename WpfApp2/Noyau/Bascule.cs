@@ -7,7 +7,6 @@ namespace logisimConsole
     abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;
-       
 
         public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, 2, etiquette, dispo)
         {
@@ -20,7 +19,6 @@ namespace logisimConsole
         }
         public Bascule() :base()
         {
-            
             
         }
 
@@ -42,6 +40,7 @@ namespace logisimConsole
             //Calculer !Q
             liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
         }
+
 
     }
 }

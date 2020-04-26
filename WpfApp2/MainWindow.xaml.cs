@@ -40,7 +40,7 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            //InitializeComponent();
+            InitializeComponent();
             circuit = new CircuitPersonnalise();
             ///test sequentiel
            //T
@@ -182,8 +182,8 @@ namespace WpfApp2
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
-            //Chronogrammes chronoPage = new Chronogrammes();
-            //Chronogrammes.Children.Add(chronoPage);
+            Chronogrammes chronoPage = new Chronogrammes(circuit);
+            Chronogrammes.Children.Add(chronoPage);
         }
         public static bool isChrono;
         private void ChronogrammeAffiche(object sender, RoutedEventArgs e)
@@ -332,7 +332,7 @@ namespace WpfApp2
 
             //Vérifier si les éléments sont reliés
             
-            if (circuit.getUnrelatedGates().Count != 0)
+            /*if (circuit.getUnrelatedGates().Count != 0)
             {
                 try
                 {
@@ -345,7 +345,7 @@ namespace WpfApp2
                 }
             }
             else
-            {
+            {*/
             
 
             //souad
@@ -353,7 +353,7 @@ namespace WpfApp2
             //melissa
             circuit.EvaluateCircuit();
             circuit.setSimulation(true);
-            }
+            //}
         }
 
 

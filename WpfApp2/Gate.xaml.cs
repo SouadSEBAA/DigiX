@@ -239,7 +239,8 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() < 5)
                 {
-                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, true, false);
+                    //Remarque TO-DO : Utiliser nouveau constructeur des io (pour initialiser les labels)
+                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, false, false);
                     outil.AjoutEntree(classeEntree);
                     AjouterIO(LeftGate, classeEntree, outil.getnbrentrees() - 1);
                 }
@@ -377,7 +378,7 @@ namespace WpfApp2
             if (o is DemiAdd) { outils = new DemiAdd(); }
             if (o is Demultiplexeur) { outils = new Demultiplexeur(); }
             if (o is Encodeur) { outils = new Encodeur(); }
-            if (o is Horloge) { outils = new Horloge(1000, 500); }
+            if (o is Horloge) { outils = new Horloge(); }
             if (o is JK) { outils = new JK(); }
             if (o is Multiplexeur) { outils = new Multiplexeur(); }
             if (o is Reg_Dec) { outils = new Reg_Dec(); }
