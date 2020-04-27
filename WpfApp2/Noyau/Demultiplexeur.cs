@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class Demultiplexeur : CircCombinatoire
     {
         //protected List<ClasseEntree> liste_controlleurs;
@@ -10,7 +12,16 @@ namespace logisimConsole
         {
             //this.liste_controlleurs = liste_commande;
         }
-        public Demultiplexeur() { }
+        public Demultiplexeur() 
+        {
+            this.nb_entrees = 1;
+            this.nb_sorties = 2;
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree("Entrée 1", 0, Disposition.left, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie 1", 0, Disposition.right, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie ", 1, Disposition.right, false, new List<OutStruct>()));
+        }
 
         public override void calcul_sorties()
         {

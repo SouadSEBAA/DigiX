@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace logisimConsole
 {
-     class PorteLogique : Outils
-    {
+    [Serializable]
+    class PorteLogique : Outils
+     {
 
         protected const int entreeMax = 5;
 
@@ -17,9 +19,9 @@ namespace logisimConsole
             this.nb_sorties = 1;
             List<ClasseEntree> liste_e = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            liste_e.Add(new ClasseEntree(0, Disposition.left, false, false));
-            liste_e.Add(new ClasseEntree(1, Disposition.left, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.right, false, new List<OutStruct>()));
+            liste_e.Add(new ClasseEntree("Entrée 1", 0, Disposition.left, false, false));
+            liste_e.Add(new ClasseEntree("Entrée 2", 1, Disposition.left, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie",0, Disposition.right, false, new List<OutStruct>()));
             this.liste_entrees = liste_e;
         }
 
@@ -31,12 +33,7 @@ namespace logisimConsole
         {
             
         }
-        //pour la porte NON
-        /*public PorteLogique(string etiq, List<ClasseEntree> liste_e) : base(etiq, liste_e)
-        {
-            this.nb_entrees = 1;
-        }
-        */
+      
 
     }
 }

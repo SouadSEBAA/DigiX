@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using QuickGraph;
+using System.Collections.Generic;
+using WpfApp2;
+using WpfApp2.Noyau;
 namespace logisimConsole
 {
     [Serializable]
     public abstract class Outils
     {
+        public CircuitPersonnalise circuit;
+        public bool added;
         protected int nb_entrees;
         protected int nb_sorties;
         protected string etiquette;
@@ -60,7 +68,10 @@ namespace logisimConsole
         public List<Sortie> get_liste_sortie() { return liste_sorties; }
         public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
 
-
+        public void setSortieSpe(int i, bool etat)
+        {
+            liste_sorties[i].setEtat(etat);
+        }
 
 
 
@@ -104,14 +115,10 @@ namespace logisimConsole
             return liste_sorties[0].isEtat();
         }
 
+
         public virtual void setEntreeSpe(int i, bool etat)
         {
             liste_entrees[i].setEtat(etat);
-        }
-        
-        public void setSortieSpe(int i,bool etat)
-        {
-            liste_sorties[i].setEtat(etat);
         }
 
         public virtual ClasseEntree getEntreeSpecifique(int i)
@@ -133,22 +140,60 @@ namespace logisimConsole
             this.nb_entrees = nb_entrees;
 
             ClasseEntree entree;
-            for ( int i = 0; i < nb_entrees; i++)
+            for (int i = 0; i < nb_entrees; i++)
             {
-                entree = new ClasseEntree(i, Disposition.left, false, false);
+                entree = new ClasseEntree("entree",i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
             }
 
             Sortie sortie;
             for (int i = 0; i < nb_sorties; i++)
             {
-                sortie = new Sortie(0, Disposition.right, false, new List<OutStruct>());
+                sortie = new Sortie("sortie",0, Disposition.right, false, new List<OutStruct>());
                 liste_sorties.Add(sortie);
             }
         }
 
-    }
+        //construiction de la liste de fin d'un element
+        public void EndCircuit(IN iN)
+        {
+            Outils o = this;
+            Console.WriteLine("+++++++++entree end circuit ********");
+            foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
+                {
+                    Console.WriteLine("bouce"+edge.Target);
+                    if ((edge.Target is PinOut) || edge.Target.Empty())
+                    {
+                        Console.WriteLine("if");
+                        iN.getEndListe().Add(edge.Target);
 
+
+                    }
+                    else { edge.Target.EndCircuit(iN); }
+
+                }
+            
+        }
+
+
+        public bool Empty()  //to make sure an element is considered an ending element
+        {
+            bool empty = true;
+
+            foreach (Sortie s in this.get_liste_sortie())
+            {
+                if (s.get_OutStruct() != null)
+                {
+                    foreach (OutStruct o in s.get_OutStruct())
+                    {
+                        if (o.getOutils() != null) { empty = false; }
+                    }
+                }
+                else empty = true;
+            }
+            return empty;
+        }
+    }
     public class Outilspm
     {
         public void calcul_sorties()
@@ -156,6 +201,6 @@ namespace logisimConsole
             throw new System.NotImplementedException();
         }
     }
-
+ 
 
 }

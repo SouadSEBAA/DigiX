@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class Compteur : CircSequentielle
     {//liste des entrées : [clock ,raz]
      //liste des sorties : [les sories du compteur]
@@ -8,7 +10,7 @@ namespace logisimConsole
         public Compteur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
         {
             this.nb_entrees = nb_entrees; this.nb_sorties = nb_sorties; int i = 0;
-            while (i < nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
+            while (i < nb_entrees) { this.liste_entrees.Add(new ClasseEntree("entree",1, dd, false, false)); i++; }
             i = 0;
             while (i < nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
 
@@ -19,10 +21,10 @@ namespace logisimConsole
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.right, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("Clock", 0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear",1, Disposition.right, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie 1",0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 2",1, Disposition.down, false, new List<OutStruct>()));
 
         }
         public override void calcul_sorties()

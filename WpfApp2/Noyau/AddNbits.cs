@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class AddNbits : CircCombinatoire
     {
         public AddNbits(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
@@ -11,11 +13,11 @@ namespace logisimConsole
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             //on crée less listes
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("Retenue entrante",0, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("A",1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("B",2, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("Somme",0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Retenue sortante",1, Disposition.down, false, new List<OutStruct>()));
         }
         public override void calcul_sorties()
         {

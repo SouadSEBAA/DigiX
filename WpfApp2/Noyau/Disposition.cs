@@ -1,5 +1,8 @@
-﻿namespace logisimConsole
+﻿using System;
+
+namespace logisimConsole
 {
+    [Serializable]
     public enum Disposition
     {
         up,

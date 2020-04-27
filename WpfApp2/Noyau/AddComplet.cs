@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 namespace logisimConsole
 {
+    [Serializable]
     class AddComplet : CircCombinatoire
     {
         // les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente
@@ -12,11 +14,11 @@ namespace logisimConsole
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("A",1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("B",2, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Retenue entrante",3, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("Somme",0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Retenue sortante",0, Disposition.down, false, new List<OutStruct>()));
         }
         
 

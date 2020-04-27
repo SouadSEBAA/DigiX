@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace logisimConsole
 {
+    [Serializable]
     class Reg_Dec : CircSequentielle
     {//liste des sorties : [SD*SG*mem...]
      //liste des entrées : [clock*raz*chg*dd*dg*esd*esg*les entrees paraleles ]]
@@ -13,7 +14,7 @@ namespace logisimConsole
             this.nb_sorties = nb_sorties + 2;
             this.nb_entrees = nb_entrees + 7;
             int i = 0;
-            while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree(1, dd, false, false)); i++; }
+            while (i < this.nb_entrees) { this.liste_entrees.Add(new ClasseEntree("entree",1, dd, false, false)); i++; }
             i = 0;
             while (i < this.nb_sorties) { this.liste_sorties.Add(new Sortie()); i++; }
         }
@@ -24,18 +25,18 @@ namespace logisimConsole
             this.nb_sorties = 4;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree(2, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree(3, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree(4, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(5, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(6, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree(7, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(1, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(2, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie(3, Disposition.down, false, null));
+            this.liste_entrees.Add(new ClasseEntree("Decalage gauche",0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear",1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Decalage droit",2, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Load",3, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 1", 4, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 2", 5, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 3", 6, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 4", 7, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie 1",0, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("Sorte 2",1, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("Sortie 3",2, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("Sortie 4",3, Disposition.down, false, null));
         }
         /*
 		public override bool verifiRelie(){//verifier le  nombre d'entrées paralleles est egale aunombre de sorties

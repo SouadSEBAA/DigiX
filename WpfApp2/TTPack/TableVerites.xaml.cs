@@ -87,25 +87,25 @@ namespace WpfApp2.TTPack
             }
 
             int numberOfVariables = nbrPinEntree;
-            int biggestvalue = Convert.ToInt32(Math.Pow(2, numberOfVariables))-1;
+            int biggestvalue = Convert.ToInt32(Math.Pow(2, numberOfVariables)) - 1;
             int biggestDigitLength = Convert.ToString(biggestvalue, 2).Length;
-            
-           
+
+
             /*
             for (int i = 1;i<=numberOfVariables;i++ )
             {
                 dt.Columns.Add(new DataColumn(i.ToString(), typeof(string)));
             }*/
             int cpt = 1;
-            foreach(Outils elmnt in circuit.Vertices)
+            foreach (Outils elmnt in circuit.Vertices)
             {
                 if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
-                { 
+                {
                     string nom = elmnt.getname() + cpt.ToString();
                     dt.Columns.Add(new DataColumn(nom, typeof(string)));
                     cpt++;
                 }
-                
+
             }
             
             cpt = 1;
@@ -113,16 +113,16 @@ namespace WpfApp2.TTPack
             {
                 if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
                 {
-                    DataColumn output = new DataColumn("output"+cpt.ToString(), typeof(string));
+                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
                     dt.Columns.Add(output);
                     cpt++;
                 }
 
             }
-            
-                //DataColumn output = new DataColumn("output", typeof(string));
 
-                //dt.Columns.Add(output);
+            //DataColumn output = new DataColumn("output", typeof(string));
+
+            //dt.Columns.Add(output);
 
             Console.WriteLine("rani kemlthaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             for (int i = 0; i < Math.Pow(2, numberOfVariables); i++)
@@ -130,29 +130,27 @@ namespace WpfApp2.TTPack
                 string binary = Convert.ToString(i, 2);
                 binary = binary.PadLeft(biggestDigitLength, '0');
                 bool[] binaryExpression = binary.Select(c => c == '1').ToArray();
-               // Console.WriteLine("sdfklefozekfozerkf^zeof           " + binaryExpression[i]);
+                // Console.WriteLine("sdfklefozekfozerkf^zeof           " + binaryExpression[i]);
                 DataRow inputRow = dt.NewRow();
 
+                int mlh;
                 //Add
                 for (int j = 0; j < binaryExpression.Length; j++)
                 {
                     if (binaryExpression[j] == true)
                     {
-                        inputRow[j] = "True"+i.ToString();
+                        inputRow[j] = "True" ;
                     }
                     else if (binaryExpression[j] == false)
                     {
                         inputRow[j] = "False";
                     }
+                    mlh = j;
                 }
                 Console.WriteLine("*****************************************************************");
 
-                Console.WriteLine("la ligne numero : " + i);
-
-
-                Console.WriteLine("*****************************************************************");
                 int l = 0;
-                foreach(Outils elmnt in circuit.Vertices)
+                foreach (Outils elmnt in circuit.Vertices)
                 {
                     if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
                     {
@@ -163,8 +161,50 @@ namespace WpfApp2.TTPack
                         l++;
                     }
                 }
-                Console.WriteLine("*****************************************************************");
+                
+                CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
+                essaie.EvaluateCircuit();
+                l = 0;
+                
+                foreach (Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                    {
+                        //inputRow[binaryExpression.Length + l] = elmnt.getSortie().ToString();
+                        inputRow[binaryExpression.Length + l] = elmnt.getEntreeSpecifique(0).getEtat().ToString();
+                        Console.WriteLine("Je vais inserer  :    " + elmnt.getEntreeSpecifique(0).getEtat().ToString());
+                        //inputRow[binaryExpression.Length + l] = "lllll"+i.ToString();
+                        l++;
+                    }
+                }
+                
 
+                dt.Rows.Add(inputRow);
+
+                /*
+                foreach (Outils elmnt in circuit.Vertices)
+                {
+                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                    {
+                        Console.WriteLine("kayena une sortieeeeee");
+                    }
+                }
+                */
+                /*
+                CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
+                simuler_click(essaie);
+
+                 List<Outils> ll = essaie.GetCompFinaux();
+                
+                cpt = 1;
+                foreach (Outils elmnt in ll)
+                {
+                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
+                    dt.Columns.Add(output);
+                    cpt++;
+                }
+                */
+                /*
                 Console.WriteLine("je vais afficher le graph seulement les inputs : ");
                 l = 0;
                 foreach (Outils elmnt in circuit.Vertices)
@@ -177,42 +217,8 @@ namespace WpfApp2.TTPack
                         Console.WriteLine("elmnt : " + mk + "etat : " + elmnt.getSortie());
                         l++;
                     }
-                }
+                }*/
 
-                Console.WriteLine("*****************************************************************");
-
-                Console.WriteLine("la valeur maximale du l est  :    " + l);
-
-                //CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
-                //simuler_click(essaie);
-
-               // List<Outils> ll = essaie.GetCompFinaux();
-                /*
-                cpt = 1;
-                foreach (Outils elmnt in ll)
-                {
-                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
-                    dt.Columns.Add(output);
-                    cpt++;
-                }
-                */
-
-
-
-                foreach (Outils elmnt in circuit.Vertices)
-                {
-                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
-                    {
-                        Console.WriteLine("kayena une sortieeeeee");
-                    }
-                }
-
-
-
-
-
-
-                dt.Rows.Add(inputRow);
             }
 
 
@@ -222,12 +228,12 @@ namespace WpfApp2.TTPack
             tVerite.ItemsSource = dt.DefaultView;
         }
 
-        
+
         public void Last_Elements(CircuitPersonnalise circuit)
         {
             string ch1 = "WpfApp2.Noyau.PinOut";
             circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
-            
+
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
                 if (vertex.GetType().ToString().CompareTo(ch1) == 0 || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
@@ -254,7 +260,7 @@ namespace WpfApp2.TTPack
             foreach (var gate in circuit.GetCompFinaux())
                 circuit.Evaluate(gate);
         }
-        
+
 
 
 
@@ -264,7 +270,7 @@ namespace WpfApp2.TTPack
 
         private void InitialiseTable()
         {
-            
+
             this.Width = 800;
             FlowDocument oDoc = new FlowDocument();
 
@@ -278,12 +284,12 @@ namespace WpfApp2.TTPack
 
             oDoc.Blocks.Add(oTable);
 
-            
+
             oTable.Background = Brushes.Red;
 
 
 
-            
+
 
             //int numberOfColumns = 5;
 
@@ -301,7 +307,7 @@ namespace WpfApp2.TTPack
             {
                 if (noeud.GetType().ToString().CompareTo(ch1) == 0)
                 {
-                    Console.WriteLine("il existe une sortie diode,il s'appelle : "+noeud.getname());
+                    Console.WriteLine("il existe une sortie diode,il s'appelle : " + noeud.getname());
                     nbrDiodSortie++;
                     LLC.Add(noeud);
                     DiodSortieLLC.Add(noeud);
@@ -320,7 +326,7 @@ namespace WpfApp2.TTPack
 
 
             Console.WriteLine("il esxiste :  " + nbrDiodSortie + "Sorties   " + nbrPinEntree + "entrees ");
-            int numberOfColumns = nbrPinEntree+nbrDiodSortie;
+            int numberOfColumns = nbrPinEntree + nbrDiodSortie;
             oTable.CellSpacing = 10;
             // LLC = PinEntreeLLC.GetRange(0,nbrPinEntree);
             /*
@@ -378,29 +384,31 @@ namespace WpfApp2.TTPack
 
             foreach (Outils elmnt in circuit.Vertices)
             {
-                if (elmnt.GetType().ToString().CompareTo(ch2) == 0) { 
-                oTable.Columns.Add(new TableColumn());
-                // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
-                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+                if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
+                {
+                    oTable.Columns.Add(new TableColumn());
+                    // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
 
-                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+                    //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
 
-                oTable.Columns[x].Width = new GridLength(130);
-                x++;
+                    oTable.Columns[x].Width = new GridLength(130);
+                    x++;
                 }
             }
 
             foreach (Outils elmnt in circuit.Vertices)
             {
-                if (elmnt.GetType().ToString().CompareTo(ch1) == 0) { 
+                if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                {
                     oTable.Columns.Add(new TableColumn());
-                // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
-                currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
+                    // currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname().ToString()))));
+                    currentRow.Cells.Add(new TableCell(new Paragraph(new Run(elmnt.getname()))));
 
-                //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
+                    //currentRow.Cells.Add(new TableCell(new Paragraph(new Run("sdfsdf"))));
 
-                oTable.Columns[x].Width = new GridLength(130);
-                x++;
+                    oTable.Columns[x].Width = new GridLength(130);
+                    x++;
                 }
             }
 
@@ -474,8 +482,8 @@ namespace WpfApp2.TTPack
             int iterr = 0;
             double totale = Math.Pow(2, nbrPinEntree);
             //Add Tunisia data row
-            for (int k=1;k<=totale;k++)
-            { 
+            for (int k = 1; k <= totale; k++)
+            {
                 oTable.RowGroups[0].Rows.Add(new TableRow());
 
                 currentRow = oTable.RowGroups[0].Rows[k];
@@ -487,14 +495,15 @@ namespace WpfApp2.TTPack
                 int m = 0;
                 foreach (Outils elmnt in circuit.Vertices)
                 {
-                    
-                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0) 
+
+                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
                     {
-                        
+
                         string binary = Convert.ToString(iterr, 2);
                         int j = nbrPinEntree - m;
-                        try { 
-                        currentRow.Cells.Add(new TableCell(new Paragraph(new Run(binary[j].ToString()))));
+                        try
+                        {
+                            currentRow.Cells.Add(new TableCell(new Paragraph(new Run(binary[j].ToString()))));
                         }
                         catch
                         {
@@ -508,8 +517,8 @@ namespace WpfApp2.TTPack
                 iterr++;
                 foreach (Outils elmnt in circuit.Vertices)
                 {
-                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0) 
-                    { 
+                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
+                    {
                         currentRow.Cells.Add(new TableCell(new Paragraph(new Run("hadi sor"))));
                     }
                 }
@@ -546,3 +555,4 @@ namespace WpfApp2.TTPack
         }
     }
 }
+

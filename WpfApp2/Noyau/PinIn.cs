@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Noyau
 {
-    class PinIn : Outils
+    [Serializable]
+    class PinIn : IN
     {
-        public PinIn(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
+        public PinIn(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo)// : base(entree, etiq, liste_e, dispo)
         {
             /*  this.nb_entrees = 2;
               this.nb_sorties = 1;
@@ -30,11 +31,11 @@ namespace WpfApp2.Noyau
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             disposition = Disposition.right;
-            liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
-            liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
+            liste_sorties.Add(new Sortie("Sortie",0, Disposition.down, false, new List<OutStruct>()));
+            liste_entrees.Add(new ClasseEntree("Entrée", 0, Disposition.left, false, false));
         }
 
-        public override void calcul_sorties()
+        public override void calcul_sorties()//on l'ajoute au graphique
         {
             liste_sorties[0].setEtat(liste_entrees[0].getEtat());
         }
