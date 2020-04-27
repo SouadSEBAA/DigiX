@@ -159,9 +159,11 @@ namespace logisimConsole
         {
             Outils o = this;
             Console.WriteLine("+++++++++entree end circuit ********");
-            foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
+            if ((iN.circuit.getCircuit().OutEdges(o)).Any())
+            {
+                foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    Console.WriteLine("bouce"+edge.Target);
+                    Console.WriteLine("bouce" + edge.Target);
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
                         Console.WriteLine("if");
@@ -172,6 +174,7 @@ namespace logisimConsole
                     else { edge.Target.EndCircuit(iN); }
 
                 }
+            }
             
         }
 

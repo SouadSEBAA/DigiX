@@ -222,7 +222,7 @@ namespace WpfApp2
             if (!gate.added) {
                 Grille.Children.Add(gate);
                 gate.added = true;
-
+                gate.outil.circuit = this.circuit;
                 circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
             }
             e.Handled = true;
@@ -233,7 +233,7 @@ namespace WpfApp2
         {
             e.Effects = DragDropEffects.All;
 
-            //Console.WriteLine("Ecrit");
+
             Gate gate = (Gate)e.Data.GetData("Object");
             this.circuit.AddComponent(gate.outil);
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
@@ -316,6 +316,7 @@ namespace WpfApp2
         
         public void DeSerializeXAML(string filename)
         {
+            Grille.Children.Clear();//a controler
             XElement root = XElement.Load(filename);
             //Gates
             foreach(XElement gate in root.Element("Gates").Elements())

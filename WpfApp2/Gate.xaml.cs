@@ -20,6 +20,7 @@ namespace WpfApp2
 
         protected string data;
         public Outils outil;
+
         public Gate(Outils outils) 
         {
             this.outil = outils;
@@ -32,6 +33,10 @@ namespace WpfApp2
             this.OutilShape.AllowDrop = true;//e drop autorisé
         }
         
+
+        public Gate() { }
+        public Gate(Gate gate) { }
+
         public Gate(Outils outil, String ph)
         {
             InputOutputs = new List<InputOutput>();
