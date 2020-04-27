@@ -12,8 +12,8 @@ namespace logisimConsole
     [Serializable]
     public abstract class Outils
     {
-        public static int nbrOutils=0;
-        public int id=0;
+        public static int nbrOutils = 0;
+        public int id = 0;
         public CircuitPersonnalise circuit;
         public bool added;
         protected int nb_entrees;
@@ -38,7 +38,7 @@ namespace logisimConsole
 
         }
 
-        public Outils() 
+        public Outils()
         {
             id = nbrOutils;
             nbrOutils++;
@@ -142,14 +142,14 @@ namespace logisimConsole
             ClasseEntree entree;
             for (int i = 0; i < nb_entrees; i++)
             {
-                entree = new ClasseEntree("entree",i, Disposition.left, false, false);
+                entree = new ClasseEntree("entree", i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
             }
 
             Sortie sortie;
             for (int i = 0; i < nb_sorties; i++)
             {
-                sortie = new Sortie("sortie",0, Disposition.right, false, new List<OutStruct>());
+                sortie = new Sortie("sortie", 0, Disposition.right, false, new List<OutStruct>());
                 liste_sorties.Add(sortie);
             }
         }
@@ -175,7 +175,7 @@ namespace logisimConsole
 
                 }
             }
-            
+
         }
 
 
@@ -204,6 +204,4 @@ namespace logisimConsole
             throw new System.NotImplementedException();
         }
     }
- 
-
 }
