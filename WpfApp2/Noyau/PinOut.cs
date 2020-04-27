@@ -41,6 +41,7 @@ namespace WpfApp2.Noyau
             //liste_sorties.Add(new Sortie("sortie", 0, Disposition.down, false, new List<OutStruct>()));
             //throw new NotImplementedException();
             //Console.WriteLine("oefkpopko");
+            liste_sorties[0].setEtat(liste_entrees[0].getEtat());
 
         }
     }

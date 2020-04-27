@@ -156,7 +156,8 @@ namespace WpfApp2.TTPack
                     {
                         //Console.Write("fdofkd");
                         int mk = l + 1;
-                        elmnt.setSortieSpe(0, binaryExpression[l]);
+                        //elmnt.setSortieSpe(0, binaryExpression[l]);
+                        elmnt.getEntreeSpecifique(0).setEtat(binaryExpression[l]);
                         Console.WriteLine("elmnt : " + mk + "etat : " + elmnt.getSortie());
                         l++;
                     }
@@ -177,47 +178,7 @@ namespace WpfApp2.TTPack
                         l++;
                     }
                 }
-                
-
                 dt.Rows.Add(inputRow);
-
-                /*
-                foreach (Outils elmnt in circuit.Vertices)
-                {
-                    if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
-                    {
-                        Console.WriteLine("kayena une sortieeeeee");
-                    }
-                }
-                */
-                /*
-                CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
-                simuler_click(essaie);
-
-                 List<Outils> ll = essaie.GetCompFinaux();
-                
-                cpt = 1;
-                foreach (Outils elmnt in ll)
-                {
-                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
-                    dt.Columns.Add(output);
-                    cpt++;
-                }
-                */
-                /*
-                Console.WriteLine("je vais afficher le graph seulement les inputs : ");
-                l = 0;
-                foreach (Outils elmnt in circuit.Vertices)
-                {
-                    if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
-                    {
-                        //Console.Write("fdofkd");
-                        int mk = l + 1;
-                        //elmnt.setSortieSpe(0, binaryExpression[l]);
-                        Console.WriteLine("elmnt : " + mk + "etat : " + elmnt.getSortie());
-                        l++;
-                    }
-                }*/
 
             }
 

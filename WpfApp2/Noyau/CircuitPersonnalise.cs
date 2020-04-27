@@ -140,18 +140,24 @@ namespace logisimConsole
                     Evaluate(edge.Source);
                 }
             }
-            
             outil.calcul_sorties();
-            Console.WriteLine("--------------------------");
+            Console.WriteLine("--------------------------------------------------------------------------------------------------");
             Console.WriteLine(outil.GetType());
             Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
-            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
         public void EvaluateCircuit()
         {
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
-            foreach(Outils outil in this.CompFinaux)
+            Console.WriteLine("*****************************************************************");
+            Console.WriteLine("*****************************************************************");
+            foreach (Outils elmnt in Circuit.Vertices)
+            {
+                Console.WriteLine("Nom   : " + elmnt.getname() + "  etat : " + elmnt.getSortie().ToString());
+            }
+            Console.WriteLine("*****************************************************************");
+            Console.WriteLine("*****************************************************************");
+            foreach (Outils outil in this.CompFinaux)
             {
                //new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******");
