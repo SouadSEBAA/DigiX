@@ -349,6 +349,8 @@ namespace WpfApp2
                 int io1= int.Parse(wire.Element("gatestart").Attribute("IO").Value);
                 int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
                 //points
+                Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
+                Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
                 Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
                 Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
                 InputOutput IN1, IN2;
@@ -380,9 +382,49 @@ namespace WpfApp2
                     return new Et();
                 case "Ou":
                     return new Ou();
+                case "Non":
+                    return new Non();
+                case "Oux":
+                    return new Oux();
+                case "Nand":
+                    return new Nand();
+                case "Nor":
+                    return new Nor();
+                case "Mux":
+                    return new Mux();
+                case "Demux":
+                    return new Demux();
+                case "Encod":
+                    return new Encod();
+                case "Decod":
+                    return new Decod();
+                case "Add_N":
+                    return new Add_N();
+                case "Add_C":
+                    return new Add_C();
+                case "D_Add":
+                    return new D_Add();
+                case "Cpt":
+                    return new Cpt();
+                case "horloge":
+                    return new horloge();
+                case "BasculeD":
+                    return new BasculeD();
+                case "BasculeJk":
+                    return new BasculeJk();
+                case "BasculeRst":
+                    return new BasculeRst();
+                case "BasculeT":
+                    return new BasculeT();
+                case "Reg":
+                    return new Reg();
+                case "pin_entree":
+                    return new pin_entree();
+                case "pin_sortie":
+                    return new pin_sortie();
                 
             }
-            Console.WriteLine("----"+gate.Attribute("Type").Value);
+            
             return null;
         }
         public Gate Recup(int id)
@@ -459,12 +501,12 @@ namespace WpfApp2
                     XElement w = new XElement("Wire");
                     //start point
                     w.Add(new XElement("startp"));//position 
-                    w.Element("startp").SetAttributeValue("X", wire.StartPoint.X);
-                    w.Element("startp").SetAttributeValue("Y", wire.StartPoint.Y);
+                    w.Element("startp").SetAttributeValue("X", Convert.ToInt32(wire.StartPoint.X));
+                    w.Element("startp").SetAttributeValue("Y", Convert.ToInt32(wire.StartPoint.Y));
                     //end point
                     w.Add(new XElement("endp"));//position 
-                    w.Element("endp").SetAttributeValue("X", wire.EndPoint.X);
-                    w.Element("endp").SetAttributeValue("Y", wire.EndPoint.Y);
+                    w.Element("endp").SetAttributeValue("X", Convert.ToInt32(wire.EndPoint.X));
+                    w.Element("endp").SetAttributeValue("Y", Convert.ToInt32(wire.EndPoint.Y));
                     //****
                     w.Add(new XElement("gatestart"));
                     w.Element("gatestart").SetAttributeValue("ID", wire.gateStart.outil.id);
