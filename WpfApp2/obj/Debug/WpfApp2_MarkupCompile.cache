@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\obj\Debug\
 WpfApp2
 none
 false
 DEBUG;TRACE
-C:\Users\linak\Documents\PotatoGUI\WpfApp2\App.xaml
-6-1814996635
+D:\2CP\S2\PRJP\Git\PotatoGUI\WpfApp2\App.xaml
+101252410047
 
-48-232374599
-231187167062
-Chronogramme\Chronogrammes.xaml;Chronogramme\StepLine.xaml;Gate.xaml;InputOutput.xaml;MainWindow.xaml;Wire.xaml;
+54854984878
+27-290334225
+AjoutLabel.xaml;Chronogramme\ChronogrammeException.xaml;Chronogramme\Chrono.xaml;Chronogramme\Chronogrammes.xaml;Chronogramme\StepLine.xaml;Gate.xaml;InputOutput.xaml;MainWindow.xaml;Noyau\UnrelatedGatesMessage.xaml;Wire.xaml;
 
 False
 

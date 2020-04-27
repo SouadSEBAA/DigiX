@@ -54,5 +54,17 @@ namespace logisimConsole
             }
         }
 
+        //Supression elemnt
+        public void DeleteOustruct(Outils outil)
+        {
+            
+            for (int i = Sorties.Count - 1; i >= 0; i--)
+            {
+                if (Sorties[i].getOutils().Equals(outil))
+                {
+                    Sorties.Remove(Sorties[i]);
+                }
+            }
+        }
     }
 }

@@ -203,9 +203,18 @@ namespace logisimConsole
         {
             if (Circuit.ContainsVertex(outil))
             {
+                //Mettre à jour les entrées des outils auxquelles l'outil était connecté
                 foreach(var sortie in outil.getListesorties())
                 {
                     sortie.getSortie().ForEach((outstruct) => { outstruct.getOutils().getEntreeSpecifique(outstruct.getNum_entree()).setRelated(false); });
+                }
+                //Mettre à jour les sorties des outils auxquelles l'outil était connecté
+                foreach(var edge in Circuit.InEdges(outil))
+                {
+                   foreach(var sortie in edge.Source.getListesorties())
+                    {
+                        sortie.DeleteOustruct(outil);
+                    }
                 }
                 Circuit.ClearEdges(outil);
                 Circuit.RemoveVertex(outil);

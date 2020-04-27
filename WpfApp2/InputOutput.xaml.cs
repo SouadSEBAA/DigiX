@@ -117,9 +117,9 @@ namespace WpfApp2
                 // Code causing the exception or requires UI thread access
                 this.etat = etat;
                 if (etat == true)
-                    elSelector.Fill = Brushes.Red;
+                    elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Black;
+                    elSelector.Fill = Brushes.Red;
             });
 
 

@@ -26,11 +26,12 @@ namespace WpfApp2
         public PathFigure fil;
         Dictionary<PolyLineSegment, Gate> existingWires;//Ts les fils dérivés
         ***************************************/
-        public LineSegment _ls;
+        private LineSegment _ls;
         private PathFigure _fil;
-        public Gate gateStart;//début du fil
-        InputOutput io1, io2;
-        public Gate gateEnd;
+        public Gate gateStart { get; set; }//début du fil
+        private InputOutput io1 { get; set; } 
+        private InputOutput io2 { get; set; }
+        public Gate gateEnd { get; set; }
         private bool _value;
 
         public Wire(Point start, Gate gatePrinciple, InputOutput io)

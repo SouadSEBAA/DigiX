@@ -42,11 +42,13 @@ namespace WpfApp2
     {
         int gridGap = 10;
         CircuitPersonnalise circuit;
+        List<Wire> Wires;
 
         public MainWindow()
         {
             InitializeComponent();
             circuit = new CircuitPersonnalise();
+            Wires = new List<Wire>();
             ///test sequentiel
            //T
            /*
@@ -96,8 +98,24 @@ namespace WpfApp2
         {
             
             circuit.DeleteComponent(((Gate)e.Source).outil);
+            foreach(Wire wire in RecupererWires((Gate)e.Source))
+            {
+                Grille.Children.Remove(wire);
+            }
+
             Grille.Children.Remove(((Gate)e.Source));
             e.Handled = true;
+        }
+
+        private List<Wire> RecupererWires(Gate gate)
+        {
+            List<Wire> list = new List<Wire>();
+            foreach(Wire wire in Wires)
+            {
+                if (wire.gateEnd.Equals(gate) || wire.gateStart.Equals(gate))
+                    list.Add(wire);
+            }
+            return list;
         }
         /*************************************************************/
 
@@ -127,6 +145,7 @@ namespace WpfApp2
                 {
                     isDrawing = true;
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
+                    mousePosPrec = io.TranslatePoint(new Point(5, 5), Grille);
                     Panel.SetZIndex(line, -2);
                     Grille.Children.Add(line);
                 }
@@ -134,7 +153,7 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-
+        Point mousePosPrec;
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
@@ -159,7 +178,13 @@ namespace WpfApp2
                     {
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
+                        {
                             Grille.Children.Remove(line);
+                        }
+                        else
+                        {
+                            Wires.Add(line);
+                        }
                         break;
                     }
 
