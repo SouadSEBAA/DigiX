@@ -107,6 +107,7 @@ namespace WpfApp2.TTPack
                 }
                 
             }
+            
             cpt = 1;
             foreach (Outils elmnt in circuit.Vertices)
             {
@@ -118,6 +119,7 @@ namespace WpfApp2.TTPack
                 }
 
             }
+            
                 //DataColumn output = new DataColumn("output", typeof(string));
 
                 //dt.Columns.Add(output);
@@ -181,8 +183,22 @@ namespace WpfApp2.TTPack
 
                 Console.WriteLine("la valeur maximale du l est  :    " + l);
 
-                CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
-                simuler_click(essaie);
+                //CircuitPersonnalise essaie = new CircuitPersonnalise(circuit);
+                //simuler_click(essaie);
+
+               // List<Outils> ll = essaie.GetCompFinaux();
+                /*
+                cpt = 1;
+                foreach (Outils elmnt in ll)
+                {
+                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
+                    dt.Columns.Add(output);
+                    cpt++;
+                }
+                */
+
+
+
                 foreach (Outils elmnt in circuit.Vertices)
                 {
                     if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
