@@ -310,8 +310,47 @@ namespace WpfApp2
             
             if (result == true)
             {
-               
+                Grille.Children.Clear();
+
+                string filename = dlg.FileName;
+                Canvas canvas = DeSerializeXAML(filename) as Canvas;
+                // Add all child elements (lines, rectangles etc) to canvas
+                while (canvas.Children.Count > 0)
+                {
+                    UIElement obj = canvas.Children[0]; // Get next child
+                    canvas.Children.Remove(obj); // Have to disconnect it from result before we can add it
+                    Grille.Children.Add(obj); // Add to canvas
+                }
             }
+        }
+
+
+        public static Canvas DeSerializeXAML(string filename)
+        {
+            using (System.IO.FileStream fs = System.IO.File.Open(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+            {
+                // return System.Windows.Markup.XamlReader.Load(fs) as UIElementCollection;
+                StringReader strreader = new StringReader(mystrXAML);
+                XmlReader xmlReader = XmlReader.Create(strreader);
+                Canvas readerLoadChildren = (Canvas)XamlReader.Load(xmlReader);
+                return (readerLoadChildren);
+            }
+        }
+
+
+        public static string mystrXAML;
+        public static void SetStr(string s) { mystrXAML = s; }
+
+        // Serializes any UIElement object to XAML using a given filename. // function version 2
+        public static void SerializeToXML(Canvas canvas, string filename)
+        {
+            mystrXAML = XamlWriter.Save(canvas);
+            SetStr(mystrXAML);
+            FileStream filestream = File.Create(filename);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.Write(mystrXAML);
+            streamwriter.Close();
+            filestream.Close();
         }
 
         private void sauvegarde_click(object sender, RoutedEventArgs e)
@@ -327,6 +366,10 @@ namespace WpfApp2
             // Process save file dialog box results
             if (result == true)
             {
+                // Save document
+                //string filename = dlg.FileName;
+                //SerializeToXAML(Grille.Children, filename);
+                SerializeToXML(Grille, dlg.FileName);
 
             }
         }
