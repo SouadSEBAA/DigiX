@@ -12,6 +12,8 @@ namespace logisimConsole
     [Serializable]
     public abstract class Outils
     {
+        public static int nbrOutils=0;
+        public int id=0;
         public CircuitPersonnalise circuit;
         public bool added;
         protected int nb_entrees;
@@ -36,7 +38,11 @@ namespace logisimConsole
 
         }
 
-        public Outils() { }
+        public Outils() 
+        {
+            id = nbrOutils;
+            nbrOutils++;
+        }
 
 
         //Constructeur pour les portes logiques (le nobre de sorties est fixee a 1)
@@ -153,9 +159,11 @@ namespace logisimConsole
         {
             Outils o = this;
             Console.WriteLine("+++++++++entree end circuit ********");
-            foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
+            if ((iN.circuit.getCircuit().OutEdges(o)).Any())
+            {
+                foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    Console.WriteLine("bouce"+edge.Target);
+                    Console.WriteLine("bouce" + edge.Target);
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
                         Console.WriteLine("if");
@@ -166,6 +174,7 @@ namespace logisimConsole
                     else { edge.Target.EndCircuit(iN); }
 
                 }
+            }
             
         }
 
