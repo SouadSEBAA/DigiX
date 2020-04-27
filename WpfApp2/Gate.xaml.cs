@@ -250,7 +250,7 @@ namespace WpfApp2
     [Serializable]
     public class Et : Gate
     {
-        public Et() : base(new ET(), "M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15") { InitializeComponent(); }
+        public Et() : base(new ET(), "M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15") {  }
 
     }
 
