@@ -613,7 +613,6 @@ namespace WpfApp2
 
             //to inform theuser that the screeshot was created successfully
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-           
             
            
         }
