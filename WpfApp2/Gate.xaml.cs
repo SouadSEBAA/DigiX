@@ -387,7 +387,6 @@ namespace WpfApp2
         {
             path.Fill = Brushes.Red;
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
-            // this.MouseDoubleClick += OnClick;
         }
 
         public void OnClick(object sender, MouseEventArgs e)
@@ -428,11 +427,9 @@ namespace WpfApp2
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
         }
         public void OnClick(object sender, MouseEventArgs e)
-        {Console.WriteLine("Demmarer");
-            
+        {
+            Console.WriteLine("Demmarer");
             ((Horloge)this.outil).Demmarer();
-            
-
         }
     }
     //le circuit perssonalisé 

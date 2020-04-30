@@ -10,7 +10,7 @@ using WpfApp2.Noyau;
 
 namespace logisimConsole
 {
-    public abstract class  IN :Outils
+    public abstract class  IN : Outils
     { 
 
         HashSet<Outils> listefin = new HashSet<Outils>();//pour eviter less redoublants qui changent less sorties
@@ -18,16 +18,18 @@ namespace logisimConsole
         {
 
         }
+
         //construiction de la liste des elementss finaux d'un mini circuit relié à un element de depart
         public HashSet<Outils> getEndListe() { return this.listefin; }
         //*************************
+
         public void Calcul()
         {
-           // if (this.circuit.getSimulation())
-           // {
+           if (this.circuit.getSimulation())
+            {
                 this.EndCircuit(this);
                 this.circuit.EvaluateCircuit(this);
-           // }
+            }
         }
 
     }

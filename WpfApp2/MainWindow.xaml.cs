@@ -269,7 +269,6 @@ namespace WpfApp2
             {
                 if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
                 { 
-                //list_element_de_sortie.Add(vertex);
                 circuit.GetCompFinaux().Add(vertex);
                 }
                 
@@ -281,11 +280,15 @@ namespace WpfApp2
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
+            //In order to show the pause/stop buttons --------------------------------------------
+            if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+            if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+            //-----------------------------------------------------------------------------------
+
             circuit.setSimulation(false);
-            //jimin
+           
             Last_Elements(); //idk if this is needed based on what has been done below
-            //souad
-            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
+
             //melissa
             circuit.EvaluateCircuit();
             circuit.setSimulation(true);
@@ -441,7 +444,6 @@ namespace WpfApp2
                     Gate gate = (Gate)user;
                     if (gate.outil.id == id) { return gate; }
                 }
-
             }
             return null;
         }
@@ -461,10 +463,8 @@ namespace WpfApp2
             if (result == true)
             {
                 // Save document
-
                 string filename = dlg.FileName;
                 SerializeToXAML(filename);
-
                 //melissa 
 
             }
@@ -643,9 +643,52 @@ namespace WpfApp2
             this.WindowState = WindowState.Maximized;
         }
 
+        private void pause_click(object sender, RoutedEventArgs e)
+        {
+            circuit.setSimulation(false);
+        }
+
+        private void stop_click(object sender, RoutedEventArgs e)
+        {
+            int i = 0; int j = 0; //need this to make sure it works --on console only--
+            Console.WriteLine("-----Stop Button--------");
+
+            circuit.setSimulation(false);
+
+            foreach (Outils o in circuit.getCircuit().Vertices)
+            {
+                if (o is Horloge) { ((Horloge)o).arreter(); }
+                Console.WriteLine("l'outil :"+o);
+                foreach (ClasseEntree c_e in o.getListeentrees()) 
+                {
+                    i++;
+                    Console.WriteLine("input number : "+i);
+                    //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
+                    Console.WriteLine("etat avant 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
+                    c_e.setRelated(false);
+                    c_e.setEtat(false);
+                    c_e.stopbutton();
+                    Console.WriteLine("etat apres 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
+                }
+
+                foreach (Sortie s in o.getListesorties())
+                {
+                    j++;
+                    Console.WriteLine("output number : " + j);
+                    Console.WriteLine("etat avant"+s.getEtat());
+                    s.setEtat(false);
+                    s.set_Sorties(new List<OutStruct>());
+                    s.stopbutton();
+                    Console.WriteLine("etat avant:"+s.getEtat());
+                }
+
+            }
+
+            if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
+            if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
+        }
+
         //**************************************END OF MENU BUTTONS*******************************//
-
-
 
     }
 }

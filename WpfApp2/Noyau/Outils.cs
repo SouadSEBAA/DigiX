@@ -7,6 +7,8 @@ using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
+
+
 namespace logisimConsole
 {
     [Serializable]
@@ -53,6 +55,7 @@ namespace logisimConsole
             this.etiquette = etiquette;
             this.liste_entrees = liste_entrees;
         }
+
         /*
                 //Constructeur pour la porte non -cas speciale- car elle a une seule entree
                 public Outils(string etiquette, List<ClasseEntree> liste_entrees)
@@ -92,9 +95,9 @@ namespace logisimConsole
             if (stop) { Console.WriteLine("attention entrée non reliée"); }
             return (!stop);
         }
+
         public void appelCalcul()
         {
-
             int i = 0, i1 = 0;
             Sortie s;
             while (i < nb_entrees)
@@ -168,8 +171,6 @@ namespace logisimConsole
                     {
                         Console.WriteLine("if");
                         iN.getEndListe().Add(edge.Target);
-
-
                     }
                     else { edge.Target.EndCircuit(iN); }
 
@@ -197,6 +198,8 @@ namespace logisimConsole
             return empty;
         }
     }
+
+
     public class Outilspm
     {
         public void calcul_sorties()

@@ -32,7 +32,6 @@ namespace WpfApp2
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
-           // this.MouseEnter += MouseOver2; // for our labels
         }
 
         public bool GetIsInput() { return IsInput; }
@@ -81,24 +80,16 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
 
-
-       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            my_label.Content = this.GetEtiquette();
-        }*/
-
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
 
-
         virtual public void setEtat(bool etat)
         {
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
             //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
-
             Application.Current.Dispatcher.Invoke(() =>
             {
                 // Code causing the exception or requires UI thread access
@@ -106,14 +97,11 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Red;
                 else
-                    elSelector.Fill = Brushes.Black;
-            });
-
-
-           
-            
-           
+                    elSelector.Fill = Brushes.Black; 
+            });       
         }
+
+        public void stopbutton() { elSelector.Fill = Brushes.Black; }
 
         public bool getEtat()
         {

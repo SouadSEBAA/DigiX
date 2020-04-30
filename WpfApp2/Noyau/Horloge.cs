@@ -14,7 +14,6 @@ namespace logisimConsole
 		//Constructeur 
 		public Horloge()
 		{
-			
 			this.nb_entrees = 0;
 			this.nb_sorties = 1;
 			this.etiquette = "horloge";
@@ -26,17 +25,13 @@ namespace logisimConsole
 			//on demare le thread
 	        /*this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();*/
-
-			liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, new List<OutStruct>()));
+			liste_sorties.Add(new Sortie("Sortie Horloge",1, Disposition.down, false, new List<OutStruct>()));
 			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
-
-
 		}
 		public void Demmarer()
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();
-
 		}
 
 		//  le Tour du signal d'horloge 
@@ -106,13 +101,10 @@ namespace logisimConsole
 			//
 		}
 
-		
-
 		public int getUP()
 		{
 			return UP;
 		}
-
 
 	}
 }

@@ -97,14 +97,28 @@
                     <Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Sauvegarder" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="ContentSaveAll"  Margin="5" />
+                            <materialDesign:PackIcon Kind="ContentSaveEdit"  Margin="5" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="simuler" Width="90" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Simuler" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="Play" Margin="5" />
+                            <materialDesign:PackIcon Kind="Play" Margin="5" Foreground="CadetBlue" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="pause" Visibility="Collapsed" Width="70" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="pause_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Pause" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Pause" Margin="5" Foreground="DarkGray"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="stop" Visibility="Collapsed" Width="70" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="stop_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Arret" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Stop" Margin="5" Foreground="Salmon" />
                         </StackPanel>
                     </Button>
 
