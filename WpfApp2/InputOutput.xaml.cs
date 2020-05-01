@@ -97,7 +97,7 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Red;
                 else
-                    elSelector.Fill = Brushes.Black; 
+                    elSelector.Fill = Brushes.Black;  
             });       
         }
 

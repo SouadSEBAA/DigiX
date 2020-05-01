@@ -41,32 +41,7 @@ namespace WpfApp2
         {
             //InitializeComponent();
             circuit = new CircuitPersonnalise();
-            ///test sequentiel
-           //T
-           /*
-            T basculeT = new T(); circuit.AddComponent(basculeT);
-            basculeT.getEntreeSpecifique(3).setEtat(true);//T
-            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
-            //D
-            D basculeD = new D(); circuit.AddComponent(basculeD);
-            basculeD.getEntreeSpecifique(3).setEtat(true);//T
-            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
-            //Et
-            ET et = new ET();circuit.AddComponent(et);
-            //horloge
-            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
-            horloge.circuit = circuit;
-            //relation
-            circuit.Relate(horloge, basculeT, 0, 0);
-            circuit.Relate(horloge, basculeD, 0, 0);
-            circuit.Relate(basculeT, et, 0, 0);
-            circuit.Relate(basculeD, et, 0, 1);
-            horloge.fin = et;
-            horloge.Demmarer();*/
-            //seriaisation 
-
+           
         }
 
 
@@ -286,11 +261,13 @@ namespace WpfApp2
             //-----------------------------------------------------------------------------------
 
             circuit.setSimulation(false);
-           
              Last_Elements(); //idk if this is needed based on what has been done below
+           
                 //melissa
              circuit.EvaluateCircuit();
              circuit.setSimulation(true);
+               //
+            
         }
 
 
@@ -647,16 +624,17 @@ namespace WpfApp2
             circuit.setSimulation(false);
         }
 
-       
+        public bool has_stopped = false;
+
         private void stop_click(object sender, RoutedEventArgs e)
         {
             int i = 0; int j = 0; //need this to make sure it works --on console only--
             Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
-
+            has_stopped = true;
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
-                //if (o is Horloge) { ((Horloge)o).arreter(); }
+                if (o is Horloge) { ((Horloge)o).arreter(); }
                 Console.WriteLine("l'outil :"+o);
                 foreach (ClasseEntree c_e in o.getListeentrees()) 
                 {
@@ -685,39 +663,24 @@ namespace WpfApp2
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
 
-            
-           // Gate g = Find_clock();
-            //(g).MouseDoubleClick += new MouseButtonEventHandler(OnClick2); Console.WriteLine("made the clock work");
-
         }
 
-        public Gate Find_clock()
+        public void reset_clock()
         {
-            bool found = false;
-            Gate g = new Gate();
-            //case of clock since it can be stopped in stop button was previously pressed
-            foreach (UserControl user in Grille.Children)
+            foreach (Outils o in circuit.getCircuit().Vertices)
             {
-                if (user is Gate)
+                if (o is Horloge)
                 {
-                    g = (Gate)user;
-                    if (g is horloge)
-                    {
-                        found = true;
-                        Console.WriteLine("found horloge");
-                    }  
+                    ((Horloge)o).mini();
                 }
             }
-            if (found == false) { return null; }
-            else { return g; }
-
         }
 
         
-        public void OnClick2(object sender, MouseEventArgs e)
+        private void circuit_click(object sender, MouseButtonEventArgs e)
         {
-            Gate g = Find_clock();
-            ((Horloge)g.outil).Demmarer();
+            //for the 'circuit personnalise' button 
+            reset_clock();
         }
 
         //**************************************END OF MENU BUTTONS*******************************//
