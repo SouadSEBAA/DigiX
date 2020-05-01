@@ -18,9 +18,6 @@ using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
 using Path = System.IO.Path;
-using Microsoft.Research.DynamicDataDisplay;
-using Microsoft.Research.DynamicDataDisplay.DataSources;
-using Microsoft.Research.DynamicDataDisplay.Charts;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Threading;
@@ -158,6 +155,11 @@ namespace WpfApp2
             if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
                 line.EndPoint = mousePos;
+            }
+            else if (isDragNewCircuit)
+            {
+                Canvas.SetLeft(gate, mousePos.X);
+                Canvas.SetTop(gate, mousePos.Y);
             }
 
         }
@@ -565,10 +567,41 @@ namespace WpfApp2
         {
             this.WindowState = WindowState.Maximized;
         }
-
         //**************************************END OF MENU BUTTONS*******************************//
 
+        //Circuit Personnalsié
+        /*************************************************************************************/
+        bool isDragNewCircuit;
+        circuitpersonnalise gate ;
 
+        private void ListViewItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Open a file
+            //Si il clique sur ouvrir
+            isDragNewCircuit = true;
+            CircuitPersonnalise cir = new CircuitPersonnalise(1, 1); //à modifier
+
+
+            gate = new circuitpersonnalise(cir);
+            Grille.Children.Add(gate);
+            Canvas.SetLeft(gate, e.GetPosition(Grille).X);
+            Canvas.SetTop(gate, e.GetPosition(Grille).Y);
+            //Si il clique sur annuler, ne rien faire
+
+        }
+
+        private void Grille_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (isDragNewCircuit)
+            {
+                isDragNewCircuit = false;
+                gate.added = true;
+                gate.currentPoint = mousePos;
+                gate.anchorPoint = gate.currentPoint;
+                
+            }
+        }
+        /************************************************************************************/
 
     }
 }

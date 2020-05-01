@@ -138,7 +138,18 @@ namespace WpfApp2
             //Fréquences de l'horloge
             if(outil is Horloge)
             {
-                
+                ListBoxItem lbi = new ListBoxItem();
+                MenuItem mi = new MenuItem();
+                MenuItem mi1 = new MenuItem();
+                mi1.Header = "1s";
+                MenuItem mi2 = new MenuItem();
+                MenuItem mi3 = new MenuItem();
+                mi.Items.Add(mi1);
+                mi.Items.Add(mi2);
+                mi.Items.Add(mi3);
+                mi.Header = "Fréquences";
+                lbi.Content = mi; 
+                menu.Items.Add(lbi);
             }
         }
         //cette fonction pour ajouter et créer les i/o
@@ -586,9 +597,10 @@ namespace WpfApp2
         }
     }
     //le circuit perssonalisé 
-    public class CircuitComplet : Gate
+    public class circuitpersonnalise : Gate
     {
-        public CircuitComplet() : base(new CircuitPersonnalise()) { }
+        public circuitpersonnalise() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
+        public circuitpersonnalise(CircuitPersonnalise circuit) : base(circuit, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
 }
     

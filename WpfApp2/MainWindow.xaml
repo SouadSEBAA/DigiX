@@ -25,7 +25,7 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
                 <Canvas x:Name="Grille"         
-                MouseMove="MouseMoved"
+                MouseMove="MouseMoved" MouseDown="Grille_MouseDown"
                 MouseLeftButtonUp="MouseReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
@@ -45,7 +45,7 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Canvas.Background>
-                    <StackPanel Orientation="Vertical" x:Name="StackExceptions" Canvas.Top="5" Canvas.Left="380"/>
+                    <StackPanel x:Name="StackExceptions" Orientation="Vertical" Canvas.Top="5" Canvas.Left="380"/>
                 </Canvas>
             </ScrollViewer>
         </Grid>
@@ -146,7 +146,7 @@
                 <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                     <StackPanel Orientation="Vertical">
 
-                        <ListViewItem Height="60">
+                        <ListViewItem Height="60" MouseUp="ListViewItem_MouseDown">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="Lavender" VerticalAlignment="Center" Margin="5"/>
                                 <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender"/>

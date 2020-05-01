@@ -8,7 +8,7 @@ using System.Windows.Controls;
 namespace logisimConsole
 {
     [Serializable]
-    public class CircuitPersonnalise :Outils, ICloneable
+    public class CircuitPersonnalise :Outils
     {
         private bool Sauvegardé;
         private bool simulation;
@@ -25,6 +25,16 @@ namespace logisimConsole
         {
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
             CompFinaux = new List<Outils>();
+        }
+
+        public CircuitPersonnalise(int nbentree, int nbsortie)
+        {
+            liste_entrees = new List<ClasseEntree>(nb_entrees);
+            liste_sorties = new List<Sortie>(nb_sorties);
+
+            //à décommenter
+            //this.nb_entrees = nbentree;
+            //this.nb_sorties = nbsortie;
         }
 
 
@@ -249,17 +259,6 @@ namespace logisimConsole
             return l;
         }
 
-        public CircuitPersonnalise(CircuitPersonnalise circuit)
-        {
-            Circuit = circuit.Circuit.Clone();
-            simulation = circuit.simulation;
-            CompFinaux = new List<Outils>();
-        }
-
-        public object Clone()
-        {
-            return new CircuitPersonnalise(this);
-        }
 
 
     }
