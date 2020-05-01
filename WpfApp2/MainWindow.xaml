@@ -45,6 +45,7 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Canvas.Background>
+                    <StackPanel Orientation="Vertical" x:Name="StackExceptions" Canvas.Top="5" Canvas.Left="380"/>
                 </Canvas>
             </ScrollViewer>
         </Grid>

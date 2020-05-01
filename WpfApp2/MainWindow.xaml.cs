@@ -336,11 +336,13 @@ namespace WpfApp2
         {
             circuit.setSimulation(false);
             Console.WriteLine("--------------  Partie Simuler Click");
-            
+
+            //For exceptions
+            StackExceptions.Children.Clear();
 
             //Vérifier si les éléments sont reliés
-            
-            /*if (circuit.getUnrelatedGates().Count != 0)
+
+            if (circuit.getUnrelatedGates().Count != 0)
             {
                 try
                 {
@@ -352,7 +354,7 @@ namespace WpfApp2
                     exception.Gerer();
                 }
             }
-            else
+           /* else
             {*/
             
 
