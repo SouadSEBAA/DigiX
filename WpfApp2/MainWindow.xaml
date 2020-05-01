@@ -89,49 +89,49 @@
 
                     <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="CellphoneScreenshot" Margin="5" />
+                            <TextBlock Text="Capture d'ecran" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="MonitorScreenshot" Foreground="LightGray" Margin="5" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Sauvegarder" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="ContentSaveEdit"  Margin="5" />
+                            <TextBlock Text="Sauvegarder" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ContentSaveEdit" Foreground="#e3f2fd"  Margin="5" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="simuler" Width="90" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Simuler" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Simuler" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Play" Margin="5" Foreground="CadetBlue" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="pause" Visibility="Collapsed" Width="70" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="pause_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Pause" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Pause" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Pause" Margin="5" Foreground="DarkGray"/>
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="stop" Visibility="Collapsed" Width="70" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="stop_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Arret" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Arret" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Stop" Margin="5" Foreground="Salmon" />
                         </StackPanel>
                     </Button>
 
                     <Button x:Name="aide" Width="80" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="aide_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Aide" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="HelpCircle"  Margin="5" />
+                            <TextBlock Text="Aide" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="HelpCircle" Foreground="DarkBlue" Background="White" Margin="10 5" />
                         </StackPanel>
                     </Button>
 
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="Autre" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="Lavender" StaysOpen="False">
+                        <TextBlock Text="Autre" Foreground="#9fa8da" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="White" StaysOpen="False">
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
@@ -139,12 +139,6 @@
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
-
-                    <!--
-                    <Button x:Name="close" Width="40" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_window">
-                        <materialDesign:PackIcon Kind="Close" Height="30" Width="30"  Background="Red"/>
-                    </Button>
-                    -->
 
                 </StackPanel>
             </Grid>
@@ -161,14 +155,14 @@
 
                         <ListViewItem Height="60">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="Lavender" VerticalAlignment="Center" Margin="5"/>
-                                <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender"/>
+                                <materialDesign:PackIcon Kind="YoutubeCreatorStudio" Width="25" Height="25" Foreground="#00363a" VerticalAlignment="Center" Margin="5"/>
+                                <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="#9fa8da"/>
                             </StackPanel>
                         </ListViewItem>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="Lavender" />
-                            <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold"/>
+                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="#00363a" />
+                            <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold"/>
                             <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
@@ -176,12 +170,10 @@
                                         <StackPanel Orientation="Horizontal"  Width="201" Height="65">
                                             <TextBlock Text="Porte ET"  Padding="20 5" VerticalAlignment="Center"/>
                                             <local:Et Canvas.Top="0" Canvas.Left="0" >
-
                                             </local:Et>
                                         </StackPanel>
 
                                     </ListViewItem>
-                                    <ListViewItem/>
 
 
                                     <ListViewItem>
@@ -232,8 +224,8 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="Waves" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
-                            <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <materialDesign:PackIcon Kind="LetterCCircle" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
@@ -293,8 +285,8 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
-                            <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
@@ -351,8 +343,8 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="Hourglass" Width="25" Height="25" Margin="10 16" Foreground="Lavender"/>
-                            <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
+                            <materialDesign:PackIcon Kind="Lightbulb" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 

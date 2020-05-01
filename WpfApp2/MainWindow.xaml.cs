@@ -277,7 +277,7 @@ namespace WpfApp2
         }
 
 
-
+        
         private void simuler_click(object sender, RoutedEventArgs e)
         {
             //In order to show the pause/stop buttons --------------------------------------------
@@ -287,11 +287,10 @@ namespace WpfApp2
 
             circuit.setSimulation(false);
            
-            Last_Elements(); //idk if this is needed based on what has been done below
-
-            //melissa
-            circuit.EvaluateCircuit();
-            circuit.setSimulation(true);
+             Last_Elements(); //idk if this is needed based on what has been done below
+                //melissa
+             circuit.EvaluateCircuit();
+             circuit.setSimulation(true);
         }
 
 
@@ -648,16 +647,16 @@ namespace WpfApp2
             circuit.setSimulation(false);
         }
 
+       
         private void stop_click(object sender, RoutedEventArgs e)
         {
             int i = 0; int j = 0; //need this to make sure it works --on console only--
             Console.WriteLine("-----Stop Button--------");
-
             circuit.setSimulation(false);
 
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
-                if (o is Horloge) { ((Horloge)o).arreter(); }
+                //if (o is Horloge) { ((Horloge)o).arreter(); }
                 Console.WriteLine("l'outil :"+o);
                 foreach (ClasseEntree c_e in o.getListeentrees()) 
                 {
@@ -677,7 +676,6 @@ namespace WpfApp2
                     Console.WriteLine("output number : " + j);
                     Console.WriteLine("etat avant"+s.getEtat());
                     s.setEtat(false);
-                    s.set_Sorties(new List<OutStruct>());
                     s.stopbutton();
                     Console.WriteLine("etat avant:"+s.getEtat());
                 }
@@ -686,6 +684,40 @@ namespace WpfApp2
 
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
+
+            
+           // Gate g = Find_clock();
+            //(g).MouseDoubleClick += new MouseButtonEventHandler(OnClick2); Console.WriteLine("made the clock work");
+
+        }
+
+        public Gate Find_clock()
+        {
+            bool found = false;
+            Gate g = new Gate();
+            //case of clock since it can be stopped in stop button was previously pressed
+            foreach (UserControl user in Grille.Children)
+            {
+                if (user is Gate)
+                {
+                    g = (Gate)user;
+                    if (g is horloge)
+                    {
+                        found = true;
+                        Console.WriteLine("found horloge");
+                    }  
+                }
+            }
+            if (found == false) { return null; }
+            else { return g; }
+
+        }
+
+        
+        public void OnClick2(object sender, MouseEventArgs e)
+        {
+            Gate g = Find_clock();
+            ((Horloge)g.outil).Demmarer();
         }
 
         //**************************************END OF MENU BUTTONS*******************************//
