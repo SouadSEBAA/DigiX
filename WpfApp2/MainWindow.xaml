@@ -101,6 +101,13 @@
                         </StackPanel>
                     </Button>
 
+                    <Button x:Name="clock" Width="120" Visibility="Collapsed" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="clock_click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="Reset Clock" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Hourglass" Margin="5" Foreground="Lavender" />
+                        </StackPanel>
+                    </Button>
+
                     <Button x:Name="simuler" Width="90" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="simuler_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Simuler" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>

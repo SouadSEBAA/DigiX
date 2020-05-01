@@ -662,6 +662,7 @@ namespace WpfApp2
 
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
+            if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
 
         }
 
@@ -680,6 +681,11 @@ namespace WpfApp2
         private void circuit_click(object sender, MouseButtonEventArgs e)
         {
             //for the 'circuit personnalise' button 
+            
+        }
+
+        private void clock_click(object sender, RoutedEventArgs e)
+        {
             reset_clock();
         }
 
