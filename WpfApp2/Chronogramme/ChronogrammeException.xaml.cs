@@ -20,6 +20,7 @@ namespace WpfApp2
     /// </summary>
     public partial class ChronogrammeException : UserControl
     {
+
         public ChronogrammeException()
         {
             InitializeComponent();

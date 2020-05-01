@@ -38,7 +38,7 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()//on l'ajoute au graphique
         {
-           // liste_sorties[0].setEtat(liste_entrees[0].getEtat());
+            liste_sorties[0].setEtat(liste_entrees[0].getEtat());
         }
     }
 }

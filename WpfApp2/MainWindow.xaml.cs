@@ -38,7 +38,7 @@ namespace WpfApp2
     /// </summary>
 
     [Serializable]
-    public partial class MainWindow : Window, System.Collections.IEnumerable
+    public partial class MainWindow : Window/*, System.Collections.IEnumerable*/
     {
         int gridGap = 10;
         CircuitPersonnalise circuit;
@@ -77,9 +77,6 @@ namespace WpfApp2
 
             //Suppression d'un Gate
             Grille.AddHandler(Gate.DeletingGateEvent, new RoutedEventHandler(Supprimer));
-
-            //Affichage d'un chronogramme
-            Grille.AddHandler(InputOutput.ChronogrammeEvent, new RoutedEventHandler(ChronogrammeAffiche));
 
         }
 
@@ -212,34 +209,17 @@ namespace WpfApp2
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
-            Chronogrammes chronoPage = new Chronogrammes(circuit);
-            Chronogrammes.Children.Add(chronoPage);
-        }
-        public static bool isChrono;
-        private void ChronogrammeAffiche(object sender, RoutedEventArgs e)
-        {
-            if (!isChrono)
+            if (!Chronogrammes.isOneChrono)
             {
-                isChrono = true;
-                Chrono chronogrammeWindow = new Chrono((InputOutput)e.OriginalSource, ((InputOutput)e.OriginalSource).getEtiquette() + ((Gate)e.Source).outil.getLabel());
-                chronogrammeWindow.Show();
-                chronogrammeWindow.Topmost = true;
+                Chronogrammes chronoPage = new Chronogrammes(circuit);
+                chronoPage.Show();
+                chronoPage.Topmost = true;
+                chronoPage.Owner = this;
+                ChronoButton.IsEnabled = false;
+                Chronogrammes.isOneChrono = true;
             }
-            else
-            {
-                try
-                {
-                    throw new OneChronogrammeException(StackExceptions);
-                }
-                catch(OneChronogrammeException expt)
-                {
-                    StackExceptions.Children.Clear();
-                    expt.Gerer();
-                }
-            }
-            e.Handled = true;
-        }
 
+        }
 
         /******************************************************************************/
 
@@ -557,11 +537,11 @@ namespace WpfApp2
             
            
         }
-
+        /*
         public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)

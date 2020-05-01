@@ -45,7 +45,6 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Canvas.Background>
-                    <StackPanel Orientation="Vertical" x:Name="StackExceptions" Canvas.Top="5" Canvas.Left="380"/>
                 </Canvas>
             </ScrollViewer>
         </Grid>
@@ -122,7 +121,7 @@
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
-                                <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -372,7 +371,6 @@
             </Grid>
         </Grid>
 
-        <Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" ></Canvas>
 
     </Grid>
 </Window>

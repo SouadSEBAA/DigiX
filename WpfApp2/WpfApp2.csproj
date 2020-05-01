@@ -49,12 +49,6 @@
     <Reference Include="DynamicDataDisplay.Markers2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5b7d744a7263923f, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicDataDisplayWpf.0.4.0\lib\DynamicDataDisplay.Markers2.dll</HintPath>
     </Reference>
-    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.2.2.920, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.2\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -100,10 +94,9 @@
     <Compile Include="Chronogramme\ChronogrammeException.xaml.cs">
       <DependentUpon>ChronogrammeException.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Chronogramme\Chrono.xaml.cs">
-      <DependentUpon>Chrono.xaml</DependentUpon>
+    <Compile Include="Chronogramme\EssaiChrono.xaml.cs">
+      <DependentUpon>EssaiChrono.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Chronogramme\ClasseChronogramme.cs" />
     <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
       <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
     </Compile>
@@ -125,15 +118,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Chronogramme\Chrono.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Chronogramme\Chronogrammes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Chronogramme\StepLine.xaml">
+    <Page Include="Chronogramme\EssaiChrono.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,9 +144,6 @@
     </Compile>
     <Compile Include="Chronogramme\Chronogrammes.xaml.cs">
       <DependentUpon>Chronogrammes.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Chronogramme\StepLine.xaml.cs">
-      <DependentUpon>StepLine.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gate.xaml.cs">
       <DependentUpon>Gate.xaml</DependentUpon>

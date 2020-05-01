@@ -38,7 +38,8 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+                
         }
     }
 

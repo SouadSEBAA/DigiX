@@ -18,7 +18,7 @@ namespace WpfApp2
     public partial class InputOutput : UserControl
     {
 
-        protected String etiquette;
+        public String etiquette { get; set; }
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
@@ -61,7 +61,7 @@ namespace WpfApp2
 
         public InputOutput() 
         { 
-            InitializeComponent(); etat = false; 
+            InitializeComponent(); etat = false;
         }
 
         public Disposition GetDisposition() { return dispo; }
@@ -119,12 +119,8 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Red;
+                    elSelector.Fill = Brushes.Black;
             });
-
-
-           
-            
            
         }
 

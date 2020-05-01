@@ -134,6 +134,12 @@ namespace WpfApp2
             OutilShape.Width = path.Width + 44;
             OutilShape.Height = path.Height + 44;
             //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la fonction ajouterio
+
+            //Fréquences de l'horloge
+            if(outil is Horloge)
+            {
+                
+            }
         }
         //cette fonction pour ajouter et créer les i/o
         public void AjouterIO(Grid grid, InputOutput myt, int n)
@@ -521,17 +527,18 @@ namespace WpfApp2
     }
 
     // Liaisons
-
-    class pin_entree : Gate
+    [Serializable]
+    public class pin_entree : Gate
     {
-        public pin_entree() : base(new PinIn(), "M78.072001,36.905001 C78.072001,57.010928 60.706917,73.310002 39.286001,73.310002 C17.865084,73.310002 0.5,57.010928 0.5,36.905001 C0.5,16.799074 17.865084,0.5 39.286001,0.5 C60.706917,0.5 78.072001,16.799074 78.072001,36.905001 z M64.977001,35.7155 C64.977001,48.588982 53.741587,59.025001 39.882001,59.025001 C26.022415,59.025001 14.787,48.588982 14.787,35.7155 C14.787,22.842019 26.022415,12.406 39.882001,12.406 C53.741587,12.406 64.977001,22.842019 64.977001,35.7155 z")
+
+        public pin_entree() : base(new PinIn(), "M57.5,29 C57.5,44.740115 44.740115,57.5 29,57.5 C13.259885,57.5 0.5,44.740115 0.5,29 C0.5,13.259885 13.259885,0.5 29,0.5 C44.740115,0.5 57.5,13.259885 57.5,29 z M35.5,28 C35.5,31.589851 32.365993,34.5 28.5,34.5 C24.634007,34.5 21.5,31.589851 21.5,28 C21.5,24.410149 24.634007,21.5 28.5,21.5 C32.365993,21.5 35.5,24.410149 35.5,28 z")
         {
             path.Fill = Brushes.Red;
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
             // this.MouseDoubleClick += OnClick;
         }
 
-        public void OnClick(object sender, System.Windows.Input.MouseEventArgs e)
+        public void OnClick(object sender, MouseEventArgs e)
         {
 
             if (this.outil.getListeentrees()[0].getEtat().Equals(true))
@@ -555,27 +562,30 @@ namespace WpfApp2
         }
     }
 
-
-
-    class pin_sortie : Gate
+    [Serializable]
+    public class pin_sortie : Gate
     {
         public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z") { }
+        
     }
 
-    class horloge : Gate
+    [Serializable]
+    public class horloge : Gate
     {
         public horloge() : base(new Horloge(), "M1.0000047, 1.0000005 L83.333005, 1.0000005 L83.333005, 27.571001 L1.0000047, 27.571001 z M0.99999997, 28.570993 L13.095017, 1 M15.094999, 1 L27.380993, 28.570993 M29.381017, 28.570993 L40.476016, 1 M42.476016, 1 L54.761992, 28.570993 M56.762006, 28.570993 L69.047004, 1 M71.047003, 1 L84.332993, 28.570993")
         {
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
         }
-        public void OnClick(object sender, System.Windows.Input.MouseEventArgs e)
+        public void OnClick(object sender, MouseEventArgs e)
         {
             Console.WriteLine("Demmarer");
 
             ((Horloge)this.outil).Demmarer();
+
+
         }
     }
-
+    //le circuit perssonalisé 
     public class CircuitComplet : Gate
     {
         public CircuitComplet() : base(new CircuitPersonnalise()) { }

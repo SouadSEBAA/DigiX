@@ -11,14 +11,15 @@ namespace WpfApp2
 {
     class OneChronogrammeException : Exception
     {
-        StackPanel panel;
+        Panel panel;
 
-        public OneChronogrammeException(StackPanel panel) { this.panel = panel; }
+        public OneChronogrammeException(Panel panel) { this.panel = panel; }
         public OneChronogrammeException() { this.panel = null; }
 
-        public void Gerer()
+        public void Gerer(String s)
         {
             ChronogrammeException message = new ChronogrammeException();
+            message.textMessage.Text = s;
             message.Opacity = 0.5;
             message.MouseDown += Close;
 

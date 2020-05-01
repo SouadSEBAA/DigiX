@@ -39,8 +39,8 @@ namespace logisimConsole
 
 		//  le Tour du signal d'horloge 
 
-		int T = 2000;
-		int UP = 1000;
+		int T = 1000;
+		int UP = 500;
 		Thread mythread;
 		//Task task;
 		bool stop = false;
