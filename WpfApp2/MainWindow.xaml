@@ -162,13 +162,13 @@
 
                         <ListViewItem Height="60" MouseDoubleClick="circuit_click">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="YoutubeCreatorStudio" Width="25" Height="25" Foreground="#00363a" VerticalAlignment="Center" Margin="5"/>
+                                <materialDesign:PackIcon Kind="YoutubeCreatorStudio" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5"/>
                                 <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="#9fa8da"/>
                             </StackPanel>
                         </ListViewItem>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="#00363a" />
+                            <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81" />
                             <ListBoxItem  Content="Portes Logiques" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold"/>
                             <Expander IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -231,7 +231,7 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="LetterCCircle" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <materialDesign:PackIcon Kind="LetterCCircle" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81"/>
                             <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -292,7 +292,7 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <materialDesign:PackIcon Kind="Animation" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81"/>
                             <ListBoxItem  Content="Sequentielles" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -350,7 +350,7 @@
                         </Grid>
 
                         <Grid>
-                            <materialDesign:PackIcon Kind="Lightbulb" Width="25" Height="25" Margin="10 16" Foreground="#00363a"/>
+                            <materialDesign:PackIcon Kind="Lightbulb" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81"/>
                             <ListBoxItem  Content="Liaison" Padding="60 16" FontSize="15" Foreground="#9fa8da" FontWeight="DemiBold" />
                             <Expander  IsExpanded="False" Width="210" HorizontalAlignment="Right" Background="{x:Null}" Foreground="White">
                                 <ListView  Foreground="Lavender" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
