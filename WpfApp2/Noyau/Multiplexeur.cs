@@ -10,10 +10,11 @@ namespace logisimConsole
         //protected List<ClasseEntree> liste_controlleurs;
         public Multiplexeur() 
         {
-            this.nb_entrees = 2;
+            this.nb_entrees = 3;
             this.nb_sorties = 1;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree("Controle 1", 0, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 1", 1, Disposition.left, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 2", 2, Disposition.left, false, false));
             this.liste_sorties.Add(new Sortie("Sortie", 0, Disposition.right, false, new List<OutStruct>()));
@@ -63,7 +64,7 @@ namespace logisimConsole
 
             // ect...
 
-
+            /*
             bool AllRelated = true;
 
             foreach (ClasseEntree uneEntree in this.liste_entrees)
@@ -73,7 +74,7 @@ namespace logisimConsole
 
 
             if (AllRelated)
-            {
+            {*/
                 switch (this.nb_entrees)
                 //ArgumentOutOfRangeException
                 {
@@ -156,11 +157,11 @@ namespace logisimConsole
                         Console.WriteLine("erreur des entrées");
                         break;
                 }
-            }
+           /* }
             else
             {
                 Console.WriteLine("Erreur ! Assurez que tous les entrées sont reliées");
-            }
+            }*/
 
 
 

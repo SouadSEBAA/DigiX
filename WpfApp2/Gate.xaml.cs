@@ -17,10 +17,25 @@ namespace WpfApp2
     [Serializable]
     public partial class Gate : UserControl
     {
-
         protected string data;
         public Outils outil;
-        public Gate(Outils outils) 
+
+        // Pour classifier les entrees selon la direction
+        private List<ClasseEntree> E_Left = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Up = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Right = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Down = new List<ClasseEntree>();
+
+        // Pour classifier les sorties selon la direction
+        private List<Sortie> S_Left = new List<Sortie>();
+        private List<Sortie> S_Up = new List<Sortie>();
+        private List<Sortie> S_Right = new List<Sortie>();
+        private List<Sortie> S_Down = new List<Sortie>();
+
+
+        public Gate() { }
+        public Gate(Gate gate) { }
+        public Gate(Outils outils)
         {
             this.outil = outils;
             //on supprime tt les children 
@@ -31,7 +46,8 @@ namespace WpfApp2
             this.OutilShape.Children.Remove(RightGate);
             this.OutilShape.AllowDrop = true;//e drop autorisé
         }
-        
+
+
         public Gate(Outils outil, String ph)
         {
             InputOutputs = new List<InputOutput>();
@@ -42,96 +58,138 @@ namespace WpfApp2
             path.Data = StreamGeometry.Parse(ph);
             path.StrokeThickness = 1;
             path.Fill = Brushes.White;
-            List<ClasseEntree> listEntre = outil.getListeentrees();
-            List<Sortie> sorties = outil.getListesorties();
 
-            Grid target = LeftGate;
+            Classification();
 
+            Creation();
 
-            int nE = 0, nS = 0, up = 0, left = 0, right = 0, down = 0, i = 0;
+            MAJ_Path();
+        }
 
-            // ajouter les entrées 
+        // Fonction qui separe les entrees et sorties selon la disposition
+
+        public void Classification()
+        {
+            int nE = 0;
+            int nS = 0;
+
             while (nE < outil.getnbrentrees())
             {
                 //Console.WriteLine(nE);
-                switch (listEntre[nE].GetDisposition())
+                switch (outil.getListeentrees()[nE].GetDisposition())
                 {
                     case Disposition.up:
-                        target = TopGate;
-                        i = up;
-                        up++;
-
+                        E_Up.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.down:
-                        target = BottomGate;
-                        i = down;
-                        down++;
+                        E_Down.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.left:
-                        target = LeftGate;
-                        i = left;
-                        left++;
+                        E_Left.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.right:
-                        target = RightGate;
-                        i = right;
-                        right++;
+                        E_Right.Add(outil.getListeentrees()[nE]);
                         break;
-
                 }
-
-                AjouterIO(target, listEntre[nE], i);
-
                 nE++;
             }
-            //ajouter les sorties 
 
             while (nS < outil.getnbrsoryies())
             {
-
-                switch (sorties[nS].GetDisposition())
+                //Console.WriteLine(nE);
+                switch (outil.getListesorties()[nS].GetDisposition())
                 {
                     case Disposition.up:
-                        target = TopGate;
-                        up++;
+                        S_Up.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.down:
-                        target = BottomGate;
-                        down++;
+                        S_Down.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.left:
-                        target = LeftGate;
-                        left++;
+                        S_Left.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.right:
-                        target = RightGate;
-                        right++;
+                        S_Right.Add(outil.getListesorties()[nS]);
                         break;
-                        //ajouter le cas d'erreur qui ne doit pas se presenter 
-
                 }
-
-                AjouterIO(target, sorties[nS], nS);
-
                 nS++;
             }
-            double taille = 20;
-            try
+
+            E_Left.Reverse();
+            S_Down.Reverse();
+            E_Up.Reverse();
+            //S_Right.Reverse();
+        }
+
+        // Pour la creaction
+
+        public void Creation()
+        {
+            // Les entrees :
+            int i = 0;
+            foreach (ClasseEntree Er in E_Right)
             {
-                PorteLogique p = (PorteLogique)outil;
+                AjouterIO(RightGate, Er, i);
+                i++;
             }
-            catch (Exception ex) { taille = 22.5; }
-            //if (outil.GetType().IsInstanceOfType(PorteLogiqu)) { taille = 10; }
-            //on peut ajouter un handeler d'event de changement de size du path pour faire les etapes qui suivent mais c pass necesssaire ;)
-            int ver = Math.Max(left, right);
-            int hor = Math.Max(up, down);
-            //mettre à jour la taille du path 
-            path.Height = Math.Max(ver * taille, path.Height);
-            path.Width = Math.Max(hor * taille, path.Width);
-            //mettre à jour la taille de la canavas parente 
-            OutilShape.Width = path.Width + 44;
-            OutilShape.Height = path.Height + 44;
-            //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la fonction ajouterio
+
+            i = 0;
+            foreach (ClasseEntree El in E_Left)
+            {
+                AjouterIO(LeftGate, El, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (ClasseEntree Ed in E_Down)
+            {
+                AjouterIO(BottomGate, Ed, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (ClasseEntree Eu in E_Up)
+            {
+                AjouterIO(TopGate, Eu, i);
+                i++;
+            }
+
+            // Les sorties :
+            i = 0;
+            foreach (Sortie Sr in S_Right)
+            {
+                AjouterIO(RightGate, Sr, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Sl in S_Left)
+            {
+                AjouterIO(LeftGate, Sl, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Sd in S_Down)
+            {
+                AjouterIO(BottomGate, Sd, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Su in S_Up)
+            {
+                AjouterIO(TopGate, Su, i);
+                i++;
+            }
+
+            RaiseEvent(new RoutedEventArgs(MAJwiresEvent));
         }
 
 
@@ -146,6 +204,340 @@ namespace WpfApp2
             //on peut le supprimer et on verifie dans les deux listes d'entrées et de sorties 
             //Liaison
             InputOutputs.Add(myt);
+        }
+
+
+        public void MAJ()
+        {
+            InputOutputs = new List<InputOutput>();
+
+            LeftGate.Children.Clear(); RightGate.Children.Clear(); BottomGate.Children.Clear(); TopGate.Children.Clear();
+            LeftGate.ColumnDefinitions.Clear(); RightGate.ColumnDefinitions.Clear(); BottomGate.ColumnDefinitions.Clear(); TopGate.ColumnDefinitions.Clear();
+        }
+
+        // Mise a jour du path apres ajout ou suppression d'une entrée ou sortie
+        public void MAJ_Path()
+        {
+            int taille = 20;
+
+            int ver = Math.Max(Math.Max(E_Left.Count, S_Left.Count), Math.Max(E_Right.Count, S_Right.Count));
+            int hor = Math.Max(Math.Max(E_Up.Count, S_Up.Count), Math.Max(E_Down.Count, S_Down.Count));
+            //mettre à jour la taille du path 
+            if (ver > 0) { path.Height = ver * taille; }
+            if (hor > 0) { path.Width = hor * taille; }
+
+            OutilShape.Width = path.Width + 44;
+            OutilShape.Height = path.Height + 44;
+        }
+
+        // ContextMenu
+
+        private void AjouterEntrée(object sender, RoutedEventArgs e)
+        {
+            Type type = outil.GetType();
+
+            if ((type.Name == "ET") || (type.Name == "OU") || (type.Name == "NAND") || (type.Name == "OUX") || (type.Name == "NOR"))
+            {
+                if (outil.getnbrentrees() < 5)
+                {
+                    string i = (outil.getnbrentrees() + 1).ToString();
+                    string etiq = ("Entrée " + i);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, true, false);
+                    outil.AjoutEntree(classeEntree);
+                    E_Left.Insert(0, classeEntree);
+                }
+            }
+
+            if (type.Name == "Encodeur")
+            {
+                int entree = 0;
+                if (outil.getnbrentrees() == 2) { entree = 2; }
+                if (outil.getnbrentrees() == 4) { entree = 4; }
+                for (int i = 0; i < entree; i++)
+                {
+                    string ee = (outil.getnbrentrees() + 1).ToString();
+                    string etiq_e = ("Entrée " + ee);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                    outil.AjoutEntree(classeEntree);
+                    E_Left.Insert(0, classeEntree);
+                }
+
+                string es = (outil.getnbrsoryies() + 1).ToString();
+                string etiq_s = ("Sortie " + es);
+                Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                outil.AjoutSortie(sortie);
+                S_Right.Add(sortie);
+            }
+
+            if (type.Name == "Decodeur")
+            {
+                int nbr_sortie = 0;
+                if (outil.getnbrsoryies() == 2) { nbr_sortie = 2; }
+                if (outil.getnbrsoryies() == 4) { nbr_sortie = 4; }
+                for (int i = 0; i < nbr_sortie; i++)
+                {
+                    string es = (outil.getnbrsoryies() + 1).ToString();
+                    string etiq_s = ("Sortie " + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                    outil.AjoutSortie(sortie);
+                    S_Right.Add(sortie);
+                }
+                string ee = (outil.getnbrentrees() + 1).ToString();
+                string etiq_e = ("Entrée " + ee);
+                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                outil.AjoutEntree(classeEntree);
+                E_Left.Insert(0, classeEntree);
+            }
+
+            if (type.Name == "AddNbits")
+            {
+                if (outil.getnbrentrees() < 10)
+                {
+
+                    string ee = (outil.getnbrsoryies()).ToString();
+                    string A = ("A" + ee);
+                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, true, false);
+                    outil.AjoutEntreeSpe(classeEntreeA, outil.getnbrsoryies() - 1);
+                    E_Up.Insert((outil.getnbrsoryies()) - 1, classeEntreeA);
+
+                    string B = ("B" + ee);
+                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, true, false);
+                    outil.AjoutEntreeSpe(classeEntreeB, 2 * (outil.getnbrsoryies()) - 1);
+                    E_Up.Insert(0, classeEntreeB);
+
+                    string es = (outil.getnbrsoryies()).ToString();
+                    string etiq_s = ("Somme" + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.down, false, new List<OutStruct>());
+                    outil.AjoutSortieSpe(sortie, outil.getnbrsoryies() - 1);
+                    S_Down.Insert(1, sortie);
+                }
+            }
+
+            if (type.Name == "Multiplexeur")
+            {
+                if (outil.getnbrentrees() < 11)
+                {
+                    int entree = 0; string etiq = ""; int a = 0; int b = 0;
+                    if (outil.getnbrentrees() == 3) { entree = 2; etiq = "Controle 2"; a = 1; }
+                    if (outil.getnbrentrees() == 6) { entree = 4; etiq = "Controle 3"; a = 2; b = 1; }
+
+                    for (int i = 0; i < entree; i++)
+                    {
+                        string ee = (outil.getnbrentrees() - b).ToString();
+                        string etiq_e = ("Entrée " + ee);
+                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                        outil.AjoutEntree(classeEntree);
+                        E_Left.Insert(0, classeEntree);
+                    }
+
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    outil.AjoutEntreeSpe(Controle, a);
+                    E_Up.Insert(0, Controle);
+                }
+            }
+
+            if (type.Name == "Demultiplexeur")
+            {
+                if (outil.getnbrsoryies() < 8)
+                {
+                    int nsortie = 0; string etiq = ""; int a = 0;
+                    if (outil.getnbrentrees() == 2) { nsortie = 2; etiq = "Controle 2"; a = 1; }
+                    if (outil.getnbrentrees() == 3) { nsortie = 4; etiq = "Controle 3"; a = 2; }
+
+                    for (int i = 0; i < nsortie; i++)
+                    {
+                        string es = (outil.getnbrsoryies() + 1).ToString();
+                        string etiq_s = ("Sortie " + es);
+                        Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                        outil.AjoutSortie(sortie);
+                        S_Right.Add(sortie);
+                    }
+
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    outil.AjoutEntreeSpe(Controle, a);
+                    E_Up.Insert(0, Controle);
+                }
+            }
+
+            MAJ();
+            Creation();
+            MAJ_Path();
+            // MAJ des wires
+        }
+
+
+        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler MAJwire
+        {
+            add { AddHandler(MAJwiresEvent, value); }
+            remove { RemoveHandler(MAJwiresEvent, value); }
+        }
+
+
+        private void SupprimerEntrée(object sender, RoutedEventArgs e)
+        {
+
+            Type type = outil.GetType();
+
+            if ((type.Name == "ET") || (type.Name == "OU") || (type.Name == "NAND") || (type.Name == "OUX") || (type.Name == "NOR"))
+            {
+                if (outil.getnbrentrees() > 2)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+            }
+
+            if (type.Name == "Encodeur")
+            {
+                if (outil.getnbrentrees() == 4)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+                }
+                if (outil.getnbrentrees() == 8)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+                }
+            }
+
+            if (type.Name == "Decodeur")
+            {
+                if (outil.getnbrentrees() == 2)
+                {
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+                if (outil.getnbrentrees() == 3)
+                {
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+            }
+
+            if (type.Name == "AddNbits")
+            {
+                if (outil.getnbrentrees() > 2)
+                {
+                    int entree = 0, sortie = 0;
+                    if (outil.getnbrentrees() == 4) { entree = 1; sortie = 3; }
+                    if (outil.getnbrentrees() == 6) { entree = 2; sortie = 5; }
+                    if (outil.getnbrentrees() == 8) { entree = 3; sortie = 7; }
+                    if (outil.getnbrentrees() == 10) { entree = 4; sortie = 9; }
+
+                    outil.SupprimerEntree(outil.getListeentrees()[sortie]);
+                    outil.SupprimerEntree(outil.getListeentrees()[entree]);
+                    outil.SupprimerSortie(outil.getListesorties()[entree]);
+
+                    E_Up.Remove(E_Up[outil.getnbrsoryies()]);
+                    E_Up.Remove(E_Up[0]);
+
+                    S_Down.Remove(S_Down[1]);
+                }
+            }
+
+            if (type.Name == "Multiplexeur")
+            {
+                if (outil.getnbrentrees() > 3)
+                {
+                    int entree = 0, id = 0;
+                    if (outil.getnbrentrees() == 11) { entree = 4; id = 2; }
+                    if (outil.getnbrentrees() == 6) { entree = 2; id = 1; }
+
+                    for (int i = 0; i < entree; i++)
+                    {
+                        E_Left.Remove(E_Left[0]);
+                        outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    }
+
+                    E_Up.Remove(E_Up[0]);
+                    outil.SupprimerEntree(outil.getListeentrees()[id]);
+                }
+            }
+
+            if (type.Name == "Demultiplexeur")
+            {
+                if (outil.getnbrsoryies() > 2)
+                {
+                    int sortie = 0, id = 0;
+                    if (outil.getnbrsoryies() == 8) { sortie = 4; id = 2; }
+                    if (outil.getnbrsoryies() == 4) { sortie = 2; id = 1; }
+
+                    for (int i = 0; i < sortie; i++)
+                    {
+                        S_Right.Remove(S_Right[S_Right.Count - 1]);
+                        outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    }
+
+                    E_Up.Remove(E_Up[0]);
+                    outil.SupprimerEntree(outil.getListeentrees()[id]);
+                }
+
+            }
+
+            MAJ_Path();
+            MAJ();
+            Creation();
+        }
+
+
+        private void AjouterLabel(object sender, MouseButtonEventArgs e)
+        {
+            AjoutLabel ajoutLabel = new AjoutLabel();
+            ajoutLabel.InputChanged += OnDialogInputChanged;
+            ajoutLabel.Show();
+        }
+
+        private void OnDialogInputChanged(object sender, DialogInputEventArgs e)
+        {
+            // update the MainWindow somehow using e.Input (the text submitted in dialog)
+            System.Windows.Controls.ToolTip tt = new System.Windows.Controls.ToolTip();
+            tt.Content = e.Input;
+            outil.setLabel(e.Input);
+            path.ToolTip = tt;
+        }
+
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            // The version is with meriem
         }
 
 
@@ -435,7 +827,4 @@ namespace WpfApp2
     {
         public CircuitComplet() : base(new CircuitPersonnalise()) { }
     }
-
-
-
 }

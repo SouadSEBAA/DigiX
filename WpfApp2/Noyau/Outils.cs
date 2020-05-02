@@ -73,6 +73,46 @@ namespace logisimConsole
             liste_sorties[i].setEtat(etat);
         }
 
+        public void AjoutEntree(ClasseEntree entree)
+        {
+            this.liste_entrees.Add(entree);
+            this.nb_entrees++;
+        }
+
+        public void AjoutSortie(Sortie sortie)
+        {
+            this.liste_sorties.Add(sortie);
+            this.nb_sorties++;
+        }
+
+        public void AjoutEntreeSpe(ClasseEntree entree, int i)
+        {
+            this.liste_entrees.Insert(i, entree);
+            this.nb_entrees++;
+        }
+
+        public void AjoutSortieSpe(Sortie sortie, int i)
+        {
+            this.liste_sorties.Insert(i, sortie);
+            this.nb_sorties++;
+        }
+
+        public void SupprimerEntree(ClasseEntree classeEntree)
+        {
+            this.nb_entrees--;
+            this.liste_entrees.Remove(classeEntree);
+        }
+
+        public void SupprimerSortie(Sortie sortie)
+        {
+            this.nb_sorties--;
+            this.liste_sorties.Remove(sortie);
+        }
+
+        public void setLabel(string label)
+        {
+            this.etiquette = label;
+        }
 
 
         public List<Sortie> getListesorties() { return liste_sorties; }
