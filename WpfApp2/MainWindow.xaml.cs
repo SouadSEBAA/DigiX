@@ -624,14 +624,14 @@ namespace WpfApp2
             circuit.setSimulation(false);
         }
 
-        public bool has_stopped = false;
+       
 
         private void stop_click(object sender, RoutedEventArgs e)
         {
             int i = 0; int j = 0; //need this to make sure it works --on console only--
             Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
-            has_stopped = true;
+            
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
                 if (o is Horloge) { ((Horloge)o).arreter(); }
