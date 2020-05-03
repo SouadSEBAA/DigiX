@@ -14,17 +14,14 @@ namespace logisimConsole
 		//Constructeur 
 		public Horloge()
 		{
-			
 			this.nb_entrees = 0;
 			this.nb_sorties = 1;
 			this.etiquette = "horloge";
 			this.liste_entrees = new List<ClasseEntree>();
 			this.liste_sorties = new List<Sortie>();
 			this.disposition = Disposition.right;
-			liste_sorties.Add(new Sortie("sortie horloge",1, Disposition.down, false, new List<OutStruct>()));
-			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
-
-
+			liste_sorties.Add(new Sortie("Sortie", 1, Disposition.down, false, new List<OutStruct>()));
+			liste_entrees.Add(new ClasseEntree("", 0, Disposition.left, false, false));
 		}
 		public void Demmarer()
 		{
@@ -52,13 +49,13 @@ namespace logisimConsole
 				{
 					if (parti)//etat haut 
 					{
-						(this.liste_sorties[0]).setEtat(true);/*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul();
+						(this.liste_sorties[0]).setEtat(true);
 						this.Calcul();
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
-						(this.liste_sorties[0]).setEtat(false); /*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul(); //this.circuit.EvaluateCircuit();
+						(this.liste_sorties[0]).setEtat(false); 
 						this.Calcul();
 						Thread.Sleep(T - UP);
 					}

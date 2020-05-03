@@ -8,7 +8,6 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Xml.Linq;
 using System.Windows;
-
 namespace logisimConsole
 {
     [Serializable]
@@ -17,12 +16,12 @@ namespace logisimConsole
         private bool Sauvegardé;
         private bool simulation;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
-        public List<Outils> CompFinaux;
+        private List<Outils> CompFinaux;
 
-        public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; } //to iterate through vertices and edges of the graph created in the constructor
         public List<Outils> GetCompFinaux() { return CompFinaux; }
         public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
-        
+        public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; } //to iterate through vertices and edges of the graph created in the constructor
+
 
         public CircuitPersonnalise()
         {
@@ -32,6 +31,15 @@ namespace logisimConsole
             this.liste_sorties = new List<Sortie>();
         }
         public BidirectionalGraph<Outils, Edge<Outils>> GetGraph() { return Circuit; }
+
+        
+        public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> grph)
+        {
+            this.Circuit = grph;
+            CompFinaux = new List<Outils>();
+        }
+
+
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
         { 
@@ -139,18 +147,25 @@ namespace logisimConsole
                     Evaluate(edge.Source);
                 }
             }
+
             
             outil.calcul_sorties();
-            Console.WriteLine("--------------------------");
-            Console.WriteLine(outil.GetType());
-            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
-            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
+
+
         }
         public void EvaluateCircuit()
         {
             this.CompFinaux = new List<Outils>();
-            this.EndComponents();
-            foreach(Outils outil in this.CompFinaux)
+
+            Console.WriteLine("*****************************************************************");
+            Console.WriteLine("*****************************************************************");
+            foreach (Outils elmnt in Circuit.Vertices)
+            {
+                Console.WriteLine("Nom   : " + elmnt.getname() + "  etat : " + elmnt.getSortie().ToString());
+            }
+            Console.WriteLine("*****************************************************************");
+            Console.WriteLine("*****************************************************************");
+            foreach (Outils outil in this.CompFinaux)
             {
                //new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******");
@@ -177,6 +192,7 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
+
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
             foreach (Outils outil in this.CompFinaux)
@@ -289,7 +305,9 @@ namespace logisimConsole
         }
 
 
+
     }
-
-
 }
+
+
+

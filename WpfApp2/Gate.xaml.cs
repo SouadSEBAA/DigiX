@@ -21,7 +21,22 @@ namespace WpfApp2
         protected string data;
         public Outils outil;
 
-        public Gate(Outils outils) 
+        // Pour classifier les entrees selon la direction
+        private List<ClasseEntree> E_Left = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Up = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Right = new List<ClasseEntree>();
+        private List<ClasseEntree> E_Down = new List<ClasseEntree>();
+
+        // Pour classifier les sorties selon la direction
+        private List<Sortie> S_Left = new List<Sortie>();
+        private List<Sortie> S_Up = new List<Sortie>();
+        private List<Sortie> S_Right = new List<Sortie>();
+        private List<Sortie> S_Down = new List<Sortie>();
+
+
+        public Gate() { }
+        public Gate(Gate gate) { }
+        public Gate(Outils outils)
         {
             this.outil = outils;
             //on supprime tt les children 
@@ -32,10 +47,7 @@ namespace WpfApp2
             this.OutilShape.Children.Remove(RightGate);
             this.OutilShape.AllowDrop = true;//e drop autorisé
         }
-        
 
-        public Gate() { }
-        public Gate(Gate gate) { }
 
         public Gate(Outils outil, String ph)
         {
@@ -47,96 +59,144 @@ namespace WpfApp2
             path.Data = StreamGeometry.Parse(ph);
             path.StrokeThickness = 1;
             path.Fill = Brushes.White;
-            List<ClasseEntree> listEntre = outil.getListeentrees();
-            List<Sortie> sorties = outil.getListesorties();
-
-            Grid target = LeftGate;
 
 
-            int nE = 0, nS = 0, up = 0, left = 0, right = 0, down = 0, i = 0;
+            Classification();
 
-            // ajouter les entrées 
+            Creation();
+
+            MAJ_Path();
+        }
+
+
+        // Fonction qui separe les entrees et sorties selon la disposition
+
+        public void Classification()
+        {
+            int nE = 0;
+            int nS = 0;
+
             while (nE < outil.getnbrentrees())
             {
                 //Console.WriteLine(nE);
-                switch (listEntre[nE].GetDisposition())
+
+                switch (outil.getListeentrees()[nE].GetDisposition())
                 {
                     case Disposition.up:
-                        target = TopGate;
-                        i = up;
-                        up++;
-
+                        E_Up.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.down:
-                        target = BottomGate;
-                        i = down;
-                        down++;
+                        E_Down.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.left:
-                        target = LeftGate;
-                        i = left;
-                        left++;
+                        E_Left.Add(outil.getListeentrees()[nE]);
                         break;
+
                     case Disposition.right:
-                        target = RightGate;
-                        i = right;
-                        right++;
+                        E_Right.Add(outil.getListeentrees()[nE]);
                         break;
-
                 }
-
-                AjouterIO(target, listEntre[nE], i);
 
                 nE++;
             }
-            //ajouter les sorties 
 
             while (nS < outil.getnbrsoryies())
             {
-
-                switch (sorties[nS].GetDisposition())
+                //Console.WriteLine(nE);
+                switch (outil.getListesorties()[nS].GetDisposition())
                 {
                     case Disposition.up:
-                        target = TopGate;
-                        up++;
+                        S_Up.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.down:
-                        target = BottomGate;
-                        down++;
+                        S_Down.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.left:
-                        target = LeftGate;
-                        left++;
+                        S_Left.Add(outil.getListesorties()[nS]);
                         break;
+
                     case Disposition.right:
-                        target = RightGate;
-                        right++;
+                        S_Right.Add(outil.getListesorties()[nS]);
                         break;
-                        //ajouter le cas d'erreur qui ne doit pas se presenter 
-
                 }
-
-                AjouterIO(target, sorties[nS], nS);
 
                 nS++;
             }
-            double taille = 20;
-            try
+
+            E_Left.Reverse();
+            S_Down.Reverse();
+            E_Up.Reverse();
+            //S_Right.Reverse();
+        }
+
+        // Pour la creaction
+
+        public void Creation()
+        {
+            // Les entrees :
+            int i = 0;
+            foreach (ClasseEntree Er in E_Right)
             {
-                PorteLogique p = (PorteLogique)outil;
+                AjouterIO(RightGate, Er, i);
+                i++;
             }
-            catch (Exception ex) { taille = 22.5; }
-            //if (outil.GetType().IsInstanceOfType(PorteLogiqu)) { taille = 10; }
-            //on peut ajouter un handeler d'event de changement de size du path pour faire les etapes qui suivent mais c pass necesssaire ;)
-            int ver = Math.Max(left, right);
-            int hor = Math.Max(up, down);
-            //mettre à jour la taille du path 
-            path.Height = Math.Max(ver * taille, path.Height);
-            path.Width = Math.Max(hor * taille, path.Width);
-            //mettre à jour la taille de la canavas parente 
-            OutilShape.Width = path.Width + 44;
-            OutilShape.Height = path.Height + 44;
-            //TO DO :ajouter les couleurs des i/o  et les etiquettes des i/o mm danss la fonction ajouterio
+
+            i = 0;
+            foreach (ClasseEntree El in E_Left)
+            {
+
+                AjouterIO(LeftGate, El, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (ClasseEntree Ed in E_Down)
+            {
+                AjouterIO(BottomGate, Ed, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (ClasseEntree Eu in E_Up)
+            {
+                AjouterIO(TopGate, Eu, i);
+                i++;
+            }
+
+            // Les sorties :
+            i = 0;
+            foreach (Sortie Sr in S_Right)
+            {
+                AjouterIO(RightGate, Sr, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Sl in S_Left)
+            {
+                AjouterIO(LeftGate, Sl, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Sd in S_Down)
+            {
+                AjouterIO(BottomGate, Sd, i);
+                i++;
+            }
+
+            i = 0;
+            foreach (Sortie Su in S_Up)
+            {
+                AjouterIO(TopGate, Su, i);
+                i++;
+            }
+
+            RaiseEvent(new RoutedEventArgs(MAJwiresEvent));
         }
 
 
@@ -151,6 +211,348 @@ namespace WpfApp2
             //on peut le supprimer et on verifie dans les deux listes d'entrées et de sorties 
             //Liaison
             InputOutputs.Add(myt);
+        }
+
+
+
+        public void MAJ()
+        {
+            InputOutputs = new List<InputOutput>();
+
+            LeftGate.Children.Clear(); RightGate.Children.Clear(); BottomGate.Children.Clear(); TopGate.Children.Clear();
+            LeftGate.ColumnDefinitions.Clear(); RightGate.ColumnDefinitions.Clear(); BottomGate.ColumnDefinitions.Clear(); TopGate.ColumnDefinitions.Clear();
+        }
+
+        // Mise a jour du path apres ajout ou suppression d'une entrée ou sortie
+        public void MAJ_Path()
+        {
+            int taille = 20;
+
+            int ver = Math.Max(Math.Max(E_Left.Count, S_Left.Count), Math.Max(E_Right.Count, S_Right.Count));
+            int hor = Math.Max(Math.Max(E_Up.Count, S_Up.Count), Math.Max(E_Down.Count, S_Down.Count));
+            //mettre à jour la taille du path 
+            if (ver > 0) { path.Height = ver * taille; }
+            if (hor > 0) { path.Width = hor * taille; }
+
+            OutilShape.Width = path.Width + 44;
+            OutilShape.Height = path.Height + 44;
+        }
+
+        // ContextMenu
+
+        private void AjouterEntrée(object sender, RoutedEventArgs e)
+        {
+            Type type = outil.GetType();
+            AddEntree(type);
+        }
+        public void AddEntree(Type type)
+        { 
+
+            if ((type.Name == "ET") || (type.Name == "OU") || (type.Name == "NAND") || (type.Name == "OUX") || (type.Name == "NOR"))
+            {
+                if (outil.getnbrentrees() < 5)
+                {
+                    Console.WriteLine("donel'ajout");
+                    string i = (outil.getnbrentrees() + 1).ToString();
+                    string etiq = ("Entrée " + i);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, false, false);
+                    
+                    outil.setnb_entrees((outil.getnbrentrees())+1);
+                    outil.AjoutEntree(classeEntree);
+                    E_Left.Insert(0, classeEntree);
+                }
+            }
+
+            if (type.Name == "Encodeur")
+            {
+                int entree = 0;
+                if (outil.getnbrentrees() == 2) { entree = 2; }
+                if (outil.getnbrentrees() == 4) { entree = 4; }
+                for (int i = 0; i < entree; i++)
+                {
+                    string ee = (outil.getnbrentrees() + 1).ToString();
+                    string etiq_e = ("Entrée " + ee);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
+                    outil.AjoutEntree(classeEntree);
+                    E_Left.Insert(0, classeEntree);
+                }
+
+                string es = (outil.getnbrsoryies() + 1).ToString();
+                string etiq_s = ("Sortie " + es);
+                Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                outil.AjoutSortie(sortie);
+                S_Right.Add(sortie);
+            }
+
+            if (type.Name == "Decodeur")
+            {
+                int nbr_sortie = 0;
+                if (outil.getnbrsoryies() == 2) { nbr_sortie = 2; }
+                if (outil.getnbrsoryies() == 4) { nbr_sortie = 4; }
+                for (int i = 0; i < nbr_sortie; i++)
+                {
+                    string es = (outil.getnbrsoryies() + 1).ToString();
+                    string etiq_s = ("Sortie " + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                    outil.AjoutSortie(sortie);
+                    S_Right.Add(sortie);
+                }
+                string ee = (outil.getnbrentrees() + 1).ToString();
+                string etiq_e = ("Entrée " + ee);
+                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
+                outil.AjoutEntree(classeEntree);
+                E_Left.Insert(0, classeEntree);
+            }
+
+            if (type.Name == "AddNbits")
+            {
+                if (outil.getnbrentrees() < 10)
+                {
+
+                    string ee = (outil.getnbrsoryies()).ToString();
+                    string A = ("A" + ee);
+                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, false, false);
+                    outil.AjoutEntreeSpe(classeEntreeA, outil.getnbrsoryies() - 1);
+                    E_Up.Insert((outil.getnbrsoryies()) - 1, classeEntreeA);
+
+                    string B = ("B" + ee);
+                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, false, false);
+                    outil.AjoutEntreeSpe(classeEntreeB, 2 * (outil.getnbrsoryies()) - 1);
+                    E_Up.Insert(0, classeEntreeB);
+
+                    string es = (outil.getnbrsoryies()).ToString();
+                    string etiq_s = ("Somme" + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.down, false, new List<OutStruct>());
+                    outil.AjoutSortieSpe(sortie, outil.getnbrsoryies() - 1);
+                    S_Down.Insert(1, sortie);
+                }
+            }
+
+            if (type.Name == "Multiplexeur")
+            {
+                if (outil.getnbrentrees() < 11)
+                {
+                    int entree = 0; string etiq = ""; int a = 0; int b = 0;
+                    if (outil.getnbrentrees() == 3) { entree = 2; etiq = "Controle 2"; a = 1; }
+                    if (outil.getnbrentrees() == 6) { entree = 4; etiq = "Controle 3"; a = 2; b = 1; }
+
+                    for (int i = 0; i < entree; i++)
+                    {
+                        string ee = (outil.getnbrentrees() - b).ToString();
+                        string etiq_e = ("Entrée " + ee);
+                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
+                        outil.AjoutEntree(classeEntree);
+                        E_Left.Insert(0, classeEntree);
+                    }
+
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
+                    outil.AjoutEntreeSpe(Controle, a);
+                    E_Up.Insert(0, Controle);
+                }
+            }
+
+            if (type.Name == "Demultiplexeur")
+            {
+                if (outil.getnbrsoryies() < 8)
+                {
+                    int nsortie = 0; string etiq = ""; int a = 0;
+                    if (outil.getnbrentrees() == 2) { nsortie = 2; etiq = "Controle 2"; a = 1; }
+                    if (outil.getnbrentrees() == 3) { nsortie = 4; etiq = "Controle 3"; a = 2; }
+
+                    for (int i = 0; i < nsortie; i++)
+                    {
+                        string es = (outil.getnbrsoryies() + 1).ToString();
+                        string etiq_s = ("Sortie " + es);
+                        Sortie sortie = new Sortie(etiq_s, 1, Disposition.right, false, new List<OutStruct>());
+                        outil.AjoutSortie(sortie);
+                        S_Right.Add(sortie);
+                    }
+
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
+                    outil.AjoutEntreeSpe(Controle, a);
+                    E_Up.Insert(0, Controle);
+                }
+            }
+
+            MAJ();
+            Creation();
+            MAJ_Path();
+            // MAJ des wires
+        }
+
+
+        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler MAJwire
+        {
+            add { AddHandler(MAJwiresEvent, value); }
+            remove { RemoveHandler(MAJwiresEvent, value); }
+        }
+
+
+        private void SupprimerEntrée(object sender, RoutedEventArgs e)
+        {
+
+            Type type = outil.GetType();
+
+            if ((type.Name == "ET") || (type.Name == "OU") || (type.Name == "NAND") || (type.Name == "OUX") || (type.Name == "NOR"))
+            {
+                if (outil.getnbrentrees() > 2)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+            }
+
+            if (type.Name == "Encodeur")
+            {
+                if (outil.getnbrentrees() == 4)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+                }
+                if (outil.getnbrentrees() == 8)
+                {
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+                }
+            }
+
+            if (type.Name == "Decodeur")
+            {
+                if (outil.getnbrentrees() == 2)
+                {
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+                if (outil.getnbrentrees() == 3)
+                {
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    S_Right.Remove(S_Right[S_Right.Count - 1]);
+
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    E_Left.Remove(E_Left[0]);
+                }
+            }
+
+            if (type.Name == "AddNbits")
+            {
+                if (outil.getnbrentrees() > 2)
+                {
+                    int entree = 0, sortie = 0;
+                    if (outil.getnbrentrees() == 4) { entree = 1; sortie = 3; }
+                    if (outil.getnbrentrees() == 6) { entree = 2; sortie = 5; }
+                    if (outil.getnbrentrees() == 8) { entree = 3; sortie = 7; }
+                    if (outil.getnbrentrees() == 10) { entree = 4; sortie = 9; }
+
+                    outil.SupprimerEntree(outil.getListeentrees()[sortie]);
+                    outil.SupprimerEntree(outil.getListeentrees()[entree]);
+                    outil.SupprimerSortie(outil.getListesorties()[entree]);
+
+                    E_Up.Remove(E_Up[outil.getnbrsoryies()]);
+                    E_Up.Remove(E_Up[0]);
+
+                    S_Down.Remove(S_Down[1]);
+                }
+            }
+
+            if (type.Name == "Multiplexeur")
+            {
+                if (outil.getnbrentrees() > 3)
+                {
+                    int entree = 0, id = 0;
+                    if (outil.getnbrentrees() == 11) { entree = 4; id = 2; }
+                    if (outil.getnbrentrees() == 6) { entree = 2; id = 1; }
+
+                    for (int i = 0; i < entree; i++)
+                    {
+                        E_Left.Remove(E_Left[0]);
+                        outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                    }
+
+                    E_Up.Remove(E_Up[0]);
+                    outil.SupprimerEntree(outil.getListeentrees()[id]);
+                }
+            }
+
+            if (type.Name == "Demultiplexeur")
+            {
+                if (outil.getnbrsoryies() > 2)
+                {
+                    int sortie = 0, id = 0;
+                    if (outil.getnbrsoryies() == 8) { sortie = 4; id = 2; }
+                    if (outil.getnbrsoryies() == 4) { sortie = 2; id = 1; }
+
+                    for (int i = 0; i < sortie; i++)
+                    {
+                        S_Right.Remove(S_Right[S_Right.Count - 1]);
+                        outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                    }
+
+                    E_Up.Remove(E_Up[0]);
+                    outil.SupprimerEntree(outil.getListeentrees()[id]);
+                }
+
+            }
+
+            MAJ_Path();
+            MAJ();
+            Creation();
+        }
+
+
+        private void AjouterLabel(object sender, MouseButtonEventArgs e)
+        {
+            AjoutLabel ajoutLabel = new AjoutLabel();
+            ajoutLabel.InputChanged += OnDialogInputChanged;
+            ajoutLabel.Show();
+        }
+
+        private void OnDialogInputChanged(object sender, DialogInputEventArgs e)
+        {
+            // update the MainWindow somehow using e.Input (the text submitted in dialog)
+            System.Windows.Controls.ToolTip tt = new System.Windows.Controls.ToolTip();
+            tt.Content = e.Input;
+            outil.setLabel(e.Input);
+            path.ToolTip = tt;
+        }
+
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            // The version is with meriem
         }
 
 
@@ -294,7 +696,8 @@ namespace WpfApp2
     //la partie Combinatoires
 
     [Serializable]
-    public class Add_C : Gate
+
+   public  class Add_C : Gate
     { //need to fix writting:too small
         public Add_C() : base(new AddComplet(), "M0.5,0.5 L78.833,0.5 L78.833,95.5 L0.5,95.5 z M14.163449,21.874763 L12.598018,26.673256 L15.735716,26.673256 z M13.363644,20.494 L15.031614,20.494 L18.463258,30.672 L17.034545,30.672 L16.111693,27.828449 L12.222041,27.828449 L11.299189,30.672 L9.932,30.672 z M20.779445,21.656028 L20.779445,29.509972 L21.811672,29.509972 C22.413235,29.509972 22.939603,29.462124 23.390775,29.366427 C23.841947,29.270731 24.254382,29.093009 24.628081,28.833261 C25.097482,28.514273 25.450672,28.089336 25.687652,27.558448 C25.924631,27.02756 26.043121,26.36566 26.043121,25.572747 C26.043121,24.788948 25.913238,24.120212 25.653472,23.566539 C25.393707,23.012868 25.008614,22.581094 24.498198,22.27122 C24.138171,22.052485 23.75308,21.895269 23.342924,21.799573 C22.932767,21.703876 22.422349,21.656028 21.811672,21.656028 z M19.425928,20.494 L21.743313,20.494 C22.700345,20.494 23.451159,20.565772 23.995756,20.709317 C24.540352,20.852862 25.004058,21.049951 25.386871,21.300584 C26.043121,21.733497 26.551258,22.308815 26.911286,23.026538 C27.271312,23.744261 27.451326,24.599833 27.451326,25.593253 C27.451326,26.522876 27.263337,27.361359 26.88736,28.108702 C26.511383,28.856046 26.006662,29.439339 25.373199,29.85858 C24.858224,30.182125 24.335274,30.398582 23.80435,30.507949 C23.273424,30.617316 22.595526,30.672 21.770657,30.672 L19.425928,30.672 z M30.276119,21.656028 L30.276119,29.509972 L31.308347,29.509972 C31.90991,29.509972 32.436277,29.462124 32.88745,29.366427 C33.338622,29.270731 33.751056,29.093009 34.124755,28.833261 C34.594156,28.514273 34.947346,28.089336 35.184327,27.558448 C35.421305,27.02756 35.539796,26.36566 35.539796,25.572747 C35.539796,24.788948 35.409913,24.120212 35.150147,23.566539 C34.890381,23.012868 34.505289,22.581094 33.994872,22.27122 C33.634845,22.052485 33.249755,21.895269 32.839598,21.799573 C32.429441,21.703876 31.919023,21.656028 31.308347,21.656028 z M28.922602,20.494 L31.239987,20.494 C32.197019,20.494 32.947832,20.565772 33.492431,20.709317 C34.037027,20.852862 34.500732,21.049951 34.883545,21.300584 C35.539796,21.733497 36.047933,22.308815 36.40796,23.026538 C36.767986,23.744261 36.948,24.599833 36.948,25.593253 C36.948,26.522876 36.760012,27.361359 36.384035,28.108702 C36.008058,28.856046 35.503337,29.439339 34.869873,29.85858 C34.354898,30.182125 33.831948,30.398582 33.301024,30.507949 C32.770098,30.617316 32.092201,30.672 31.267331,30.672 L28.922602,30.672 z M15.031084,42.209435 C15.372881,42.209435 15.693031,42.2345 15.991534,42.28463 C16.290037,42.33476 16.566892,42.398561 16.822102,42.476034 C17.040852,42.544393 17.265299,42.629841 17.495442,42.732379 C17.725586,42.834917 17.952311,42.947709 18.175619,43.070755 L18.175619,44.704529 L18.066244,44.704529 C17.947754,44.595155 17.795084,44.462995 17.608235,44.308048 C17.421386,44.153103 17.193521,44.000434 16.924641,43.850045 C16.664875,43.708771 16.382322,43.592561 16.076984,43.501415 C15.771644,43.410271 15.418454,43.364698 15.017412,43.364698 C14.584469,43.364698 14.174312,43.453564 13.786942,43.631297 C13.399571,43.80903 13.060053,44.071072 12.768386,44.417422 C12.481276,44.763774 12.257968,45.198991 12.098463,45.723074 C11.938958,46.247158 11.859205,46.837322 11.859205,47.493566 C11.859205,48.190825 11.943515,48.791242 12.112135,49.294819 C12.280755,49.798395 12.510898,50.223358 12.802565,50.569709 C13.085118,50.906946 13.417801,51.161013 13.800614,51.331909 C14.183427,51.502806 14.589026,51.588255 15.017412,51.588255 C15.409339,51.588255 15.771644,51.540404 16.104327,51.444701 C16.437009,51.348999 16.733234,51.228232 16.993,51.0824 C17.243652,50.941125 17.460123,50.796433 17.642415,50.648322 C17.824706,50.500211 17.968261,50.373747 18.07308,50.268931 L18.175619,50.268931 L18.175619,51.882197 C17.952311,51.987014 17.741536,52.087274 17.543294,52.182976 C17.345052,52.278678 17.104654,52.372102 16.822102,52.463247 C16.525877,52.558949 16.2513,52.631865 15.99837,52.681995 C15.74544,52.732124 15.416175,52.757189 15.010576,52.757189 C14.34521,52.757189 13.733393,52.645537 13.175124,52.422231 C12.616855,52.198926 12.134921,51.866247 11.729322,51.424194 C11.323722,50.98214 11.009269,50.430714 10.785961,49.769912 C10.562654,49.109111 10.451,48.350329 10.451,47.493566 C10.451,46.641361 10.559236,45.898529 10.775707,45.265071 C10.992179,44.631613 11.307772,44.080186 11.722486,43.610789 C12.128085,43.155065 12.60888,42.807574 13.164871,42.568318 C13.720861,42.329063 14.342932,42.209435 15.031084,42.209435 z M22.214127,45.832448 C21.544204,45.832448 21.02809,46.072844 20.665785,46.553633 C20.30348,47.034423 20.122327,47.769279 20.122327,48.758203 C20.122327,49.715225 20.30348,50.440967 20.665785,50.935429 C21.02809,51.42989 21.544204,51.677121 22.214127,51.677121 C22.874935,51.677121 23.386491,51.434448 23.748797,50.9491 C24.111102,50.463753 24.292254,49.733454 24.292254,48.758203 C24.292254,47.769279 24.112241,47.034423 23.752215,46.553633 C23.392188,46.072844 22.879492,45.832448 22.214127,45.832448 z M22.214127,44.725037 C23.244076,44.725037 24.068946,45.077084 24.688739,45.781179 C25.308532,46.485274 25.618428,47.477616 25.618428,48.758203 C25.618428,50.043347 25.308532,51.035689 24.688739,51.735226 C24.068946,52.434764 23.244076,52.784533 22.214127,52.784533 C21.152277,52.784533 20.317152,52.423371 19.708753,51.701047 C19.100353,50.978722 18.796154,49.997774 18.796154,48.758203 C18.796154,47.482173 19.109468,46.490971 19.736096,45.784597 C20.362725,45.078224 21.188735,44.725037 22.214127,44.725037 z M30.31316,44.725037 C30.764332,44.725037 31.164235,44.827575 31.512868,45.032651 C31.861502,45.237727 32.126965,45.574964 32.309256,46.044361 C32.696626,45.611422 33.074882,45.2833 33.444023,45.059995 C33.813164,44.83669 34.214206,44.725037 34.64715,44.725037 C34.975275,44.725037 35.273777,44.776306 35.542658,44.878844 C35.81154,44.981382 36.046239,45.146583 36.246761,45.374445 C36.451839,45.606865 36.610205,45.896251 36.721859,46.242601 C36.833514,46.588952 36.88934,47.024169 36.88934,47.548253 L36.88934,52.572621 L35.604182,52.572621 L35.604182,48.156646 C35.604182,47.805738 35.59051,47.481034 35.563166,47.182534 C35.535823,46.884033 35.478856,46.650475 35.392268,46.481857 C35.301121,46.299567 35.171238,46.165128 35.002619,46.07854 C34.833999,45.991953 34.606134,45.948659 34.319024,45.948658 C34.054701,45.948659 33.77101,46.02955 33.467949,46.191332 C33.164888,46.353115 32.851575,46.586673 32.528006,46.892009 C32.532563,46.969482 32.53826,47.061766 32.545096,47.168862 C32.551932,47.275958 32.55535,47.402421 32.55535,47.548253 L32.55535,52.572621 L31.270192,52.572621 L31.270192,48.156646 C31.270192,47.805738 31.25652,47.481034 31.229176,47.182534 C31.201833,46.884033 31.144866,46.650475 31.058278,46.481857 C30.967131,46.299567 30.837248,46.165128 30.668629,46.07854 C30.50001,45.991953 30.272144,45.948659 29.985034,45.948658 C29.70704,45.948659 29.415372,46.035246 29.110033,46.208422 C28.804695,46.381597 28.50847,46.602624 28.22136,46.871501 L28.22136,52.572621 L26.936202,52.572621 L26.936202,44.936949 L28.22136,44.936949 L28.22136,45.784597 C28.558601,45.447361 28.892422,45.186458 29.222826,45.00189 C29.553231,44.817321 29.916675,44.725037 30.31316,44.725037 z M42.001485,45.948658 C41.636899,45.948659 41.284847,46.02955 40.945329,46.191332 C40.605811,46.353115 40.283381,46.561609 39.978043,46.816814 L39.978043,51.143923 C40.315284,51.307984 40.603532,51.419636 40.84279,51.478881 C41.082048,51.538125 41.356625,51.567747 41.666522,51.567747 C42.331888,51.567747 42.849142,51.323934 43.218283,50.836309 C43.587421,50.348683 43.771991,49.635473 43.771995,48.69668 C43.771991,47.826245 43.632995,47.150633 43.355002,46.669843 C43.077006,46.189054 42.625833,45.948659 42.001485,45.948658 z M42.315938,44.725037 C43.19094,44.725037 43.873394,45.071388 44.363304,45.76409 C44.853211,46.456792 45.098169,47.38647 45.098169,48.553126 C45.098169,49.824599 44.793969,50.837448 44.18557,51.591673 C43.577171,52.345897 42.808127,52.72301 41.878436,52.72301 C41.50018,52.72301 41.165218,52.679716 40.873552,52.593128 C40.581886,52.50654 40.283381,52.372102 39.978043,52.189812 L39.978043,55.389 L38.692885,55.389 L38.692885,44.936949 L39.978043,44.936949 L39.978043,45.736746 C40.297053,45.449639 40.651384,45.209245 41.041033,45.015561 C41.430682,44.821879 41.855649,44.725037 42.315938,44.725037 z M46.456904,41.936 L47.742062,41.936 L47.742062,52.572621 L46.456904,52.572621 z M52.562186,45.784597 C52.220389,45.784598 51.929861,45.835867 51.690603,45.938405 C51.451345,46.040943 51.233735,46.190193 51.03777,46.386154 C50.846364,46.586673 50.700531,46.808839 50.60027,47.052652 C50.500008,47.296465 50.436207,47.580154 50.408863,47.903718 L54.448907,47.903718 C54.439794,47.557367 54.398778,47.258868 54.32586,47.008219 C54.252942,46.75757 54.148126,46.545658 54.011407,46.372483 C53.861016,46.181078 53.668469,46.035246 53.433769,45.934987 C53.19907,45.834728 52.908542,45.784598 52.562186,45.784597 z M52.637382,44.725037 C53.111339,44.725037 53.530613,44.793396 53.895196,44.930113 C54.259778,45.066831 54.57879,45.281021 54.852228,45.572685 C55.125666,45.86435 55.335303,46.220955 55.481135,46.6425 C55.626967,47.064045 55.699885,47.580154 55.699885,48.190825 L55.699885,48.888084 L50.408863,48.888084 C50.408863,49.776748 50.632172,50.455778 51.078786,50.925175 C51.5254,51.394572 52.142916,51.62927 52.931327,51.62927 C53.213878,51.62927 53.490734,51.597369 53.761895,51.533568 C54.033055,51.469767 54.278009,51.387736 54.496759,51.287476 C54.729181,51.18266 54.925146,51.08126 55.08465,50.98328 C55.244154,50.885299 55.376319,50.793015 55.481135,50.706427 L55.556331,50.706427 L55.556331,52.107781 C55.40594,52.167026 55.219092,52.241081 54.995783,52.329947 C54.772474,52.418813 54.571954,52.488312 54.39422,52.538441 C54.143567,52.6068 53.916844,52.659209 53.714043,52.695666 C53.511242,52.732124 53.254894,52.750353 52.944999,52.750353 C51.728201,52.750353 50.7837,52.40742 50.1115,51.721554 C49.439299,51.035689 49.103197,50.061576 49.103197,48.799218 C49.103197,47.555089 49.429046,46.565027 50.080738,45.829031 C50.73243,45.093035 51.584646,44.725037 52.637382,44.725037 z M57.081605,42.742633 L58.366763,42.742633 L58.366763,44.936949 L60.732,44.936949 L60.732,46.003345 L58.366763,46.003345 L58.366763,49.633195 C58.366763,50.020561 58.373599,50.31906 58.387271,50.528694 C58.400942,50.738328 58.453353,50.934289 58.544497,51.116579 C58.62197,51.276083 58.747298,51.395711 58.920474,51.475463 C59.09365,51.555215 59.328354,51.595091 59.624577,51.595091 C59.834214,51.595091 60.037011,51.564329 60.232976,51.502806 C60.428941,51.441283 60.570215,51.390014 60.656805,51.348999 L60.732,51.348999 L60.732,52.504262 C60.490465,52.572621 60.245507,52.626168 59.997136,52.664905 C59.748764,52.703642 59.51976,52.72301 59.310123,52.72301 C58.608298,52.72301 58.061422,52.52363 57.669496,52.124871 C57.27757,51.726112 57.081605,51.096072 57.081605,50.234752 L57.081605,46.003345 L56.21344,46.003345 L56.21344,44.936949 L57.081605,44.936949 z") { }
     }
@@ -306,7 +709,8 @@ namespace WpfApp2
     }
 
     [Serializable]
-    public class D_Add : Gate
+
+   public  class D_Add : Gate
     {
         public D_Add() : base(new DemiAdd(), "M0.5,0.5 L72.167,0.5 L72.167,89.5 L0.5,89.5 z M19.666508,26.263714 L19.666508,35.091978 L21.338393,35.091978 C22.807151,35.091978 23.950387,34.698743 24.768101,33.912272 C25.585814,33.125802 25.994671,32.011201 25.994671,30.568469 C25.994671,27.698633 24.46862,26.263714 21.416519,26.263714 z M18.354,25.076195 L21.447769,25.076195 C25.395709,25.076195 27.36968,26.896536 27.36968,30.537219 C27.36968,32.266413 26.821499,33.655758 25.725138,34.705253 C24.628777,35.754749 23.16132,36.279497 21.322768,36.279497 L18.354,36.279497 z M32.519399,29.17001 C31.915228,29.17001 31.402204,29.38616 30.980327,29.818458 C30.558449,30.250756 30.298031,30.81587 30.199072,31.513797 L34.519412,31.513797 C34.514203,30.774202 34.335817,30.198673 33.984252,29.787207 C33.632687,29.375743 33.144403,29.17001 32.519399,29.17001 z M32.542836,28.091868 C33.589718,28.091868 34.399618,28.430415 34.972539,29.107509 C35.545459,29.784604 35.83192,30.724722 35.83192,31.927866 L35.83192,32.599751 L30.183447,32.599751 C30.20428,33.490391 30.443865,34.177901 30.902201,34.662284 C31.360537,35.146667 31.99075,35.388858 32.792838,35.388858 C33.693885,35.388858 34.522015,35.091978 35.277229,34.498219 L35.277229,35.701363 C34.574098,36.211787 33.644404,36.467 32.488148,36.467 C31.357934,36.467 30.469907,36.103713 29.82407,35.377139 C29.178233,34.650565 28.855314,33.628414 28.855314,32.310684 C28.855314,31.065874 29.20818,30.051535 29.913914,29.267668 C30.619648,28.483802 31.495955,28.091868 32.542836,28.091868 z M41.565807,28.091868 C42.112685,28.091868 42.58925,28.244214 42.995503,28.548906 C43.401755,28.853599 43.680402,29.253345 43.831445,29.748144 C44.425199,28.643961 45.31062,28.091868 46.487711,28.091868 C48.248138,28.091868 49.128352,29.177822 49.128352,31.349732 L49.128352,36.279497 L47.847095,36.279497 L47.847095,31.685675 C47.847095,30.800245 47.710375,30.159609 47.436936,29.763769 C47.163497,29.36793 46.703857,29.17001 46.058021,29.17001 C45.511143,29.17001 45.046297,29.420014 44.663482,29.920022 C44.280667,30.42003 44.089259,31.018998 44.089259,31.716925 L44.089259,36.279497 L42.808002,36.279497 L42.808002,31.529422 C42.808002,29.956481 42.201227,29.17001 40.987678,29.17001 C40.425175,29.17001 39.961631,29.405691 39.597045,29.877052 C39.232459,30.348414 39.050166,30.961705 39.050166,31.716925 L39.050166,36.279497 L37.768909,36.279497 L37.768909,28.279371 L39.050166,28.279371 L39.050166,29.545016 L39.081417,29.545016 C39.649129,28.57625 40.477257,28.091868 41.565807,28.091868 z M51.548991,28.279371 L52.830249,28.279371 L52.830249,36.279497 L51.548991,36.279497 z M52.205245,24.584 C52.439621,24.584 52.638841,24.663429 52.802905,24.822285 C52.966968,24.981142 53.049,25.180364 53.049,25.419951 C53.049,25.649121 52.966968,25.844437 52.802905,26.005897 C52.638841,26.167359 52.439621,26.248089 52.205245,26.248089 C51.976076,26.248089 51.780762,26.169963 51.619304,26.01371 C51.457846,25.857458 51.377115,25.659538 51.377115,25.419951 C51.377115,25.180364 51.457846,24.981142 51.619304,24.822285 C51.780762,24.663429 51.976076,24.584 52.205245,24.584 z M21.994422,47.71636 C21.94234,48.034065 21.882445,48.284062 21.814738,48.466351 L20.072578,53.239736 L23.955329,53.239736 L22.197544,48.466351 C22.140253,48.310103 22.082963,48.060106 22.025672,47.71636 z M21.353807,46.357 L22.713161,46.357 L27.025593,57.56 L25.572491,57.56 L24.38501,54.41941 L19.635084,54.41941 L18.517915,57.56 L17.057,57.56 z M29.986171,47.544487 L29.986171,56.372513 L31.65802,56.372513 C33.126747,56.372513 34.269958,55.979288 35.087654,55.192839 C35.905348,54.40639 36.314197,53.291819 36.314197,51.849126 C36.314197,48.979367 34.788178,47.544487 31.736144,47.544487 z M28.673692,46.357 L31.767393,46.357 C35.715247,46.357 37.689175,48.177292 37.689175,51.817877 C37.689175,53.547024 37.141006,54.936332 36.04467,55.985799 C34.948332,57.035266 33.480907,57.56 31.642395,57.56 L28.673692,57.56 z M41.205996,47.544487 L41.205996,56.372513 L42.877845,56.372513 C44.346572,56.372513 45.489782,55.979288 46.307478,55.192839 C47.125173,54.40639 47.534022,53.291819 47.534022,51.849126 C47.534022,48.979367 46.008003,47.544487 42.955969,47.544487 z M39.893517,46.357 L42.987218,46.357 C46.935072,46.357 48.909,48.177292 48.909,51.817877 C48.909,53.547024 48.360831,54.936332 47.264495,55.985799 C46.168156,57.035266 44.700732,57.56 42.86222,57.56 L39.893517,57.56 z") { }
     }
@@ -439,8 +843,6 @@ namespace WpfApp2
     public class CircuitComplet :Gate
     {
         public CircuitComplet( CircuitPersonnalise c) : base(c, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
+        public CircuitComplet() : base(new CircuitPersonnalise()) { }
     }
-
-
-
 }

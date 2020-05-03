@@ -12,6 +12,7 @@ namespace logisimConsole
     [Serializable]
     public abstract class Outils
     {
+
         public static int nbrOutils=0;
         public int id=0;
         public CircuitPersonnalise circuit;
@@ -27,6 +28,8 @@ namespace logisimConsole
 
         //Methodes:
         public abstract void calcul_sorties();
+
+        public string getname() { return this.etiquette; }
 
         public Outils(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo)
         {
@@ -73,8 +76,51 @@ namespace logisimConsole
         public List<Sortie> get_liste_sortie() { return liste_sorties; }
         public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
 
+        public void setSortieSpe(int i, bool etat)
+        {
+            liste_sorties[i].setEtat(etat);
+        }
 
+        public void AjoutEntree(ClasseEntree entree)
+        {
+            this.liste_entrees.Add(entree);
+            this.nb_entrees++;
+        }
 
+        public void AjoutSortie(Sortie sortie)
+        {
+            this.liste_sorties.Add(sortie);
+            this.nb_sorties++;
+        }
+
+        public void AjoutEntreeSpe(ClasseEntree entree, int i)
+        {
+            this.liste_entrees.Insert(i, entree);
+            this.nb_entrees++;
+        }
+
+        public void AjoutSortieSpe(Sortie sortie, int i)
+        {
+            this.liste_sorties.Insert(i, sortie);
+            this.nb_sorties++;
+        }
+
+        public void SupprimerEntree(ClasseEntree classeEntree)
+        {
+            this.nb_entrees--;
+            this.liste_entrees.Remove(classeEntree);
+        }
+
+        public void SupprimerSortie(Sortie sortie)
+        {
+            this.nb_sorties--;
+            this.liste_sorties.Remove(sortie);
+        }
+
+        public void setLabel(string label)
+        {
+            this.etiquette = label;
+        }
 
 
         public List<Sortie> getListesorties() { return liste_sorties; }
@@ -116,6 +162,7 @@ namespace logisimConsole
         {
             return liste_sorties[0].isEtat();
         }
+
 
         public virtual void setEntreeSpe(int i, bool etat)
         {
@@ -159,24 +206,17 @@ namespace logisimConsole
         public void EndCircuit(IN iN)
         {
             Outils o = this;
-            Console.WriteLine("+++++++++entree end circuit ********");
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    Console.WriteLine("bouce" + edge.Target);
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
-                        Console.WriteLine("if");
                         iN.getEndListe().Add(edge.Target);
-
-
                     }
                     else { edge.Target.EndCircuit(iN); }
-
                 }
             }
-            
         }
 
 

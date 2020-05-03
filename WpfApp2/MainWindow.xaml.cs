@@ -21,6 +21,12 @@ using Microsoft.Win32;
 using Path = System.IO.Path;
 using System.Windows.Markup;
 using System.Xml;
+using System.Xml.Serialization;
+using System.Collections;
+using System.Windows.Markup;
+using System.Xml;
+using WpfApp2.TTPack;
+using System.Windows.Controls.Primitives;
 
 namespace WpfApp2
 {
@@ -29,40 +35,17 @@ namespace WpfApp2
     /// </summary>
 
     [Serializable]
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, System.Collections.IEnumerable
     {
         int gridGap = 10;
         CircuitPersonnalise circuit;
 
         public MainWindow()
         {
-            //InitializeComponent();
+            InitializeComponent();
             circuit = new CircuitPersonnalise();
-            ///test sequentiel
-           //T
-           /*
-            T basculeT = new T(); circuit.AddComponent(basculeT);
-            basculeT.getEntreeSpecifique(3).setEtat(true);//T
-            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
-            //D
-            D basculeD = new D(); circuit.AddComponent(basculeD);
-            basculeD.getEntreeSpecifique(3).setEtat(true);//T
-            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
-            //Et
-            ET et = new ET();circuit.AddComponent(et);
-            //horloge
-            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
-            horloge.circuit = circuit;
-            //relation
-            circuit.Relate(horloge, basculeT, 0, 0);
-            circuit.Relate(horloge, basculeD, 0, 0);
-            circuit.Relate(basculeT, et, 0, 0);
-            circuit.Relate(basculeD, et, 0, 1);
-            horloge.fin = et;
-            horloge.Demmarer();*/
-            //seriaisation 
+            Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
+
 
         }
 
@@ -81,6 +64,7 @@ namespace WpfApp2
         private bool isDrawing;
         Wire line = null;
         Point mousePos;
+        protected List<Wire> wires = new List<Wire>();
         //pour verifier le type des entrees/sorties
         bool entry1;
         bool entry2;
@@ -136,25 +120,52 @@ namespace WpfApp2
                     {
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
+                        {
                             Grille.Children.Remove(line);
-                        break;
+                            break;
+                        }
+                        else
+                        {
+                            wires.Add(line);
+                        }
                     }
 
                 }
                 if (target == false)
                     Grille.Children.Remove(line);
             }
-        
+
             e.Handled = true;
         }
 
         private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
-            if (isDrawing )
+            if (isDrawing)
             {
                 isDrawing = false;
                 Grille.Children.Remove(line);
             }
+        }
+
+        // Pour redessiner les wires
+        /*****************************************************************************/
+
+        public void Redraw()
+        {
+            if (wires != null)
+            {
+                foreach (Wire wire in wires)
+                {
+                    wire.StartPoint = wire.io1.TranslatePoint(new Point(5, 5), Grille);
+                    wire.EndPoint = wire.io2.TranslatePoint(new Point(5, 5), Grille);
+                }
+            }
+        }
+
+        public void Redraw2(object sender, RoutedEventArgs e)
+        {
+            Redraw();
+            e.Handled = true;
         }
 
         /******************************************************************************/
@@ -166,7 +177,14 @@ namespace WpfApp2
             //Chronogrammes.Children.Add(chronoPage);
         }
         /******************************************************************************/
+        private void TVClick(object sender, RoutedEventArgs e)
+        {
+            //Chronogrammes chronoPage = new Chronogrammes();
+            //Chronogrammes.Children.Add(chronoPage);
+            TableVerites tv = new TableVerites(circuit.GetCircuit());
+            tv.Show();
 
+        }
 
         /*****************/
         //drag and drop 
@@ -176,6 +194,8 @@ namespace WpfApp2
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
             e.Handled = true;
+
+            Redraw();
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -213,16 +233,19 @@ namespace WpfApp2
             gate.anchorPoint = gate.currentPoint;
 
             //Liaison
-            gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
+            gate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
 
-          
+
             /*******/
             //a reffaire pour le drag & drop
-            if (!gate.added) {
+            if (!gate.added)
+            {
                 Grille.Children.Add(gate);
                 gate.added = true;
                 gate.outil.circuit = this.circuit;
+
+
                 circuit.AddComponent(gate.GetOutil()); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
             }
             e.Handled = true;
@@ -232,7 +255,6 @@ namespace WpfApp2
         private void Grille_Drop(object sender, DragEventArgs e)
         {
             e.Effects = DragDropEffects.All;
-
 
             Gate gate = (Gate)e.Data.GetData("Object");
             this.circuit.AddComponent(gate.outil);
@@ -258,19 +280,19 @@ namespace WpfApp2
         }
 
 
-       //Fonction elements de sortie version 2
-        public void Last_Elements() 
+        //Fonction elements de sortie version 2
+        public void Last_Elements()
         {
             circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
 
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
                 if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
-                { 
-                //list_element_de_sortie.Add(vertex);
-                circuit.GetCompFinaux().Add(vertex);
+                {
+                    //list_element_de_sortie.Add(vertex);
+                    circuit.GetCompFinaux().Add(vertex);
                 }
-                
+
             }
             foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
         }
@@ -283,6 +305,8 @@ namespace WpfApp2
             Console.WriteLine("--------------  Partie Simuler Click");
             Last_Elements();
             Console.WriteLine("--------------  Fin Simuler Click");
+            //jimin
+            Last_Elements(); //idk if this is needed based on what has been done below
             //souad
             //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
             //melissa
@@ -297,7 +321,9 @@ namespace WpfApp2
             string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
-        
+
+
+
         private void open_file(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -309,17 +335,18 @@ namespace WpfApp2
             if (result == true)
             {
                 string filename = dlg.FileName;
-                DeSerializeXAML(filename) ;
-               
+                DeSerializeXAML(filename);
+
+
             }
         }
-        
+
         public void DeSerializeXAML(string filename)
         {
             Grille.Children.Clear();//a controler
             XElement root = XElement.Load(filename);
             //Gates
-            foreach(XElement gate in root.Element("Gates").Elements())
+            foreach (XElement gate in root.Element("Gates").Elements())
             {
                 Gate abgate = CreateGate(gate);
                 Grille.Children.Add(abgate);
@@ -332,39 +359,56 @@ namespace WpfApp2
                 double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value);
                 abgate.anchorPoint = new Point(x, y);
                 //transform point 
-                 x = double.Parse(gate.Element("transform").Attribute("X").Value);
-                 y = double.Parse(gate.Element("transform").Attribute("Y").Value);
+                x = double.Parse(gate.Element("transform").Attribute("X").Value);
+                y = double.Parse(gate.Element("transform").Attribute("Y").Value);
                 abgate.transform.X += x;
                 abgate.transform.Y += y;
                 abgate.RenderTransform = abgate.transform;
                 abgate.outil.id = int.Parse(gate.Attribute("ID").Value);
+                int i=abgate.outil.getnbrentrees(),entree = int.Parse(gate.Attribute("Entree").Value);
+                Console.WriteLine("serialisation" + entree+"  ID"+abgate.outil.id);
+                while (i < entree)
+                {
+                    Console.WriteLine("Entree");
+                    
+                    abgate.AddEntree(abgate.outil.GetType());
+                    i++;
+                }
 
             }
             //Wires 
-            foreach(XElement wire in root.Element("Wires").Elements())
+            foreach (XElement wire in root.Element("Wires").Elements())
             {
                 //id
                 int idStart = int.Parse(wire.Element("gatestart").Attribute("ID").Value);
                 int idEnd = int.Parse(wire.Element("gateend").Attribute("ID").Value);
                 //index
-                int io1= int.Parse(wire.Element("gatestart").Attribute("IO").Value);
+                int io1 = int.Parse(wire.Element("gatestart").Attribute("IO").Value);
                 int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
                 //points
                 Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
                 Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
+                
                 Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
                 Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
                 InputOutput IN1, IN2;
                 //on recupere les gate qui ont ces identifiants
-                Gate gatestart=Recup(idStart),gateend=Recup(idEnd);
-
-                if(wire.Element("gatestart").Attribute("Type").Value=="ClasseEntree")
+                Gate gatestart = Recup(idStart), gateend = Recup(idEnd);
+                Console.WriteLine("gateEntrée" + gatestart.outil.getnbrentrees());
+                Console.WriteLine("gateEnd" + gateend.outil.getnbrentrees());
+                if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
                 {
                     IN1 = gatestart.outil.getListeentrees()[io1];
                     IN2 = gateend.outil.getListesorties()[io2];
                 }
                 else
                 {
+                    Console.WriteLine("/////////");
+                    Console.WriteLine("io1" + io1+"----gatestart"+gatestart.outil.getnbrentrees()+"  ID"+gatestart.outil.id);
+                    Console.WriteLine("io2" + io2 + "----gateend" + gateend.outil.getnbrentrees()+"   ID"+gateend.outil.id);
+                    
+                    Console.WriteLine("/////////");
+
                     IN1 = gatestart.outil.getListesorties()[io1];
                     IN2 = gateend.outil.getListeentrees()[io2];
                 }
@@ -423,23 +467,23 @@ namespace WpfApp2
                     return new pin_entree();
                 case "pin_sortie":
                     return new pin_sortie();
-                
+
             }
-            
+
             return null;
         }
-        public  Gate Recup(int id)
+        public Gate Recup(int id)
         {
-           foreach(UserControl user in Grille.Children)
-           {
-                if(user is Gate) 
+            foreach (UserControl user in Grille.Children)
+            {
+                if (user is Gate)
                 {
                     Gate gate = (Gate)user;
-                    if (gate.outil.id == id) { return gate; } 
+                    if (gate.outil.id == id) { return gate; }
                 }
-               
-           }
-            return null; 
+
+            }
+            return null;
         }
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
@@ -447,7 +491,6 @@ namespace WpfApp2
             dlg.FileName = "UIElement File"; // Default file name
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-
             // Show save file dialog box
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -455,10 +498,10 @@ namespace WpfApp2
             if (result == true)
             {
                 // Save document
-                
+
                 string filename = dlg.FileName;
                 SerializeToXAML(filename);
-                
+
                 //melissa 
 
             }
@@ -467,14 +510,14 @@ namespace WpfApp2
         // Serializes any UIElement object to XAML using a given filename.
         public void SerializeToXAML(string filename)
         {
-           
+
             XElement grille = new XElement("Grille");//pour contenir tt le circuit 
             XElement gates = new XElement("Gates");//pour contenir les composants
             XElement wires = new XElement("Wires");//pour les wires 
             //parcourire les gates
             foreach (UserControl user in Grille.Children)
             {//on ajoute le nbr d'entrées et sorties 
-                if(user is Gate)
+                if (user is Gate)
                 {
                     Gate g = (Gate)user;
                     XElement gt = new XElement("Gate");
@@ -528,6 +571,7 @@ namespace WpfApp2
                     {
                         if (wire.gateStart.outil.getListeentrees().Contains(wire.io1))//io1 est entrée dans gatestart..io2 sortie dans gateend
                         {
+                            Console.WriteLine("1");
                             w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
                             w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
                             w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
@@ -535,6 +579,7 @@ namespace WpfApp2
                         }
                         else//io1 entrée dans gateend .. io2 sortie danss gatesstart
                         {
+                            Console.WriteLine("2");
                             w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
                             w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
                             w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
@@ -546,6 +591,7 @@ namespace WpfApp2
                     {
                         if (wire.gateStart.outil.getListesorties().Contains(wire.io1))//io1 est sortie dans gatestart... io2 entrée dans gateend
                         {
+                            Console.WriteLine("3");
                             w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est sortie
                             w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io1));
                             w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
@@ -553,6 +599,7 @@ namespace WpfApp2
                         }
                         else//io1 sortie dans gateend ..io2 entrée dans gatestart
                         {
+                            Console.WriteLine("4");
                             w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie
                             w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
                             w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
@@ -562,15 +609,16 @@ namespace WpfApp2
                     wires.Add(w);
 
                 }
-                
+
             }
-            
-            
+
+
             //on ajoute wires
             grille.Add(gates);
             grille.Add(wires);
             //on sauvegarde le tt 
             grille.Save(filename);
+
         }
 
 
@@ -621,7 +669,7 @@ namespace WpfApp2
 
             //to inform theuser that the screeshot was created successfully
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-           
+
         }
         //*************************************Reutilisation******************************************
         private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -636,10 +684,10 @@ namespace WpfApp2
             {
                 string filename = dlg.FileName;
                 CircuitPersonnalise personnalise = Reutilisation(filename);
-                CircuitComplet gate = new CircuitComplet(personnalise );
-                
+                CircuitComplet gate = new CircuitComplet(personnalise);
+
                 Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
-                Console.WriteLine("height "+gate.ActualHeight+"width"+gate.Width);
+                Console.WriteLine("height " + gate.ActualHeight + "width" + gate.Width);
                 this.circuit.AddComponent(personnalise);
                 gate.added = true;
                 Grille.Children.Add(gate);
@@ -650,12 +698,12 @@ namespace WpfApp2
 
             }
         }
-    
-        public  CircuitPersonnalise Reutilisation(string filename)
+
+        public CircuitPersonnalise Reutilisation(string filename)
         {
             CircuitPersonnalise nouveauCircuit = new CircuitPersonnalise();
             List<Gate> list = new List<Gate>();
-           
+
             XElement root = XElement.Load(filename);
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
@@ -683,7 +731,7 @@ namespace WpfApp2
                 Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
                 InputOutput IN1, IN2;
                 //on recupere les gate qui ont ces identifiants
-                Gate gatestart = Recuplist(idStart,list), gateend = Recuplist(idEnd,list);
+                Gate gatestart = Recuplist(idStart, list), gateend = Recuplist(idEnd, list);
 
                 if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
                 {
@@ -697,19 +745,19 @@ namespace WpfApp2
                 }
 
                 Wire w = new Wire(startp, gatestart, IN1);
-                w.Connect(endp, gateend, IN2,nouveauCircuit);
-                
+                w.Connect(endp, gateend, IN2, nouveauCircuit);
+
             }
             nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
             nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
-            
+
             //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
             //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
             //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
 
             return nouveauCircuit;
         }
-        public Gate Recuplist(int id,List<Gate> list)
+        public Gate Recuplist(int id, List<Gate> list)
         {
             foreach (UserControl user in list)
             {
@@ -726,5 +774,39 @@ namespace WpfApp2
 
 
 
+
+
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        //For the top bar
+        private void close_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void minimize_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void normal_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+        }
+
+        private void maximize_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
+
+        //**************************************END OF MENU BUTTONS*******************************//
+
+
+
     }
 }
+

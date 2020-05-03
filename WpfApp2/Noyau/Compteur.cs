@@ -21,11 +21,10 @@ namespace logisimConsole
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree("idk",0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree("idk",1, Disposition.right, false, false));
-            this.liste_sorties.Add(new Sortie("sortie 1",0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie("sortie 2",1, Disposition.down, false, new List<OutStruct>()));
-
+            this.liste_entrees.Add(new ClasseEntree("Clock", 0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear",1, Disposition.right, false, false));
+            this.liste_sorties.Add(new Sortie("Sortie 1",0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 2",1, Disposition.down, false, new List<OutStruct>()));
         }
         public override void calcul_sorties()
         {
@@ -65,8 +64,7 @@ namespace logisimConsole
                     }
                 }
             }
-            //parcours de lalistes 
-            //this.appelCalcul();
+            
 
         }
 
