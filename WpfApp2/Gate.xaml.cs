@@ -242,7 +242,7 @@ namespace WpfApp2
                 {
                     string i = (outil.getnbrentrees() + 1).ToString();
                     string etiq = ("Entrée " + i);
-                    ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, true, false);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, false, false);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }
@@ -257,7 +257,7 @@ namespace WpfApp2
                 {
                     string ee = (outil.getnbrentrees() + 1).ToString();
                     string etiq_e = ("Entrée " + ee);
-                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }
@@ -284,7 +284,7 @@ namespace WpfApp2
                 }
                 string ee = (outil.getnbrentrees() + 1).ToString();
                 string etiq_e = ("Entrée " + ee);
-                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                 outil.AjoutEntree(classeEntree);
                 E_Left.Insert(0, classeEntree);
             }
@@ -296,12 +296,12 @@ namespace WpfApp2
 
                     string ee = (outil.getnbrsoryies()).ToString();
                     string A = ("A" + ee);
-                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, true, false);
+                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(classeEntreeA, outil.getnbrsoryies() - 1);
                     E_Up.Insert((outil.getnbrsoryies()) - 1, classeEntreeA);
 
                     string B = ("B" + ee);
-                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, true, false);
+                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(classeEntreeB, 2 * (outil.getnbrsoryies()) - 1);
                     E_Up.Insert(0, classeEntreeB);
 
@@ -325,12 +325,12 @@ namespace WpfApp2
                     {
                         string ee = (outil.getnbrentrees() - b).ToString();
                         string etiq_e = ("Entrée " + ee);
-                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                         outil.AjoutEntree(classeEntree);
                         E_Left.Insert(0, classeEntree);
                     }
 
-                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(Controle, a);
                     E_Up.Insert(0, Controle);
                 }
@@ -353,7 +353,7 @@ namespace WpfApp2
                         S_Right.Add(sortie);
                     }
 
-                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(Controle, a);
                     E_Up.Insert(0, Controle);
                 }

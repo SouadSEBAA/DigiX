@@ -92,6 +92,12 @@ namespace WpfApp2
             set {_ls.Point = value;}
         }
 
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            // Supression in kernel
+
+        }
+
         public bool Value
         {
             get { return _value; }

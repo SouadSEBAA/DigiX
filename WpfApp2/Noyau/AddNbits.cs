@@ -20,6 +20,17 @@ namespace logisimConsole
         }
         public override void calcul_sorties()
         {
+            if (nb_entrees == 2)
+            {
+                AddComplet add = new AddComplet();
+                add.setEntree(0, liste_entrees[0].isEtat());
+                add.setEntree(1, liste_entrees[1].isEtat());
+                add.setEntree(2, false);
+
+                add.calcul_sorties();
+                liste_sorties[0].setEtat(add.getSortie());
+                liste_sorties[1].setEtat(add.getRetenue());
+            }
             if (nb_entrees == 4)
             {
                 AddComplet add1 = new AddComplet();

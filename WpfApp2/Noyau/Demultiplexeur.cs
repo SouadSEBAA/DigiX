@@ -47,7 +47,8 @@ namespace logisimConsole
                     case 2:
                         Console.WriteLine("2 sorties || 1 commande");
                         if (liste_entrees[0].isEtat() == false)
-                        { //liste_sorties[0].setEtat(liste_entrees[1].isEtat());
+                        { 
+                            liste_sorties[0].setEtat(liste_entrees[1].isEtat());
                             Console.WriteLine(liste_entrees[1].isEtat());
                         }
                         else
