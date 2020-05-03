@@ -59,6 +59,7 @@ namespace WpfApp2
             DataContext = this;
         }
 
+
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
@@ -69,9 +70,6 @@ namespace WpfApp2
                 return false;
             else
             {
-                //Relate kernel
-                //partie Souad + it works avec la la fonction des compo finaux
-
                 if (io1 is ClasseEntree)
                 {
                     if (!circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1))

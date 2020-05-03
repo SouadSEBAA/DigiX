@@ -145,7 +145,6 @@ namespace logisimConsole
 
         public  void Evaluate(Outils outil)
         {
-            
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
@@ -161,20 +160,20 @@ namespace logisimConsole
             //Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat() );
             Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
+
         public void EvaluateCircuit()
         {
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
             foreach(Outils outil in this.CompFinaux)
             {
-               //new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******");
                 this.Evaluate(outil);
             }
         }
+
         public void EvaluateCircuit(IN iN)
         {
-            
             foreach (Outils outil in iN.getEndListe())
             {
                // new Thread(() => Evaluate(outil)).Start();
@@ -187,6 +186,8 @@ namespace logisimConsole
         {
             return Circuit;
         }
+
+
         public bool getSimulation() { return simulation; }
         public void setSimulation(bool s) { this.simulation = s; }
 

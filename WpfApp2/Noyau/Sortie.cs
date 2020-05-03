@@ -36,8 +36,6 @@ namespace logisimConsole
         //public  bool get_Etat_Class_Sortie() { return etat; }
         public List<OutStruct> get_OutStruct() { return Sorties; }
 
-
-
         public virtual OutStruct getSortieSpecifique(int i)
         {
             return Sorties[i];

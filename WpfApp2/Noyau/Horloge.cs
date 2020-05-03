@@ -25,8 +25,7 @@ namespace logisimConsole
 			//on demare le thread
 	        /*this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();*/
-
-			liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, new List<OutStruct>()));
+			liste_sorties.Add(new Sortie("Sortie Horloge",1, Disposition.right, false, new List<OutStruct>()));
 			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
 		}
 
@@ -34,7 +33,6 @@ namespace logisimConsole
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();
-
 		}
 
 		//  le Tour du signal d'horloge 
@@ -135,8 +133,6 @@ namespace logisimConsole
 			// TODO: Add constructor logic here
 			//
 		}
-
-		
 
 		public int getUP()
 		{

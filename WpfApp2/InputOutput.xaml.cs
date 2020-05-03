@@ -32,7 +32,6 @@ namespace WpfApp2
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
-           // this.MouseEnter += MouseOver2; // for our labels
         }
 
         public InputOutput(int ID, Disposition disposi)
@@ -94,17 +93,10 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
 
-
-       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            my_label.Content = this.GetEtiquette();
-        }*/
-
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
-
 
 
         virtual public void setEtat(bool etat)
@@ -120,15 +112,11 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Red;
-            });
-           
+                    elSelector.Fill = Brushes.Black;  
+            });       
         }
 
-        public void getetat(ref bool etat)
-        {
-            etat = this.etat;
-        }
+        public void stopbutton() { elSelector.Fill = Brushes.Black; }
 
         public bool getEtat()
         {
