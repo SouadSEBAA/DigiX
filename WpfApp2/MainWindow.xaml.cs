@@ -39,33 +39,35 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            //InitializeComponent();
+            InitializeComponent();
             circuit = new CircuitPersonnalise();
             ///test sequentiel
-           //T
-           /*
-            T basculeT = new T(); circuit.AddComponent(basculeT);
-            basculeT.getEntreeSpecifique(3).setEtat(true);//T
-            basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
-            //D
-            D basculeD = new D(); circuit.AddComponent(basculeD);
-            basculeD.getEntreeSpecifique(3).setEtat(true);//T
-            basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
-            basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
-            //Et
-            ET et = new ET();circuit.AddComponent(et);
-            //horloge
-            Horloge horloge = new Horloge();circuit.AddComponent(horloge);
-            horloge.circuit = circuit;
-            //relation
-            circuit.Relate(horloge, basculeT, 0, 0);
-            circuit.Relate(horloge, basculeD, 0, 0);
-            circuit.Relate(basculeT, et, 0, 0);
-            circuit.Relate(basculeD, et, 0, 1);
-            horloge.fin = et;
-            horloge.Demmarer();*/
+            //T
+            /*
+             T basculeT = new T(); circuit.AddComponent(basculeT);
+             basculeT.getEntreeSpecifique(3).setEtat(true);//T
+             basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
+             basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
+             //D
+             D basculeD = new D(); circuit.AddComponent(basculeD);
+             basculeD.getEntreeSpecifique(3).setEtat(true);//T
+             basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
+             basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
+             //Et
+             ET et = new ET();circuit.AddComponent(et);
+             //horloge
+             Horloge horloge = new Horloge();circuit.AddComponent(horloge);
+             horloge.circuit = circuit;
+             //relation
+             circuit.Relate(horloge, basculeT, 0, 0);
+             circuit.Relate(horloge, basculeD, 0, 0);
+             circuit.Relate(basculeT, et, 0, 0);
+             circuit.Relate(basculeD, et, 0, 1);
+             horloge.fin = et;
+             horloge.Demmarer();*/
             //seriaisation 
+
+            Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
 
         }
 
@@ -84,6 +86,7 @@ namespace WpfApp2
         private bool isDrawing;
         Wire line = null;
         Point mousePos;
+        protected List<Wire> wires = new List<Wire>();
         //pour verifier le type des entrees/sorties
         bool entry1;
         bool entry2;
@@ -139,8 +142,14 @@ namespace WpfApp2
                     {
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
+                        {
                             Grille.Children.Remove(line);
-                        break;
+                            break;
+                        }
+                        else
+                        {
+                            wires.Add(line);
+                        }
                     }
 
                 }
@@ -158,6 +167,28 @@ namespace WpfApp2
                 isDrawing = false;
                 Grille.Children.Remove(line);
             }
+        }
+
+        /******************************************************************************/
+        // Pour redessiner les wires
+        /*****************************************************************************/
+
+        public void Redraw()
+        {
+            if (wires != null)
+            {
+                foreach (Wire wire in wires)
+                {
+                    wire.StartPoint = wire.io1.TranslatePoint(new Point(5, 5), Grille);
+                    wire.EndPoint = wire.io2.TranslatePoint(new Point(5, 5), Grille);
+                }
+            }
+        }
+
+        public void Redraw2(object sender, RoutedEventArgs e)
+        {
+            Redraw();
+            e.Handled = true;
         }
 
         /******************************************************************************/
@@ -186,6 +217,8 @@ namespace WpfApp2
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
             e.Handled = true;
+
+            Redraw();
         }
 
         protected override void OnDragOver(DragEventArgs e)

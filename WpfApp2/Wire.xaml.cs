@@ -29,7 +29,7 @@ namespace WpfApp2
         public LineSegment _ls;
         private PathFigure _fil;
         public Gate gateStart;//début du fil
-        InputOutput io1, io2;
+        public InputOutput io1, io2;
         public Gate gateEnd;
         private bool _value;
 

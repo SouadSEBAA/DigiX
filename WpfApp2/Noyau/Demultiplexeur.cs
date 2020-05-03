@@ -14,10 +14,11 @@ namespace logisimConsole
         }
         public Demultiplexeur() 
         {
-            this.nb_entrees = 1;
+            this.nb_entrees = 2;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
+            this.liste_entrees.Add(new ClasseEntree("Controle 1", 0, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 1", 0, Disposition.left, false, false));
             this.liste_sorties.Add(new Sortie("Sortie 1", 0, Disposition.right, false, new List<OutStruct>()));
             this.liste_sorties.Add(new Sortie("Sortie ", 1, Disposition.right, false, new List<OutStruct>()));
@@ -30,6 +31,7 @@ namespace logisimConsole
                 unesortie.setEtat(false);
             }
 
+            /*
             bool AllRelated = true;
 
             foreach (ClasseEntree uneEntree in this.liste_entrees)
@@ -39,7 +41,7 @@ namespace logisimConsole
 
             // throw new NotImplementedException();
             if (AllRelated)
-            {
+            {*/
                 switch (this.nb_sorties)
                 {
                     case 2:
@@ -88,8 +90,8 @@ namespace logisimConsole
                         Console.WriteLine("erreur des entrées");
                         break;
                 }
-            }
-            else { Console.WriteLine("Assurez que tous les entrées sont reliées....."); }
+            /*}
+            else { Console.WriteLine("Assurez que tous les entrées sont reliées....."); }*/
         }
 
 

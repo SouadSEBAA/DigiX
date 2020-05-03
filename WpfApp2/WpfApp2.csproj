@@ -85,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AjoutLabel.xaml.cs">
+      <DependentUpon>AjoutLabel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Noyau\IN.cs" />
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
@@ -94,6 +97,10 @@
     <Compile Include="Wire.xaml.cs">
       <DependentUpon>Wire.xaml</DependentUpon>
     </Compile>
+    <Page Include="AjoutLabel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Chronogramme\Chronogrammes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
