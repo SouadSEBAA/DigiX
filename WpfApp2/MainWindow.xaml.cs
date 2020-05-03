@@ -375,7 +375,7 @@ namespace WpfApp2
             }
 
         }
-        public Gate CreateGate(XElement gate)
+        public static Gate CreateGate(XElement gate)
         {
             switch (gate.Attribute("Type").Value)
             {
@@ -428,7 +428,7 @@ namespace WpfApp2
             
             return null;
         }
-        public Gate Recup(int id)
+        public  Gate Recup(int id)
         {
            foreach(UserControl user in Grille.Children)
            {
@@ -492,7 +492,18 @@ namespace WpfApp2
                     gt.SetAttributeValue("Sortie", g.outil.getnbrsoryies());
                     //on ajoute le id pour recréer le circuit 
                     gt.SetAttributeValue("ID", g.outil.id);
+                    /*
+                    if(g is CircuitComplet)
+                    {
+                        XElement element = new XElement("circuit");
+                        XElement Cgates = new XElement("Gates");//pour contenir les composants
+                        XElement Cwires = new XElement("Wires");//pour les wires 
+                        foreach(Outils outils in ((CircuitPersonnalise)(g.outil)).GetGraph().vert)
+                        {
+                            
+                        }
 
+                    }*/
                     gates.Add(gt);
 
                 }
@@ -612,7 +623,105 @@ namespace WpfApp2
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
            
         }
+        //*************************************Reutilisation******************************************
+        private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+            // Process open file dialog box results
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                CircuitPersonnalise personnalise = Reutilisation(filename);
+                CircuitComplet gate = new CircuitComplet(personnalise );
+                
+                Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
+                Console.WriteLine("height "+gate.ActualHeight+"width"+gate.Width);
+                this.circuit.AddComponent(personnalise);
+                gate.added = true;
+                Grille.Children.Add(gate);
+                /*
+                Console.WriteLine("done");
+                Canvas.SetLeft(gate, 50);
+                Canvas.SetTop(gate,50);*/
 
+            }
+        }
+    
+        public  CircuitPersonnalise Reutilisation(string filename)
+        {
+            CircuitPersonnalise nouveauCircuit = new CircuitPersonnalise();
+            List<Gate> list = new List<Gate>();
+           
+            XElement root = XElement.Load(filename);
+            //Gates
+            foreach (XElement gate in root.Element("Gates").Elements())
+            {
+                Gate abgate = CreateGate(gate);
+                list.Add(abgate);
+                nouveauCircuit.AddComponent(abgate.outil);
+                abgate.added = true;
+                abgate.outil.id = int.Parse(gate.Attribute("ID").Value);
+
+            }
+            //Wires 
+            foreach (XElement wire in root.Element("Wires").Elements())
+            {
+                //id
+                int idStart = int.Parse(wire.Element("gatestart").Attribute("ID").Value);
+                int idEnd = int.Parse(wire.Element("gateend").Attribute("ID").Value);
+                //index
+                int io1 = int.Parse(wire.Element("gatestart").Attribute("IO").Value);
+                int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
+                //points
+                Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
+                Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
+                Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
+                Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
+                InputOutput IN1, IN2;
+                //on recupere les gate qui ont ces identifiants
+                Gate gatestart = Recuplist(idStart,list), gateend = Recuplist(idEnd,list);
+
+                if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
+                {
+                    IN1 = gatestart.outil.getListeentrees()[io1];
+                    IN2 = gateend.outil.getListesorties()[io2];
+                }
+                else
+                {
+                    IN1 = gatestart.outil.getListesorties()[io1];
+                    IN2 = gateend.outil.getListeentrees()[io2];
+                }
+
+                Wire w = new Wire(startp, gatestart, IN1);
+                w.Connect(endp, gateend, IN2,nouveauCircuit);
+                
+            }
+            nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
+            nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
+            
+            //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
+            //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
+            //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
+
+            return nouveauCircuit;
+        }
+        public Gate Recuplist(int id,List<Gate> list)
+        {
+            foreach (UserControl user in list)
+            {
+                if (user is Gate)
+                {
+                    Gate gate = (Gate)user;
+                    if (gate.outil.id == id) { return gate; }
+                }
+
+            }
+            return null;
+        }
         //**************************************END OF MENU BUTTONS*******************************//
 
 

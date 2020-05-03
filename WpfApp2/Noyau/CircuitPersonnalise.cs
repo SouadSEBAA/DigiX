@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System;
 using System.Threading;
 using System.Windows.Controls;
+using System.Xml.Linq;
+using System.Windows;
+
 namespace logisimConsole
 {
     [Serializable]
@@ -14,7 +17,7 @@ namespace logisimConsole
         private bool Sauvegardé;
         private bool simulation;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
-        private List<Outils> CompFinaux;
+        public List<Outils> CompFinaux;
 
         public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; } //to iterate through vertices and edges of the graph created in the constructor
         public List<Outils> GetCompFinaux() { return CompFinaux; }
@@ -25,8 +28,10 @@ namespace logisimConsole
         {
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
             CompFinaux = new List<Outils>();
+            this.liste_entrees = new List<ClasseEntree>();
+            this.liste_sorties = new List<Sortie>();
         }
-
+        public BidirectionalGraph<Outils, Edge<Outils>> GetGraph() { return Circuit; }
         //Relate for console
         public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
         { 
@@ -172,8 +177,118 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
-            throw new NotImplementedException();
+            this.CompFinaux = new List<Outils>();
+            this.EndComponents();
+            foreach (Outils outil in this.CompFinaux)
+            {
+                //new Thread(() => Evaluate(outil)).Start();
+                Console.WriteLine("********Evaluate circuit *******");
+                this.EvaluatePerso(outil);
+            }
         }
+        //pour calculsortie()
+        public void EvaluatePerso(Outils outil)
+        {
+
+            if (!outil.end)
+            {
+                IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
+                foreach (Edge<Outils> edge in inEdges)
+                {
+                    EvaluatePerso(edge.Source);
+                }
+            }
+
+            outil.calcul_sorties();
+            Console.WriteLine("--------------------------");
+            Console.WriteLine(outil.GetType());
+            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat());
+            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
+        }
+        public void ConstructSortie()
+        {
+            
+            foreach(Outils outils in this.Circuit.Vertices)
+            {
+                if(outils is PinOut )
+                {
+                    //on construit la liste des sorties
+                   
+                    foreach (Edge<Outils> edge in Circuit.InEdges(outils))
+                    {
+                        RecupSorti(edge.Source,(PinOut)outils);
+                    }
+                }
+            }
+            
+            
+        }
+        //recuperation de la sortie
+        public void RecupSorti(Outils outil,PinOut pin)
+        {
+            foreach(Sortie sorti in outil.getListesorties())
+            {
+                foreach(OutStruct outs in sorti.get_OutStruct())
+                {
+                    if (outs.getOutils().Equals(pin))
+                    {
+                        this.nb_sorties++;
+                        sorti.set_Sorties(new List<OutStruct>());
+                        sorti.setDispo(Disposition.right);
+                        this.liste_sorties.Add(sorti);
+                        Console.WriteLine("SORTIE"+nb_sorties);
+                        
+                        //on supprime la sortie de gate 
+                        ((Grid)(sorti.Parent)).Children.Remove(sorti);
+                    }
+                }
+            }
+        }
+        //construction de la liste des entrées
+        public void ConstructEntrée()
+        {
+            List<Edge<Outils>> list = new List<Edge<Outils>>();
+            foreach(Outils outils in this.Circuit.Vertices)
+            {
+                if(outils is PinIn || outils is Horloge)
+                {
+                    foreach (Edge<Outils> edge in Circuit.OutEdges(outils))
+                    {
+
+                         list.Add(edge);
+                    }
+                   
+                    RecupEntré((IN)outils);
+                    
+                }
+            }
+            foreach(Edge<Outils> edge in list)
+            {
+ 
+                    this.Circuit.RemoveEdge(edge);
+            }
+
+            
+        }
+        //****
+        public void RecupEntré(IN outils)
+        {
+            foreach (OutStruct outs in outils.getListesorties()[0].get_OutStruct())
+            {
+                this.nb_entrees++;
+                ClasseEntree entree = outs.getOutils().getListeentrees()[outs.getNum_entree()];
+                entree.setDispo(Disposition.left);
+                entree.setRelated(false);
+                outs.getOutils().end = true;
+                this.liste_entrees.Add(entree);//on ajoute l'entrée 
+                Console.WriteLine("ENTREE"+this.nb_entrees);
+                
+                
+                ((Grid)(entree.Parent)).Children.Remove(entree);
+            }
+        }
+
+
     }
 
 

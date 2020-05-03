@@ -16,6 +16,7 @@ namespace logisimConsole
         public int id=0;
         public CircuitPersonnalise circuit;
         public bool added;
+        public bool end;
         protected int nb_entrees;
         protected int nb_sorties;
         protected string etiquette;

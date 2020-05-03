@@ -438,7 +438,7 @@ namespace WpfApp2
     //le circuit perssonalisé 
     public class CircuitComplet :Gate
     {
-        public CircuitComplet() : base(new CircuitPersonnalise()) { }
+        public CircuitComplet( CircuitPersonnalise c) : base(c, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
 
 

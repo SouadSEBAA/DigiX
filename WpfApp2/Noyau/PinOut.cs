@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WpfApp2.Noyau
 {
     [Serializable]
-    class PinOut : Outils
+    public class PinOut : Outils
     {
         public PinOut(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
         {
@@ -38,7 +38,7 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            throw new NotImplementedException();
+           
         }
     }
 
