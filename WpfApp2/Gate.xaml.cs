@@ -10,6 +10,8 @@ using System.Windows.Navigation;
 using WpfApp2.Noyau;
 using DataObject = System.Windows.DataObject;
 using DragDropEffects = System.Windows.DragDropEffects;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace WpfApp2
 {
@@ -138,18 +140,52 @@ namespace WpfApp2
             //Fréquences de l'horloge
             if(outil is Horloge)
             {
-                ListBoxItem lbi = new ListBoxItem();
                 MenuItem mi = new MenuItem();
-                MenuItem mi1 = new MenuItem();
-                mi1.Header = "1s";
-                MenuItem mi2 = new MenuItem();
-                MenuItem mi3 = new MenuItem();
-                mi.Items.Add(mi1);
-                mi.Items.Add(mi2);
-                mi.Items.Add(mi3);
+                BindingGroup bindingGroup = new BindingGroup(); 
+                RadioButton propo1 = new RadioButton(); 
+
+                propo1.BindingGroup = bindingGroup;
+                propo1.IsChecked = true;
+                propo1.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(1000, 500); };
+                propo1.Content = "T = 1s DutyCycle = 500 ms";
+
+                RadioButton propo5 = new RadioButton();
+                propo5.BindingGroup = bindingGroup;
+                propo5.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(1000, 200); };
+                propo5.Content = "T = 1s DutyCycle = 200 ms";
+
+
+                RadioButton propo2 = new RadioButton(); 
+                propo2.BindingGroup = bindingGroup;
+                propo2.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(2000, 1000); };
+                propo2.Content = "T = 2s DutyCycle = 1s";
+
+                RadioButton propo6 = new RadioButton();
+                propo6.BindingGroup = bindingGroup;
+                propo6.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(2000, 500); };
+                propo6.Content = "T = 2s DutyCycle = 500 ms";
+
+
+                RadioButton propo3 = new RadioButton(); 
+                propo3.BindingGroup = bindingGroup;
+                propo3.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(3000, 1500); };
+                propo3.Content = "T = 3s DutyCycle = 1,5s";
+
+                RadioButton propo4 = new RadioButton();
+                propo4.BindingGroup = bindingGroup;
+                propo4.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(4000, 2000); };
+                propo4.Content = "T = 4s DutyCycle = 2s";
+
+                mi.Items.Add(propo5);
+                mi.Items.Add(propo1);
+                mi.Items.Add(propo6);
+                mi.Items.Add(propo2);
+                mi.Items.Add(propo3);
+                mi.Items.Add(propo4);
+
                 mi.Header = "Fréquences";
-                lbi.Content = mi; 
-                menu.Items.Add(lbi);
+                
+                menu.Items.Add(mi);
             }
         }
         //cette fonction pour ajouter et créer les i/o
@@ -576,8 +612,11 @@ namespace WpfApp2
     [Serializable]
     public class pin_sortie : Gate
     {
-        public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z") { }
-        
+        public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z")
+        {
+            
+        }
+
     }
 
     [Serializable]

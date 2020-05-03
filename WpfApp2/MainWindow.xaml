@@ -34,9 +34,9 @@
                 Width="2000">
                     <Canvas.Background>
                         <VisualBrush TileMode="Tile"
-                             Viewport="0,0,10,10"
+                             Viewport="0,0,15,15"
                              ViewportUnits="Absolute"
-                             Viewbox="0,0,10,10"
+                             Viewbox="0,0,15,15"
                              ViewboxUnits="Absolute">
                             <VisualBrush.Visual>
                                 <Ellipse Fill="Black"

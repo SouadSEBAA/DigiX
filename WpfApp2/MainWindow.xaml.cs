@@ -37,7 +37,7 @@ namespace WpfApp2
     [Serializable]
     public partial class MainWindow : Window/*, System.Collections.IEnumerable*/
     {
-        int gridGap = 10;
+        int gridGap = 20;
         CircuitPersonnalise circuit;
         List<Wire> Wires;
 

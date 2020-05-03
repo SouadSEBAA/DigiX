@@ -68,8 +68,6 @@ namespace logisimConsole
 
 
 
-
-
         public List<Sortie> getListesorties() { return liste_sorties; }
         public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
         public int getnbrentrees() { return this.nb_entrees; }

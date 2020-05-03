@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuickGraph;
-using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
 

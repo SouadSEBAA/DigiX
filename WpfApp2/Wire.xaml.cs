@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +25,7 @@ namespace WpfApp2
         public PathFigure fil;
         Dictionary<PolyLineSegment, Gate> existingWires;//Ts les fils dérivés
         ***************************************/
-        private LineSegment _ls;
+        private BezierSegment _ls;
         private PathFigure _fil;
         public Gate gateStart { get; set; }//début du fil
         private InputOutput io1 { get; set; } 
@@ -39,10 +38,14 @@ namespace WpfApp2
             InitializeComponent();
 
             _fil = new PathFigure();
-            _ls = new LineSegment();
+            _ls = new BezierSegment();
             _fil.IsClosed = false;
             StartPoint = start;
             EndPoint = start;
+            _ls.Point3 = EndPoint;
+            _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
+            _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, _fil.StartPoint.Y);
+
             //PolyLineSegment pls = new PolyLineSegment(); pls.Points.Add(start); existingWires.Add(pls, null);
             //fil.Segments.Add(pls);
 
@@ -52,14 +55,15 @@ namespace WpfApp2
 
             this.io1 = io;
             this.gateStart = gatePrinciple;
-            Value = false;
+
             DataContext = this;
         }
 
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
-            _ls.Point = end;
+            Maj();
+            EndPoint = end;
             this.io2 = io;
             if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput() || io1.getEtat() != io2.getEtat())
                 return false;
@@ -81,18 +85,24 @@ namespace WpfApp2
                 return true;
             }
         }
+        
+        void Maj()
+        {
+            _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
+            _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, EndPoint.Y);
+        }
 
         public Point StartPoint 
         { 
             get { return _fil.StartPoint; }
-            set { _fil.StartPoint = value;  }
+            set { _fil.StartPoint = value; }
         }
 
 
         public Point EndPoint
         {
-            get { return _ls.Point;}
-            set {_ls.Point = value;}
+            get { return _ls.Point3;}
+            set {_ls.Point3 = value;   }
         }
 
         public bool Value
@@ -102,9 +112,9 @@ namespace WpfApp2
             {
                 _value = value;
                 if (value == true)
-                    wire.Stroke = Brushes.Red; //définir la couleur
+                    wire.Stroke = Brushes.Green; //définir la couleur
                 else
-                    wire.Stroke = Brushes.Black;
+                    wire.Stroke = Brushes.Red;
             }
         }
 

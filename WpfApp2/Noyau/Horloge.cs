@@ -143,6 +143,20 @@ namespace logisimConsole
 			return UP;
 		}
 
+		public void setUP(int UP)
+		{
+			this.UP =UP;
+		}
 
+		public void setT(int T)
+		{
+			this.T = T;
+		}
+
+		public void setTUp(int T, int UP)
+		{
+			this.UP = UP;
+			this.T = T;
+		}
 	}
 }

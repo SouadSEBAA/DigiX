@@ -109,19 +109,25 @@ namespace WpfApp2
 
         virtual public void setEtat(bool etat)
         {
+            this.etat = etat;
+
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
             //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
-
+            //this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,new Action( ()=>
             Application.Current.Dispatcher.Invoke(() =>
             {
                 // Code causing the exception or requires UI thread access
-                this.etat = etat;
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Black;
+                    elSelector.Fill = Brushes.Red;
             });
            
+        }
+
+        public void getetat(ref bool etat)
+        {
+            etat = this.etat;
         }
 
         public bool getEtat()
@@ -155,6 +161,8 @@ namespace WpfApp2
             add { AddHandler(ChronogrammeEvent, value); }
             remove { RemoveHandler(ChronogrammeEvent, value); }
         }
+
+
         /***************************************************************************************/
     }
 }
