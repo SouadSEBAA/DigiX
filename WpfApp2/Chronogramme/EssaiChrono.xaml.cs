@@ -79,7 +79,7 @@ namespace WpfApp2.Chronogramme
 
                         Thread.Sleep(1);
                         
-                        dataSource.AppendAsync(p.Dispatcher, new MeasureModel
+                        dataSource.AppendAsync(Application.Current.Dispatcher, new MeasureModel
                         {
                             interval = Chronogrammes.watch.Elapsed,
                             Value = io.getEtat(),

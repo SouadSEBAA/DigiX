@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Name="uc"
              Height="40" Width="600">
     <Canvas Height="40" Width="650" Background="#990000" >
+
         <materialDesign:PackIcon Kind="Error" Height="28" Width="28" Foreground="White" Canvas.Left="15" Canvas.Top="5"/>
 
         <TextBlock Height="25" Width="570" x:Name="textMessage" 

@@ -34,13 +34,20 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
+                    
                     if (!EtatAvant_R && EtatAvant_S) //R=0 S=1
                         liste_sorties[0].setEtat(true);
                     else if (EtatAvant_R && !EtatAvant_S) //R=1 S=0
                         liste_sorties[0].setEtat(false);
                     else if (EtatAvant_R && EtatAvant_S) //R=1 S=1
                     {
-                        //throw exception
+                        try
+                        {
+                            throw new RSTException(liste_entrees[3], liste_entrees[4]);
+                        }catch(RSTException e)
+                        {
+                            e.Gerer();
+                        }
                     }
                     else if (!EtatAvant_R && !EtatAvant_S) //R=0 S=0
                     {
