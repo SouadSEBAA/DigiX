@@ -70,9 +70,8 @@ namespace WpfApp2
             circuit.DeleteComponent(((Gate)e.Source).outil);
             foreach(Wire wire in RecupererWires((Gate)e.Source))
             {
-                Grille.Children.Remove(wire);
+                Grille.Children.Remove(wire); 
             }
-
             Grille.Children.Remove(((Gate)e.Source));
             e.Handled = true;
         }
@@ -98,7 +97,7 @@ namespace WpfApp2
 
         public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
-            if (!isDrawing)
+            if (!isDrawing && !circuit.getSimulation())
             {
                 Gate gate = (Gate)e.Source;
                 InputOutput io = null;
@@ -131,11 +130,6 @@ namespace WpfApp2
             if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
                 line.EndPoint = mousePos;
-            }
-            else if (isDragNewCircuit)
-            {
-                Canvas.SetLeft(gate, mousePos.X);
-                Canvas.SetTop(gate, mousePos.Y);
             }
 
         }
@@ -311,18 +305,16 @@ namespace WpfApp2
         
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-            //In order to show the pause/stop buttons --------------------------------------------
-            if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
-            if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-            //-----------------------------------------------------------------------------------
 
-            circuit.setSimulation(false);
+            //circuit.setSimulation(false);
 
             //For exceptions
             StackExceptions.Children.Clear();
+
              Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
-            if (circuit.getUnrelatedGates().Count != 0)
+            if (circuit.getCircuit().VertexCount != 0)
+            if (circuit.getUnrelatedGates().Count != 0 )
             {
                 try
                 {
@@ -336,10 +328,15 @@ namespace WpfApp2
             }
             else
             {
-           
+                //In order to show the pause/stop buttons --------------------------------------------
+                if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+                if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                //-----------------------------------------------------------------------------------
+
                 //melissa
-             circuit.EvaluateCircuit();
-             circuit.setSimulation(true);
+                circuit.setSimulation(true);
+                Tools.IsEnabled = false;
+                circuit.EvaluateCircuit();
                //
             }
             
@@ -706,7 +703,10 @@ namespace WpfApp2
             int i = 0; int j = 0; //need this to make sure it works --on console only--
             Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
-            
+
+            //Souad
+            Tools.IsEnabled = true;
+
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
                 if (o is Horloge) { ((Horloge)o).arreter(); }
@@ -717,7 +717,7 @@ namespace WpfApp2
                     Console.WriteLine("input number : "+i);
                     //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
                     Console.WriteLine("etat avant 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
-                    c_e.setRelated(false);
+                    //c_e.setRelated(false);
                     c_e.setEtat(false);
                     c_e.stopbutton();
                     Console.WriteLine("etat apres 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());

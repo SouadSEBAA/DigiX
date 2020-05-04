@@ -70,7 +70,7 @@ namespace logisimConsole
         {
             component1.circuit = this;
             component2.circuit = this;
-            if (!entree.getRelated() || entree.getEtat() != sortie.getEtat() || !component1.getListesorties().Contains(sortie) || !component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
+            if (!entree.getRelated() && entree.getEtat() == sortie.getEtat() && component1.getListesorties().Contains(sortie) && component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
@@ -86,6 +86,7 @@ namespace logisimConsole
                 }
 
                 entree.setEtat(sortie.getEtat());//Mise à jour de l'état d'entree de component2
+
                 return true; // component1 et component2 liées avec succès
             }
             else

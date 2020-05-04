@@ -324,7 +324,7 @@ namespace WpfApp2
                 if (outil.getnbrentrees() == 4) { entree = 4; }
                 for (int i = 0; i < entree; i++)
                 {
-                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, true, false);
+                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, false, false);
                     outil.AjoutEntree(classeEntree);
                     AjouterIO(LeftGate, classeEntree, outil.getnbrentrees() - 1);
                 }
@@ -345,7 +345,7 @@ namespace WpfApp2
                     outil.AjoutSortie(sortie);
                     AjouterIO(RightGate, sortie, outil.getnbrsoryies() - 1);
                 }
-                ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, true, false);
+                ClasseEntree classeEntree = new ClasseEntree(1, Disposition.left, false, false);
                 outil.AjoutEntree(classeEntree);
                 AjouterIO(LeftGate, classeEntree, outil.getnbrentrees() - 1);
             }
@@ -354,11 +354,11 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() < 10)
                 {
-                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.up, true, false);
+                    ClasseEntree classeEntree = new ClasseEntree(1, Disposition.up, false, false);
                     outil.AjoutEntree(classeEntree);
                     AjouterIO(TopGate, classeEntree, outil.getnbrentrees() - 1);
 
-                    ClasseEntree classeEntree1 = new ClasseEntree(1, Disposition.up, true, false);
+                    ClasseEntree classeEntree1 = new ClasseEntree(1, Disposition.up, false, false);
                     outil.AjoutEntree(classeEntree1);
                     AjouterIO(TopGate, classeEntree1, outil.getnbrentrees() - 1);
 

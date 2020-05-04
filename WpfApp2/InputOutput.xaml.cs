@@ -112,7 +112,7 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Black;  
+                    elSelector.Fill = Brushes.Red;  
             });       
         }
 
@@ -122,7 +122,7 @@ namespace WpfApp2
         {
             return this.etat;
         }
-
+        
         public bool isEtat() { return this.etat; }
 
         public String getEtiquette() { return etiquette; }

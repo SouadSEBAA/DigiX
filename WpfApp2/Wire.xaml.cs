@@ -28,8 +28,8 @@ namespace WpfApp2
         private BezierSegment _ls;
         private PathFigure _fil;
         public Gate gateStart { get; set; }//début du fil
-        private InputOutput io1 { get; set; } 
-        private InputOutput io2 { get; set; }
+        public InputOutput io1 { get; set; }
+        public InputOutput io2 { get; set; }
         public Gate gateEnd { get; set; }
         private bool _value;
 
@@ -54,6 +54,9 @@ namespace WpfApp2
             wire.Data = new PathGeometry(new PathFigure[]{ _fil });
 
             this.io1 = io;
+            //_value = io.gtEtat();
+            
+            
             this.gateStart = gatePrinciple;
 
             DataContext = this;

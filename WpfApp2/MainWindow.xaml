@@ -25,7 +25,7 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
                 <Canvas x:Name="Grille"         
-                MouseMove="MouseMoved" MouseDown="Grille_MouseDown"
+                MouseMove="MouseMoved" 
                 MouseLeftButtonUp="MouseReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
