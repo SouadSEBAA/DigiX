@@ -101,10 +101,10 @@
     <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
       <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Noyau\IN.cs" />
     <Compile Include="AjoutLabel.xaml.cs">
       <DependentUpon>AjoutLabel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Noyau\IN.cs" />
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
     <Compile Include="Chronogramme\OneChronogrammeException.cs" />

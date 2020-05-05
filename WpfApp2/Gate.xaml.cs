@@ -43,13 +43,10 @@ namespace WpfApp2
         public Gate(Outils outils)
         {
             this.outil = outils;
-            //on supprime tt les children 
-            this.OutilShape.Children.Remove(path);
-            this.OutilShape.Children.Remove(TopGate);
-            this.OutilShape.Children.Remove(BottomGate);
-            this.OutilShape.Children.Remove(LeftGate);
-            this.OutilShape.Children.Remove(RightGate);
-            this.OutilShape.AllowDrop = true;//e drop autorisé
+            this.data = "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z";
+            path.Data = StreamGeometry.Parse(data);
+            path.StrokeThickness = 1;
+            path.Fill = Brushes.White;
         }
 
 
@@ -292,14 +289,21 @@ namespace WpfApp2
         private void AjouterEntrée(object sender, RoutedEventArgs e)
         {
             Type type = outil.GetType();
+            AddEntree(type);
+        }
+        public void AddEntree(Type type)
+        { 
 
             if ((type.Name == "ET") || (type.Name == "OU") || (type.Name == "NAND") || (type.Name == "OUX") || (type.Name == "NOR"))
             {
                 if (outil.getnbrentrees() < 5)
                 {
+                    Console.WriteLine("donel'ajout");
                     string i = (outil.getnbrentrees() + 1).ToString();
                     string etiq = ("Entrée " + i);
                     ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, false, false);
+                    
+                    outil.setnb_entrees((outil.getnbrentrees())+1);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }
@@ -722,7 +726,8 @@ namespace WpfApp2
     
 
 
-
+        public List< ClasseEntree> getE_left() { return this.E_Left; }
+        public List<Sortie> getS_right() { return this.S_Right; }
 
         public Outils GetOutil()
         {
@@ -927,10 +932,10 @@ namespace WpfApp2
         }
     }
     //le circuit perssonalisé 
-    public class circuitpersonnalise : Gate
+    public class CircuitComplet : Gate
     {
-        public circuitpersonnalise() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
-        public circuitpersonnalise(CircuitPersonnalise circuit) : base(circuit, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
+        public CircuitComplet( CircuitPersonnalise c) : base(c, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
+        public CircuitComplet() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
 }
     

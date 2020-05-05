@@ -57,13 +57,13 @@ namespace logisimConsole
 				{
 					if (parti)//etat haut 
 					{
-						(this.liste_sorties[0]).setEtat(true);/*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul();
+						(this.liste_sorties[0]).setEtat(true);
 						this.Calcul();
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
-						(this.liste_sorties[0]).setEtat(false); /*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul(); //this.circuit.EvaluateCircuit();
+						(this.liste_sorties[0]).setEtat(false); 
 						this.Calcul();
 						Thread.Sleep(T - UP);
 					}

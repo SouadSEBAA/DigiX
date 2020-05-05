@@ -9,8 +9,8 @@ using WpfApp2.Noyau;
 
 namespace logisimConsole
 {
-    public abstract class  IN : Outils
-    { 
+    public abstract class IN : Outils
+    {
 
         HashSet<Outils> listefin = new HashSet<Outils>();//pour eviter less redoublants qui changent less sorties
         public IN()
@@ -33,3 +33,4 @@ namespace logisimConsole
 
     }
 }
+

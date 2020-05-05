@@ -103,7 +103,6 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
-
         virtual public void setEtat(bool etat)
         {
             this.etat = etat;

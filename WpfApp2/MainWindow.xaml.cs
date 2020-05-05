@@ -191,13 +191,13 @@ namespace WpfApp2
                 if (target == false)
                     Grille.Children.Remove(line);
             }
-        
+
             e.Handled = true;
         }
 
         private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
-            if (isDrawing )
+            if (isDrawing)
             {
                 isDrawing = false;
                 Grille.Children.Remove(line);
@@ -324,16 +324,18 @@ namespace WpfApp2
             gate.anchorPoint = gate.currentPoint;
 
             //Liaison
-            gate.MouseLeftButtonDown += new MouseButtonEventHandler( MouseLeftButtonPressed);
+            gate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
             gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
 
-          
+
             /*******/
-            if (!gate.added) {
+            //a reffaire pour le drag & drop
+            if (!gate.added)
+            {
                 Grille.Children.Add(gate);
                 gate.added = true;
+                gate.outil.circuit = this.circuit;
 
-                //foreach (var vertex in circuit.GetCircuit().Vertices) { Console.WriteLine(vertex); }
             }
             e.Handled = true;
         }
@@ -343,7 +345,6 @@ namespace WpfApp2
         {
             e.Effects = DragDropEffects.All;
 
-            //Console.WriteLine("Ecrit");
             Gate gate = (Gate)e.Data.GetData("Object");
             this.circuit.AddComponent(gate.outil); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
             //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
@@ -368,19 +369,19 @@ namespace WpfApp2
         }
 
 
-       //Fonction elements de sortie version 2
-        public void Last_Elements() 
+        //Fonction elements de sortie version 2
+        public void Last_Elements()
         {
             circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
 
             foreach (var vertex in circuit.GetCircuit().Vertices)
             {
                 if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
-                { 
-                //list_element_de_sortie.Add(vertex);
-                circuit.GetCompFinaux().Add(vertex);
+                {
+                    //list_element_de_sortie.Add(vertex);
+                    circuit.GetCompFinaux().Add(vertex);
                 }
-                
+
             }
             foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
         }
@@ -390,7 +391,7 @@ namespace WpfApp2
         private void simuler_click(object sender, RoutedEventArgs e)
         {
 
-            //circuit.setSimulation(false);
+            circuit.setSimulation(false);
 
             //For exceptions
             StackExceptions.Children.Clear();
@@ -418,9 +419,10 @@ namespace WpfApp2
                 //-----------------------------------------------------------------------------------
 
                 //melissa
-                circuit.setSimulation(true);
                 Tools.IsEnabled = false;
                 circuit.EvaluateCircuit();
+                circuit.setSimulation(true);
+
                //
             }
             
@@ -434,86 +436,337 @@ namespace WpfApp2
             System.Diagnostics.Process.Start(path);
         }
 
+        //*********************SERIALISATION*********************
+
+       
+        //sauvegarder un composant 
+        public XElement SaveGate(Gate g)
+        {
+            XElement gt = new XElement("Gate");
+            gt.SetAttributeValue("Type", g.GetType().Name);
+            //********
+            gt.Add(new XElement("anchorPoint"));//position 
+            gt.Element("anchorPoint").SetAttributeValue("X", g.anchorPoint.X);
+            gt.Element("anchorPoint").SetAttributeValue("Y", g.anchorPoint.Y);
+            //****transform 
+            gt.Add(new XElement("transform"));//position 
+            gt.Element("transform").SetAttributeValue("X", g.transform.X);
+            gt.Element("transform").SetAttributeValue("Y", g.transform.Y);
+            //*****nombre d'entrée et de sorties
+            gt.SetAttributeValue("Entree", g.outil.getnbrentrees());
+            gt.SetAttributeValue("Sortie", g.outil.getnbrsoryies());
+            //on ajoute le id pour recréer le circuit 
+            gt.SetAttributeValue("ID", g.outil.id);
+            if (g is CircuitComplet)
+            {
+                XElement Cgates = new XElement("Gates");
+                XElement Cwires = new XElement("Wires");
+                XElement entrées = new XElement("Entrees");
+                XElement sorties = new XElement("Sorties");
+                foreach (Gate gate in ((CircuitPersonnalise)g.outil).gates)
+                {
+                    XElement element = SaveGate(gate);
+                    element.SetAttributeValue("end", gate.outil.end);
+                    Cgates.Add(element);
+                }
+                foreach (Wire wire in ((CircuitPersonnalise)g.outil).wires)
+                {
+                    XElement element = SaveWire(wire);
+                    Cwires.Add(element);
+                }
+                foreach (Point point in ((CircuitPersonnalise)g.outil).Entrée)
+                {
+                    XElement entre = new XElement("Entree");
+                    entre.SetAttributeValue("id", point.X);
+                    entre.SetAttributeValue("num", point.Y);
+                    entrées.Add(entre);
+                }
+                foreach (Point point in ((CircuitPersonnalise)g.outil).Sortie)
+                {
+                    XElement entre = new XElement("Sortie");
+                    entre.SetAttributeValue("id", point.X);
+                    entre.SetAttributeValue("num", point.Y);
+                    sorties.Add(entre);
+                }
+                gt.Add(entrées);
+                gt.Add(sorties);
+                gt.Add(Cgates);
+                gt.Add(Cwires);
+            }
+            return gt;
+        }
+        //sauvegarder une relation
+        public XElement SaveWire(Wire wire)
+        {
+            XElement w = new XElement("Wire");
+            //start point
+            w.Add(new XElement("startp"));//position 
+            w.Element("startp").SetAttributeValue("X", Convert.ToInt32(wire.StartPoint.X));
+            w.Element("startp").SetAttributeValue("Y", Convert.ToInt32(wire.StartPoint.Y));
+            //end point
+            w.Add(new XElement("endp"));//position 
+            w.Element("endp").SetAttributeValue("X", Convert.ToInt32(wire.EndPoint.X));
+            w.Element("endp").SetAttributeValue("Y", Convert.ToInt32(wire.EndPoint.Y));
+            //****
+            w.Add(new XElement("gatestart"));
+            w.Element("gatestart").SetAttributeValue("ID", wire.gateStart.outil.id);
+            w.Add(new XElement("gateend"));
+            w.Element("gateend").SetAttributeValue("ID", wire.gateEnd.outil.id);
+            if (wire.io1 is ClasseEntree)//io1 c une entrée donc io2 une sortie
+            {
+                if (wire.gateStart.outil.getListeentrees().Contains(wire.io1))//io1 est entrée dans gatestart..io2 sortie dans gateend
+                {
+                    Console.WriteLine("1");
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
+                    w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
+                    w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
+                    w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListesorties().IndexOf((Sortie)wire.io2));
+                }
+                else//io1 entrée dans gateend .. io2 sortie danss gatesstart
+                {
+                    Console.WriteLine("2");
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
+                    w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
+                    w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
+                    w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
+                }
+
+            }
+            else//io1 ssortie et io2 entrée
+            {
+                if (wire.gateStart.outil.getListesorties().Contains(wire.io1))//io1 est sortie dans gatestart... io2 entrée dans gateend
+                {
+                    Console.WriteLine("3");
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est sortie
+                    w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io1));
+                    w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
+                    w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
+                }
+                else//io1 sortie dans gateend ..io2 entrée dans gatestart
+                {
+                    Console.WriteLine("4");
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie
+                    w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
+                    w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
+                    w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListesorties().IndexOf((Sortie)wire.io1));
+                }
+            }
+            return w;
+        }
+        private void sauvegarde_click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "UIElement File"; // Default file name
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+
+                string filename = dlg.FileName;
+                SerializeToXAML(filename);
+
+                //melissa 
+
+            }
+        }
+
+        // Serializes any UIElement object to XAML using a given filename.
+        public void SerializeToXAML(string filename)
+        {
+            XElement grille = new XElement("Grille");//pour contenir tt le circuit 
+            XElement gates = new XElement("Gates");//pour contenir les composants
+            XElement wires = new XElement("Wires");//pour les wires 
+            //parcourire les gates
+            foreach (UserControl user in Grille.Children)
+            {//on ajoute le nbr d'entrées et sorties 
+                if (user is Gate)
+                {
+                    Gate g = (Gate)user;
+                    XElement gt = SaveGate(g);
+                    //le cas d'un circuit personalisé
+                    
+                    gates.Add(gt);
+                }
+                else
+                {
+                    Wire wire = (Wire)user;
+                    XElement w = SaveWire(wire);
+                    wires.Add(w);
+                }
+
+            }
+            //on ajoute wires
+            grille.Add(gates);
+            grille.Add(wires);
+            //on sauvegarde le tt 
+            grille.Save(filename);
+
+        }
+        //*************************DESERIALISATION*******************************
 
         private void open_file(object sender, RoutedEventArgs e)
-        {      
+        {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
             // Show open file dialog box
             Nullable<bool> result = dlg.ShowDialog();
             // Process open file dialog box results
-            
             if (result == true)
             {
                 string filename = dlg.FileName;
                 DeSerializeXAML(filename);
+
+
             }
         }
+        //deserialisation gate 
+        public Gate LoadGate(XElement gate)
+        {
+            Gate abgate = CreateGate(gate);
+            //l'emplacement
+            //anchorpoint
+            double x = double.Parse(gate.Element("anchorPoint").Attribute("X").Value);
+            double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value);
+            abgate.anchorPoint = new Point(x, y);
+            //transform point 
+            x = double.Parse(gate.Element("transform").Attribute("X").Value);
+            y = double.Parse(gate.Element("transform").Attribute("Y").Value);
+            abgate.transform.X += x;
+            abgate.transform.Y += y;
+            abgate.RenderTransform = abgate.transform;
+            abgate.outil.id = int.Parse(gate.Attribute("ID").Value);
+            int i = abgate.outil.getnbrentrees(), entree = int.Parse(gate.Attribute("Entree").Value);
+            if (!(abgate is CircuitComplet))
+            {
+                Console.WriteLine("serialisation" + entree + "  ID" + abgate.outil.id);
+                while (i < entree)
+                {
+                    Console.WriteLine("Entree");
 
+                    abgate.AddEntree(abgate.outil.GetType());
+                    i++;
+                }
+            }
+            if (abgate is CircuitComplet)
+            {
+                foreach (XElement element in gate.Element("Gates").Elements())
+                {
+                    Gate Cgate = LoadGate(element);
+                    Cgate.outil.end = bool.Parse(element.Attribute("end").Value);
+                    ((CircuitPersonnalise)abgate.outil).AddComponent(Cgate.outil);
+                    ((CircuitPersonnalise)abgate.outil).gates.Add(Cgate);
+                }
+                foreach (XElement element1 in gate.Element("Wires").Elements())
+                {
+                    Wire wire = LoadWire(element1, ((CircuitPersonnalise)abgate.outil));
+                    ((CircuitPersonnalise)abgate.outil).wires.Add(wire);
+                }
+                foreach (XElement element2 in gate.Element("Entrees").Elements())
+                {
+                    int x0 = int.Parse(element2.Attribute("id").Value);
+                    int y0 = int.Parse(element2.Attribute("num").Value);
+                    ((CircuitPersonnalise)abgate.outil).Entrée.Add(new Point(x0, y0));
+                    Gate gate1 = Recuplist(x0, ((CircuitPersonnalise)abgate.outil).gates);
+                    ClasseEntree classeEntree = gate1.outil.getListeentrees()[y0];
+                    classeEntree.setDispo(Disposition.left);
+                    classeEntree.setRelated(false);
+                   ((Grid)(classeEntree.Parent)).Children.Remove(classeEntree);
+                    abgate.outil.AjoutEntree(classeEntree);
+                    abgate.getE_left().Insert(0, classeEntree);
+
+                }
+                foreach (XElement element3 in gate.Element("Sorties").Elements())
+                {
+                    int x1 = int.Parse(element3.Attribute("id").Value);
+                    int y1 = int.Parse(element3.Attribute("num").Value);
+                    ((CircuitPersonnalise)abgate.outil).Entrée.Add(new Point(x1, y1));
+                    Gate gate2 = Recuplist(x1, ((CircuitPersonnalise)abgate.outil).gates);
+                    Sortie sortie = gate2.outil.getListesorties()[y1];
+                    sortie.set_Sorties(new List<OutStruct>());
+                    sortie.setDispo(Disposition.right);
+                    ((Grid)(sortie.Parent)).Children.Remove(sortie);
+                    
+                    abgate.outil.AjoutSortie(sortie);
+                    abgate.getS_right().Insert(0, sortie);
+
+                }
+                abgate.MAJ();
+                abgate.Creation();
+                abgate.MAJ_Path();
+
+            }
+            return abgate;
+        }
+        //recuperer les relations 
+        public Wire LoadWire(XElement wire,CircuitPersonnalise circuit)
+        {
+            //id
+            int idStart = int.Parse(wire.Element("gatestart").Attribute("ID").Value);
+            int idEnd = int.Parse(wire.Element("gateend").Attribute("ID").Value);
+            //index
+            int io1 = int.Parse(wire.Element("gatestart").Attribute("IO").Value);
+            int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
+            //points
+            Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
+            Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
+
+            Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
+            Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
+            InputOutput IN1, IN2;
+            //on recupere les gate qui ont ces identifiants
+            Gate gatestart = Recuplist(idStart,circuit.gates), gateend = Recuplist(idEnd,circuit.gates);
+            Console.WriteLine("gateEntrée" + gatestart.outil.getnbrentrees());
+            Console.WriteLine("gateEnd" + gateend.outil.getnbrentrees());
+            if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
+            {
+                IN1 = gatestart.outil.getListeentrees()[io1];
+                IN2 = gateend.outil.getListesorties()[io2];
+            }
+            else
+            {
+                Console.WriteLine("/////////");
+                Console.WriteLine("io1" + io1 + "----gatestart" + gatestart.outil.getnbrentrees() + "  ID" + gatestart.outil.id);
+                Console.WriteLine("io2" + io2 + "----gateend" + gateend.outil.getnbrentrees() + "   ID" + gateend.outil.id);
+
+                Console.WriteLine("/////////");
+
+                IN1 = gatestart.outil.getListesorties()[io1];
+                IN2 = gateend.outil.getListeentrees()[io2];
+            }
+            Wire w = new Wire(startp, gatestart, IN1);
+            w.Connect(endp, gateend, IN2, circuit);
+            return w;
+        }
         public void DeSerializeXAML(string filename)
         {
-            Grille.Children.Clear();//a controler
+            Grille.Children.Clear();//à controler
             XElement root = XElement.Load(filename);
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
             {
-                Gate abgate = CreateGate(gate);
+                
+                Gate abgate = LoadGate(gate);Console.WriteLine("deserealisation " + abgate.GetType().Name);
                 Grille.Children.Add(abgate);
                 this.circuit.AddComponent(abgate.outil);
+                ((CircuitPersonnalise)this.circuit).gates.Add(abgate);
                 abgate.added = true;
-                //gid.Add(int.Parse(gate.Attribute("ID").Value), abgate);
-                //l'emplacement
-                //anchorpoint
-                double x = double.Parse(gate.Element("anchorPoint").Attribute("X").Value);
-                double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value);
-                abgate.anchorPoint = new Point(x, y);
-                //transform point 
-                x = double.Parse(gate.Element("transform").Attribute("X").Value);
-                y = double.Parse(gate.Element("transform").Attribute("Y").Value);
-                abgate.transform.X += x;
-                abgate.transform.Y += y;
-                abgate.RenderTransform = abgate.transform;
-                abgate.outil.id = int.Parse(gate.Attribute("ID").Value);
-
+                
             }
             //Wires 
             foreach (XElement wire in root.Element("Wires").Elements())
             {
-                //id
-                int idStart = int.Parse(wire.Element("gatestart").Attribute("ID").Value);
-                int idEnd = int.Parse(wire.Element("gateend").Attribute("ID").Value);
-                //index
-                int io1 = int.Parse(wire.Element("gatestart").Attribute("IO").Value);
-                int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
-                //points
-                Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
-                Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
-                Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
-                Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
-                InputOutput IN1, IN2;
-                //on recupere les gate qui ont ces identifiants
-                Gate gatestart = Recup(idStart), gateend = Recup(idEnd);
-
-                if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
-                {
-                    IN1 = gatestart.outil.getListeentrees()[io1];
-                    IN2 = gateend.outil.getListesorties()[io2];
-                }
-                else
-                {
-                    IN1 = gatestart.outil.getListesorties()[io1];
-                    IN2 = gateend.outil.getListeentrees()[io2];
-                }
-                Wire w = new Wire(startp, gatestart, IN1);
-                w.Connect(endp, gateend, IN2, this.circuit);
+                Wire w = LoadWire(wire,this.circuit);
                 Grille.Children.Add(w);
 
             }
         }
-
-
-        public Gate CreateGate(XElement gate)
+        public static Gate CreateGate(XElement gate)
         {
             switch (gate.Attribute("Type").Value)
             {
@@ -561,8 +814,10 @@ namespace WpfApp2
                     return new pin_entree();
                 case "pin_sortie":
                     return new pin_sortie();
-
+                case "CircuitComplet":
+                    return new CircuitComplet();
             }
+
             return null;
         }
 
@@ -576,126 +831,11 @@ namespace WpfApp2
                     Gate gate = (Gate)user;
                     if (gate.outil.id == id) { return gate; }
                 }
+
             }
             return null;
         }
-
-
-        private void sauvegarde_click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "UIElement File"; // Default file name
-            dlg.DefaultExt = ".xaml"; // Default file extension
-            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
-            {
-                // Save document
-                string filename = dlg.FileName;
-                SerializeToXAML(filename);
-                //melissa 
-
-            }
-        }
-
-        // Serializes any UIElement object to XAML using a given filename.
-        public void SerializeToXAML(string filename)
-        {
-
-            XElement grille = new XElement("Grille");//pour contenir tt le circuit 
-            XElement gates = new XElement("Gates");//pour contenir les composants
-            XElement wires = new XElement("Wires");//pour les wires 
-            //parcourire les gates
-            foreach (UserControl user in Grille.Children)
-            {//on ajoute le nbr d'entrées et sorties 
-                if (user is Gate)
-                {
-                    Gate g = (Gate)user;
-                    XElement gt = new XElement("Gate");
-                    gt.SetAttributeValue("Type", g.GetType().Name);
-                    //********
-                    gt.Add(new XElement("anchorPoint"));//position 
-                    gt.Element("anchorPoint").SetAttributeValue("X", g.anchorPoint.X);
-                    gt.Element("anchorPoint").SetAttributeValue("Y", g.anchorPoint.Y);
-                    //****transform 
-                    gt.Add(new XElement("transform"));//position 
-                    gt.Element("transform").SetAttributeValue("X", g.transform.X);
-                    gt.Element("transform").SetAttributeValue("Y", g.transform.Y);
-                    //*****nombre d'entrée et de sorties
-                    gt.SetAttributeValue("Entree", g.outil.getnbrentrees());
-                    gt.SetAttributeValue("Sortie", g.outil.getnbrsoryies());
-                    //on ajoute le id pour recréer le circuit 
-                    gt.SetAttributeValue("ID", g.outil.id);
-
-                    gates.Add(gt);
-
-                }
-                else
-                {
-                    Wire wire = (Wire)user;
-                    XElement w = new XElement("Wire");
-                    //start point
-                    w.Add(new XElement("startp"));//position 
-                    w.Element("startp").SetAttributeValue("X", Convert.ToInt32(wire.StartPoint.X));
-                    w.Element("startp").SetAttributeValue("Y", Convert.ToInt32(wire.StartPoint.Y));
-                    //end point
-                    w.Add(new XElement("endp"));//position 
-                    w.Element("endp").SetAttributeValue("X", Convert.ToInt32(wire.EndPoint.X));
-                    w.Element("endp").SetAttributeValue("Y", Convert.ToInt32(wire.EndPoint.Y));
-                    //****
-                    w.Add(new XElement("gatestart"));
-                    w.Element("gatestart").SetAttributeValue("ID", wire.gateStart.outil.id);
-                    w.Add(new XElement("gateend"));
-                    w.Element("gateend").SetAttributeValue("ID", wire.gateEnd.outil.id);
-                    if (wire.io1 is ClasseEntree)//io1 c une entrée donc io2 une sortie
-                    {
-                        if (wire.gateStart.outil.getListeentrees().Contains(wire.io1))//io1 est entrée dans gatestart..io2 sortie dans gateend
-                        {
-                            w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
-                            w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
-                            w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
-                            w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListesorties().IndexOf((Sortie)wire.io2));
-                        }
-                        else//io1 entrée dans gateend .. io2 sortie danss gatesstart
-                        {
-                            w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
-                            w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
-                            w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
-                            w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
-                        }
-
-                    }
-                    else//io1 ssortie et io2 entrée
-                    {
-                        if (wire.gateStart.outil.getListesorties().Contains(wire.io1))//io1 est sortie dans gatestart... io2 entrée dans gateend
-                        {
-                            w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est sortie
-                            w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io1));
-                            w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
-                            w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
-                        }
-                        else//io1 sortie dans gateend ..io2 entrée dans gatestart
-                        {
-                            w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie
-                            w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
-                            w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
-                            w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListesorties().IndexOf((Sortie)wire.io1));
-                        }
-                    }
-                    wires.Add(w);
-                }
-            }
-            //on ajoute wires
-            grille.Add(gates);
-            grille.Add(wires);
-            //on sauvegarde le tt 
-            grille.Save(filename);
-        }
-
+        
 
 
 
@@ -745,10 +885,88 @@ namespace WpfApp2
 
             //to inform theuser that the screeshot was created successfully
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-            
-           
+
         }
-        /*
+        //*************************************Reutilisation******************************************
+        private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".xaml"; // Default file extension
+            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+            // Process open file dialog box results
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                CircuitPersonnalise personnalise = Reutilisation(filename);
+                CircuitComplet gate = new CircuitComplet(personnalise);
+
+                Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
+                Console.WriteLine("height " + gate.ActualHeight + "width" + gate.Width);
+                this.circuit.AddComponent(personnalise);
+                gate.added = true;
+                Grille.Children.Add(gate);
+                /*
+                Console.WriteLine("done");
+                Canvas.SetLeft(gate, 50);
+                Canvas.SetTop(gate,50);*/
+
+            }
+        }
+
+        public CircuitPersonnalise Reutilisation(string filename)
+        {
+            CircuitPersonnalise nouveauCircuit = new CircuitPersonnalise();
+            List<Gate> list = new List<Gate>();
+            XElement root = XElement.Load(filename);
+            //Gates
+            foreach (XElement gate in root.Element("Gates").Elements())
+            {
+                Gate abgate =LoadGate(gate);
+                nouveauCircuit.gates.Add(abgate);
+               // list.Add(abgate);
+                nouveauCircuit.AddComponent(abgate.outil);
+                abgate.added = true;
+
+            }
+            //Wires 
+            foreach (XElement wire in root.Element("Wires").Elements())
+            {
+                
+                Wire w = LoadWire(wire, nouveauCircuit);
+                nouveauCircuit.wires.Add(w);
+
+            }
+            nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
+            nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
+
+            //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
+            //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
+            //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
+
+            return nouveauCircuit;
+        }
+        public Gate Recuplist(int id, List<Gate> list)
+        {
+            foreach (UserControl user in list)
+            {
+                if (user is Gate)
+                {
+                    Gate gate = (Gate)user;
+                    if (gate.outil.id == id) { return gate; }
+                }
+
+            }
+            return null;
+        }
+        //**************************************END OF MENU BUTTONS*******************************//
+
+
+
+
+
+
         public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
@@ -774,7 +992,7 @@ namespace WpfApp2
 
         private void normal_click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Normal;  
+            this.WindowState = WindowState.Normal;
         }
 
         private void maximize_click(object sender, RoutedEventArgs e)
@@ -863,3 +1081,4 @@ namespace WpfApp2
 
     }
 }
+
