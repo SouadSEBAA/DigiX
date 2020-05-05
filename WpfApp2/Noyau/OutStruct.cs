@@ -14,6 +14,9 @@ namespace logisimConsole
             this.outils = outils;
 
         }
+
+        //public Outstruct(){ }
+
         public int getNum_entree() { return this.num_entree; }
         public void setNum_entree(int entree) { num_entree = entree; }
         public void setOutil(Outils outil) { outils = outil; }
@@ -23,6 +26,8 @@ namespace logisimConsole
         {
             return ((OutStruct)obj).num_entree.Equals(this.num_entree) && ((OutStruct)obj).outils.Equals(this.outils);
         }
+
+
 
 
         /*essai

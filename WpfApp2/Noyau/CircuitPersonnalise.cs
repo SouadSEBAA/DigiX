@@ -20,7 +20,6 @@ namespace logisimConsole
         public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
         
 
-
         public CircuitPersonnalise()
         {
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
@@ -35,6 +34,13 @@ namespace logisimConsole
             //à décommenter
             //this.nb_entrees = nbentree;
             //this.nb_sorties = nbsortie;
+        }
+
+        
+        public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> grph)
+        {
+            this.Circuit = grph;
+            CompFinaux = new List<Outils>();
         }
 
 
@@ -86,7 +92,6 @@ namespace logisimConsole
                 }
 
                 entree.setEtat(sortie.getEtat());//Mise à jour de l'état d'entree de component2
-
                 return true; // component1 et component2 liées avec succès
             }
             else

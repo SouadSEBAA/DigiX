@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace WpfApp2.Noyau
 {
@@ -33,8 +34,9 @@ namespace WpfApp2.Noyau
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             this.disposition = Disposition.right;
-            liste_sorties.Add(new Sortie("sortie", 0, Disposition.down, false, new List<OutStruct>()));
+            liste_sorties.Add(new Sortie("sortie",0, Disposition.down, false, new List<OutStruct>()));
             liste_entrees.Add(new ClasseEntree("Entrée ", 1, Disposition.left, false, false));
+
 
         }
 
@@ -48,14 +50,6 @@ namespace WpfApp2.Noyau
         {
             base.setEntreeSpe(i, etat);
             NotifyPropertyChanged("liste_entrees");
-            /*
-            Application.Current.Dispatcher.Invoke(() => {
-
-                if (etat)
-                    (((liste_entrees[0].Parent as Grid).Parent as Canvas).Parent as Gate).path.Fill = Brushes.Green;
-                else
-                    (((liste_entrees[0].Parent as Grid).Parent as Canvas).Parent as Gate).path.Fill = Brushes.Red;
-            });*/
         }
 
 

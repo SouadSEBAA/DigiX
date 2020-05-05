@@ -18,7 +18,8 @@ namespace WpfApp2
     public partial class InputOutput : UserControl
     {
 
-        public String etiquette { get; set; }
+        //public String etiquette { get; set; }
+        protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
@@ -37,6 +38,7 @@ namespace WpfApp2
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
+            this.etiquette = etiq;
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
@@ -58,14 +60,11 @@ namespace WpfApp2
 
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
 
-        public InputOutput() 
-        { 
-            InitializeComponent(); etat = false;
-        }
+        public InputOutput() { InitializeComponent(); etat = false;  }
 
         public Disposition GetDisposition() { return dispo; }
 
-        //****************la liaison
+           //****************la liaison
         private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -92,6 +91,12 @@ namespace WpfApp2
             my_label.Content = this.GetEtiquette();
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
+
+
+       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            my_label.Content = this.GetEtiquette();
+        }*/
 
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -134,5 +139,22 @@ namespace WpfApp2
                 setEtat(!this.etat);
         }
 
+        /***************************************************************/
+        // Pour supprimer un wire lors de la sippression d'une entree
+        /***************************************************************/
+
+        public void Supprimer()
+        {
+            RaiseEvent(new RoutedEventArgs(SupprimerWireEvent));
+        }
+
+        // Pour supprimer un 
+        public static readonly RoutedEvent SupprimerWireEvent = EventManager.RegisterRoutedEvent("SupprimerWire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(InputOutput));
+
+        public event RoutedEventHandler SupprimerWire
+        {
+            add { AddHandler(SupprimerWireEvent, value); }
+            remove { RemoveHandler(SupprimerWireEvent, value); }
+        }
     }
 }

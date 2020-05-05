@@ -17,6 +17,8 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour AjoutLabel.xaml
     /// </summary>
+
+    [Serializable]
     public class DialogInputEventArgs : EventArgs
     {
         public string Input { get; set; }

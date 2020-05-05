@@ -17,11 +17,11 @@
                     <ListBoxItem Content="Ajouter entrée" MouseUp="AjouterEntrée" />
                     <ListBoxItem Content="Supprimer entrée" MouseUp="SupprimerEntrée"/>
                     <ListBoxItem Content="Ajouter Label" MouseUp="AjouterLabel"/>
-                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer" />
+                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer"/>
                 </ContextMenu>
             </Path.ContextMenu>
         </Path>
-       
+
 
         <Grid x:Name="TopGate"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Canvas.Left="22"
               Width="{Binding ElementName=path, Path=ActualWidth}">

@@ -23,6 +23,11 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
+            foreach (Sortie unesortie in this.liste_sorties)
+            {
+                unesortie.setEtat(false);
+            }
+
             // Decodeur 1 -> 2
             if (nb_entrees == 1)
             {

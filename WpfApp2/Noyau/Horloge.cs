@@ -38,8 +38,8 @@ namespace logisimConsole
 
 		//  le Tour du signal d'horloge 
 
-		int T = 1000;
-		int UP = 500;
+		int T = 2000;
+		int UP = 1000;
 		Thread mythread;
 		//Task task;
 		bool stop = false;
@@ -58,14 +58,13 @@ namespace logisimConsole
 					if (parti)//etat haut 
 					{
 						(this.liste_sorties[0]).setEtat(true);/*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul();
-							this.Calcul();
-
+						this.Calcul();
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
 						(this.liste_sorties[0]).setEtat(false); /*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul(); //this.circuit.EvaluateCircuit();
-							this.Calcul();
+						this.Calcul();
 						Thread.Sleep(T - UP);
 					}
 					parti = !parti;
@@ -126,12 +125,10 @@ namespace logisimConsole
 
 			this.T = T; this.UP = UP;
 			this.mythread = new Thread(new ThreadStart(this.auto));
-			
-
 			//task = Task.Run(new Action(auto));
 			mythread.Start();
 			//tf.StartNew(new Action(auto));
-
+			//
 			// TODO: Add constructor logic here
 			//
 		}

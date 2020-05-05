@@ -26,8 +26,8 @@ using System.Xml.Serialization;
 using System.Collections;
 using System.Windows.Markup;
 using System.Xml;
+using WpfApp2.TTPack;
 using System.Windows.Controls.Primitives;
-using System.Xml.Linq;
 
 namespace WpfApp2
 {
@@ -51,6 +51,35 @@ namespace WpfApp2
             //Suppression d'un Gate
             Grille.AddHandler(Gate.DeletingGateEvent, new RoutedEventHandler(Supprimer));
 
+            ///test sequentiel
+            //T
+            /*
+             T basculeT = new T(); circuit.AddComponent(basculeT);
+             basculeT.getEntreeSpecifique(3).setEtat(true);//T
+             basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
+             basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
+             //D
+             D basculeD = new D(); circuit.AddComponent(basculeD);
+             basculeD.getEntreeSpecifique(3).setEtat(true);//T
+             basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
+             basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
+             //Et
+             ET et = new ET();circuit.AddComponent(et);
+             //horloge
+             Horloge horloge = new Horloge();circuit.AddComponent(horloge);
+             horloge.circuit = circuit;
+             //relation
+             circuit.Relate(horloge, basculeT, 0, 0);
+             circuit.Relate(horloge, basculeD, 0, 0);
+             circuit.Relate(basculeT, et, 0, 0);
+             circuit.Relate(basculeD, et, 0, 1);
+             horloge.fin = et;
+             horloge.Demmarer();*/
+            //seriaisation 
+
+            Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
+            Grille.AddHandler(Wire.SuppwireEvent, new RoutedEventHandler(Supp_Wire));
+            Grille.AddHandler(InputOutput.SupprimerWireEvent, new RoutedEventHandler(SupprimerWire));
         }
 
 
@@ -175,8 +204,53 @@ namespace WpfApp2
         }
 
         /******************************************************************************/
+        // Pour redessiner les wires
+        /*****************************************************************************/
+
+        public void Redraw()
+        {
+            if (Wires != null)
+            {
+                foreach (Wire wire in Wires)
+                {
+                    wire.StartPoint = wire.io1.TranslatePoint(new Point(5, 5), Grille);
+                    wire.EndPoint = wire.io2.TranslatePoint(new Point(5, 5), Grille);
+                }
+            }
+        }
+
+        public void Redraw2(object sender, RoutedEventArgs e)
+        {
+            Redraw();
+            e.Handled = true;
+        }
+
+        /******************************************************************************/
+        // Pour 
+        /*****************************************************************************/
 
 
+        private void SupprimerWire(object sender, RoutedEventArgs e)
+        {
+            InputOutput inputOutput = (InputOutput)e.OriginalSource;
+            foreach (Wire wire in Wires)
+            {
+                if (wire.io1.Equals(inputOutput) || wire.io2.Equals(inputOutput))
+                    wire.Supprimer();
+            }
+            e.Handled = true;
+        }
+
+        /******************************************************************************/
+        //Pour supprimer un wire
+        /******************************************************************************/
+        public void Supp_Wire(object sender, RoutedEventArgs e)
+        {
+            Grille.Children.Remove((Wire)e.Source);
+            e.Handled = true;
+        }
+
+        /******************************************************************************/
         //Chronogrammes
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
@@ -192,9 +266,15 @@ namespace WpfApp2
             }
 
         }
-
         /******************************************************************************/
+        private void TVClick(object sender, RoutedEventArgs e)
+        {
+            //Chronogrammes chronoPage = new Chronogrammes();
+            //Chronogrammes.Children.Add(chronoPage);
+            TableVerites tv = new TableVerites(circuit.GetCircuit());
+            tv.Show();
 
+        }
 
         /*****************/
         //drag and drop 
@@ -204,6 +284,8 @@ namespace WpfApp2
             base.OnDrop(e); Console.WriteLine("mouse4");
             e.Effects = DragDropEffects.All;
             e.Handled = true;
+
+            Redraw();
         }
 
         protected override void OnDragOver(DragEventArgs e)
@@ -294,6 +376,7 @@ namespace WpfApp2
             {
                 if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
                 { 
+                //list_element_de_sortie.Add(vertex);
                 circuit.GetCompFinaux().Add(vertex);
                 }
                 
@@ -311,7 +394,7 @@ namespace WpfApp2
             //For exceptions
             StackExceptions.Children.Clear();
 
-             Last_Elements(); //idk if this is needed based on what has been done below
+            //Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
             if (circuit.getCircuit().VertexCount != 0)
             if (circuit.getUnrelatedGates().Count != 0 )

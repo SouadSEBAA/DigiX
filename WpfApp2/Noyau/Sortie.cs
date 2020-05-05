@@ -33,6 +33,26 @@ namespace logisimConsole
             this.Sorties = Sorties; 
         }
 
+        public void DeleteOustruct(Outils outil, int t)
+        {
+            for (int i = Sorties.Count - 1; i >= 0; i--)
+            {
+                if (Sorties[i].getOutils().Equals(outil))
+                {                    
+                    if (Sorties[i].getNum_entree() == t)
+                    {
+                        Sorties.Remove(Sorties[i]);
+                    }                    
+                }
+            }
+        }
+
+
+        public void suppSortie(OutStruct outStruct)
+        {
+            Sorties.Remove(outStruct);
+        }
+
         //public  void set_Etat_Class_Sortie(bool etat) { this.etat = etat; }
         //public  bool get_Etat_Class_Sortie() { return etat; }
         public List<OutStruct> get_OutStruct() { return Sorties; }

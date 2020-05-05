@@ -144,9 +144,16 @@
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
                                 <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton"/>
+                                <Button Content="TableVerite" Click="TVClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
+
+                    <!--
+                    <Button x:Name="close" Width="40" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_window">
+                        <materialDesign:PackIcon Kind="Close" Height="30" Width="30"  Background="Red"/>
+                    </Button>
+                    -->
 
                 </StackPanel>
             </Grid>

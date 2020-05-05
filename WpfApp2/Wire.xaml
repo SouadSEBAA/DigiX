@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Path Name="wire" StrokeThickness="4" Stroke="Black" />
-
+        <Path x:Name="wire" Stroke="Black" StrokeThickness="3.5">
+            <Path.ContextMenu >
+                <ContextMenu x:Name="menu" Background="Lavender">
+                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer" />
+                </ContextMenu>
+            </Path.ContextMenu>
+        </Path>
     </Grid>
 </UserControl>

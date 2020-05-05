@@ -8,9 +8,9 @@
         Title="AjoutLabel" Height="180" Width="250">
 
     <Grid Background="#060629">
-            <Label Margin="10,10,10,110" Content="Label:" Foreground="Lavender" Target="{Binding ElementName=txtName}" />
-            <TextBox x:Name="txtName" Margin="10,40,10,80" Background="Lavender"/>
-            <Button Margin="48,90,48,10" Content="Ajouter" FontSize="15" Foreground="Lavender" Click="Button_Click"></Button>
-        </Grid>
-    
+        <Label Margin="10,10,10,110" Content="Label:" Foreground="Lavender" Target="{Binding ElementName=txtName}" />
+        <TextBox x:Name="txtName" Margin="10,40,10,80" Background="Lavender"/>
+        <Button Margin="48,90,48,10" Content="Ajouter" FontSize="15" Foreground="#060629" Click="Button_Click" Background="Lavender"></Button>
+    </Grid>
+
 </Window>

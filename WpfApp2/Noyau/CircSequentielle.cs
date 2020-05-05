@@ -35,15 +35,10 @@ namespace logisimConsole
         //Redéfinition de la méthode set pour controler le changeemt d'état de l'entrée Clock et générer un front
         public override void setEntreeSpe(int i, bool etat)
         {
-            Console.WriteLine("ddddddddddddddd");
             if (i == 0)
             {
-                Console.WriteLine("ddddddddddddddd");
-
                 if (etat == true && !liste_entrees[0].isEtat() && Trigger == true)
                 {
-                    Console.WriteLine("ddddddddddddddd");
-
                     front = true;
                     timer.Start();
                 }

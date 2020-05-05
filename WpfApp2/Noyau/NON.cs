@@ -27,10 +27,11 @@ namespace logisimConsole
 
         }
 
-        //public NON() : base(1, 1) { nb_entrees = 1; }
-
+        //Remarque : à revoir
         //For simulation
         //public NON() : base(1, 1) { nb_entrees = 1; }
+        //essai
+        public NON(String s) : base(1, 1) { }
 
         //Methodes
         public override void calcul_sorties()
