@@ -20,7 +20,7 @@
                                 <TextBlock Text="{Binding outil}" Foreground="White" Background="Transparent"/>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate>
-                                            <TextBlock Text="{Binding etiquette}" />
+                                        <TextBlock Text="{Binding etiquette}"/>
                                     </DataTemplate>
                                 </HierarchicalDataTemplate.ItemTemplate>
                             </HierarchicalDataTemplate>

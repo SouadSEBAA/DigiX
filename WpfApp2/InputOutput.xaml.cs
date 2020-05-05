@@ -18,8 +18,8 @@ namespace WpfApp2
     public partial class InputOutput : UserControl
     {
 
-        //public String etiquette { get; set; }
-        protected String etiquette;
+        public String etiquette { get; set; }
+        //protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
