@@ -17,7 +17,10 @@ namespace logisimConsole
         private bool simulation;
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
         private List<Outils> CompFinaux;
-
+        public List<Gate> gates;
+        public List<Wire> wires;
+        public List<Point> Entrée;
+        public List<Point> Sortie;
         public List<Outils> GetCompFinaux() { return CompFinaux; }
         public void SetCompFinaux(List<Outils> l) { CompFinaux = l; }
         public BidirectionalGraph<Outils, Edge<Outils>> GetCircuit() { return Circuit; } //to iterate through vertices and edges of the graph created in the constructor
@@ -29,6 +32,10 @@ namespace logisimConsole
             CompFinaux = new List<Outils>();
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
+            Entrée = new List<Point>();
+            Sortie = new List<Point>();
+            gates = new List<Gate>();
+            wires = new List<Wire>();
         }
         public BidirectionalGraph<Outils, Edge<Outils>> GetGraph() { return Circuit; }
 
@@ -99,6 +106,7 @@ namespace logisimConsole
         public void AddComponent(Outils outil)
         {
             Circuit.AddVertex(outil);
+            outil.circuit = this;
         }
 
 
@@ -198,7 +206,7 @@ namespace logisimConsole
             foreach (Outils outil in this.CompFinaux)
             {
                 //new Thread(() => Evaluate(outil)).Start();
-                Console.WriteLine("********Evaluate circuit *******");
+                Console.WriteLine("********Evaluate circuit *******"+outil.GetType());
                 this.EvaluatePerso(outil);
             }
         }
@@ -251,6 +259,8 @@ namespace logisimConsole
                         this.nb_sorties++;
                         sorti.set_Sorties(new List<OutStruct>());
                         sorti.setDispo(Disposition.right);
+                        //creation de la liste pour la sauvegarde du circuit aprés  reutilisation 
+                        this.Sortie.Add(new Point(outil.id, outil.getListesorties().IndexOf(sorti)));
                         this.liste_sorties.Add(sorti);
                         Console.WriteLine("SORTIE"+nb_sorties);
                         
@@ -280,7 +290,6 @@ namespace logisimConsole
             }
             foreach(Edge<Outils> edge in list)
             {
- 
                     this.Circuit.RemoveEdge(edge);
             }
 
@@ -298,7 +307,8 @@ namespace logisimConsole
                 outs.getOutils().end = true;
                 this.liste_entrees.Add(entree);//on ajoute l'entrée 
                 Console.WriteLine("ENTREE"+this.nb_entrees);
-                
+                //creation de la liste pour la sauvegarde aprés réutilisation 
+                this.Entrée.Add(new Point(outs.getOutils().id, outs.getNum_entree()));
                 
                 ((Grid)(entree.Parent)).Children.Remove(entree);
             }

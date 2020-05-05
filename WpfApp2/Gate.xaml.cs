@@ -39,13 +39,10 @@ namespace WpfApp2
         public Gate(Outils outils)
         {
             this.outil = outils;
-            //on supprime tt les children 
-            this.OutilShape.Children.Remove(path);
-            this.OutilShape.Children.Remove(TopGate);
-            this.OutilShape.Children.Remove(BottomGate);
-            this.OutilShape.Children.Remove(LeftGate);
-            this.OutilShape.Children.Remove(RightGate);
-            this.OutilShape.AllowDrop = true;//e drop autorisé
+            this.data = "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z";
+            path.Data = StreamGeometry.Parse(data);
+            path.StrokeThickness = 1;
+            path.Fill = Brushes.White;
         }
 
 
@@ -640,7 +637,8 @@ namespace WpfApp2
     
 
 
-
+        public List< ClasseEntree> getE_left() { return this.E_Left; }
+        public List<Sortie> getS_right() { return this.S_Right; }
 
         public Outils GetOutil()
         {
@@ -843,6 +841,6 @@ namespace WpfApp2
     public class CircuitComplet :Gate
     {
         public CircuitComplet( CircuitPersonnalise c) : base(c, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
-        public CircuitComplet() : base(new CircuitPersonnalise()) { }
+        public CircuitComplet() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
 }
