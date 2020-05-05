@@ -394,7 +394,7 @@ namespace WpfApp2
             circuit.setSimulation(false);
 
             //For exceptions
-            StackExceptions.Children.Clear();
+            //StackExceptions.Children.Clear();
 
             //Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
@@ -403,11 +403,11 @@ namespace WpfApp2
             {
                 try
                 {
-                    throw new RelatedException(StackExceptions);
+                    throw new RelatedException(Grille);
                 }
                 catch (RelatedException exception)
                 {
-                    StackExceptions.Children.Clear();
+                    //StackExceptions.Children.Clear();
                     exception.Gerer();
                 }
             }
@@ -970,7 +970,7 @@ namespace WpfApp2
         public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
-        }*/
+        }
 
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)

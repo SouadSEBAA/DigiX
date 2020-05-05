@@ -117,6 +117,7 @@ namespace logisimConsole
             if (!Circuit.ContainsVertex(outil))
             {
                 Circuit.AddVertex(outil);
+                outil.circuit = this;
                 return true;
             }
             else

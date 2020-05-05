@@ -9,9 +9,9 @@ namespace logisimConsole
     [Serializable]
     class RelatedException : Exception
     {
-        StackPanel panel;
+        Canvas panel;
 
-        public RelatedException(StackPanel panel) { this.panel = panel; }
+        public RelatedException(Canvas panel) { this.panel = panel; }
         public RelatedException() { this.panel = null; }
 
         public void Gerer()
