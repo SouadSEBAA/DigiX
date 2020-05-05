@@ -8,7 +8,8 @@ namespace logisimConsole
         //liste_entrees[3] == R
         //liste_entrees[4] == S
         //liste_entrees[0] == T
-       
+        private bool EtatAvant_R, EtatAvant_S;
+
 
         public RST(string etiquette, Disposition dispo) : base(2, etiquette, dispo) { }
         public RST() : base()
@@ -33,23 +34,42 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
-                    if (!liste_entrees[3].isEtat() && liste_entrees[4].isEtat()) //R=0 S=1
+                    
+                    if (!EtatAvant_R && EtatAvant_S) //R=0 S=1
                         liste_sorties[0].setEtat(true);
-                    else if (liste_entrees[3].isEtat() && !liste_entrees[4].isEtat()) //R=1 S=0
+                    else if (EtatAvant_R && !EtatAvant_S) //R=1 S=0
                         liste_sorties[0].setEtat(false);
-                    else if (liste_entrees[3].isEtat() && liste_entrees[4].isEtat()) //R=1 S=1
+                    else if (EtatAvant_R && EtatAvant_S) //R=1 S=1
                     {
-                        //throw exception
+                        try
+                        {
+                            throw new RSTException(liste_entrees[3], liste_entrees[4]);
+                        }catch(RSTException e)
+                        {
+                            e.Gerer();
+                        }
                     }
-                    else if (!liste_entrees[3].isEtat() && !liste_entrees[4].isEtat()) //R=0 S=0
+                    else if (!EtatAvant_R && !EtatAvant_S) //R=0 S=0
                     {
                         //Effet Mémoire
                     }
-                    liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
                 }
+                liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+                front = false;
             }
             else //Asynchrone
                 calcul_sorties_asynch();
         }
+
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            if (i == 3)
+                EtatAvant_R = liste_entrees[3].getEtat(); //R
+            else if (i == 4)
+                EtatAvant_S = liste_entrees[4].getEtat();// S
+
+            base.setEntreeSpe(i, etat);
+        }
+
     }
 }

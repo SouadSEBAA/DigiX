@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,11 +26,12 @@ namespace WpfApp2
         public PathFigure fil;
         Dictionary<PolyLineSegment, Gate> existingWires;//Ts les fils dérivés
         ***************************************/
-        public LineSegment _ls;
+        private BezierSegment _ls;
         private PathFigure _fil;
-        public Gate gateStart;//début du fil
-        public InputOutput io1, io2;
-        public Gate gateEnd;
+        public Gate gateStart { get; set; }//début du fil
+        public InputOutput io1 { get; set; }
+        public InputOutput io2 { get; set; }
+        public Gate gateEnd { get; set; }
         private bool _value;
 
         public Wire(Point start, Gate gatePrinciple, InputOutput io)
@@ -38,58 +39,117 @@ namespace WpfApp2
             InitializeComponent();
 
             _fil = new PathFigure();
-            _ls = new LineSegment();
+            _ls = new BezierSegment();
             _fil.IsClosed = false;
             StartPoint = start;
             EndPoint = start;
+            _ls.Point3 = EndPoint;
+            _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
+            _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, _fil.StartPoint.Y);
+
             //PolyLineSegment pls = new PolyLineSegment(); pls.Points.Add(start); existingWires.Add(pls, null);
             //fil.Segments.Add(pls);
 
             _fil.Segments.Add(_ls);
-
-            wire.Data = new PathGeometry(new PathFigure[]{ _fil });
+            var d = new PathGeometry(new PathFigure[] { _fil });
+            wire.Data = d;
 
             this.io1 = io;
+
+
             this.gateStart = gatePrinciple;
-            Value = false;
+
             DataContext = this;
         }
+
 
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
-            _ls.Point = end;
+            Maj();
+            EndPoint = end;
             this.io2 = io;
             if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput() || io1.getEtat() != io2.getEtat())
                 return false;
             else
             {
-                //Relate kernel
-                //partie Souad + it works avec la la fonction des compo finaux
-
                 if (io1 is ClasseEntree)
                 {
-                    circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1);
+
+                    if (!circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1))
+                        return false;
+                    (io2 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io2.getEtat(); });
+
                 }
                 else
                 {
-                    circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2);
+                    if (!circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2))
+                        return false;
+                    (io1 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io1.getEtat(); });
+
                 }
                 return true;
             }
         }
 
+
+        void Maj()
+        {
+            _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
+            _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, EndPoint.Y);
+        }
+
         public Point StartPoint 
         { 
             get { return _fil.StartPoint; }
-            set { _fil.StartPoint = value;  }
+            set { _fil.StartPoint = value; }
         }
 
 
         public Point EndPoint
         {
-            get { return _ls.Point;}
-            set {_ls.Point = value;}
+            get { return _ls.Point3;}
+            set {_ls.Point3 = value;   }
+        }
+
+        public void Supprimer()
+        {
+            // Supression in kernel
+            RaiseEvent(new RoutedEventArgs(SuppwireEvent));
+
+            if (io1 is ClasseEntree)
+            {
+                ClasseEntree i = (ClasseEntree)io1;
+                i.setEtat(false);
+                i.setRelated(false);
+
+
+                Sortie o = (Sortie)io2;
+                o.DeleteOustruct(gateStart.outil, gateStart.outil.getListeentrees().IndexOf(i));
+            }
+            else
+            {
+                ClasseEntree i = (ClasseEntree)io2;
+                i.setEtat(false);
+                i.setRelated(false);
+
+
+                Sortie o = (Sortie)io1;
+                o.DeleteOustruct(gateEnd.outil, gateEnd.outil.getListeentrees().IndexOf(i));
+            }
+        }
+
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            Supprimer();
+        }
+
+        public static readonly RoutedEvent SuppwireEvent = EventManager.RegisterRoutedEvent("Suppwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Wire));
+
+        public event RoutedEventHandler Suppwire
+        {
+            add { AddHandler(SuppwireEvent, value); }
+            remove { RemoveHandler(SuppwireEvent, value); }
         }
 
         public bool Value
@@ -98,12 +158,18 @@ namespace WpfApp2
             set
             {
                 _value = value;
-                if (value == true)
-                    wire.Stroke = Brushes.Red; //définir la couleur
-                else
-                    wire.Stroke = Brushes.Black;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (value == true)
+                        wire.Stroke = Brushes.Green; //définir la couleur
+                    else
+                        wire.Stroke = Brushes.Red;
+                });
             }
         }
+
+        public void stopbutton() { Value = false; wire.Stroke = Brushes.Black; }
+        
 
     }
 }

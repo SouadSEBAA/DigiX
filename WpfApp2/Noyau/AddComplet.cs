@@ -25,9 +25,9 @@ namespace logisimConsole
         public override void calcul_sorties()
         {
             // Soit le nombre A mis dans liste_entrees[0] et le nombre B mis dans liste_entrees[1]
-            // La retenue sortante est dans liste_entrees[2]
+            // La retenue entrante est dans liste_entrees[2]
             // La somme des deux Bit est mis dans liste_sorties[0]
-            // La retenue est dans le bit liste_sorties[1]        
+            // La retenue sortante est dans le bit liste_sorties[1]        
 
             if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == false && liste_entrees[2].isEtat() == false)
             {

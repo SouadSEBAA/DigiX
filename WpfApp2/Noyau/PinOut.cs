@@ -1,14 +1,18 @@
-﻿using logisimConsole;
+using logisimConsole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Threading.Tasks;
 
 namespace WpfApp2.Noyau
 {
     [Serializable]
-    class PinOut : Outils
+    class PinOut : Outils, INotifyPropertyChanged
     {
         public PinOut(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
         {
@@ -38,13 +42,30 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            //liste_sorties.Add(new Sortie("sortie", 0, Disposition.down, false, new List<OutStruct>()));
             //throw new NotImplementedException();
-            //Console.WriteLine("oefkpopko");
-            liste_sorties[0].setEtat(liste_entrees[0].getEtat());
 
         }
+
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            base.setEntreeSpe(i, etat);
+            NotifyPropertyChanged("liste_entrees");
+        }
+
+
+    protected void NotifyPropertyChanged(string property)
+    {
+        if (PropertyChanged != null)
+            PropertyChanged(this, new PropertyChangedEventArgs(property));
     }
 
-}
+    public event PropertyChangedEventHandler PropertyChanged;
+
+} 
+            
+
+    }
+
+
+
 

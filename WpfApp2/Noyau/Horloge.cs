@@ -14,7 +14,6 @@ namespace logisimConsole
 		//Constructeur 
 		public Horloge()
 		{
-			
 			this.nb_entrees = 0;
 			this.nb_sorties = 1;
 			this.etiquette = "horloge";
@@ -26,16 +25,14 @@ namespace logisimConsole
 			//on demare le thread
 	        /*this.mythread = new Thread(new ThreadStart(this.auto));
 			mythread.Start();*/
-
-			liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, new List<OutStruct>()));
+			liste_sorties.Add(new Sortie("Sortie Horloge",1, Disposition.right, false, new List<OutStruct>()));
 			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
-
-
 		}
+
 		public void Demmarer()
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
-			mythread.Start();
+				mythread.Start();
 
 		}
 
@@ -46,10 +43,12 @@ namespace logisimConsole
 		Thread mythread;
 		//Task task;
 		bool stop = false;
+
+
 		//***********
 		public void auto()
 		{
-			fin = circuit.getCircuit().Vertices.Last();
+			//fin = circuit.getCircuit().Vertices.Last();
 			bool parti = false;
 			while (!this.stop)
 			{
@@ -74,6 +73,28 @@ namespace logisimConsole
 			}
 
 		}
+
+		//Chronogramme
+		public void auto(object sender, EventArgs e )
+		{
+			bool parti = false;
+			while (!this.stop)
+			{
+					if (parti)//etat haut 
+					{
+						(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
+						Thread.Sleep(UP);
+					}
+					else//etat bas 
+					{
+						(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
+						Thread.Sleep(T - UP);
+					}
+					parti = !parti;
+			}
+
+		}
+
 		//*********
 		
 		public override void calcul_sorties() { }
@@ -90,11 +111,17 @@ namespace logisimConsole
 			//mythread.Start();
 		}
 		//**********/
-		public Horloge(int T, int UP/*, TaskFactory tf*/)
+		public Horloge(int T, int UP)
 		{
-			liste_sorties = new List<Sortie>();
-			liste_sorties.Add(new Sortie());
-			liste_sorties.Add(new Sortie());
+
+			this.nb_entrees = 0;
+			this.nb_sorties = 1;
+			this.etiquette = "horloge";
+			this.liste_entrees = new List<ClasseEntree>();
+			this.liste_sorties = new List<Sortie>();
+			this.disposition = Disposition.right;
+			liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
+			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
 
 			this.T = T; this.UP = UP;
 			this.mythread = new Thread(new ThreadStart(this.auto));
@@ -106,13 +133,25 @@ namespace logisimConsole
 			//
 		}
 
-		
-
 		public int getUP()
 		{
 			return UP;
 		}
 
+		public void setUP(int UP)
+		{
+			this.UP =UP;
+		}
 
+		public void setT(int T)
+		{
+			this.T = T;
+		}
+
+		public void setTUp(int T, int UP)
+		{
+			this.UP = UP;
+			this.T = T;
+		}
 	}
 }

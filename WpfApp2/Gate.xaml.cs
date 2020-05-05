@@ -1,12 +1,17 @@
-﻿using logisimConsole;
+﻿
+using logisimConsole;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 using WpfApp2.Noyau;
+using DataObject = System.Windows.DataObject;
+using DragDropEffects = System.Windows.DragDropEffects;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace WpfApp2
 {
@@ -64,6 +69,58 @@ namespace WpfApp2
             Creation();
 
             MAJ_Path();
+
+            //Fréquences de l'horloge
+            if(outil is Horloge)
+            {
+                MenuItem mi = new MenuItem();
+                BindingGroup bindingGroup = new BindingGroup(); 
+                RadioButton propo1 = new RadioButton(); 
+
+                propo1.BindingGroup = bindingGroup;
+                propo1.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(1000, 500); };
+                propo1.Content = "T = 1s DutyCycle = 500 ms";
+
+                RadioButton propo5 = new RadioButton();
+                propo5.BindingGroup = bindingGroup;
+                propo5.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(1000, 200); };
+                propo5.Content = "T = 1s DutyCycle = 200 ms";
+
+
+                RadioButton propo2 = new RadioButton(); 
+                propo2.IsChecked = true;
+                propo2.BindingGroup = bindingGroup;
+                propo2.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(2000, 1000); };
+                propo2.Content = "T = 2s DutyCycle = 1s";
+
+                RadioButton propo6 = new RadioButton();
+                propo6.BindingGroup = bindingGroup;
+                propo6.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(2000, 500); };
+                propo6.Content = "T = 2s DutyCycle = 500 ms";
+
+
+                RadioButton propo3 = new RadioButton(); 
+                propo3.BindingGroup = bindingGroup;
+                propo3.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(3000, 1500); };
+                propo3.Content = "T = 3s DutyCycle = 1,5s";
+
+                RadioButton propo4 = new RadioButton();
+                propo4.BindingGroup = bindingGroup;
+                propo4.Checked += (object s, RoutedEventArgs e) => { (outil as Horloge).setTUp(4000, 2000); };
+                propo4.Content = "T = 4s DutyCycle = 2s";
+
+                mi.Items.Add(propo5);
+                mi.Items.Add(propo1);
+                mi.Items.Add(propo6);
+                mi.Items.Add(propo2);
+                mi.Items.Add(propo3);
+                mi.Items.Add(propo4);
+
+                mi.Header = "Fréquences";
+                
+                menu.Items.Add(mi);
+            }
+
         }
 
         // Fonction qui separe les entrees et sorties selon la disposition
@@ -257,7 +314,7 @@ namespace WpfApp2
                 {
                     string ee = (outil.getnbrentrees() + 1).ToString();
                     string etiq_e = ("Entrée " + ee);
-                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                    ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }
@@ -284,7 +341,7 @@ namespace WpfApp2
                 }
                 string ee = (outil.getnbrentrees() + 1).ToString();
                 string etiq_e = ("Entrée " + ee);
-                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                 outil.AjoutEntree(classeEntree);
                 E_Left.Insert(0, classeEntree);
             }
@@ -296,12 +353,12 @@ namespace WpfApp2
 
                     string ee = (outil.getnbrsoryies()).ToString();
                     string A = ("A" + ee);
-                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, true, false);
+                    ClasseEntree classeEntreeA = new ClasseEntree(A, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(classeEntreeA, outil.getnbrsoryies() - 1);
                     E_Up.Insert((outil.getnbrsoryies()) - 1, classeEntreeA);
 
                     string B = ("B" + ee);
-                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, true, false);
+                    ClasseEntree classeEntreeB = new ClasseEntree(B, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(classeEntreeB, 2 * (outil.getnbrsoryies()) - 1);
                     E_Up.Insert(0, classeEntreeB);
 
@@ -325,12 +382,12 @@ namespace WpfApp2
                     {
                         string ee = (outil.getnbrentrees() - b).ToString();
                         string etiq_e = ("Entrée " + ee);
-                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, true, false);
+                        ClasseEntree classeEntree = new ClasseEntree(etiq_e, 1, Disposition.left, false, false);
                         outil.AjoutEntree(classeEntree);
                         E_Left.Insert(0, classeEntree);
                     }
 
-                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(Controle, a);
                     E_Up.Insert(0, Controle);
                 }
@@ -353,7 +410,7 @@ namespace WpfApp2
                         S_Right.Add(sortie);
                     }
 
-                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, true, false);
+                    ClasseEntree Controle = new ClasseEntree(etiq, 1, Disposition.up, false, false);
                     outil.AjoutEntreeSpe(Controle, a);
                     E_Up.Insert(0, Controle);
                 }
@@ -366,15 +423,6 @@ namespace WpfApp2
         }
 
 
-        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
-
-        public event RoutedEventHandler MAJwire
-        {
-            add { AddHandler(MAJwiresEvent, value); }
-            remove { RemoveHandler(MAJwiresEvent, value); }
-        }
-
-
         private void SupprimerEntrée(object sender, RoutedEventArgs e)
         {
 
@@ -384,6 +432,7 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() > 2)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
@@ -393,29 +442,37 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() == 4)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null ) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
                 }
                 if (outil.getnbrentrees() == 8)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
                 }
@@ -425,29 +482,37 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() == 2)
                 {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
                 if (outil.getnbrentrees() == 3)
                 {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
@@ -463,13 +528,17 @@ namespace WpfApp2
                     if (outil.getnbrentrees() == 8) { entree = 3; sortie = 7; }
                     if (outil.getnbrentrees() == 10) { entree = 4; sortie = 9; }
 
+                    if (outil.getListeentrees()[sortie].getRelated()) { outil.getListeentrees()[sortie].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[sortie]);
+
+                    if (outil.getListeentrees()[entree].getRelated()) { outil.getListeentrees()[entree].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[entree]);
+
+                    if (outil.getListesorties()[entree].getSortie() != null) { outil.getListesorties()[entree].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[entree]);
 
                     E_Up.Remove(E_Up[outil.getnbrsoryies()]);
                     E_Up.Remove(E_Up[0]);
-
                     S_Down.Remove(S_Down[1]);
                 }
             }
@@ -485,10 +554,12 @@ namespace WpfApp2
                     for (int i = 0; i < entree; i++)
                     {
                         E_Left.Remove(E_Left[0]);
+                        if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                         outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     }
 
                     E_Up.Remove(E_Up[0]);
+                    if (outil.getListeentrees()[id].getRelated()) { outil.getListeentrees()[id].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[id]);
                 }
             }
@@ -503,10 +574,12 @@ namespace WpfApp2
 
                     for (int i = 0; i < sortie; i++)
                     {
+                        if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                         S_Right.Remove(S_Right[S_Right.Count - 1]);
                         outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     }
 
+                    if (outil.getListeentrees()[id].getRelated()) { outil.getListeentrees()[id].Supprimer(); }
                     E_Up.Remove(E_Up[0]);
                     outil.SupprimerEntree(outil.getListeentrees()[id]);
                 }
@@ -535,11 +608,17 @@ namespace WpfApp2
             path.ToolTip = tt;
         }
 
-        private void Supprimer(object sender, MouseButtonEventArgs e)
-        {
-            // The version is with meriem
-        }
 
+        /***************************************************************/
+        // MAJ wires
+        /*************************************************************/
+        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler MAJwire
+        {
+            add { AddHandler(MAJwiresEvent, value); }
+            remove { RemoveHandler(MAJwiresEvent, value); }
+        }
 
         //Drag Drop 
         //les attributs
@@ -551,29 +630,29 @@ namespace WpfApp2
 
 
 
-        protected override void OnGiveFeedback(GiveFeedbackEventArgs e)
+        protected override void OnGiveFeedback(System.Windows.GiveFeedbackEventArgs e)
         {
 
             base.OnGiveFeedback(e);
             // These Effects values are set in the drop target's
             // DragOver event handler.
-            if (e.Effects.HasFlag(DragDropEffects.Copy))
+            if (e.Effects.HasFlag(System.Windows.DragDropEffects.Copy))
             {
-                Mouse.SetCursor(Cursors.Cross);
+                Mouse.SetCursor(System.Windows.Input.Cursors.Cross);
             }
-            else if (e.Effects.HasFlag(DragDropEffects.Move))
+            else if (e.Effects.HasFlag(System.Windows.DragDropEffects.Move))
             {
-                Mouse.SetCursor(Cursors.Pen);
+                Mouse.SetCursor(System.Windows.Input.Cursors.Pen);
             }
             else
             {
-                Mouse.SetCursor(Cursors.No);
+                Mouse.SetCursor(System.Windows.Input.Cursors.No);
             }
             e.Handled = true;
         }
 
 
-        private void path_MouseMove(object sender, MouseEventArgs e)
+        private void path_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -590,6 +669,24 @@ namespace WpfApp2
                 DragDrop.DoDragDrop(this, data, DragDropEffects.All);
             }
         }
+
+        //Suppression
+        //**************************************************************
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(DeletingGateEvent));
+        }
+
+        public static readonly RoutedEvent DeletingGateEvent = EventManager.RegisterRoutedEvent(
+            "DeletingGate", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler DeletingGate
+        {
+            add { AddHandler(DeletingGateEvent, value); }
+            remove { RemoveHandler(DeletingGateEvent, value); }
+        }
+        //Fin Suppression
+        //*************************************************************
 
         private Gate Copier()
         {
@@ -636,18 +733,15 @@ namespace WpfApp2
         public List<InputOutput> InputOutputs;
 
     }
-
-
     //la partie portes logiques
     [Serializable]
     public class Et : Gate
     {
-        public Et() : base(new ET(), "M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15") { InitializeComponent(); }
+        public Et() : base(new ET(), "M 17,17 v 30 h 15 a 2,2 1 0 0 0,-30 h -15") {  }
 
     }
 
-    [Serializable]
-    public class Ou : Gate
+    class Ou : Gate
     {
         public Ou() : base(new OU(), "M 15,17 h 10 c 10,0 20,5 25,15 c -5,10 -15,15 -25,15 h -10 c 5,-10 5,-20 0,-30") { }
     }
@@ -764,7 +858,7 @@ namespace WpfApp2
     }
 
 
-
+    // Liaisons
     //Les pin et l'horloge 
     [Serializable]
     public class pin_entree : Gate
@@ -804,7 +898,17 @@ namespace WpfApp2
     [Serializable]
     public class pin_sortie : Gate
     {
-        public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z") { }
+        public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z")
+        {
+            (outil as PinOut).PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+
+            {
+                Application.Current.Dispatcher.Invoke(() => {
+                    if (outil.getEntreeSpecifique(0).getEtat()) path.Fill = Brushes.Green;
+                else path.Fill = Brushes.Red; });
+            });
+        }
+
     }
 
     [Serializable]
@@ -823,8 +927,12 @@ namespace WpfApp2
         }
     }
     //le circuit perssonalisé 
-    public class CircuitComplet :Gate
+    public class circuitpersonnalise : Gate
     {
-        public CircuitComplet() : base(new CircuitPersonnalise()) { }
+        public circuitpersonnalise() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
+        public circuitpersonnalise(CircuitPersonnalise circuit) : base(circuit, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
 }
+    
+    
+

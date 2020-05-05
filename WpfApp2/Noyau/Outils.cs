@@ -7,11 +7,15 @@ using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
+
+
 namespace logisimConsole
 {
     [Serializable]
     public abstract class Outils
     {
+        public static int nbrOutils = 0;
+        public int id = 0;
         public CircuitPersonnalise circuit;
         public bool added;
         protected int nb_entrees;
@@ -38,7 +42,11 @@ namespace logisimConsole
 
         }
 
-        public Outils() { }
+        public Outils()
+        {
+            id = nbrOutils;
+            nbrOutils++;
+        }
 
 
         //Constructeur pour les portes logiques (le nobre de sorties est fixee a 1)
@@ -49,6 +57,7 @@ namespace logisimConsole
             this.etiquette = etiquette;
             this.liste_entrees = liste_entrees;
         }
+
         /*
                 //Constructeur pour la porte non -cas speciale- car elle a une seule entree
                 public Outils(string etiquette, List<ClasseEntree> liste_entrees)
@@ -114,6 +123,30 @@ namespace logisimConsole
             this.etiquette = label;
         }
 
+        public int GetInt(Sortie sortie)
+        {
+            if (liste_sorties.Contains(sortie))
+            {
+                return liste_sorties.IndexOf(sortie);
+            }
+            else
+            {
+                return (-1);
+            }
+        }
+
+        public Sortie GetSortie(Sortie sortie)
+        {
+            int i = GetInt(sortie);
+            if ( i != -1)
+            {
+                return liste_sorties[i];
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public List<Sortie> getListesorties() { return liste_sorties; }
         public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
@@ -131,9 +164,9 @@ namespace logisimConsole
             if (stop) { Console.WriteLine("attention entrée non reliée"); }
             return (!stop);
         }
+
         public void appelCalcul()
         {
-
             int i = 0, i1 = 0;
             Sortie s;
             while (i < nb_entrees)
@@ -182,16 +215,37 @@ namespace logisimConsole
             ClasseEntree entree;
             for (int i = 0; i < nb_entrees; i++)
             {
-                entree = new ClasseEntree("entree",i, Disposition.left, false, false);
+                entree = new ClasseEntree("entree", i, Disposition.left, false, false);
                 liste_entrees.Add(entree);
             }
 
             Sortie sortie;
             for (int i = 0; i < nb_sorties; i++)
             {
-                sortie = new Sortie("sortie",0, Disposition.right, false, new List<OutStruct>());
+                sortie = new Sortie("sortie", 0, Disposition.right, false, new List<OutStruct>());
                 liste_sorties.Add(sortie);
             }
+        }
+
+        public bool SortieVide()
+        {
+            bool etatSortie = false;
+            foreach (Sortie s in this.liste_sorties)
+            {
+                foreach (OutStruct outt in s.get_OutStruct())
+                {
+                    if (outt.getNum_entree().Equals(null) && (outt.getOutils().Equals(null)))
+                    {
+                        etatSortie = true;
+                    }
+                }
+            }
+            return etatSortie;
+        }
+
+        public String getLabel()
+        {
+            return etiquette;
         }
 
         //construiction de la liste de fin d'un element
@@ -199,20 +253,21 @@ namespace logisimConsole
         {
             Outils o = this;
             Console.WriteLine("+++++++++entree end circuit ********");
-            foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
+            if ((iN.circuit.getCircuit().OutEdges(o)).Any())
+            {
+                foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    Console.WriteLine("bouce"+edge.Target);
+                    Console.WriteLine("bouce" + edge.Target);
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
                         Console.WriteLine("if");
                         iN.getEndListe().Add(edge.Target);
-
-
                     }
                     else { edge.Target.EndCircuit(iN); }
 
                 }
-            
+            }
+
         }
 
 
@@ -234,6 +289,8 @@ namespace logisimConsole
             return empty;
         }
     }
+
+
     public class Outilspm
     {
         public void calcul_sorties()

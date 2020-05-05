@@ -1,8 +1,7 @@
-﻿using QuickGraph;
+using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
-using System.Collections.Generic;
 using System;
 using System.Threading;
 using System.Windows.Controls;
@@ -26,6 +25,18 @@ namespace logisimConsole
             Circuit = new BidirectionalGraph<Outils, Edge<Outils>>();
             CompFinaux = new List<Outils>();
         }
+
+        public CircuitPersonnalise(int nbentree, int nbsortie)
+        {
+            liste_entrees = new List<ClasseEntree>(nb_entrees);
+            liste_sorties = new List<Sortie>(nb_sorties);
+
+            //à décommenter
+            //this.nb_entrees = nbentree;
+            //this.nb_sorties = nbsortie;
+        }
+
+        
         public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> grph)
         {
             this.Circuit = grph;
@@ -65,7 +76,7 @@ namespace logisimConsole
         {
             component1.circuit = this;
             component2.circuit = this;
-            if (!entree.getRelated() || entree.getEtat() != sortie.getEtat() || !component1.getListesorties().Contains(sortie) || !component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
+            if (!entree.getRelated() && entree.getEtat() == sortie.getEtat() && component1.getListesorties().Contains(sortie) && component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
             {
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
@@ -89,9 +100,17 @@ namespace logisimConsole
             }
         }
 
-        public void AddComponent(Outils outil)
+        public bool AddComponent(Outils outil)
         {
-            Circuit.AddVertex(outil);
+            if (!Circuit.ContainsVertex(outil))
+            {
+                Circuit.AddVertex(outil);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
 
@@ -114,24 +133,24 @@ namespace logisimConsole
         }
 
         //pour trouver les elements dor sortie Fonction version  1
-        public void EndComponents()
+        public List<Outils> EndComponents()
         {
             foreach (var outil in Circuit.Vertices)
             {
-                foreach (var edge in Circuit.InEdges(outil))
-                {
-                    if ((outil is PinOut) || Empty(outil))
+                //foreach (var edge in Circuit.InEdges(outil))
+                //{
+                    if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
+                    //if ((outil is PinOut) || outil.SortieVide())
                     {
                         CompFinaux.Add(outil);
                     }
-                }
+                //}
             }
-
+            return CompFinaux;
         }
 
         public  void Evaluate(Outils outil)
         {
-            
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
@@ -140,38 +159,32 @@ namespace logisimConsole
                     Evaluate(edge.Source);
                 }
             }
-            outil.calcul_sorties();
-            Console.WriteLine("--------------------------------------------------------------------------------------------------");
+                outil.calcul_sorties();
+
+            Console.WriteLine("--------------------------");
             Console.WriteLine(outil.GetType());
-            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat() );
+            //Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat() );
+            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
+
         public void EvaluateCircuit()
         {
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
-            Console.WriteLine("*****************************************************************");
-            Console.WriteLine("*****************************************************************");
-            foreach (Outils elmnt in Circuit.Vertices)
+            foreach(Outils outil in this.CompFinaux)
             {
-                Console.WriteLine("Nom   : " + elmnt.getname() + "  etat : " + elmnt.getSortie().ToString());
-            }
-            Console.WriteLine("*****************************************************************");
-            Console.WriteLine("*****************************************************************");
-            foreach (Outils outil in this.CompFinaux)
-            {
-               //new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******");
-                this.Evaluate(outil);
+                    this.Evaluate(outil);
             }
         }
+
         public void EvaluateCircuit(IN iN)
         {
-            
             foreach (Outils outil in iN.getEndListe())
             {
                // new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******"+ outil);
-                this.Evaluate(outil);
+                    this.Evaluate(outil);
             }
         }
 
@@ -179,13 +192,81 @@ namespace logisimConsole
         {
             return Circuit;
         }
+
+
         public bool getSimulation() { return simulation; }
         public void setSimulation(bool s) { this.simulation = s; }
+
+        public List<Outils> getUnrelatedGates()
+        {
+            List<Outils> UnrelatedList = new List<Outils>();
+            foreach (var outil in Circuit.Vertices)
+                if (outil.getnbrentrees() != 0 )
+                {
+                    List<ClasseEntree> listentree = outil.getListeentrees();
+                    foreach (var entree in listentree)
+                        if (!entree.getRelated())
+                        {
+                            UnrelatedList.Add(outil);
+                            break;
+                        }
+                }
+            return UnrelatedList;
+        }
+
+        
+        //Suppression d'un outil
+        public bool DeleteComponent(Outils outil)
+        {
+            if (Circuit.ContainsVertex(outil))
+            {
+                //Mettre à jour les entrées des outils auxquelles l'outil était connecté
+                foreach(var sortie in outil.getListesorties())
+                {
+                    sortie.getSortie().ForEach((outstruct) => { outstruct.getOutils().getEntreeSpecifique(outstruct.getNum_entree()).setRelated(false); });
+                }
+                //Mettre à jour les sorties des outils auxquelles l'outil était connecté
+                foreach(var edge in Circuit.InEdges(outil))
+                {
+                   foreach(var sortie in edge.Source.getListesorties())
+                    {
+                        sortie.DeleteOustruct(outil);
+                    }
+                }
+                Circuit.ClearEdges(outil);
+                Circuit.RemoveVertex(outil);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
         public override void calcul_sorties()
         {
             throw new NotImplementedException();
         }
+
+        //For chrnogramme
+        /******************************************************/
+        public List<Outils> StartComponents()
+        {
+            Console.WriteLine("Addind start components :");
+            List<Outils> l = new List<Outils>();
+            foreach (var outil in Circuit.Vertices)
+            {
+                if (Circuit.IsInEdgesEmpty(outil))
+                {
+                    Console.WriteLine(outil.GetType().Name);
+                    l.Add(outil);
+                }
+            }
+            return l;
+        }
+
+
     }
 
 

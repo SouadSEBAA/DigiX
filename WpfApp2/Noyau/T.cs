@@ -7,7 +7,8 @@ namespace logisimConsole
     class T : Bascule
     {
         //liste_entrees[3] = T
-        
+        protected bool EtatAvant_T;
+
         public T(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
         {
             liste_entrees = new List<ClasseEntree>(nb_entrees);
@@ -34,15 +35,26 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
-                    if (liste_entrees[3].isEtat()) //T=1
+                    Console.WriteLine("zzzzzzzzzzzzzzzzzz");
+                    if (EtatAvant_T) //T=1
                         liste_sorties[0].setEtat(!liste_sorties[0].isEtat());
-                    liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+                    front = false;
                 }
+                liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+
             }
             else //Asynchrone
                 calcul_sorties_asynch();
 
         }
+
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            if (i == 3)
+                EtatAvant_T = liste_entrees[i].getEtat();
+            base.setEntreeSpe(i, etat);
+        }
+
 
     }
 }

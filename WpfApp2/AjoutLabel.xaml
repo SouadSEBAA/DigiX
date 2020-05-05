@@ -1,0 +1,16 @@
+﻿<Window x:Class="WpfApp2.AjoutLabel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="AjoutLabel" Height="180" Width="250">
+
+    <Grid Background="#060629">
+        <Label Margin="10,10,10,110" Content="Label:" Foreground="Lavender" Target="{Binding ElementName=txtName}" />
+        <TextBox x:Name="txtName" Margin="10,40,10,80" Background="Lavender"/>
+        <Button Margin="48,90,48,10" Content="Ajouter" FontSize="15" Foreground="#060629" Click="Button_Click" Background="Lavender"></Button>
+    </Grid>
+
+</Window>
