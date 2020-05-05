@@ -19,7 +19,6 @@ namespace WpfApp2
     {
         protected string data;
         public Outils outil;
-        public List<Wire> wires = new List<Wire>();
 
         // Pour classifier les entrees selon la direction
         private List<ClasseEntree> E_Left = new List<ClasseEntree>();
