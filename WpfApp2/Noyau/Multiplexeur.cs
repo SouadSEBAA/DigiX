@@ -78,7 +78,7 @@ namespace logisimConsole
                 switch (this.nb_entrees)
                 //ArgumentOutOfRangeException
                 {
-                    case 2:
+                    case 3:
                         Console.WriteLine("2 entrees || 1 commande");
                         if (liste_entrees[0].isEtat() == false)
                         { 
@@ -91,7 +91,7 @@ namespace logisimConsole
                             Console.WriteLine(liste_entrees[2].isEtat());
                         }
                         break;
-                    case 4:
+                    case 6:
                         /*
                           la listes des entrées est comme suit :
                           i0-i1-i2-i3-i4-i5
@@ -119,7 +119,7 @@ namespace logisimConsole
                             Console.WriteLine(liste_entrees[5].isEtat());
                         }
                         break;
-                    case 8:
+                    case 11:
                         /*
                             la listes des entrées est comme suit :
                             i0-i1-i2-i3-i4-i5-i6-i7-i8-i9-i10

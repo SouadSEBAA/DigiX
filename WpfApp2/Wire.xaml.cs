@@ -92,10 +92,44 @@ namespace WpfApp2
             set {_ls.Point = value;}
         }
 
-        private void Supprimer(object sender, MouseButtonEventArgs e)
+        public void Supprimer()
         {
             // Supression in kernel
+            RaiseEvent(new RoutedEventArgs(SuppwireEvent));
 
+            if (io1 is ClasseEntree)
+            {
+                ClasseEntree i = (ClasseEntree)io1;
+                i.setEtat(false);
+                i.setRelated(false);
+
+
+                Sortie o = (Sortie)io2;
+                o.DeleteOustruct(gateStart.outil, gateStart.outil.getListeentrees().IndexOf(i));
+            }
+            else
+            {
+                ClasseEntree i = (ClasseEntree)io2;
+                i.setEtat(false);
+                i.setRelated(false);
+
+
+                Sortie o = (Sortie)io1;
+                o.DeleteOustruct(gateEnd.outil, gateEnd.outil.getListeentrees().IndexOf(i));
+            }
+        }
+
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            Supprimer();
+        }
+
+        public static readonly RoutedEvent SuppwireEvent = EventManager.RegisterRoutedEvent("Suppwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Wire));
+
+        public event RoutedEventHandler Suppwire
+        {
+            add { AddHandler(SuppwireEvent, value); }
+            remove { RemoveHandler(SuppwireEvent, value); }
         }
 
         public bool Value

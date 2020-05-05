@@ -19,6 +19,7 @@ namespace WpfApp2
     {
         protected string data;
         public Outils outil;
+        public List<Wire> wires = new List<Wire>();
 
         // Pour classifier les entrees selon la direction
         private List<ClasseEntree> E_Left = new List<ClasseEntree>();
@@ -366,15 +367,6 @@ namespace WpfApp2
         }
 
 
-        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
-
-        public event RoutedEventHandler MAJwire
-        {
-            add { AddHandler(MAJwiresEvent, value); }
-            remove { RemoveHandler(MAJwiresEvent, value); }
-        }
-
-
         private void SupprimerEntrée(object sender, RoutedEventArgs e)
         {
 
@@ -384,6 +376,7 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() > 2)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
@@ -393,29 +386,37 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() == 4)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null ) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
                 }
                 if (outil.getnbrentrees() == 8)
                 {
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
                 }
@@ -425,29 +426,37 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() == 2)
                 {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
                 if (outil.getnbrentrees() == 3)
                 {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     S_Right.Remove(S_Right[S_Right.Count - 1]);
 
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     E_Left.Remove(E_Left[0]);
                 }
@@ -463,13 +472,17 @@ namespace WpfApp2
                     if (outil.getnbrentrees() == 8) { entree = 3; sortie = 7; }
                     if (outil.getnbrentrees() == 10) { entree = 4; sortie = 9; }
 
+                    if (outil.getListeentrees()[sortie].getRelated()) { outil.getListeentrees()[sortie].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[sortie]);
+
+                    if (outil.getListeentrees()[entree].getRelated()) { outil.getListeentrees()[entree].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[entree]);
+
+                    if (outil.getListesorties()[entree].getSortie() != null) { outil.getListesorties()[entree].Supprimer(); }
                     outil.SupprimerSortie(outil.getListesorties()[entree]);
 
                     E_Up.Remove(E_Up[outil.getnbrsoryies()]);
                     E_Up.Remove(E_Up[0]);
-
                     S_Down.Remove(S_Down[1]);
                 }
             }
@@ -485,10 +498,12 @@ namespace WpfApp2
                     for (int i = 0; i < entree; i++)
                     {
                         E_Left.Remove(E_Left[0]);
+                        if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
                         outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
                     }
 
                     E_Up.Remove(E_Up[0]);
+                    if (outil.getListeentrees()[id].getRelated()) { outil.getListeentrees()[id].Supprimer(); }
                     outil.SupprimerEntree(outil.getListeentrees()[id]);
                 }
             }
@@ -503,10 +518,12 @@ namespace WpfApp2
 
                     for (int i = 0; i < sortie; i++)
                     {
+                        if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
                         S_Right.Remove(S_Right[S_Right.Count - 1]);
                         outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
                     }
 
+                    if (outil.getListeentrees()[id].getRelated()) { outil.getListeentrees()[id].Supprimer(); }
                     E_Up.Remove(E_Up[0]);
                     outil.SupprimerEntree(outil.getListeentrees()[id]);
                 }
@@ -540,6 +557,17 @@ namespace WpfApp2
             // The version is with meriem
         }
 
+
+        /***************************************************************/
+        // MAJ wires
+        /*************************************************************/
+        public static readonly RoutedEvent MAJwiresEvent = EventManager.RegisterRoutedEvent("MAJwire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler MAJwire
+        {
+            add { AddHandler(MAJwiresEvent, value); }
+            remove { RemoveHandler(MAJwiresEvent, value); }
+        }
 
         //Drag Drop 
         //les attributs

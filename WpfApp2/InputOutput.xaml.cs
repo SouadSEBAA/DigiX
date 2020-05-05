@@ -32,7 +32,8 @@ namespace WpfApp2
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
-           // this.MouseEnter += MouseOver2; // for our labels
+            // this.MouseEnter += MouseOver2; // for our labels
+
         }
 
         public bool GetIsInput() { return IsInput; }
@@ -46,7 +47,7 @@ namespace WpfApp2
             this.IsInput = isInput;
         }
 
-     
+
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
 
         public InputOutput() { InitializeComponent(); etat = false;  }
@@ -128,5 +129,22 @@ namespace WpfApp2
                 setEtat(!this.etat);
         }
 
+        /***************************************************************/
+        // Pour supprimer un wire lors de la sippression d'une entree
+        /***************************************************************/
+
+        public void Supprimer()
+        {
+            RaiseEvent(new RoutedEventArgs(SupprimerWireEvent));
+        }
+
+        // Pour supprimer un 
+        public static readonly RoutedEvent SupprimerWireEvent = EventManager.RegisterRoutedEvent("SupprimerWire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(InputOutput));
+
+        public event RoutedEventHandler SupprimerWire
+        {
+            add { AddHandler(SupprimerWireEvent, value); }
+            remove { RemoveHandler(SupprimerWireEvent, value); }
+        }
     }
 }

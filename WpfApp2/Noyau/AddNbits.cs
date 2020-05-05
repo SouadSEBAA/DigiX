@@ -20,6 +20,11 @@ namespace logisimConsole
         }
         public override void calcul_sorties()
         {
+            foreach (Sortie unesortie in this.liste_sorties)
+            {
+                unesortie.setEtat(false);
+            }
+
             if (nb_entrees == 2)
             {
                 AddComplet add = new AddComplet();

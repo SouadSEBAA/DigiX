@@ -68,7 +68,8 @@ namespace WpfApp2
             //seriaisation 
 
             Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
-
+            Grille.AddHandler(Wire.SuppwireEvent, new RoutedEventHandler(Supp_Wire));
+            Grille.AddHandler(InputOutput.SupprimerWireEvent, new RoutedEventHandler(SupprimerWire));
         }
 
 
@@ -86,7 +87,7 @@ namespace WpfApp2
         private bool isDrawing;
         Wire line = null;
         Point mousePos;
-        protected List<Wire> wires = new List<Wire>();
+        protected List<Wire> Wires = new List<Wire>();
         //pour verifier le type des entrees/sorties
         bool entry1;
         bool entry2;
@@ -148,7 +149,7 @@ namespace WpfApp2
                         }
                         else
                         {
-                            wires.Add(line);
+                            Wires.Add(line);
                         }
                     }
 
@@ -175,9 +176,9 @@ namespace WpfApp2
 
         public void Redraw()
         {
-            if (wires != null)
+            if (Wires != null)
             {
-                foreach (Wire wire in wires)
+                foreach (Wire wire in Wires)
                 {
                     wire.StartPoint = wire.io1.TranslatePoint(new Point(5, 5), Grille);
                     wire.EndPoint = wire.io2.TranslatePoint(new Point(5, 5), Grille);
@@ -188,6 +189,31 @@ namespace WpfApp2
         public void Redraw2(object sender, RoutedEventArgs e)
         {
             Redraw();
+            e.Handled = true;
+        }
+
+        /******************************************************************************/
+        // Pour 
+        /*****************************************************************************/
+
+
+        private void SupprimerWire(object sender, RoutedEventArgs e)
+        {
+            InputOutput inputOutput = (InputOutput)e.OriginalSource;
+            foreach (Wire wire in Wires)
+            {
+                if (wire.io1.Equals(inputOutput) || wire.io2.Equals(inputOutput))
+                    wire.Supprimer();
+            }
+            e.Handled = true;
+        }
+
+        /******************************************************************************/
+        //Pour supprimer un wire
+        /******************************************************************************/
+        public void Supp_Wire(object sender, RoutedEventArgs e)
+        {
+            Grille.Children.Remove((Wire)e.Source);
             e.Handled = true;
         }
 

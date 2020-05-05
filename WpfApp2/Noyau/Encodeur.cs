@@ -19,8 +19,13 @@ namespace logisimConsole
         }
         public override void calcul_sorties()
         {
+            foreach (Sortie unesortie in this.liste_sorties)
+            {
+                unesortie.setEtat(false);
+            }
+
             // 2 -> 1
-            if(nb_entrees == 2)
+            if (nb_entrees == 2)
             {
                 if (liste_entrees[0].isEtat() == true && liste_entrees[1].isEtat() == false )
                 {

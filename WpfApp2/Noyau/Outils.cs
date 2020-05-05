@@ -114,6 +114,32 @@ namespace logisimConsole
             this.etiquette = label;
         }
 
+        public int GetInt(Sortie sortie)
+        {
+            if (liste_sorties.Contains(sortie))
+            {
+                return liste_sorties.IndexOf(sortie);
+            }
+            else
+            {
+                return (-1);
+            }
+        }
+
+        public Sortie GetSortie(Sortie sortie)
+        {
+            int i = GetInt(sortie);
+            if ( i != -1)
+            {
+                return liste_sorties[i];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
 
         public List<Sortie> getListesorties() { return liste_sorties; }
         public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
