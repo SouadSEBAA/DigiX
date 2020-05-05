@@ -38,7 +38,7 @@ namespace WpfApp2
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
-            this.etiquette = etiq;
+            ///this.etiquette = etiq;
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;

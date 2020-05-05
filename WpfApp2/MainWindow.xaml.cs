@@ -28,6 +28,7 @@ using System.Windows.Markup;
 using System.Xml;
 using WpfApp2.TTPack;
 using System.Windows.Controls.Primitives;
+using System.Xml.Linq;
 
 namespace WpfApp2
 {

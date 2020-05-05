@@ -226,23 +226,6 @@ namespace logisimConsole
                 liste_sorties.Add(sortie);
             }
         }
-        public void AjoutEntree( ClasseEntree entree)
-        {
-            this.liste_entrees.Add(entree);
-            this.nb_entrees++;
-        }
-
-        public void AjoutSortie(Sortie sortie)
-        {
-            this.liste_sorties.Add(sortie);
-            this.nb_sorties++;
-        }
-
-        public void SupprimerEntree( ClasseEntree classeEntree)
-        {
-            this.nb_entrees--;
-            this.liste_entrees.Remove(classeEntree);
-        }
 
         public bool SortieVide()
         {
@@ -258,11 +241,6 @@ namespace logisimConsole
                 }
             }
             return etatSortie;
-        }
-
-        public void setLabel(string label)
-        {
-            this.etiquette = label;
         }
 
         public String getLabel()

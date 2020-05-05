@@ -29,7 +29,7 @@ namespace WpfApp2.Chronogramme
     {
         public ObservableDataSource<MeasureModel> dataSource = new ObservableDataSource<MeasureModel>();
         TimeSpanAxis d = new TimeSpanAxis();
-
+        
         int a = 16;
         double xMin;
         double startXMax;
