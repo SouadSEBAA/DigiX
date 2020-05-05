@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using WpfApp2;
 
 namespace logisimConsole
 {
     [Serializable]
-    public class Sortie : InputOutput
+    public class Sortie : InputOutput, INotifyPropertyChanged
     {
         private List<OutStruct> Sorties;
         public Sortie() : base() { Sorties = new List<OutStruct>(); IsInput = false; }
@@ -50,7 +51,18 @@ namespace logisimConsole
                 //outstruct.getEntree().setEtat(etat);
                 outstruct.getOutils().setEntreeSpe(outstruct.getNum_entree(), etat);
             }
+            NotifyPropertyChanged("etat");
         }
+
+        protected void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
 
         //Supression elemnt
         public void DeleteOustruct(Outils outil)

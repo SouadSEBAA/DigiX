@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -50,13 +51,12 @@ namespace WpfApp2
             //fil.Segments.Add(pls);
 
             _fil.Segments.Add(_ls);
-
-            wire.Data = new PathGeometry(new PathFigure[]{ _fil });
+            var d = new PathGeometry(new PathFigure[] { _fil });
+            wire.Data = d;
 
             this.io1 = io;
-            //_value = io.gtEtat();
-            
-            
+
+
             this.gateStart = gatePrinciple;
 
             DataContext = this;
@@ -75,18 +75,24 @@ namespace WpfApp2
             {
                 if (io1 is ClasseEntree)
                 {
+
                     if (!circuit.Relate(gateEnd.GetOutil(), gateStart.GetOutil(), (Sortie)io2, (ClasseEntree)io1))
                         return false;
+                    (io2 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io2.getEtat(); });
+
                 }
                 else
                 {
                     if (!circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2))
                         return false;
+                    (io1 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io1.getEtat(); });
+
                 }
                 return true;
             }
         }
-        
+
+
         void Maj()
         {
             _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
@@ -112,12 +118,18 @@ namespace WpfApp2
             set
             {
                 _value = value;
-                if (value == true)
-                    wire.Stroke = Brushes.Green; //définir la couleur
-                else
-                    wire.Stroke = Brushes.Red;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (value == true)
+                        wire.Stroke = Brushes.Green; //définir la couleur
+                    else
+                        wire.Stroke = Brushes.Red;
+                });
             }
         }
+
+        public void stopbutton() { Value = false; wire.Stroke = Brushes.Black; }
+        
 
     }
 }

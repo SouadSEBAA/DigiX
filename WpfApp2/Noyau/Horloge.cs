@@ -32,7 +32,8 @@ namespace logisimConsole
 		public void Demmarer()
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
-			mythread.Start();
+				mythread.Start();
+
 		}
 
 		//  le Tour du signal d'horloge 
@@ -57,13 +58,14 @@ namespace logisimConsole
 					if (parti)//etat haut 
 					{
 						(this.liste_sorties[0]).setEtat(true);/*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul();
-						this.Calcul();
+							this.Calcul();
+
 						Thread.Sleep(UP);
 					}
 					else//etat bas 
 					{
 						(this.liste_sorties[0]).setEtat(false); /*this.circuit.Evaluate(circuit.getCircuit().Vertices.Last()); *///this.Calcul(); //this.circuit.EvaluateCircuit();
-						this.Calcul();
+							this.Calcul();
 						Thread.Sleep(T - UP);
 					}
 					parti = !parti;

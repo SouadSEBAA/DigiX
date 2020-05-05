@@ -24,15 +24,12 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
-            //if (!Preset.isRelated() || !Clear.isRelated()) throw exception
             try
             {
                 if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
                     throw new PresetClearException(liste_entrees[1], liste_entrees[2]);
             }catch(PresetClearException e)
-            {
-                e.Gerer();
-            }
+            { e.Gerer(); }
         }
 
         public void calcul_sorties_asynch()

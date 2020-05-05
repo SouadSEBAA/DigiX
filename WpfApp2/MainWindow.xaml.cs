@@ -673,6 +673,13 @@ namespace WpfApp2
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)
         {
+                foreach (Outils o in circuit.getCircuit().Vertices)
+                {
+                    if (o is Horloge)
+                    {
+                        ((Horloge)o).arreter();
+                    }
+                }
             this.Close();
         }
 
@@ -732,8 +739,12 @@ namespace WpfApp2
                     s.stopbutton();
                     Console.WriteLine("etat avant:"+s.getEtat());
                 }
-
             }
+            foreach (Wire w in Wires)
+            {
+                w.stopbutton();
+            }
+
 
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }

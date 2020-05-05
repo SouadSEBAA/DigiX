@@ -27,7 +27,7 @@ namespace logisimConsole
            if (this.circuit.getSimulation())
             {
                 this.EndCircuit(this);
-                this.circuit.EvaluateCircuit(this);
+                    this.circuit.EvaluateCircuit(this);
             }
         }
 

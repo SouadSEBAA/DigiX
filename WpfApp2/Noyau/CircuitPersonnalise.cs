@@ -154,8 +154,8 @@ namespace logisimConsole
                     Evaluate(edge.Source);
                 }
             }
-            
-            outil.calcul_sorties();
+                outil.calcul_sorties();
+
             Console.WriteLine("--------------------------");
             Console.WriteLine(outil.GetType());
             //Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat() );
@@ -169,7 +169,7 @@ namespace logisimConsole
             foreach(Outils outil in this.CompFinaux)
             {
                 Console.WriteLine("********Evaluate circuit *******");
-                this.Evaluate(outil);
+                    this.Evaluate(outil);
             }
         }
 
@@ -179,7 +179,7 @@ namespace logisimConsole
             {
                // new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******"+ outil);
-                this.Evaluate(outil);
+                    this.Evaluate(outil);
             }
         }
 

@@ -11,7 +11,7 @@ using System.Windows.Media;
 namespace WpfApp2.Noyau
 {
     [Serializable]
-    class PinOut : Outils
+    class PinOut : Outils, INotifyPropertyChanged
     {
         public PinOut(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
         {
@@ -47,15 +47,27 @@ namespace WpfApp2.Noyau
         public override void setEntreeSpe(int i, bool etat)
         {
             base.setEntreeSpe(i, etat);
+            NotifyPropertyChanged("liste_entrees");
+            /*
             Application.Current.Dispatcher.Invoke(() => {
 
                 if (etat)
                     (((liste_entrees[0].Parent as Grid).Parent as Canvas).Parent as Gate).path.Fill = Brushes.Green;
                 else
                     (((liste_entrees[0].Parent as Grid).Parent as Canvas).Parent as Gate).path.Fill = Brushes.Red;
-            });
+            });*/
         }
-    } 
+
+
+    protected void NotifyPropertyChanged(string property)
+    {
+        if (PropertyChanged != null)
+            PropertyChanged(this, new PropertyChangedEventArgs(property));
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+} 
             
 
     }

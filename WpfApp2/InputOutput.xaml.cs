@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Threading;
 using System;
-
+using System.ComponentModel;
 
 namespace WpfApp2
 {
@@ -102,7 +102,7 @@ namespace WpfApp2
         virtual public void setEtat(bool etat)
         {
             this.etat = etat;
-
+            
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
             //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
             //this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,new Action( ()=>
@@ -113,8 +113,9 @@ namespace WpfApp2
                     elSelector.Fill = Brushes.Green;
                 else
                     elSelector.Fill = Brushes.Red;  
-            });       
+            });      
         }
+
 
         public void stopbutton() { elSelector.Fill = Brushes.Black; }
 
@@ -133,24 +134,5 @@ namespace WpfApp2
                 setEtat(!this.etat);
         }
 
-        //Chronogrammes
-        /**************************************************************************************/
-
-        private void AfficherChronogrammeClick(Object sender, MouseButtonEventArgs e)
-        {
-            RaiseEvent(new RoutedEventArgs(ChronogrammeEvent));
-        }
-
-        public static readonly RoutedEvent ChronogrammeEvent = EventManager.RegisterRoutedEvent(
-            "AfficherChronogramme", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
-
-        public event RoutedEventHandler AfficherChronogramme
-        {
-            add { AddHandler(ChronogrammeEvent, value); }
-            remove { RemoveHandler(ChronogrammeEvent, value); }
-        }
-
-
-        /***************************************************************************************/
     }
 }

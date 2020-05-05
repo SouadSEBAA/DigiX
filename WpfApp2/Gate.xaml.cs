@@ -586,7 +586,7 @@ namespace WpfApp2
 
         public pin_entree() : base(new PinIn(), "M57.5,29 C57.5,44.740115 44.740115,57.5 29,57.5 C13.259885,57.5 0.5,44.740115 0.5,29 C0.5,13.259885 13.259885,0.5 29,0.5 C44.740115,0.5 57.5,13.259885 57.5,29 z M35.5,28 C35.5,31.589851 32.365993,34.5 28.5,34.5 C24.634007,34.5 21.5,31.589851 21.5,28 C21.5,24.410149 24.634007,21.5 28.5,21.5 C32.365993,21.5 35.5,24.410149 35.5,28 z")
         {
-            path.Fill = Brushes.Red;
+            //path.Fill = Brushes.Red;
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
         }
 
@@ -599,7 +599,8 @@ namespace WpfApp2
                 this.outil.getListeentrees()[0].setEtat(false);
                 //le calcul automatique 
                 path.Fill = Brushes.Red;
-                ((PinIn)(this.outil)).Calcul();
+                    ((PinIn)(this.outil)).Calcul();
+
                 Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
             else
@@ -607,7 +608,7 @@ namespace WpfApp2
                 Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(true);
                 path.Fill = Brushes.Green;
-                ((PinIn)(this.outil)).Calcul();
+                    ((PinIn)(this.outil)).Calcul();
                 Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
 
@@ -619,7 +620,13 @@ namespace WpfApp2
     {
         public pin_sortie() : base(new PinOut(), "M0.5, 0.5 L79.5, 0.5 L79.5, 79.5 L0.5, 79.5 z M71.166003, 39.285999 C71.166003, 54.131966 56.67928, 66.166999 38.809002, 66.166999 C20.938723, 66.166999 6.452, 54.131966 6.452, 39.285999 C6.452, 24.440033 20.938723, 12.405 38.809002, 12.405 C56.67928, 12.405 71.166003, 24.440033 71.166003, 39.285999 z")
         {
-            
+            (outil as PinOut).PropertyChanged += new PropertyChangedEventHandler((sender, e) =>
+
+            {
+                Application.Current.Dispatcher.Invoke(() => {
+                    if (outil.getEntreeSpecifique(0).getEtat()) path.Fill = Brushes.Green;
+                else path.Fill = Brushes.Red; });
+            });
         }
 
     }
@@ -634,7 +641,15 @@ namespace WpfApp2
         public void OnClick(object sender, MouseEventArgs e)
         {
             Console.WriteLine("Demmarer");
-            ((Horloge)this.outil).Demmarer();
+            try
+            {
+                ((Horloge)this.outil).Demmarer();
+            }
+            catch (BasculeExceptions ex)
+            {
+                throw;
+            }
+
         }
     }
     //le circuit perssonalisé 

@@ -6,7 +6,7 @@
     <UserControl.Resources>
         <Style TargetType="Ellipse">
             <Setter Property="Stroke" Value="Black" />
-            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="StrokeThickness" Value="2" />
             <Setter Property="Width" Value="12" />
             <Setter Property="Height" Value="12" />
             <Setter Property="Fill" Value="Black" />
@@ -27,9 +27,4 @@
             <!--MouseMove="elSelector_MouseMove-->
         </Ellipse>
     </Grid>
-    <UserControl.ContextMenu>
-        <ContextMenu x:Name="menu">
-            <ListBoxItem Content="Chronogramme" MouseUp="AfficherChronogrammeClick"></ListBoxItem>
-        </ContextMenu>
-    </UserControl.ContextMenu>
 </UserControl>
