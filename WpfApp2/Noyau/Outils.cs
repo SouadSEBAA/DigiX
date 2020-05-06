@@ -47,6 +47,7 @@ namespace logisimConsole
         {
             id = nbrOutils;
             nbrOutils++;
+            etiquette = "Label_" + id;
         }
 
 

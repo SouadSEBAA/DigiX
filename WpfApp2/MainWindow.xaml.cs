@@ -416,11 +416,14 @@ namespace WpfApp2
                 //In order to show the pause/stop buttons --------------------------------------------
                 if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
                 if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-                //-----------------------------------------------------------------------------------
+                    //-----------------------------------------------------------------------------------
 
-                //melissa
-                Tools.IsEnabled = false;
-                circuit.EvaluateCircuit();
+                    //To stop changes while simulating
+                    Tools.IsEnabled = false;
+                    //foreach(UserControl uc in )
+                    //melissa
+
+                    circuit.EvaluateCircuit();
                 circuit.setSimulation(true);
 
                //

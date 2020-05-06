@@ -18,9 +18,9 @@ namespace WpfApp2.Noyau
     /// <summary>
     /// Logique d'interaction pour UnrelatedGatesMessage.xaml
     /// </summary>
-    public partial class UnrelatedGatesMessage : UserControl
+    public partial class ExceptionMessage : UserControl
     {
-        public UnrelatedGatesMessage()
+        public ExceptionMessage()
         {
             InitializeComponent();
         }

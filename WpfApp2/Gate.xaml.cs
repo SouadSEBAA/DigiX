@@ -57,6 +57,7 @@ namespace WpfApp2
             this.data = ph;
             this.outil = outil;
             this.InitializeComponent();
+            ToolTip = outil.getLabel();
             path.Data = StreamGeometry.Parse(ph);
             path.StrokeThickness = 1;
             path.Fill = Brushes.White;

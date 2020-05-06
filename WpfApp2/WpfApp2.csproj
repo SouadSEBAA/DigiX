@@ -98,8 +98,8 @@
       <DependentUpon>EssaiChrono.xaml</DependentUpon>
     </Compile>
     <Compile Include="Noyau\BasculeExceptions.cs" />
-    <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
-      <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
+    <Compile Include="ExceptionMessage.xaml.cs">
+      <DependentUpon>ExceptionMessage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Noyau\IN.cs" />
     <Compile Include="AjoutLabel.xaml.cs">
@@ -126,12 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="Chronogramme\EssaiChrono.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="Gate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,7 +167,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Noyau\UnrelatedGatesMessage.xaml">
+    <Page Include="ExceptionMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

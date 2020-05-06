@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using WpfApp2;
 
 namespace logisimConsole
 {
     [Serializable]
-    abstract class Bascule : CircSequentielle
+    public abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;
 
@@ -27,7 +29,7 @@ namespace logisimConsole
             try
             {
                 if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
-                    throw new PresetClearException(liste_entrees[1], liste_entrees[2]);
+                    throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
             }catch(PresetClearException e)
             { e.Gerer(); }
         }
