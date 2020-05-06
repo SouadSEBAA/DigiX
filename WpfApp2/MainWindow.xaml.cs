@@ -763,6 +763,7 @@ namespace WpfApp2
             {
                 Wire w = LoadWire(wire,this.circuit);
                 Grille.Children.Add(w);
+                this.Wires.Add(w);
 
             }
         }

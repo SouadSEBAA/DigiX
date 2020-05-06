@@ -351,27 +351,38 @@ namespace logisimConsole
         //construction de la liste des entrées
         public void ConstructEntrée()
         {
-            List<Edge<Outils>> list = new List<Edge<Outils>>();
-            foreach(Outils outils in this.Circuit.Vertices)
+            List<Outils> list = new List<Outils>();
+            foreach (Outils outils in this.Circuit.Vertices)
             {
-                if(outils is PinIn || outils is Horloge)
+                if (outils is PinIn || outils is Horloge)
                 {
-                    foreach (Edge<Outils> edge in Circuit.OutEdges(outils))
-                    {
 
-                         list.Add(edge);
-                    }
-                   
+                    list.Add(outils);
+
                     RecupEntré((IN)outils);
-                    
+
                 }
             }
-            foreach(Edge<Outils> edge in list)
+            List<Wire> listw = new List<Wire>();
+            foreach (Outils outils1 in list)
             {
-                    this.Circuit.RemoveEdge(edge);
+                InputOutput inputOutput = outils1.getListesorties()[0];
+                foreach (Wire wire in wires)
+                {
+                    if (wire.io1.Equals(inputOutput) || wire.io2.Equals(inputOutput))
+                    { listw.Add(wire); wire.Supprimer(); }
+
+                }
+
+
+            }
+            foreach (Wire wire in listw)
+            {
+                wires.Remove(wire);
+
             }
 
-            
+
         }
         //****
         public void RecupEntré(IN outils)
