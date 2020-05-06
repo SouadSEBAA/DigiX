@@ -7,9 +7,7 @@ namespace logisimConsole
     public class ClasseEntree : InputOutput
     {
         private bool related;
-
         public ClasseEntree() { } //added this for serialization
-
         public ClasseEntree(String e, int ID, Disposition disposi, bool rel, bool etat) : base(e,ID, disposi)
         {
             this.related = rel;

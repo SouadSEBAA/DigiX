@@ -17,10 +17,10 @@
                     <MenuItem  Header="Signaux" Foreground="White" Background="Transparent" Width="137" Height="30" ItemsSource="{Binding newl}" x:Name="SignalsChrono" Click="Ajouter">
                         <MenuItem.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding SubMenuItems}" >
-                                <TextBlock Text="{Binding outil}" Foreground="White" Background="Transparent"/>
+                                <TextBlock Text="{Binding header}" Foreground="White" Background="Transparent"/>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate>
-                                            <TextBlock Text="{Binding etiquette}" />
+                                        <TextBlock Text="{Binding etiquette}"/>
                                     </DataTemplate>
                                 </HierarchicalDataTemplate.ItemTemplate>
                             </HierarchicalDataTemplate>

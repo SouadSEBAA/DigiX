@@ -3,7 +3,7 @@
 namespace logisimConsole
 {
     [Serializable]
-    abstract class CircSequentielle : Circuit
+    public abstract class CircSequentielle : Circuit
     {
         protected bool Trigger; //si Trigger = 1 alors le circuit se déclenche sur un FrontMontant
 

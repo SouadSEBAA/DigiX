@@ -18,6 +18,7 @@ namespace logisimConsole
         public int id = 0;
         public CircuitPersonnalise circuit;
         public bool added;
+        public bool end;
         protected int nb_entrees;
         protected int nb_sorties;
         protected string etiquette;
@@ -46,6 +47,9 @@ namespace logisimConsole
         {
             id = nbrOutils;
             nbrOutils++;
+
+            etiquette = "Label_" + id;
+
         }
 
 
@@ -252,19 +256,19 @@ namespace logisimConsole
         public void EndCircuit(IN iN)
         {
             Outils o = this;
-            Console.WriteLine("+++++++++entree end circuit ********");
+
+
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    Console.WriteLine("bouce" + edge.Target);
+
+
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
-                        Console.WriteLine("if");
                         iN.getEndListe().Add(edge.Target);
                     }
                     else { edge.Target.EndCircuit(iN); }
-
                 }
             }
 

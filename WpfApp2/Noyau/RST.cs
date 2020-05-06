@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Windows.Controls;
+using WpfApp2;
+
 namespace logisimConsole
 {
     [Serializable]
@@ -43,7 +46,7 @@ namespace logisimConsole
                     {
                         try
                         {
-                            throw new RSTException(liste_entrees[3], liste_entrees[4]);
+                            throw new RSTException(liste_entrees[3], liste_entrees[4], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
                         }catch(RSTException e)
                         {
                             e.Gerer();

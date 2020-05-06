@@ -31,17 +31,6 @@ namespace logisimConsole
                 unesortie.setEtat(false);
             }
 
-            /*
-            bool AllRelated = true;
-
-            foreach (ClasseEntree uneEntree in this.liste_entrees)
-            {
-                if (uneEntree.getRelated() == false) { AllRelated = false; }
-            }
-
-            // throw new NotImplementedException();
-            if (AllRelated)
-            {*/
                 switch (this.nb_sorties)
                 {
                     case 2:
@@ -91,8 +80,7 @@ namespace logisimConsole
                         Console.WriteLine("erreur des entrées");
                         break;
                 }
-            /*}
-            else { Console.WriteLine("Assurez que tous les entrées sont reliées....."); }*/
+           
         }
 
 
