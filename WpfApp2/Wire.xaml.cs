@@ -53,9 +53,9 @@ namespace WpfApp2
             _fil.Segments.Add(_ls);
             var d = new PathGeometry(new PathFigure[] { _fil });
             wire.Data = d;
-
+            outer.Data = d;
             this.io1 = io;
-
+            
 
             this.gateStart = gatePrinciple;
 
