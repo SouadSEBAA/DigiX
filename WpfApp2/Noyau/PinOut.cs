@@ -31,7 +31,7 @@ namespace WpfApp2.Noyau
             etiquette = "PinSortie" + id;
             this.nb_entrees = 1;
             this.nb_sorties = 0;
-            this.etiquette = "Pin sortie";
+            //this.etiquette = "Pin sortie";
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             this.disposition = Disposition.right;
@@ -43,7 +43,6 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            //liste_sorties.Add(new Sortie("sortie", 0, Disposition.down, false, new List<OutStruct>()));
             //throw new NotImplementedException();
 
         }

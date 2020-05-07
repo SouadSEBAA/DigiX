@@ -268,15 +268,68 @@ namespace WpfApp2
 
         }
         /******************************************************************************/
+        List<ExceptionMessage> liste_Exceptions = new List<ExceptionMessage> ();
+
         private void TVClick(object sender, RoutedEventArgs e)
         {
             //Chronogrammes chronoPage = new Chronogrammes();
             //Chronogrammes.Children.Add(chronoPage);
-            TableVerites tv = new TableVerites(circuit.GetCircuit());
-            tv.Show();
+            bool key = false;
+            if (circuit.getUnrelatedGates().Count == 0)
+            {
+                foreach(Outils elmnt in circuit.GetCircuit().Vertices)
+                {
+                    if (elmnt is PinOut)
+                    {
+                        key = true;
+                        break;
+                    }
+                }
+                if (key)
+                { 
+                    TableVerites tv = new TableVerites(circuit.GetCircuit());
+                    tv.Show();
+                }
+                else 
+                {
 
+                    if (liste_Exceptions.Count != 0)
+                    {
+
+                        Grille.Children.Remove(liste_Exceptions[0]);
+                        liste_Exceptions.Remove(liste_Exceptions[0]);
+                    }
+                    ExceptionMessage message = new ExceptionMessage();
+                    message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
+                    message.Opacity = 0.5;
+                    message.MouseDown += Close;
+                    Grille.Children.Add(message);
+                    liste_Exceptions.Add(message);
+                    //set.Add(message);
+                    Canvas.SetLeft(message, 300);
+                    Canvas.SetTop(message, 20);
+                }
+            }
+            else
+            {
+                try
+                {
+                    throw new RelatedException(Grille);
+                }
+                catch (RelatedException exception)
+                {
+                    //StackExceptions.Children.Clear();
+                    
+                    exception.Gerer();
+                }
+            }
         }
 
+        
+                  public void Close(object sender, MouseEventArgs e)
+                  {
+                      Grille.Children.Remove((ExceptionMessage)sender);
+                  }
         /*****************/
         //drag and drop 
 
@@ -840,6 +893,7 @@ namespace WpfApp2
             return null;
         }
         
+
 
 
 

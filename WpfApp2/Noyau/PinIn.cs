@@ -19,7 +19,7 @@ namespace WpfApp2.Noyau
             etiquette = "PinEntrée_" + id;
             this.nb_entrees = 0;
             this.nb_sorties = 1;
-            this.etiquette = "Pin entrée";
+            //this.etiquette = "Pin entrée";
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             disposition = Disposition.right;

@@ -47,7 +47,9 @@ namespace logisimConsole
         {
             id = nbrOutils;
             nbrOutils++;
+
             etiquette = "Label_" + id;
+
         }
 
 
@@ -254,10 +256,14 @@ namespace logisimConsole
         public void EndCircuit(IN iN)
         {
             Outils o = this;
+
+
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
+
+
                     if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
                         iN.getEndListe().Add(edge.Target);
@@ -265,6 +271,7 @@ namespace logisimConsole
                     else { edge.Target.EndCircuit(iN); }
                 }
             }
+
         }
 
 
