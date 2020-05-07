@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using logisimConsole;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp2
 {
@@ -28,10 +30,13 @@ namespace WpfApp2
         ***************************************/
         public LineSegment _ls;
         private PathFigure _fil;
-        public Gate gateStart;//début du fil
+        public Gate gateStart;  //début du fil
         public InputOutput io1, io2;
         public Gate gateEnd;
         private bool _value;
+
+        
+
 
         public Wire(Point start, Gate gatePrinciple, InputOutput io)
         {
@@ -53,9 +58,11 @@ namespace WpfApp2
             this.gateStart = gatePrinciple;
             Value = false;
             DataContext = this;
+
+            
         }
 
-
+       
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
@@ -77,6 +84,8 @@ namespace WpfApp2
             }
         }
 
+
+
         public Point StartPoint 
         { 
             get { return _fil.StartPoint; }
@@ -90,6 +99,7 @@ namespace WpfApp2
             set {_ls.Point = value;}
         }
 
+
         public bool Value
         {
             get { return _value; }
@@ -97,9 +107,13 @@ namespace WpfApp2
             {
                 _value = value;
                 if (value == true)
-                    wire.Stroke = Brushes.Red; //définir la couleur
+                {
+                    wire.Stroke = Brushes.Green; //définir la couleur red
+                }
                 else
-                    wire.Stroke = Brushes.Black;
+                {
+                    wire.Stroke = Brushes.Red; //black 
+                }
             }
         }
 

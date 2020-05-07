@@ -258,15 +258,16 @@ namespace WpfApp2
             //In order to show the pause/stop buttons --------------------------------------------
             if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
             if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-            //-----------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             circuit.setSimulation(false);
+
              Last_Elements(); //idk if this is needed based on what has been done below
-           
+             
                 //melissa
              circuit.EvaluateCircuit();
              circuit.setSimulation(true);
-               //
+               //------------------------
             
         }
 
@@ -618,6 +619,8 @@ namespace WpfApp2
         {
             this.WindowState = WindowState.Maximized;
         }
+        //-----------------------------------
+
 
         private void pause_click(object sender, RoutedEventArgs e)
         {

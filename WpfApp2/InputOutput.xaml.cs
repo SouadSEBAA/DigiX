@@ -85,7 +85,7 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
-
+        
         virtual public void setEtat(bool etat)
         {
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
@@ -95,13 +95,16 @@ namespace WpfApp2
                 // Code causing the exception or requires UI thread access
                 this.etat = etat;
                 if (etat == true)
-                    elSelector.Fill = Brushes.Red;
+                    elSelector.Fill = Brushes.Red; //Red
+
                 else
-                    elSelector.Fill = Brushes.Black;  
-            });       
+                    elSelector.Fill = Brushes.Black; //Black
+                
+            });
+            
         }
 
-        public void stopbutton() { elSelector.Fill = Brushes.Black; }
+        public void stopbutton() { elSelector.Fill = Brushes.Black; } //resets the color of the inputs to black -for the stop button-
 
         public bool getEtat()
         {
@@ -114,6 +117,7 @@ namespace WpfApp2
         {
             if (IsInput)
                 setEtat(!this.etat);
+                
         }
 
     }
