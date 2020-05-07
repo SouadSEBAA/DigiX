@@ -1,65 +1,94 @@
-﻿<UserControl x:Class="WpfApp2.Chronogramme.Chronogrammes"
+﻿<Window x:Class="WpfApp2.Chronogramme.Chronogrammes"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp2.Chronogramme"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="900">
+      xmlns:local="clr-namespace:WpfApp2"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Foreground="White"
+      mc:Ignorable="d" WindowStartupLocation="CenterScreen" 
+      Height="835" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
+      >
     
-    <DockPanel LastChildFill="True" Height="800" Width="450" Background="White">
-        <Border DockPanel.Dock="Top" BorderThickness="1" Height="Auto" BorderBrush="#060629">
+    <DockPanel LastChildFill="True" Height="800" Width="530" Background="White">
+        <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
-                <Button Click="StopClick" Width="100" Height="30" x:Name="StopButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#060629" Padding="0" >
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center" >Stop</TextBlock>
-                        <materialDesign:PackIcon Kind="Pause"  Margin="5"/>
-                    </StackPanel>
-                </Button>
-                <Button  Click="Continuer" Width="100" Height="30" x:Name="ContinueButton"
-                        Background="Black" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" OpacityMask="#FF060629" IsEnabled="False">
-                    <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center" Visibility="Visible" OpacityMask="#FF060629">Continuer</TextBlock>
-                </Button>
-                <Button  Click="Ajouter" Width="100" Height="30" x:Name="AjouterButton" 
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0">
-                    <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center">Ajouter</TextBlock>
-                </Button>
-                <Button Click="Quit" Height="30">
-                    <materialDesign:PackIcon Kind="Close" />
-                </Button>
+                <TextBlock Text=" Choisissez les :" Margin="0, 8, 0, 0" Foreground="Lavender" VerticalAlignment="Center"  FontSize="15" Width="110" Height="30"/>
+                <Menu IsMainMenu="True" Name="menu" Width="110" Height="30" Background="#060629">
+                    <MenuItem  Header="Signaux" Foreground="White" Background="Transparent" Width="137" Height="30" ItemsSource="{Binding newl}" x:Name="SignalsChrono" Click="Ajouter">
+                        <MenuItem.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding SubMenuItems}" >
+                                <TextBlock Text="{Binding header}" Foreground="White" Background="Transparent"/>
+                                <HierarchicalDataTemplate.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding etiquette}"/>
+                                    </DataTemplate>
+                                </HierarchicalDataTemplate.ItemTemplate>
+                            </HierarchicalDataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                </Menu>
+                <TextBlock Margin="20, 8, 0, 0" Text=" Déssiner pendant :"   Foreground="Lavender" VerticalAlignment="Center"  FontSize="15" Width="135" Height="30"/>
+                <ComboBox IsEditable="False" x:Name="TimeChrono" Width="110" Height="30"
+                          Background="Transparent" ItemsSource="{Binding Path=l_ts}" SelectedItem="{Binding Path=STs}">
+                </ComboBox>
             </StackPanel>
         </Border>
-        <Border DockPanel.Dock="Bottom" BorderThickness="1" Height="Auto" BorderBrush="#060629">
-            <DockPanel>
+        <Border DockPanel.Dock="Bottom" BorderThickness="1" Height="Auto" Width="Auto" BorderBrush="#060629">
+            <DockPanel LastChildFill="True"  Background="#060629">
                 <Border DockPanel.Dock="Right" BorderThickness="1" Height="Auto" BorderBrush="#060629">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
                         <Button Click="PreviousClick" Width="70" Height="30" x:Name="PreviousButton"
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0">
-                            <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center">Previous</TextBlock>
+                        Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="false" ToolTip="Next"
+                        Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=ArrowBack, Size=30}">
                         </Button>
                         <Button Click="NextClick" Width="70" Height="30" x:Name="NextButton"
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0">
-                            <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center">Next</TextBlock>
+                        Background="{x:Null}" BorderBrush="{x:Null}" 
+                        IsEnabled="False" ToolTip="Previous"
+                        Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=ArrowForward, Size=30}">
                         </Button>
                     </StackPanel>
                 </Border>
                 <Border DockPanel.Dock="Left" BorderThickness="1" Height="Auto" BorderBrush="#060629">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
-                        <Button Click="AfficherAxe" Width="90" Height="30" 
+                        <Button Click="AfficherAxe" Name="AxesButton" Width="90" Height="30" IsEnabled="false" ToolTip="Afficher ou Cacher les axes" 
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0">
                             <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center">Afficher Axe</TextBlock>
                         </Button>
+                    </StackPanel>
+                </Border >
+                <Border BorderThickness="1" Height="Auto" BorderBrush="Transparent" Margin="70, 0, 0, 0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Transparent">
+                        <Button Click="StopClick" Width="69" Height="30" x:Name="StopButton" 
+                                ToolTip="Stop" Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="false"
+                                Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=Stop, Size=30}">
+                        </Button>
+                        <Button  Click="PauseClick" Width="40" Height="30" x:Name="PauseButton" ToolTip="Pause"
+                        Background="Transparent" BorderBrush="{x:Null}" Visibility="Collapsed"
+                                 Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=Pause, Size=30}">
+                        </Button>
+                        <Button Click="StartContinuerClick" ToolTip="Commencer" Width="100" Height="30" x:Name="StartContinuerButton" Background="{x:Null}" 
+                                BorderBrush="{x:Null}" Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=PlayArrow, Size=30}" >
+                        </Button>
+
                     </StackPanel>
                 </Border>
             </DockPanel>
         </Border>
         <Border BorderThickness="1" BorderBrush="#060629">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Canvas x:Name="Errors" Grid.Row="0">
+                </Canvas>
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Grid.Row="1"
                             VerticalScrollBarVisibility="Visible" >
-                <StackPanel Orientation="Vertical" x:Name="ChronoStack"></StackPanel>
-
-            </ScrollViewer>
+                    
+                    <StackPanel Orientation="Vertical" x:Name="ChronoStack">
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Border>
     </DockPanel>
-</UserControl>
+</Window>

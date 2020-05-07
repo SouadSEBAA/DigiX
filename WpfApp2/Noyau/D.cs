@@ -6,12 +6,12 @@ namespace logisimConsole
     class D : Bascule
     {//liste des entrées :[clock,Pr,Clr,D]
      //liste des sorties :[Q,-Q]
-       
+
+        protected bool EtatAvant_D;
 
         public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }
         public D() : base() 
         {
-            
             this.nb_entrees = 4;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
@@ -33,14 +33,23 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
-                    this.getListesorties()[0].setEtat(this.getListeentrees()[3].isEtat());
-                    this.getListesorties()[1].setEtat(!(this.getListeentrees()[3].isEtat()));
+                    Console.WriteLine("Etat d'avat : " + EtatAvant_D);
+                    this.getListesorties()[0].setEtat(/*this.getListeentrees()[3].isEtat()*/ EtatAvant_D);
+                    //this.getListesorties()[1].setEtat(!/*this.getListeentrees()[3].isEtat()*/ EtatAvant);
+                    front = false;
                 }
+                liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
             }
             else //Asynchrone
                 calcul_sorties_asynch();
         }
 
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            if (i == 3)
+                EtatAvant_D = liste_entrees[i].getEtat();
+            base.setEntreeSpe(i, etat);
+        }
 
     }
 }

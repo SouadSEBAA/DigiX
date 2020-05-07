@@ -13,6 +13,7 @@ namespace logisimConsole
             setnb_entrees(1);
         }
 
+        
         public NON() : base()
         {
             setnb_entrees(1);
@@ -26,8 +27,9 @@ namespace logisimConsole
 
         }
 
+        //Remarque : à revoir
+        //For simulation
         //public NON() : base(1, 1) { nb_entrees = 1; }
-
         //essai
         public NON(String s) : base(1, 1) { }
 

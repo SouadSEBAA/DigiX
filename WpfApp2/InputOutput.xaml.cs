@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Threading;
 using System;
-
+using System.ComponentModel;
 
 namespace WpfApp2
 {
@@ -18,7 +18,8 @@ namespace WpfApp2
     public partial class InputOutput : UserControl
     {
 
-        protected String etiquette;
+        public String etiquette { get; set; }
+        //protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
@@ -34,6 +35,17 @@ namespace WpfApp2
             this.MouseDoubleClick += MouseClick;
         }
 
+        public InputOutput(int ID, Disposition disposi)
+        {
+            InitializeComponent();
+            ///this.etiquette = etiq;
+            this.ID = ID;
+            this.dispo = disposi;
+            this.MouseDoubleClick += MouseClick;
+            // this.MouseEnter += MouseOver2; // for our labels
+        }
+
+
         public bool GetIsInput() { return IsInput; }
         public String GetEtiquette() { return etiquette; }
         public void SetEtiquette(String e) { etiquette = e; }
@@ -45,7 +57,7 @@ namespace WpfApp2
             this.IsInput = isInput;
         }
 
-     
+
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
 
         public InputOutput() { InitializeComponent(); etat = false;  }
@@ -62,9 +74,9 @@ namespace WpfApp2
 
                 line.StrokeThickness = 2;
                 line.Stroke = System.Windows.Media.Brushes.Black;
-               
+
                 //la ligne à copier 
-                data.SetData("Object",line);
+                data.SetData("Object", line);
                 data.SetData("String", "inputoutput");
                 // Inititate the drag-and-drop operation.
                 DragDrop.DoDragDrop(this, data, DragDropEffects.All);
@@ -80,38 +92,48 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
 
+
+       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            my_label.Content = this.GetEtiquette();
+        }*/
+
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
-        
+
         virtual public void setEtat(bool etat)
         {
+            this.etat = etat;
+            
             //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
             //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
+            //this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,new Action( ()=>
             Application.Current.Dispatcher.Invoke(() =>
             {
                 // Code causing the exception or requires UI thread access
-                this.etat = etat;
                 if (etat == true)
-                    elSelector.Fill = Brushes.Red; //Red
-
+                    elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Black; //Black
-                
+                    elSelector.Fill = Brushes.Red;
+
             });
             
         }
 
-        public void stopbutton() { elSelector.Fill = Brushes.Black; } //resets the color of the inputs to black -for the stop button-
+
+        public void stopbutton() { elSelector.Fill = Brushes.Black; }
 
         public bool getEtat()
         {
             return this.etat;
         }
-
+        
         public bool isEtat() { return this.etat; }
+
+        public String getEtiquette() { return etiquette; }
 
         private void MouseClick(object sender, MouseEventArgs e)
         {
@@ -120,5 +142,22 @@ namespace WpfApp2
                 
         }
 
+        /***************************************************************/
+        // Pour supprimer un wire lors de la sippression d'une entree
+        /***************************************************************/
+
+        public void Supprimer()
+        {
+            RaiseEvent(new RoutedEventArgs(SupprimerWireEvent));
+        }
+
+        // Pour supprimer un 
+        public static readonly RoutedEvent SupprimerWireEvent = EventManager.RegisterRoutedEvent("SupprimerWire", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(InputOutput));
+
+        public event RoutedEventHandler SupprimerWire
+        {
+            add { AddHandler(SupprimerWireEvent, value); }
+            remove { RemoveHandler(SupprimerWireEvent, value); }
+        }
     }
 }

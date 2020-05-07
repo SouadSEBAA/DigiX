@@ -4,12 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
-       
+       xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Name="DigiX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png" WindowStyle="None">
 
-    <!--MouseWheel="Canvas_MouseWheel"-->
     <Grid x:Name="grid"  >
 
         <Grid.RowDefinitions>
@@ -25,7 +24,7 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
                 <Canvas x:Name="Grille"         
-                MouseMove="MouseMoved"
+                MouseMove="MouseMoved" 
                 MouseLeftButtonUp="MouseReleased"
                 AllowDrop="True"
                 DragOver="Grille_DragOver"
@@ -34,9 +33,9 @@
                 Width="2000">
                     <Canvas.Background>
                         <VisualBrush TileMode="Tile"
-                             Viewport="0,0,10,10"
+                             Viewport="0,0,15,15"
                              ViewportUnits="Absolute"
-                             Viewbox="0,0,10,10"
+                             Viewbox="0,0,15,15"
                              ViewboxUnits="Absolute">
                             <VisualBrush.Visual>
                                 <Ellipse Fill="Black"
@@ -45,6 +44,7 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Canvas.Background>
+                    <!--<StackPanel x:Name="StackExceptions" Orientation="Vertical" Canvas.Top="5" Canvas.Left="380"/>-->
                 </Canvas>
             </ScrollViewer>
         </Grid>
@@ -142,10 +142,17 @@
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
                                 <Button Content="Tutorielles" Click="open_tut"/>
-                                <Button Content="Chronogrammes" Click="ChronogrammesClick"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton"/>
+                                <Button Content="TableVerite" Click="TVClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
+
+                    <!--
+                    <Button x:Name="close" Width="40" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_window">
+                        <materialDesign:PackIcon Kind="Close" Height="30" Width="30"  Background="Red"/>
+                    </Button>
+                    -->
 
                 </StackPanel>
             </Grid>
@@ -160,10 +167,10 @@
                 <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                     <StackPanel Orientation="Vertical">
 
-                        <ListViewItem Height="60" MouseDoubleClick="circuit_click">
+                        <ListViewItem Height="60" MouseUp="TextBlock_MouseRightButtonDown">
                             <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="YoutubeCreatorStudio" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5"/>
-                                <TextBlock Text="Circuit Personnalisee" FontSize="15" VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="#9fa8da"/>
+                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5" />
+                                <TextBlock Text="Circuit Personnalisee" FontSize="15"  VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="#9fa8da" />
                             </StackPanel>
                         </ListViewItem>
 
@@ -303,14 +310,17 @@
                                                 <TextBlock Text="Registre a" HorizontalAlignment="Left"></TextBlock>
                                                 <TextBlock Text="decalages" HorizontalAlignment="Left"></TextBlock>
                                             </StackPanel>
-                                            <local:Reg></local:Reg>
+                                            <local:Reg> </local:Reg>
+
                                         </StackPanel>
                                     </ListViewItem>
 
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Width="201" Height="100">
                                             <TextBlock Text="Compteur"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:Cpt></local:Cpt>
+
+                                               <local:Cpt> </local:Cpt>
+
                                         </StackPanel>
                                     </ListViewItem>
 
@@ -341,7 +351,7 @@
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="100" Width="201">
                                             <TextBlock Text="Bascule RST"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
-                                            <local:BasculeRst></local:BasculeRst>
+                                            <local:BasculeRst Canvas.Top="0" Canvas.Left="0" />
                                         </StackPanel>
                                     </ListViewItem>
 
@@ -363,12 +373,12 @@
                                     </ListViewItem>
 
                                     <ListViewItem>
-                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
-                                            <TextBlock Text="Pin sortie" Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                        <StackPanel Orientation="Horizontal" Height="100" Width="201">
+                                            <TextBlock Text="Pin de sortie" Padding="20 5" VerticalAlignment="Center"></TextBlock>
                                             <local:pin_sortie Canvas.Top="0" Canvas.Left="0"/>
-
                                         </StackPanel>
                                     </ListViewItem>
+                                    
                                     <ListViewItem>
                                         <StackPanel Orientation="Horizontal" Height="75" Width="201">
                                             <TextBlock Text="Horloge"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
@@ -385,12 +395,6 @@
             </Grid>
         </Grid>
 
-
-        <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
-        <!--<Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" />-->
-
-
-        <!--Canvas x:Name="Chronogrammes" Margin="1145,35,-403,279" /-->
 
     </Grid>
 </Window>

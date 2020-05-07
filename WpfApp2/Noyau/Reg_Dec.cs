@@ -21,22 +21,23 @@ namespace logisimConsole
 
         public Reg_Dec() : base() 
         {
-            this.nb_entrees =8 ;
+            this.nb_entrees = 8;
             this.nb_sorties = 4;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree("Decalage gauche",0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Clear",1, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Decalage droit",2, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Load",3, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Decalage gauche", 0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear", 1, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Decalage droit", 2, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Load", 3, Disposition.right, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 1", 4, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 2", 5, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 3", 6, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 4", 7, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie("Sortie 1",0, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie("Sorte 2",1, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie("Sortie 3",2, Disposition.down, false, null));
-            this.liste_sorties.Add(new Sortie("Sortie 4",3, Disposition.down, false, null));
+            this.liste_sorties.Add(new Sortie("Sortie 1", 0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sorte 2", 1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 3", 2, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 4", 3, Disposition.down, false, new List<OutStruct>()));
+
         }
         /*
 		public override bool verifiRelie(){//verifier le  nombre d'entrées paralleles est egale aunombre de sorties

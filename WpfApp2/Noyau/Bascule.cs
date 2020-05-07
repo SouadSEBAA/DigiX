@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using WpfApp2;
 
 namespace logisimConsole
 {
     [Serializable]
-    abstract class Bascule : CircSequentielle
+    public abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;
-       
 
         public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, 2, etiquette, dispo)
         {
@@ -21,27 +22,31 @@ namespace logisimConsole
         public Bascule() :base()
         {
             
-            
         }
 
         public override void calcul_sorties()
         {
-            //if (!Preset.isRelated() || !Clear.isRelated()) throw exception
-            //if (!Preset.isEtat() && !Clear.isEtat()) throw exception
+            try
+            {
+                if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
+                    throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
+            }catch(PresetClearException e)
+            { e.Gerer(); }
         }
 
         public void calcul_sorties_asynch()
         {
             //Asynchrone
             //Calculer Q
-            if (!liste_entrees[1].isEtat() && liste_entrees[2].isEtat()) //Preset = 0 et Clear = 1
+            if (!liste_entrees[1].getEtat() && liste_entrees[2].getEtat()) //Preset = 0 et Clear = 1
                 liste_sorties[0].setEtat(false);
-            else if (liste_entrees[1].isEtat() && !liste_entrees[2].isEtat()) //Preset = 1 et Clear = 0
+            else if (liste_entrees[1].getEtat() && !liste_entrees[2].getEtat()) //Preset = 1 et Clear = 0
                 liste_sorties[0].setEtat(true);
 
             //Calculer !Q
-            liste_sorties[1].setEtat(!liste_sorties[0].isEtat());
+            liste_sorties[1].setEtat(!liste_sorties[0].getEtat());
         }
+
 
     }
 }

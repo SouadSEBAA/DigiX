@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuickGraph;
-using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
 
 namespace logisimConsole
 {
-    public abstract class  IN : Outils
-    { 
+    public abstract class IN : Outils
+    {
 
         HashSet<Outils> listefin = new HashSet<Outils>();//pour eviter less redoublants qui changent less sorties
         public IN()
@@ -28,9 +27,10 @@ namespace logisimConsole
            if (this.circuit.getSimulation())
             {
                 this.EndCircuit(this);
-                this.circuit.EvaluateCircuit(this);
+                    this.circuit.EvaluateCircuit(this);
             }
         }
 
     }
 }
+

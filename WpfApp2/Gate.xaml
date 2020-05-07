@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfApp2"
-             
+             xmlns:local="clr-namespace:WpfApp2"  
              mc:Ignorable="d" >
 
     <Canvas x:Name="OutilShape" Width="74" Height="74" >
@@ -12,8 +11,17 @@
         Height="{Binding ElementName=Outil, Path=ActualHeight}"-->
 
 
-        <Path x:Name="path" StrokeThickness="3" Stroke="Black" Fill="AliceBlue"   MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill"  Width="30" />
-       
+        <Path x:Name="path" StrokeThickness="3" Stroke="Black" Fill="AliceBlue"   MouseMove="path_MouseMove" Margin="22,22 22,22" Height="30"  Stretch="Fill"  Width="30" >
+            <Path.ContextMenu >
+                <ContextMenu x:Name="menu" Background="Lavender">
+                    <ListBoxItem Content="Ajouter entrée" MouseUp="AjouterEntrée" />
+                    <ListBoxItem Content="Supprimer entrée" MouseUp="SupprimerEntrée"/>
+                    <ListBoxItem Content="Ajouter Label" MouseUp="AjouterLabel"/>
+                    <ListBoxItem Content="Supprimer" MouseUp="Supprimer"/>
+                </ContextMenu>
+            </Path.ContextMenu>
+        </Path>
+
 
         <Grid x:Name="TopGate"  VerticalAlignment="Top"  HorizontalAlignment="Stretch" Canvas.Left="22"
               Width="{Binding ElementName=path, Path=ActualWidth}">
