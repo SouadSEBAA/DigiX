@@ -12,7 +12,6 @@ namespace logisimConsole
         public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }
         public D() : base() 
         {
-            
             this.nb_entrees = 4;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();

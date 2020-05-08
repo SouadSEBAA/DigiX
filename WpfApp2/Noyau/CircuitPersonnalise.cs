@@ -88,8 +88,12 @@ namespace logisimConsole
         {
             component1.circuit = this;
             component2.circuit = this;
-            if (!entree.getRelated() && entree.getEtat() == sortie.getEtat() && component1.getListesorties().Contains(sortie) && component2.getListeentrees().Contains(entree)) //Si l'entrée de component2 n'est pas reliée
+            if (!entree.getRelated() && entree.getEtat() == sortie.getEtat() && component1.getListesorties().Contains(sortie) && component2.getListeentrees().Contains(entree) && Circuit.ContainsVertex(component2) && Circuit.ContainsVertex(component1)) //Si l'entrée de component2 n'est pas reliée
             {
+                Console.WriteLine(component1.GetType() + "          ");
+
+                Console.WriteLine(component2.GetType() + "          " );
+
                 OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
                 {

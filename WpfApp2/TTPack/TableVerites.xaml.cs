@@ -101,7 +101,7 @@ namespace WpfApp2.TTPack
             {
                 if (elmnt.GetType().ToString().CompareTo(ch2) == 0)
                 {
-                    string nom = elmnt.getname() + cpt.ToString();
+                    string nom = elmnt.getname();
                     dt.Columns.Add(new DataColumn(nom, typeof(string)));
                     cpt++;
                 }
@@ -113,7 +113,7 @@ namespace WpfApp2.TTPack
             {
                 if (elmnt.GetType().ToString().CompareTo(ch1) == 0)
                 {
-                    DataColumn output = new DataColumn("output" + cpt.ToString(), typeof(string));
+                    DataColumn output = new DataColumn(elmnt.getname());
                     dt.Columns.Add(output);
                     cpt++;
                 }

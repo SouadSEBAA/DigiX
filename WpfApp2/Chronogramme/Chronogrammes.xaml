@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp2"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Foreground="White"
-      mc:Ignorable="d" WindowStartupLocation="CenterScreen" 
-      Height="835" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown"
+      mc:Ignorable="d" WindowStartupLocation="CenterOwner" WindowState="Normal"
+      Height="735" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" 
       >
     
-    <DockPanel LastChildFill="True" Height="800" Width="530" Background="White">
+    <DockPanel LastChildFill="True" Height="700" Width="530" Background="White">
         <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
                 <TextBlock Text=" Choisissez les :" Margin="0, 8, 0, 0" Foreground="Lavender" VerticalAlignment="Center"  FontSize="15" Width="110" Height="30"/>
@@ -17,7 +17,7 @@
                     <MenuItem  Header="Signaux" Foreground="White" Background="Transparent" Width="137" Height="30" ItemsSource="{Binding newl}" x:Name="SignalsChrono" Click="Ajouter">
                         <MenuItem.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding SubMenuItems}" >
-                                <TextBlock Text="{Binding outil}" Foreground="White" Background="Transparent"/>
+                                <TextBlock Text="{Binding header}" Foreground="White" Background="Transparent"/>
                                 <HierarchicalDataTemplate.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding etiquette}"/>
@@ -74,7 +74,8 @@
                 </Border>
             </DockPanel>
         </Border>
-        <Border BorderThickness="1" BorderBrush="#060629">
+        <Border BorderThickness="1" BorderBrush="#060629" 
+                >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
