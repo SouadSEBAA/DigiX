@@ -169,8 +169,11 @@ namespace WpfApp2
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("released");
+
             if (isDrawing)
             {
+                Console.WriteLine("isdrawing");
                 bool target = false;
                 isDrawing = false;
                 Gate gate = (Gate)sender;
@@ -178,6 +181,8 @@ namespace WpfApp2
                 {
                     if (IO.IsMouseOver)
                     {
+                        Console.WriteLine("isoverio");
+
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
                         {
