@@ -42,7 +42,7 @@ namespace WpfApp2
         int gridGap = 20;
         CircuitPersonnalise circuit;
         List<Wire> Wires;
-
+        public String filename;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,6 +81,10 @@ namespace WpfApp2
             Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
             Grille.AddHandler(Wire.SuppwireEvent, new RoutedEventHandler(Supp_Wire));
             Grille.AddHandler(InputOutput.SupprimerWireEvent, new RoutedEventHandler(SupprimerWire));
+
+            //Exceptions
+            //Exceptions exceptions = new Exceptions();
+            //liste_Exceptions = Exceptions.set;
         }
 
 
@@ -145,7 +149,6 @@ namespace WpfApp2
                     isDrawing = true;
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
                     mousePosPrec = io.TranslatePoint(new Point(5, 5), Grille);
-                    Panel.SetZIndex(line, -2);
                     Grille.Children.Add(line);
                 }
             }
@@ -166,8 +169,11 @@ namespace WpfApp2
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
+            Console.WriteLine("released");
+
             if (isDrawing)
             {
+                Console.WriteLine("isdrawing");
                 bool target = false;
                 isDrawing = false;
                 Gate gate = (Gate)sender;
@@ -175,6 +181,8 @@ namespace WpfApp2
                 {
                     if (IO.IsMouseOver)
                     {
+                        Console.WriteLine("isoverio");
+
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
                         {
@@ -256,7 +264,7 @@ namespace WpfApp2
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
-            if (!Chronogrammes.isOneChrono)
+            if (!Chronogrammes.isOneChrono && circuit.getSimulation())
             {
                 Chronogrammes chronoPage = new Chronogrammes(circuit);
                 chronoPage.Show();
@@ -268,7 +276,7 @@ namespace WpfApp2
 
         }
         /******************************************************************************/
-        List<ExceptionMessage> liste_Exceptions = new List<ExceptionMessage> ();
+        //List<ExceptionMessage> liste_Exceptions = Exceptions.set;
 
         private void TVClick(object sender, RoutedEventArgs e)
         {
@@ -286,25 +294,31 @@ namespace WpfApp2
                     }
                 }
                 if (key)
-                { 
+                {
+                    //To remove the exceptions 
+                    if (Exceptions.set.Count != 0)
+                    {
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
+                    }
+
                     TableVerites tv = new TableVerites(circuit.GetCircuit());
                     tv.Show();
                 }
                 else 
                 {
 
-                    if (liste_Exceptions.Count != 0)
+                    if (Exceptions.set.Count != 0)
                     {
-
-                        Grille.Children.Remove(liste_Exceptions[0]);
-                        liste_Exceptions.Remove(liste_Exceptions[0]);
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
                     }
                     ExceptionMessage message = new ExceptionMessage();
                     message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
                     message.Opacity = 0.5;
                     message.MouseDown += Close;
                     Grille.Children.Add(message);
-                    liste_Exceptions.Add(message);
+                    Exceptions.set.Add(message);
                     //set.Add(message);
                     Canvas.SetLeft(message, 300);
                     Canvas.SetTop(message, 20);
@@ -325,11 +339,12 @@ namespace WpfApp2
             }
         }
 
-        
-                  public void Close(object sender, MouseEventArgs e)
-                  {
-                      Grille.Children.Remove((ExceptionMessage)sender);
-                  }
+
+        public void Close(object sender, MouseEventArgs e)
+        {
+            Grille.Children.Remove((ExceptionMessage)sender);
+            Exceptions.set.Remove(Exceptions.set[0]);
+        }
         /*****************/
         //drag and drop 
 
@@ -390,6 +405,7 @@ namespace WpfApp2
                 gate.outil.circuit = this.circuit;
 
             }
+
             e.Handled = true;
         }
 
@@ -407,6 +423,7 @@ namespace WpfApp2
             gate.RenderTransform = gate.transform;
             gate.anchorPoint = gate.currentPoint;
             // Grille.Children.Add(gate);
+
         }
 
 
@@ -459,20 +476,41 @@ namespace WpfApp2
                 }
                 catch (RelatedException exception)
                 {
-                    //StackExceptions.Children.Clear();
                     exception.Gerer();
                 }
             }
             else
             {
-                //In order to show the pause/stop buttons --------------------------------------------
-                if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+
+                    //To remove the exceptions 
+                    if (Exceptions.set.Count != 0)
+                    {
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
+                    }
+
+
+                    //In order to show the pause/stop buttons --------------------------------------------
+                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
                 if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
                     //-----------------------------------------------------------------------------------
 
                     //To stop changes while simulating
                     Tools.IsEnabled = false;
-                    //foreach(UserControl uc in )
+                    foreach (UserControl uc in Grille.Children)
+                    {
+                        if (uc is Gate)
+                        {
+                            (uc as Gate).path.ContextMenu.IsEnabled = false;
+                            (uc as Gate).path.ContextMenu.StaysOpen = false;
+                        }
+                        if (uc is Wire)
+                        {
+                            uc.ContextMenu.StaysOpen = false;
+                            uc.ContextMenu.IsEnabled = false;
+                        }
+                    }
+
                     //melissa
 
                     circuit.EvaluateCircuit();
@@ -610,23 +648,33 @@ namespace WpfApp2
         }
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "UIElement File"; // Default file name
-            dlg.DefaultExt = ".xaml"; // Default file extension
-            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
+            if (filename == null)
             {
-                // Save document
 
-                string filename = dlg.FileName;
+
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.FileName = "UIElement File"; // Default file name
+                dlg.DefaultExt = ".xaml"; // Default file extension
+                dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+                                                         // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+
+                    string filename = dlg.FileName;
+                    this.filename = filename;
+                    SerializeToXAML(filename);
+
+                    //melissa 
+
+                }
+            }
+            else
+            {
                 SerializeToXAML(filename);
-
-                //melissa 
-
             }
         }
 
@@ -666,18 +714,26 @@ namespace WpfApp2
 
         private void open_file(object sender, RoutedEventArgs e)
         {
+
+            //sauvegarde du present
+            /*
+            if (Grille.Children.Count != 0)
+            {
+                Close window = new Close(this, false);
+                window.Show();
+            }*/
+            //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-            // Show open file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-            // Process open file dialog box results
+                                                         // Show open file dialog box
+             Nullable<bool> result = dlg.ShowDialog();
+                   // Process open file dialog box results
             if (result == true)
             {
-                string filename = dlg.FileName;
-                DeSerializeXAML(filename);
-
-
+                   string filename = dlg.FileName;
+                   this.filename = filename;
+                   DeSerializeXAML(filename);
             }
         }
         //deserialisation gate 
@@ -800,6 +856,7 @@ namespace WpfApp2
         }
         public void DeSerializeXAML(string filename)
         {
+
             Grille.Children.Clear();//à controler
             XElement root = XElement.Load(filename);
             //Gates
@@ -1039,7 +1096,22 @@ namespace WpfApp2
                         ((Horloge)o).arreter();
                     }
                 }
-            this.Close();
+
+            //Remove any exception if left
+            if (Exceptions.set.Count != 0)
+                Grille.Children.Remove(Exceptions.set[0]);
+
+            //on ajoute la fenetre
+            if (Grille.Children.Count != 0)
+            {
+                Window window = new Close(this, true);
+                window.Show();
+                window.HorizontalAlignment = HorizontalAlignment.Center;
+                window.VerticalAlignment = VerticalAlignment.Center;
+                window.Activate();
+                this.IsEnabled = false;
+            }
+            else { this.Close(); }
         }
 
         private void minimize_click(object sender, RoutedEventArgs e)
@@ -1110,6 +1182,20 @@ namespace WpfApp2
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
             if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
+
+            foreach (UserControl uc in Grille.Children)
+            {
+                if (uc is Gate)
+                {
+                    (uc as Gate).path.ContextMenu.IsEnabled = true;
+                    (uc as Gate).path.ContextMenu.StaysOpen = true;
+                }
+                if (uc is Wire)
+                {
+                    uc.ContextMenu.StaysOpen = true;
+                    uc.ContextMenu.IsEnabled = true;
+                }
+            }
 
         }
 

@@ -58,11 +58,13 @@ namespace WpfApp2
             _fil.Segments.Add(_ls);
             var d = new PathGeometry(new PathFigure[] { _fil });
             wire.Data = d;
-
+            outer.Data = d;
             this.io1 = io;
-
+            
 
             this.gateStart = gatePrinciple;
+
+            Panel.SetZIndex(this, -2);
 
             DataContext = this;
 
@@ -76,6 +78,10 @@ namespace WpfApp2
             Maj();
             EndPoint = end;
             this.io2 = io;
+
+            io1.LayoutUpdated += Redraw;
+            io2.LayoutUpdated += Redraw;
+
             if (end.Equals(_fil.StartPoint) == true || io1.GetIsInput() == io2.GetIsInput() || io1.getEtat() != io2.getEtat())
                 return false;
             else
@@ -90,6 +96,7 @@ namespace WpfApp2
                 }
                 else
                 {
+                    Console.WriteLine("ddddddddddddddd");
                     if (!circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2))
                         return false;
                     (io1 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io1.getEtat(); });
@@ -97,6 +104,13 @@ namespace WpfApp2
                 }
                 return true;
             }
+        }
+
+        public void Redraw(Object sender, EventArgs e)
+        {
+            StartPoint = io1.TranslatePoint(new Point(5, 5), (UIElement)gateStart.Parent);
+            EndPoint = io2.TranslatePoint(new Point(5, 5), (UIElement)gateStart.Parent);
+            Maj();
         }
 
 

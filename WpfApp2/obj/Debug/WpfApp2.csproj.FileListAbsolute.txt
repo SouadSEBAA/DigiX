@@ -54,7 +54,6 @@ C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\ExceptionMessage.baml
 C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\ExceptionMessage.g.cs
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csprojAssemblyReference.cache
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\InputOutput.baml
-C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\ExceptionMessage.baml
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\AjoutLabel.g.cs
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\Chronogrammes.g.cs
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Chronogramme\ChronogrammeException.g.cs
@@ -106,3 +105,5 @@ C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.Properties.Resource
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csproj.GenerateResource.cache
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csproj.CoreCompileInputs.cache
 C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\WpfApp2.csproj.CopyComplete
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Close.g.cs
+C:\Users\linak\Documents\PotatoGUI\WpfApp2\obj\Debug\Close.baml

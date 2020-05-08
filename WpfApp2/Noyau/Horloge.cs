@@ -32,7 +32,8 @@ namespace logisimConsole
 		public void Demmarer()
 		{
 			this.mythread = new Thread(new ThreadStart(this.auto));
-				mythread.Start();
+			mythread.SetApartmentState(ApartmentState.STA);
+			mythread.Start();
 
 		}
 
