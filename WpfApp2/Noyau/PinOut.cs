@@ -28,7 +28,7 @@ namespace WpfApp2.Noyau
         }
         public PinOut()
         {
-            etiquette = "PinSortie" + id;
+            etiquette = "PinSortie" + (id - 24);
             this.nb_entrees = 1;
             this.nb_sorties = 0;
             //this.etiquette = "Pin sortie";

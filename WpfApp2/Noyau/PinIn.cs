@@ -16,7 +16,7 @@ namespace WpfApp2.Noyau
         }
         public PinIn()
         {
-            etiquette = "PinEntrée_" + id;
+            etiquette = "PinEntrée_" + (id - 24);
             this.nb_entrees = 0;
             this.nb_sorties = 1;
             //this.etiquette = "Pin entrée";
