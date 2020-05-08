@@ -298,12 +298,9 @@ namespace WpfApp2
             {
                 if (outil.getnbrentrees() < 5)
                 {
-                    Console.WriteLine("donel'ajout");
                     string i = (outil.getnbrentrees() + 1).ToString();
                     string etiq = ("Entrée " + i);
                     ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, false, false);
-                    
-                    outil.setnb_entrees((outil.getnbrentrees())+1);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }

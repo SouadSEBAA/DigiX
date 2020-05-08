@@ -97,6 +97,9 @@
     <Compile Include="Chronogramme\EssaiChrono.xaml.cs">
       <DependentUpon>EssaiChrono.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Close.xaml.cs">
+      <DependentUpon>Close.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Noyau\BasculeExceptions.cs" />
     <Compile Include="Noyau\UnrelatedGatesMessage.xaml.cs">
       <DependentUpon>UnrelatedGatesMessage.xaml</DependentUpon>
@@ -126,12 +129,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="Chronogramme\EssaiChrono.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
+    <Page Include="Close.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Gate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
