@@ -97,6 +97,7 @@
     <Compile Include="Chronogramme\EssaiChrono.xaml.cs">
       <DependentUpon>EssaiChrono.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Noyau\BasculeExceptions.cs" />
     <Compile Include="ExceptionMessage.xaml.cs">
       <DependentUpon>ExceptionMessage.xaml</DependentUpon>
@@ -130,7 +131,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-
     <Page Include="Gate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

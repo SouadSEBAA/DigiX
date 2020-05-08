@@ -81,6 +81,10 @@ namespace WpfApp2
             Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
             Grille.AddHandler(Wire.SuppwireEvent, new RoutedEventHandler(Supp_Wire));
             Grille.AddHandler(InputOutput.SupprimerWireEvent, new RoutedEventHandler(SupprimerWire));
+
+            //Exceptions
+            //Exceptions exceptions = new Exceptions();
+            //liste_Exceptions = Exceptions.set;
         }
 
 
@@ -145,7 +149,6 @@ namespace WpfApp2
                     isDrawing = true;
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
                     mousePosPrec = io.TranslatePoint(new Point(5, 5), Grille);
-                    Panel.SetZIndex(line, -2);
                     Grille.Children.Add(line);
                 }
             }
@@ -256,7 +259,7 @@ namespace WpfApp2
         /******************************************************************************/
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
-            if (!Chronogrammes.isOneChrono)
+            if (!Chronogrammes.isOneChrono && circuit.getSimulation())
             {
                 Chronogrammes chronoPage = new Chronogrammes(circuit);
                 chronoPage.Show();
@@ -268,7 +271,7 @@ namespace WpfApp2
 
         }
         /******************************************************************************/
-        List<ExceptionMessage> liste_Exceptions = new List<ExceptionMessage> ();
+        //List<ExceptionMessage> liste_Exceptions = Exceptions.set;
 
         private void TVClick(object sender, RoutedEventArgs e)
         {
@@ -286,25 +289,31 @@ namespace WpfApp2
                     }
                 }
                 if (key)
-                { 
+                {
+                    //To remove the exceptions 
+                    if (Exceptions.set.Count != 0)
+                    {
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
+                    }
+
                     TableVerites tv = new TableVerites(circuit.GetCircuit());
                     tv.Show();
                 }
                 else 
                 {
 
-                    if (liste_Exceptions.Count != 0)
+                    if (Exceptions.set.Count != 0)
                     {
-
-                        Grille.Children.Remove(liste_Exceptions[0]);
-                        liste_Exceptions.Remove(liste_Exceptions[0]);
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
                     }
                     ExceptionMessage message = new ExceptionMessage();
                     message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
                     message.Opacity = 0.5;
                     message.MouseDown += Close;
                     Grille.Children.Add(message);
-                    liste_Exceptions.Add(message);
+                    Exceptions.set.Add(message);
                     //set.Add(message);
                     Canvas.SetLeft(message, 300);
                     Canvas.SetTop(message, 20);
@@ -325,11 +334,12 @@ namespace WpfApp2
             }
         }
 
-        
-                  public void Close(object sender, MouseEventArgs e)
-                  {
-                      Grille.Children.Remove((ExceptionMessage)sender);
-                  }
+
+        public void Close(object sender, MouseEventArgs e)
+        {
+            Grille.Children.Remove((ExceptionMessage)sender);
+            Exceptions.set.Remove(Exceptions.set[0]);
+        }
         /*****************/
         //drag and drop 
 
@@ -390,6 +400,7 @@ namespace WpfApp2
                 gate.outil.circuit = this.circuit;
 
             }
+
             e.Handled = true;
         }
 
@@ -407,6 +418,7 @@ namespace WpfApp2
             gate.RenderTransform = gate.transform;
             gate.anchorPoint = gate.currentPoint;
             // Grille.Children.Add(gate);
+
         }
 
 
@@ -460,20 +472,41 @@ namespace WpfApp2
                 }
                 catch (RelatedException exception)
                 {
-                    //StackExceptions.Children.Clear();
                     exception.Gerer();
                 }
             }
             else
             {
-                //In order to show the pause/stop buttons --------------------------------------------
-                if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+
+                    //To remove the exceptions 
+                    if (Exceptions.set.Count != 0)
+                    {
+                        Grille.Children.Remove(Exceptions.set[0]);
+                        Exceptions.set.Remove(Exceptions.set[0]);
+                    }
+
+
+                    //In order to show the pause/stop buttons --------------------------------------------
+                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
                 if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
                     //-----------------------------------------------------------------------------------
 
                     //To stop changes while simulating
                     Tools.IsEnabled = false;
-                    //foreach(UserControl uc in )
+                    foreach (UserControl uc in Grille.Children)
+                    {
+                        if (uc is Gate)
+                        {
+                            (uc as Gate).path.ContextMenu.IsEnabled = false;
+                            (uc as Gate).path.ContextMenu.StaysOpen = false;
+                        }
+                        if (uc is Wire)
+                        {
+                            uc.ContextMenu.StaysOpen = false;
+                            uc.ContextMenu.IsEnabled = false;
+                        }
+                    }
+
                     //melissa
 
                     circuit.EvaluateCircuit();
@@ -1109,6 +1142,20 @@ namespace WpfApp2
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
             if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
+
+            foreach (UserControl uc in Grille.Children)
+            {
+                if (uc is Gate)
+                {
+                    (uc as Gate).path.ContextMenu.IsEnabled = true;
+                    (uc as Gate).path.ContextMenu.StaysOpen = true;
+                }
+                if (uc is Wire)
+                {
+                    uc.ContextMenu.StaysOpen = true;
+                    uc.ContextMenu.IsEnabled = true;
+                }
+            }
 
         }
 

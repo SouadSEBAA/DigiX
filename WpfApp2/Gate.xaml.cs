@@ -304,7 +304,7 @@ namespace WpfApp2
                     string etiq = ("Entrée " + i);
                     ClasseEntree classeEntree = new ClasseEntree(etiq, 1, Disposition.left, false, false);
                     
-                    outil.setnb_entrees((outil.getnbrentrees())+1);
+                    //outil.setnb_entrees((outil.getnbrentrees())+1);
                     outil.AjoutEntree(classeEntree);
                     E_Left.Insert(0, classeEntree);
                 }

@@ -14,35 +14,46 @@ namespace logisimConsole
 {
     public class BasculeExceptions : Exception
     {
-        static List<ExceptionMessage> set; //Avec une seule capacité
         protected InputOutput io1, io2; protected Canvas panel;
-        protected ExceptionMessage message = new ExceptionMessage();
+        protected ExceptionMessage message;
 
-        public BasculeExceptions(InputOutput io1, InputOutput io2, Canvas p) { this.io1 = io1; this.io2 = io2; panel = p; if (set == null) set = new List<ExceptionMessage>(1); }
+        public BasculeExceptions(InputOutput io1, InputOutput io2, Canvas p)
+        {
+            this.io1 = io1; this.io2 = io2;
+            Application.Current.Dispatcher.Invoke(() =>
+            { panel = p; });
+        }
+
+
         public virtual void Gerer()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 io1.elSelector.Fill = Brushes.Orange; io2.elSelector.Fill = Brushes.Orange;
+
+                message = new ExceptionMessage();
+                message.canvas.Background = Brushes.Orange;
+                message.Opacity = 0.5;
+                message.MouseDown += Close;
+
+                if (Exceptions.set.Count != 0)
+                {
+                    panel.Children.Remove(Exceptions.set[0]);
+                    Exceptions.set.Remove(Exceptions.set[0]);
+                }
+
+                panel.Children.Add(message);
+                Exceptions.set.Add(message);
+                Canvas.SetLeft(message, 300);
+                Canvas.SetTop(message, 20);
             });
-            message.canvas.Background = Brushes.Orange;
-            message.Opacity = 0.5;
-            message.MouseDown += Close;
-
-            if (set.Count != 0)
-                panel.Children.Remove(set[0]);
-
-            panel.Children.Add(message);
-            set.Add(message);
-            Canvas.SetLeft(message, 300);
-            Canvas.SetTop(message, 20);
-
-           
         }
 
         public void Close(object sender, MouseEventArgs e)
         {
             panel.Children.Remove((ExceptionMessage)sender);
+            Exceptions.set.Remove(Exceptions.set[0]);
+
         }
 
     }
@@ -52,9 +63,12 @@ namespace logisimConsole
         public RSTException(InputOutput io1, InputOutput io2, Canvas p) : base(io1, io2, p) { }
         public override void Gerer()
         {
-        
-            base.Gerer();
-            message.textMessage.Text = "     Des Etats Interdits pour preset et clear dans la bascule RST";
+                base.Gerer();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+
+                message.textMessage.Text = "     Des Etats Interdits pour R et S dans la bascule RST";
+            });
         }
     }
     public class PresetClearException : BasculeExceptions
@@ -64,7 +78,10 @@ namespace logisimConsole
         public override void Gerer()
         {
             base.Gerer();
-            message.textMessage.Text = "    Des Etats Interdits pour preset et clear dans une des bascules";
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                message.textMessage.Text = "    Des Etats Interdits pour preset et clear dans une des bascules";
+            });
 
         }
 
