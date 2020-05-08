@@ -101,9 +101,9 @@
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="clock" Width="120" Visibility="Collapsed" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="clock_click">
+                    <Button x:Name="clock" Width="180" Visibility="Collapsed"  Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="clock_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Reset Clock" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Reinisialiser l'horloge " Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Hourglass" Margin="5" Foreground="Lavender" />
                         </StackPanel>
                     </Button>
@@ -141,9 +141,9 @@
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="White" StaysOpen="False">
                             <StackPanel Width="150">
                                 <Button Content="Ouvrir un Fichier" Click="open_file"/>
-                                <Button Content="Tutorielles" Click="open_tut"/>
+                                <Button Content="Tutoriele" Click="open_tut"/>
                                 <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton"/>
-                                <Button Content="TableVerite" Click="TVClick"/>
+                                <Button Content="Table de verite" Click="TVClick"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
