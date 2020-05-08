@@ -42,7 +42,7 @@ namespace WpfApp2
         int gridGap = 20;
         CircuitPersonnalise circuit;
         List<Wire> Wires;
-
+        public String filename;
         public MainWindow()
         {
             InitializeComponent();
@@ -649,23 +649,33 @@ namespace WpfApp2
         }
         private void sauvegarde_click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "UIElement File"; // Default file name
-            dlg.DefaultExt = ".xaml"; // Default file extension
-            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
+            if (filename == null)
             {
-                // Save document
 
-                string filename = dlg.FileName;
+
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.FileName = "UIElement File"; // Default file name
+                dlg.DefaultExt = ".xaml"; // Default file extension
+                dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+                                                         // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+
+                    string filename = dlg.FileName;
+                    this.filename = filename;
+                    SerializeToXAML(filename);
+
+                    //melissa 
+
+                }
+            }
+            else
+            {
                 SerializeToXAML(filename);
-
-                //melissa 
-
             }
         }
 
@@ -705,18 +715,26 @@ namespace WpfApp2
 
         private void open_file(object sender, RoutedEventArgs e)
         {
+
+            //sauvegarde du present
+            /*
+            if (Grille.Children.Count != 0)
+            {
+                Close window = new Close(this, false);
+                window.Show();
+            }*/
+            //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.DefaultExt = ".xaml"; // Default file extension
             dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-            // Show open file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-            // Process open file dialog box results
+                                                         // Show open file dialog box
+             Nullable<bool> result = dlg.ShowDialog();
+                   // Process open file dialog box results
             if (result == true)
             {
-                string filename = dlg.FileName;
-                DeSerializeXAML(filename);
-
-
+                   string filename = dlg.FileName;
+                   this.filename = filename;
+                   DeSerializeXAML(filename);
             }
         }
         //deserialisation gate 
@@ -839,6 +857,7 @@ namespace WpfApp2
         }
         public void DeSerializeXAML(string filename)
         {
+
             Grille.Children.Clear();//à controler
             XElement root = XElement.Load(filename);
             //Gates
@@ -1078,7 +1097,22 @@ namespace WpfApp2
                         ((Horloge)o).arreter();
                     }
                 }
-            this.Close();
+
+            //Remove any exception if left
+            if (Exceptions.set.Count != 0)
+                Grille.Children.Remove(Exceptions.set[0]);
+
+            //on ajoute la fenetre
+            if (Grille.Children.Count != 0)
+            {
+                Window window = new Close(this, true);
+                window.Show();
+                window.HorizontalAlignment = HorizontalAlignment.Center;
+                window.VerticalAlignment = VerticalAlignment.Center;
+                window.Activate();
+                this.IsEnabled = false;
+            }
+            else { this.Close(); }
         }
 
         private void minimize_click(object sender, RoutedEventArgs e)

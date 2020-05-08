@@ -98,6 +98,9 @@
       <DependentUpon>EssaiChrono.xaml</DependentUpon>
     </Compile>
     <Compile Include="Exceptions.cs" />
+    <Compile Include="Close.xaml.cs">
+      <DependentUpon>Close.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Noyau\BasculeExceptions.cs" />
     <Compile Include="ExceptionMessage.xaml.cs">
       <DependentUpon>ExceptionMessage.xaml</DependentUpon>
@@ -128,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Chronogramme\EssaiChrono.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Close.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
