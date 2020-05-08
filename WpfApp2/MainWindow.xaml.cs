@@ -96,11 +96,11 @@ namespace WpfApp2
         /***********************************************************/
         private void Supprimer(object sender, RoutedEventArgs e)
         {
-            
+
             circuit.DeleteComponent(((Gate)e.Source).outil);
-            foreach(Wire wire in RecupererWires((Gate)e.Source))
+            foreach (Wire wire in RecupererWires((Gate)e.Source))
             {
-                Grille.Children.Remove(wire); 
+                Grille.Children.Remove(wire);
             }
             Grille.Children.Remove(((Gate)e.Source));
             e.Handled = true;
@@ -109,7 +109,7 @@ namespace WpfApp2
         private List<Wire> RecupererWires(Gate gate)
         {
             List<Wire> list = new List<Wire>();
-            foreach(Wire wire in Wires)
+            foreach (Wire wire in Wires)
             {
                 if (wire.gateEnd.Equals(gate) || wire.gateStart.Equals(gate))
                     list.Add(wire);
@@ -387,7 +387,7 @@ namespace WpfApp2
         }
 
 
-        
+
         private void simuler_click(object sender, RoutedEventArgs e)
         {
 
@@ -399,33 +399,33 @@ namespace WpfApp2
             //Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
             if (circuit.getCircuit().VertexCount != 0)
-            if (circuit.getUnrelatedGates().Count != 0 )
-            {
-                try
+                if (circuit.getUnrelatedGates().Count != 0)
                 {
-                    throw new RelatedException(Grille);
+                    try
+                    {
+                        throw new RelatedException(Grille);
+                    }
+                    catch (RelatedException exception)
+                    {
+                        //StackExceptions.Children.Clear();
+                        exception.Gerer();
+                    }
                 }
-                catch (RelatedException exception)
+                else
                 {
-                    //StackExceptions.Children.Clear();
-                    exception.Gerer();
+                    //In order to show the pause/stop buttons --------------------------------------------
+                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+                    if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                    //-----------------------------------------------------------------------------------
+
+                    //melissa
+                    Tools.IsEnabled = false;
+                    circuit.EvaluateCircuit();
+                    circuit.setSimulation(true);
+
+                    //
                 }
-            }
-            else
-            {
-                //In order to show the pause/stop buttons --------------------------------------------
-                if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
-                if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-                //-----------------------------------------------------------------------------------
 
-                //melissa
-                Tools.IsEnabled = false;
-                circuit.EvaluateCircuit();
-                circuit.setSimulation(true);
-
-               //
-            }
-            
         }
 
 
@@ -438,7 +438,7 @@ namespace WpfApp2
 
         //*********************SERIALISATION*********************
 
-       
+
         //sauvegarder un composant 
         public XElement SaveGate(Gate g)
         {
@@ -525,7 +525,7 @@ namespace WpfApp2
                 else//io1 entrée dans gateend .. io2 sortie danss gatesstart
                 {
                     Console.WriteLine("2");
-                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie 
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
                     w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
                     w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
@@ -581,6 +581,7 @@ namespace WpfApp2
             }
             else
             {
+                File.Delete(filename);
                 SerializeToXAML(filename);
             }
         }
@@ -599,7 +600,7 @@ namespace WpfApp2
                     Gate g = (Gate)user;
                     XElement gt = SaveGate(g);
                     //le cas d'un circuit personalisé
-                    
+
                     gates.Add(gt);
                 }
                 else
@@ -623,25 +624,9 @@ namespace WpfApp2
         {
 
             //sauvegarde du present
-            /*
-            if (Grille.Children.Count != 0)
-            {
-                Close window = new Close(this, false);
-                window.Show();
-            }*/
-            //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".xaml"; // Default file extension
-            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-                                                         // Show open file dialog box
-             Nullable<bool> result = dlg.ShowDialog();
-                   // Process open file dialog box results
-            if (result == true)
-            {
-                   string filename = dlg.FileName;
-                   this.filename = filename;
-                   DeSerializeXAML(filename);
-            }
+            Close window = new Close(this, false, true);
+            window.Show();
+            
         }
         //deserialisation gate 
         public Gate LoadGate(XElement gate)
@@ -763,8 +748,9 @@ namespace WpfApp2
         }
         public void DeSerializeXAML(string filename)
         {
-
+            //on peut fqire this.circuit=new circuit
             Grille.Children.Clear();//à controler
+            this.circuit.Clear();
             XElement root = XElement.Load(filename);
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
@@ -1005,7 +991,7 @@ namespace WpfApp2
             //on ajoute la fenetre
             if (Grille.Children.Count != 0)
             {
-                Window window = new Close(this, true);
+                Window window = new Close(this, true,false);
                 window.Show();
                 window.HorizontalAlignment = HorizontalAlignment.Center;
                 window.VerticalAlignment = VerticalAlignment.Center;

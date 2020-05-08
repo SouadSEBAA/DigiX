@@ -402,6 +402,15 @@ namespace logisimConsole
                 ((Grid)(entree.Parent)).Children.Remove(entree);
             }
         }
+        public void Clear()
+        {
+            this.Circuit.Clear();
+            this.gates.Clear();
+            this.wires.Clear();
+            this.Entrée.Clear();
+            this.Sortie.Clear();
+            this.CompFinaux.Clear();
+        }
 
 
 

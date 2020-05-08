@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,13 @@ namespace WpfApp2
     public partial class Close : Window
     {
         MainWindow main;
-        bool fermer;
-        public Close(MainWindow w,bool b)
+        bool fermer;//fermer tt la fenetre 
+        bool ouvrir;//ouvrir un fichier
+        public Close(MainWindow w,bool fermer,bool ouvrir)
         {
             main = w;
-            fermer = b;
+            this.fermer = fermer;
+            this.ouvrir = ouvrir;
             InitializeComponent();
         }
        
@@ -34,6 +37,7 @@ namespace WpfApp2
             if(main.filename!=null)//le fichier existe
             {
                 this.Close();
+                File.Delete(main.filename);
                 main.SerializeToXAML(main.filename);
                 if (fermer)
                 {
@@ -69,6 +73,26 @@ namespace WpfApp2
 
                 }
             }
+            if (ouvrir)
+            {
+                //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.DefaultExt = ".xaml"; // Default file extension
+                dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+                                                         // Show open file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+                // Process open file dialog box results
+                if (result == true)
+                {
+                    string filename = dlg.FileName;
+                    if (filename != main.filename)//c pas le meme fichier ouvert dejà
+                    {
+                        main.filename = filename;
+                        main.DeSerializeXAML(filename);
+                    }
+
+                }
+            }
         }
 
         private void Non_Click(object sender, RoutedEventArgs e)
@@ -77,6 +101,26 @@ namespace WpfApp2
             if (fermer)
             {
                 main.Close();
+            }
+            if (ouvrir)
+            {
+                //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.DefaultExt = ".xaml"; // Default file extension
+                dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
+                                                         // Show open file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+                // Process open file dialog box results
+                if (result == true)
+                {
+                    string filename = dlg.FileName;
+                    if (filename != main.filename)//c pas le meme fichier ouvert dejà
+                    {
+                        main.filename = filename;
+                        main.DeSerializeXAML(filename);
+                    }
+
+                }
             }
         }
 
