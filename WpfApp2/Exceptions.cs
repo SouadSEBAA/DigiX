@@ -9,7 +9,7 @@ namespace logisimConsole
 {
     public static class Exceptions 
     {
-        public static List<ExceptionMessage> set = new List<ExceptionMessage>();//Liste des exceptions actuellemnt affichées
+        public static List<ExceptionMessage> set = new List<ExceptionMessage>(1);//Liste des exceptions actuellemnt affichées
         
       //  public Exceptions() { if (set == null) set = new List<ExceptionMessage>(1); }
     }

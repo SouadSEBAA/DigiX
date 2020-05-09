@@ -12,9 +12,24 @@
         </ContextMenu>
     </UserControl.ContextMenu>
 
+
+    
+
     <Grid>
-        <Path x:Name="outer" Stroke="Black" StrokeThickness="4.5"></Path>
-        <Path x:Name="wire" Stroke="Black" StrokeThickness="2.5">
+
+        <Path x:Name="outer" StrokeThickness="4.65" Stroke="Black" >
+            <!--<Path.Resources>
+                <Style TargetType="Path" >
+                    <Style.Triggers >
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Stroke" Value="Blue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Resources>-->
+
+        </Path>
+        <Path x:Name="wire" StrokeThickness="2.55">
         </Path>
     </Grid>
 </UserControl>

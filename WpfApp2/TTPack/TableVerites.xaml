@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:WpfApp2.TTPack"
         mc:Ignorable="d"
         Title="TableVerites" Height="450" Width="800">
+    
     <Grid x:Name="ttt">
-        <Button Content="graph" HorizontalAlignment="Left" Click="graph_Click" Margin="25,364,0,0" VerticalAlignment="Top" Width="75"/>
-        <DataGrid Name="tVerite" HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="772"/>
+        <Button Background="#0C8E81" Content="graph" HorizontalAlignment="Left" Click="graph_Click" Margin="25,364,0,0" VerticalAlignment="Top" Width="75"/>
+        <DataGrid Name="tVerite" HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="772">
+        </DataGrid>
     </Grid>
 </Window>
