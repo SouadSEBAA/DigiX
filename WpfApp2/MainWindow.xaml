@@ -73,6 +73,7 @@
                     <Button x:Name="close" Width="30" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_click">
                         <materialDesign:PackIcon Kind="CloseCircle" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20"/>
                     </Button>
+                    
 
                 </StackPanel>
 
@@ -120,6 +121,12 @@
                     <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Capture d'ecran" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="MonitorScreenshot" Foreground="LightGray" Margin="5" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="new" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="new_Click">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
+                            <TextBlock Text="new" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="MonitorScreenshot" Foreground="LightGray" Margin="5" />
                         </StackPanel>
                     </Button>
