@@ -1150,7 +1150,18 @@ namespace WpfApp2
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
                 if (o is Horloge) { ((Horloge)o).arreter(); }
+                if (o is PinIn) 
+                {
+                        Console.WriteLine("----------------Pins------------------");
+                        Console.WriteLine("Was : " + o.getListeentrees()[0].getEtat());
+                        o.getListeentrees()[0].setEtat(false);
+                        ((PinIn)(o)).Calcul();
+                        Console.WriteLine("is : " + o.getListeentrees()[0].getEtat());
+                        Console.WriteLine("---------------- Fin Pins------------------");
+                }
+              
                 Console.WriteLine("l'outil :"+o);
+
                 foreach (ClasseEntree c_e in o.getListeentrees()) 
                 {
                     i++;
@@ -1187,6 +1198,13 @@ namespace WpfApp2
             {
                 if (uc is Gate)
                 {
+                    //jimin
+                    if (uc is pin_entree) 
+                    {
+                        ((pin_entree)uc).path.Fill = Brushes.Red; 
+                    }
+                    //fin
+
                     (uc as Gate).path.ContextMenu.IsEnabled = true;
                     (uc as Gate).path.ContextMenu.StaysOpen = true;
                 }
@@ -1221,6 +1239,8 @@ namespace WpfApp2
         {
             reset_clock();
         }
+
+       
 
         //**************************************END OF MENU BUTTONS*******************************//
 
