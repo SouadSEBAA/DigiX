@@ -57,7 +57,7 @@ namespace logisimConsole
 
 
         //Relate for console
-        public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
+        /*public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
         { 
             if (!component2.getEntreeSpecifique(num_entree).getRelated() ) //Si l'entrée de component2 n'est pas reliée
             {
@@ -82,6 +82,7 @@ namespace logisimConsole
                 return false;
             }
         }
+        */
 
         //Relate for graphique
         public bool Relate(Outils component1, Outils component2, Sortie sortie, ClasseEntree entree)
@@ -94,7 +95,7 @@ namespace logisimConsole
 
                 Console.WriteLine(component2.GetType() + "          " );
 
-                OutStruct outstruct = new OutStruct(component2.getListeentrees().IndexOf(entree), component2);//Mise à jour des liaison
+                OutStruct outstruct = new OutStruct(entree, component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
                 {
                     sortie.getSortie().Add(outstruct);
@@ -239,7 +240,7 @@ namespace logisimConsole
                 //Mettre à jour les entrées des outils auxquelles l'outil était connecté
                 foreach(var sortie in outil.getListesorties())
                 {
-                    sortie.getSortie().ForEach((outstruct) => { outstruct.getOutils().getEntreeSpecifique(outstruct.getNum_entree()).setRelated(false); });
+                    sortie.getSortie().ForEach((outstruct) => { outstruct.GetEntree().setRelated(false); });
                 }
                 //Mettre à jour les sorties des outils auxquelles l'outil était connecté
                 foreach(var edge in Circuit.InEdges(outil))
@@ -394,17 +395,26 @@ namespace logisimConsole
             foreach (OutStruct outs in outils.getListesorties()[0].get_OutStruct())
             {
                 this.nb_entrees++;
-                ClasseEntree entree = outs.getOutils().getListeentrees()[outs.getNum_entree()];
+                ClasseEntree entree = outs.GetEntree();
                 entree.setDispo(Disposition.left);
                 entree.setRelated(false);
                 outs.getOutils().end = true;
                 this.liste_entrees.Add(entree);//on ajoute l'entrée 
-                Console.WriteLine("ENTREE"+this.nb_entrees);
+                Console.WriteLine("ENTREE" + this.nb_entrees);
                 //creation de la liste pour la sauvegarde aprés réutilisation 
-                this.Entrée.Add(new Point(outs.getOutils().id, outs.getNum_entree()));
-                
+                this.Entrée.Add(new Point(outs.getOutils().id, outs.getOutils().getListeentrees().IndexOf(outs.GetEntree())));
+
                 ((Grid)(entree.Parent)).Children.Remove(entree);
             }
+        }
+        public void Clear()
+        {
+            this.Circuit.Clear();
+            this.gates.Clear();
+            this.wires.Clear();
+            this.Entrée.Clear();
+            this.Sortie.Clear();
+            this.CompFinaux.Clear();
         }
 
 

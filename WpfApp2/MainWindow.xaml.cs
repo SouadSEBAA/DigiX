@@ -100,11 +100,11 @@ namespace WpfApp2
         /***********************************************************/
         private void Supprimer(object sender, RoutedEventArgs e)
         {
-            
+
             circuit.DeleteComponent(((Gate)e.Source).outil);
-            foreach(Wire wire in RecupererWires((Gate)e.Source))
+            foreach (Wire wire in RecupererWires((Gate)e.Source))
             {
-                Grille.Children.Remove(wire); 
+                Grille.Children.Remove(wire);
             }
             Grille.Children.Remove(((Gate)e.Source));
             e.Handled = true;
@@ -113,7 +113,7 @@ namespace WpfApp2
         private List<Wire> RecupererWires(Gate gate)
         {
             List<Wire> list = new List<Wire>();
-            foreach(Wire wire in Wires)
+            foreach (Wire wire in Wires)
             {
                 if (wire.gateEnd.Equals(gate) || wire.gateStart.Equals(gate))
                     list.Add(wire);
@@ -458,10 +458,9 @@ namespace WpfApp2
         }
 
 
-        
+
         private void simuler_click(object sender, RoutedEventArgs e)
         {
-
             circuit.setSimulation(false);
 
             //For exceptions
@@ -514,9 +513,7 @@ namespace WpfApp2
                     circuit.EvaluateCircuit();
                     circuit.setSimulation(true);
 
-                    //
-                }
-
+                }       
         }
 
         private void HitContextMenu(object sender, ContextMenuEventArgs e)
@@ -524,7 +521,7 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-        private void open_tut(object sender, RoutedEventArgs e)
+            private void open_tut(object sender, RoutedEventArgs e)
         {
             //takes us directly to the tutorial page
             string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
@@ -533,7 +530,7 @@ namespace WpfApp2
 
         //*********************SERIALISATION*********************
 
-       
+
         //sauvegarder un composant 
         public XElement SaveGate(Gate g)
         {
@@ -620,7 +617,7 @@ namespace WpfApp2
                 else//io1 entrée dans gateend .. io2 sortie danss gatesstart
                 {
                     Console.WriteLine("2");
-                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
+                    w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie 
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
                     w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
                     w.Element("gateend").SetAttributeValue("IO", wire.gateEnd.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
@@ -676,6 +673,7 @@ namespace WpfApp2
             }
             else
             {
+                File.Delete(filename);
                 SerializeToXAML(filename);
             }
         }
@@ -698,7 +696,7 @@ namespace WpfApp2
                     Gate g = (Gate)user;
                     XElement gt = SaveGate(g);
                     //le cas d'un circuit personalisé
-                    
+
                     gates.Add(gt);
                 }
                 else
@@ -722,25 +720,9 @@ namespace WpfApp2
         {
 
             //sauvegarde du present
-            /*
-            if (Grille.Children.Count != 0)
-            {
-                Close window = new Close(this, false);
-                window.Show();
-            }*/
-            //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".xaml"; // Default file extension
-            dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
-                                                         // Show open file dialog box
-             Nullable<bool> result = dlg.ShowDialog();
-                   // Process open file dialog box results
-            if (result == true)
-            {
-                   string filename = dlg.FileName;
-                   this.filename = filename;
-                   DeSerializeXAML(filename);
-            }
+            Close window = new Close(this, false, true,false);
+            window.Show();
+            
         }
         //deserialisation gate 
         public Gate LoadGate(XElement gate)
@@ -863,8 +845,9 @@ namespace WpfApp2
         }
         public void DeSerializeXAML(string filename)
         {
-
+            //on peut fqire this.circuit=new circuit
             Grille.Children.Clear();//à controler
+            this.circuit.Clear();
             XElement root = XElement.Load(filename);
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
@@ -1024,9 +1007,10 @@ namespace WpfApp2
             if (result == true)
             {
                 string filename = dlg.FileName;
-                CircuitPersonnalise personnalise = Reutilisation(filename);
+                String nom = dlg.SafeFileName.Replace(".xaml"," ");
+                CircuitPersonnalise personnalise = Reutilisation(filename);personnalise.setLabel(nom);
                 CircuitComplet gate = new CircuitComplet(personnalise);
-
+                
                 Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
                 Console.WriteLine("height " + gate.ActualHeight + "width" + gate.Width);
                 this.circuit.AddComponent(personnalise);
@@ -1065,7 +1049,7 @@ namespace WpfApp2
             }
             nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
             nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
-
+           // nouveauCircuit.setLabel(filename);
             //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
             //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
             //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
@@ -1113,9 +1097,9 @@ namespace WpfApp2
                 Grille.Children.Remove(Exceptions.set[0]);*/
 
             //on ajoute la fenetre
-            if (Grille.Children.Count != 0)
+            if (Grille.Children.Count != 0 || filename!=null)
             {
-                Window window = new Close(this, true);
+                Window window = new Close(this, true,false,false);
                 window.Show();
                 window.HorizontalAlignment = HorizontalAlignment.Center;
                 window.VerticalAlignment = VerticalAlignment.Center;
@@ -1139,6 +1123,8 @@ namespace WpfApp2
         {
             this.WindowState = WindowState.Maximized;
         }
+        //-----------------------------------
+
 
         private void pause_click(object sender, RoutedEventArgs e)
         {
@@ -1156,7 +1142,18 @@ namespace WpfApp2
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
                 if (o is Horloge) { ((Horloge)o).arreter(); }
+                if (o is PinIn) 
+                {
+                        Console.WriteLine("----------------Pins------------------");
+                        Console.WriteLine("Was : " + o.getListeentrees()[0].getEtat());
+                        o.getListeentrees()[0].setEtat(false);
+                        ((PinIn)(o)).Calcul();
+                        Console.WriteLine("is : " + o.getListeentrees()[0].getEtat());
+                        Console.WriteLine("---------------- Fin Pins------------------");
+                }
+              
                 Console.WriteLine("l'outil :"+o);
+
                 foreach (ClasseEntree c_e in o.getListeentrees()) 
                 {
                     i++;
@@ -1200,7 +1197,16 @@ namespace WpfApp2
             foreach (UserControl uc in Grille.Children)
             {
                 if (uc is Gate)
-                    (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
+                    {(uc as Gate).path.ContextMenuOpening -= HitContextMenu;
+
+                    //jimin
+                    if (uc is pin_entree) 
+                    {
+                        ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
+                    }
+                    //fin
+                    }
+                }
                 if (uc is Wire)
                     uc.ContextMenuOpening -= HitContextMenu;
             }
@@ -1230,6 +1236,17 @@ namespace WpfApp2
         {
             reset_clock();
         }
+
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+            if (Grille.Children.Count != 0 || filename!=null)
+            {
+                
+                Close window = new Close(this, false, false,true);
+                window.Show();
+            }
+        }
+        public CircuitPersonnalise getcircuit() { return this.circuit; }
 
         //**************************************END OF MENU BUTTONS*******************************//
 

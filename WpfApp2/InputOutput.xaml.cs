@@ -103,6 +103,7 @@ namespace WpfApp2
             this.Cursor = System.Windows.Input.Cursors.Arrow;
         }
 
+
         virtual public void setEtat(bool etat)
         {
             this.etat = etat;
@@ -116,8 +117,10 @@ namespace WpfApp2
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
-                    elSelector.Fill = Brushes.Red;  
-            });      
+                    elSelector.Fill = Brushes.Red;
+
+            });
+            
         }
 
 
@@ -136,6 +139,7 @@ namespace WpfApp2
         {
             if (IsInput)
                 setEtat(!this.etat);
+                
         }
 
         /***************************************************************/
