@@ -96,7 +96,7 @@
                     <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
                             <TextBlock Text="Capture d'ecran" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="MonitorScreenshot" Foreground="LightGray" Margin="5" />
+                            <materialDesign:PackIcon Kind="Monitor" Foreground="White" Margin="5" />
                         </StackPanel>
                     </Button>
 
@@ -108,9 +108,9 @@
                                 Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=materialDesign:PopupBox}, Path=Foreground }"                        />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Background="#060629">
-                                <Button Content="Sauvgarder" Click="sauvegarde_click" Foreground="#0C8E81"/>
-                                <Button Content="Ouvrir un Fichier" Click="open_file" Foreground="#0C8E81"/>
-                                <Button Content="Nouveau fichier" Foreground="#0C8E81"  Click="new_Click"/>
+                                <Button Content="Sauvgarder" Click="sauvegarde_click" Foreground="#9fa8da"/>
+                                <Button Content="Ouvrir un Fichier" Click="open_file" Foreground="#9fa8da"/>
+                                <Button Content="Nouveau fichier" Foreground="#9fa8da"  Click="new_Click"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -119,24 +119,15 @@
                         <TextBlock Text="Outils d'etude" Foreground="#9fa8da" Background="{x:Null}" FontSize="15" VerticalAlignment="Center" FontWeight="DemiBold"/>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon Kind="ExpandMore" Foreground="White" 
+                                <materialDesign:PackIcon Kind="ExpandMore" Foreground="White"
                                 Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=materialDesign:PopupBox}, Path=Foreground}"                        />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Background="#060629">
-                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton" Foreground="#0C8E81"/>
-                                <Button Content="Table de verite" Click="TVClick" Foreground="#0C8E81"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton" Foreground="#9fa8da"/>
+                                <Button Content="Table de verite" Click="TVClick" Foreground="#9fa8da"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
-
-
-
-                    <!--Button x:Name="sauvegarde" Width="130" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="sauvegarde_click">
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Sauvegarder" Foreground="#9fa8da" FontSize="15" VerticalAlignment="Center"/>
-                            <materialDesign:PackIcon Kind="ContentSaveEdit" Foreground="#e3f2fd"  Margin="5" />
-                        </StackPanel>
-                    </-->
 
                     <Button x:Name="clock" Width="180" Visibility="Collapsed"  Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="clock_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
@@ -172,25 +163,6 @@
                             <materialDesign:PackIcon Kind="HelpCircle" Foreground="DarkBlue" Background="White" Margin="10 5" />
                         </StackPanel>
                     </Button>
-
-
-                    <!--StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="Autre" Foreground="#9fa8da" Background="{x:Null}" FontSize="15" VerticalAlignment="Center"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" Foreground="White" StaysOpen="False">
-                            <StackPanel Width="150">
-                                <Button Content="Ouvrir un Fichier" Click="open_file"/>
-                                <Button Content="Tutoriele" Click="open_tut"/>
-                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton"/>
-                                <Button Content="Table de verite" Click="TVClick"/>
-                            </StackPanel>
-                        </materialDesign:PopupBox>
-                    </-->
-
-                    <!--
-                    <Button x:Name="close" Width="40" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_window">
-                        <materialDesign:PackIcon Kind="Close" Height="30" Width="30"  Background="Red"/>
-                    </Button>
-                    -->
 
                 </StackPanel>
             </Grid>

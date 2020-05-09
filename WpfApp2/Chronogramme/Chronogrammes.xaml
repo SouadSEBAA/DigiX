@@ -7,8 +7,8 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Foreground="White"
       mc:Ignorable="d" WindowStartupLocation="CenterOwner" WindowState="Normal"
       Height="735" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" 
-    >
-    
+      >
+
     <DockPanel LastChildFill="True" Height="700" Width="530" Background="White">
         <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
@@ -83,9 +83,9 @@
                 </Grid.RowDefinitions>
                 <Canvas x:Name="Errors" Grid.Row="0">
                 </Canvas>
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Grid.Row="1"
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Grid.Row="1"
                             VerticalScrollBarVisibility="Visible" >
-                    
+
                     <StackPanel Orientation="Vertical" x:Name="ChronoStack">
                     </StackPanel>
                 </ScrollViewer>

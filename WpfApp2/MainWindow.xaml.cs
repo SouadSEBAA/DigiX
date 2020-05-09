@@ -1186,7 +1186,7 @@ namespace WpfApp2
                     //jimin
                     if (uc is pin_entree) 
                     {
-                        ((pin_entree)uc).path.Fill = Brushes.Red; 
+                        ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
                     }
                     //fin
 
