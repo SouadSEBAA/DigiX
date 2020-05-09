@@ -32,10 +32,10 @@ namespace logisimConsole
             base.calcul_sorties();
             if (liste_entrees[1].isEtat() && liste_entrees[2].isEtat())
             {
+
                 //Synchrone
                 if (front)
                 {
-                    Console.WriteLine("zzzzzzzzzzzzzzzzzz");
                     if (EtatAvant_T) //T=1
                         liste_sorties[0].setEtat(!liste_sorties[0].isEtat());
                     front = false;

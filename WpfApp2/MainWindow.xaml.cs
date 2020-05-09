@@ -1197,22 +1197,24 @@ namespace WpfApp2
             foreach (UserControl uc in Grille.Children)
             {
                 if (uc is Gate)
-                    {(uc as Gate).path.ContextMenuOpening -= HitContextMenu;
+                {
+                    (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
 
                     //jimin
-                    if (uc is pin_entree) 
+                    if (uc is pin_entree)
                     {
                         ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
                     }
                     //fin
-                    }
                 }
+
                 if (uc is Wire)
                     uc.ContextMenuOpening -= HitContextMenu;
             }
+            }
 
 
-        }
+        
 
         public void reset_clock()
         {

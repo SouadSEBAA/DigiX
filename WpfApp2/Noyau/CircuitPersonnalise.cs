@@ -169,6 +169,7 @@ namespace logisimConsole
 
         public  void Evaluate(Outils outil)
         {
+            if (Circuit.ContainsVertex(outil))
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);

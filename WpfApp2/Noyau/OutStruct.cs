@@ -26,7 +26,10 @@ namespace logisimConsole
         }
 
 
-
+        public int getNumEntree()
+        {
+            return outils.getListeentrees().IndexOf(entree);
+        }
 
         /*essai
         public ClasseEntree getEntree()

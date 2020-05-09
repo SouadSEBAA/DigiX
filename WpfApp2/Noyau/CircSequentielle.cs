@@ -9,7 +9,7 @@ namespace logisimConsole
 
         protected bool front;  //Indique si front montant (si Trigger= 1), indique un front descendant sinon
 
-        private System.Timers.Timer timer = new System.Timers.Timer(10); //Timer qui s'occupe de la gestion du front
+        private System.Timers.Timer timer = new System.Timers.Timer(100); //Timer qui s'occupe de la gestion du front
         //TO DO changer 100
 
         public CircSequentielle(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
