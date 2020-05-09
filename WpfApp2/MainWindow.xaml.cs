@@ -716,7 +716,7 @@ namespace WpfApp2
         {
 
             //sauvegarde du present
-            Close window = new Close(this, false, true);
+            Close window = new Close(this, false, true,false);
             window.Show();
             
         }
@@ -1088,9 +1088,9 @@ namespace WpfApp2
                 Grille.Children.Remove(Exceptions.set[0]);
 
             //on ajoute la fenetre
-            if (Grille.Children.Count != 0)
+            if (Grille.Children.Count != 0 || filename!=null)
             {
-                Window window = new Close(this, true,false);
+                Window window = new Close(this, true,false,false);
                 window.Show();
                 window.HorizontalAlignment = HorizontalAlignment.Center;
                 window.VerticalAlignment = VerticalAlignment.Center;
@@ -1205,7 +1205,16 @@ namespace WpfApp2
         {
             reset_clock();
         }
-
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+            if (Grille.Children.Count != 0 || filename!=null)
+            {
+                
+                Close window = new Close(this, false, false,true);
+                window.Show();
+            }
+        }
+        public CircuitPersonnalise getcircuit() { return this.circuit; }
         //**************************************END OF MENU BUTTONS*******************************//
 
     }
