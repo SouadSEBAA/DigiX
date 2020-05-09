@@ -148,7 +148,7 @@ namespace WpfApp2
 
 
                 Sortie o = (Sortie)io2;
-                o.DeleteOustruct(gateStart.outil, gateStart.outil.getListeentrees().IndexOf(i));
+                o.DeleteOustruct(gateStart.outil, i);
             }
             else
             {
@@ -158,7 +158,7 @@ namespace WpfApp2
 
 
                 Sortie o = (Sortie)io1;
-                o.DeleteOustruct(gateEnd.outil, gateEnd.outil.getListeentrees().IndexOf(i));
+                o.DeleteOustruct(gateEnd.outil, i);
             }
         }
 

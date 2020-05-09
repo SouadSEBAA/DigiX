@@ -419,6 +419,36 @@ namespace WpfApp2
                 }
             }
 
+            if (type.Name == "Compteur")
+            {
+                if (outil.getnbrsoryies() < 5)
+                {
+                    string es = (outil.getnbrsoryies() + 1).ToString();
+                    string etiq_s = ("Sortie" + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.down, false, new List<OutStruct>());
+                    outil.AjoutSortie(sortie);
+                    S_Down.Insert(0, sortie);
+                }
+            }
+
+            if (type.Name == "Reg_Dec")
+            {
+                if (outil.getnbrsoryies() < 8)
+                {
+                    string ee = (outil.getnbrsoryies() + 1).ToString();
+                    string Entree = ("Entrée" + ee);
+                    ClasseEntree classeEntree = new ClasseEntree(Entree, 1, Disposition.up, false, false);
+                    outil.AjoutEntree(classeEntree);
+                    E_Up.Insert(0, classeEntree);
+
+                    string es = (outil.getnbrsoryies() + 1).ToString();
+                    string etiq_s = ("Sortie" + es);
+                    Sortie sortie = new Sortie(etiq_s, 1, Disposition.down, false, new List<OutStruct>());
+                    outil.AjoutSortie(sortie);
+                    S_Down.Insert(0, sortie);
+                }
+            }
+
             MAJ();
             Creation();
             MAJ_Path();
@@ -587,6 +617,31 @@ namespace WpfApp2
                     outil.SupprimerEntree(outil.getListeentrees()[id]);
                 }
 
+            }
+
+
+            if (type.Name == "Compteur")
+            {
+                if (outil.getnbrsoryies() > 2)
+                {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
+                    S_Down.Remove(S_Down[0]);
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+                }
+            }
+
+            if (type.Name == "Reg_Dec")
+            {
+                if (outil.getnbrsoryies() > 4)
+                {
+                    if (outil.getListesorties()[outil.getnbrsoryies() - 1].getSortie() != null) { outil.getListesorties()[outil.getnbrsoryies() - 1].Supprimer(); }
+                    S_Down.Remove(S_Down[0]);
+                    outil.SupprimerSortie(outil.getListesorties()[outil.getnbrsoryies() - 1]);
+
+                    if (outil.getListeentrees()[outil.getnbrentrees() - 1].getRelated()) { outil.getListeentrees()[outil.getnbrentrees() - 1].Supprimer(); }
+                    E_Up.Remove(E_Up[0]);
+                    outil.SupprimerEntree(outil.getListeentrees()[outil.getnbrentrees() - 1]);
+                }
             }
 
             MAJ_Path();
