@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp2.TTPack"
+        xmlns:local="clr-namespace:WpfApp2.TTPack" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="TableVerites" Height="450" Width="800">
+
     <Grid x:Name="ttt">
-        <Button Content="Voir la table" HorizontalAlignment="Left" Click="graph_Click" Margin="25,364,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Voir la table" HorizontalAlignment="Left" Click="graph_Click" Margin="25,364,0,0" VerticalAlignment="Top" Width="120" Background="#0C8E81"/>
         <DataGrid Name="tVerite" HorizontalAlignment="Left" Height="349" Margin="10,10,0,0" VerticalAlignment="Top" Width="772"/>
     </Grid>
 </Window>
