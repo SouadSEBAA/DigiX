@@ -33,20 +33,19 @@ namespace logisimConsole
             this.Sorties = Sorties; 
         }
 
-        public void DeleteOustruct(Outils outil, int t)
+        public void DeleteOustruct(Outils outil, ClasseEntree t)
         {
             for (int i = Sorties.Count - 1; i >= 0; i--)
             {
                 if (Sorties[i].getOutils().Equals(outil))
-                {                    
-                    if (Sorties[i].getNum_entree() == t)
+                {
+                    if (Sorties[i].GetEntree().Equals(t))
                     {
                         Sorties.Remove(Sorties[i]);
-                    }                    
+                    }
                 }
             }
         }
-
 
         public void suppSortie(OutStruct outStruct)
         {
@@ -63,13 +62,14 @@ namespace logisimConsole
         }
 
         //essai
-        public override void setEtat(bool etat)  
+        public override void setEtat(bool etat)
         {
             base.setEtat(etat);
             foreach (OutStruct outstruct in Sorties)
             {
                 //outstruct.getEntree().setEtat(etat);
-                outstruct.getOutils().setEntreeSpe(outstruct.getNum_entree(), etat);
+                //outstruct.GetEntree().setEtat(etat);
+                outstruct.getOutils().setEntreeSpe(outstruct.getNumEntree(), etat);
                 Console.WriteLine(outstruct.getOutils());
             }
             NotifyPropertyChanged("etat");

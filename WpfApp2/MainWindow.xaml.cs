@@ -169,11 +169,8 @@ namespace WpfApp2
 
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("released");
-
             if (isDrawing)
             {
-                Console.WriteLine("isdrawing");
                 bool target = false;
                 isDrawing = false;
                 Gate gate = (Gate)sender;
@@ -181,8 +178,6 @@ namespace WpfApp2
                 {
                     if (IO.IsMouseOver)
                     {
-                        Console.WriteLine("isoverio");
-
                         target = true;
                         if (!line.Connect(IO.TranslatePoint(new Point(5, 5), Grille), gate, IO, circuit))
                         {
@@ -342,7 +337,7 @@ namespace WpfApp2
 
         public void Close(object sender, MouseEventArgs e)
         {
-            Grille.Children.Remove((ExceptionMessage)sender);
+            Grille.Children.Remove(Exceptions.set[0]);
             Exceptions.set.Remove(Exceptions.set[0]);
         }
         /*****************/
@@ -383,46 +378,52 @@ namespace WpfApp2
         //nos controleurs de Drag &Drop 
         private void Grille_DragOver(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.All;
-            Gate gate = (Gate)e.Data.GetData("Object");
-            gate.currentPoint = e.GetPosition(Grille);
-            gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
-            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-            gate.RenderTransform = gate.transform;
-            gate.anchorPoint = gate.currentPoint;
-
-            //Liaison
-            gate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
-            gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
-
-
-            /*******/
-            //a reffaire pour le drag & drop
-            if (!gate.added)
+            if (!circuit.getSimulation())
             {
-                Grille.Children.Add(gate);
-                gate.added = true;
-                gate.outil.circuit = this.circuit;
+                e.Effects = DragDropEffects.All;
+                Gate gate = (Gate)e.Data.GetData("Object");
+                gate.currentPoint = e.GetPosition(Grille);
+                gate.transform.X += gate.currentPoint.X - gate.anchorPoint.X;
+                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+                gate.RenderTransform = gate.transform;
+                gate.anchorPoint = gate.currentPoint;
 
+                //Liaison
+                gate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
+                gate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
+
+
+                /*******/
+                //a reffaire pour le drag & drop
+                if (!gate.added)
+                {
+                    Grille.Children.Add(gate);
+                    gate.added = true;
+                    gate.outil.circuit = this.circuit;
+
+                }
             }
-
             e.Handled = true;
         }
 
 
         private void Grille_Drop(object sender, DragEventArgs e)
         {
-            e.Effects = DragDropEffects.All;
+            if (!circuit.getSimulation())
+            {
 
-            Gate gate = (Gate)e.Data.GetData("Object");
-            this.circuit.AddComponent(gate.outil); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
-            //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
-            gate.currentPoint = e.GetPosition(Grille);
-            gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
-            gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
-            gate.RenderTransform = gate.transform;
-            gate.anchorPoint = gate.currentPoint;
-            // Grille.Children.Add(gate);
+                e.Effects = DragDropEffects.All;
+
+                Gate gate = (Gate)e.Data.GetData("Object");
+                this.circuit.AddComponent(gate.outil); //to add our dragged and dropped component to our graph in order to manipulate its edges and vertices
+                                                       //Set the dropped shape's X(Canvas.LeftProperty) and Y(Canvas.TopProperty) values.
+                gate.currentPoint = e.GetPosition(Grille);
+                gate.transform.X += (gate.currentPoint.X - gate.anchorPoint.X);
+                gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
+                gate.RenderTransform = gate.transform;
+                gate.anchorPoint = gate.currentPoint;
+                // Grille.Children.Add(gate);
+            }
 
         }
 
@@ -484,10 +485,7 @@ namespace WpfApp2
 
                     //To remove the exceptions 
                     if (Exceptions.set.Count != 0)
-                    {
-                        Grille.Children.Remove(Exceptions.set[0]);
-                        Exceptions.set.Remove(Exceptions.set[0]);
-                    }
+                        Close(null, null);
 
 
                     //In order to show the pause/stop buttons --------------------------------------------
@@ -501,15 +499,14 @@ namespace WpfApp2
                     {
                         if (uc is Gate)
                         {
-                            (uc as Gate).path.ContextMenu.IsEnabled = false;
-                            (uc as Gate).path.ContextMenu.StaysOpen = false;
+                            (uc as Gate).path.ContextMenuOpening += HitContextMenu;
                         }
                         if (uc is Wire)
                         {
-                            uc.ContextMenu.StaysOpen = false;
-                            uc.ContextMenu.IsEnabled = false;
+                            uc.ContextMenuOpening += HitContextMenu;
                         }
                     }
+
 
                     //melissa
 
@@ -519,6 +516,10 @@ namespace WpfApp2
                 }       
         }
 
+        private void HitContextMenu(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled = true;
+        }
 
             private void open_tut(object sender, RoutedEventArgs e)
         {
@@ -680,6 +681,10 @@ namespace WpfApp2
         // Serializes any UIElement object to XAML using a given filename.
         public void SerializeToXAML(string filename)
         {
+            //Supprimer tte éventuelle exception non supprimée
+            if (Exceptions.set.Count != 0)
+                Close(null, null);
+
             XElement grille = new XElement("Grille");//pour contenir tt le circuit 
             XElement gates = new XElement("Gates");//pour contenir les composants
             XElement wires = new XElement("Wires");//pour les wires 
@@ -833,6 +838,7 @@ namespace WpfApp2
                 IN1 = gatestart.outil.getListesorties()[io1];
                 IN2 = gateend.outil.getListeentrees()[io2];
             }
+
             Wire w = new Wire(startp, gatestart, IN1);
             w.Connect(endp, gateend, IN2, circuit);
             return w;
@@ -852,7 +858,11 @@ namespace WpfApp2
                 this.circuit.AddComponent(abgate.outil);
                 ((CircuitPersonnalise)this.circuit).gates.Add(abgate);
                 abgate.added = true;
-                
+
+                //Pour lier
+                abgate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
+                abgate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
+
             }
             //Wires 
             foreach (XElement wire in root.Element("Wires").Elements())
@@ -1082,9 +1092,9 @@ namespace WpfApp2
                     }
                 }
 
-            //Remove any exception if left
+            /*Remove any exception if left
             if (Exceptions.set.Count != 0)
-                Grille.Children.Remove(Exceptions.set[0]);
+                Grille.Children.Remove(Exceptions.set[0]);*/
 
             //on ajoute la fenetre
             if (Grille.Children.Count != 0 || filename!=null)
@@ -1128,9 +1138,6 @@ namespace WpfApp2
             int i = 0; int j = 0; //need this to make sure it works --on console only--
             Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
-
-            //Souad
-            Tools.IsEnabled = true;
 
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
@@ -1179,28 +1186,35 @@ namespace WpfApp2
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
             if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
 
+
+
+            //Supprimer les exceptios if there are any
+            if (Exceptions.set.Count != 0)
+                Close(null, null);
+
+            //Souad : To enable context menus
+            Tools.IsEnabled = true;
             foreach (UserControl uc in Grille.Children)
             {
                 if (uc is Gate)
                 {
+                    (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
+
                     //jimin
-                    if (uc is pin_entree) 
+                    if (uc is pin_entree)
                     {
                         ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
                     }
                     //fin
+                }
 
-                    (uc as Gate).path.ContextMenu.IsEnabled = true;
-                    (uc as Gate).path.ContextMenu.StaysOpen = true;
-                }
                 if (uc is Wire)
-                {
-                    uc.ContextMenu.StaysOpen = true;
-                    uc.ContextMenu.IsEnabled = true;
-                }
+                    uc.ContextMenuOpening -= HitContextMenu;
+            }
             }
 
-        }
+
+        
 
         public void reset_clock()
         {

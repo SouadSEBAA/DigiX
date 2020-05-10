@@ -148,7 +148,7 @@ namespace logisimConsole
 
                 if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == false && liste_entrees[2].isEtat() == true)
                 {
-                    liste_sorties[0].setEtat(true);
+                    liste_sorties[0].setEtat(false);
                     liste_sorties[1].setEtat(false);
                     liste_sorties[2].setEtat(false);
                     liste_sorties[3].setEtat(false);

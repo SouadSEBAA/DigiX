@@ -3,32 +3,33 @@
 namespace logisimConsole
 {
     [Serializable]
-    public class OutStruct 
+    public class OutStruct
     {
-        private int num_entree;
+        private ClasseEntree entree;
         private Outils outils;
 
-        public OutStruct(int num_entree, Outils outils)
+        public OutStruct(ClasseEntree entree, Outils outils)
         {
-            this.num_entree = num_entree;
+            this.entree = entree;
             this.outils = outils;
 
         }
 
         //public Outstruct(){ }
-
-        public int getNum_entree() { return this.num_entree; }
-        public void setNum_entree(int entree) { num_entree = entree; }
         public void setOutil(Outils outil) { outils = outil; }
         public Outils getOutils() { return this.outils; }
+        public ClasseEntree GetEntree() { return this.entree; }
 
         public override bool Equals(Object obj)
         {
-            return ((OutStruct)obj).num_entree.Equals(this.num_entree) && ((OutStruct)obj).outils.Equals(this.outils);
+            return ((OutStruct)obj).entree.Equals(this.entree) && ((OutStruct)obj).outils.Equals(this.outils);
         }
 
 
-
+        public int getNumEntree()
+        {
+            return outils.getListeentrees().IndexOf(entree);
+        }
 
         /*essai
         public ClasseEntree getEntree()

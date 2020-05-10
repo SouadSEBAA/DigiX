@@ -238,7 +238,7 @@ namespace logisimConsole
             {
                 foreach (OutStruct outt in s.get_OutStruct())
                 {
-                    if (outt.getNum_entree().Equals(null) && (outt.getOutils().Equals(null)))
+                    if (outt.GetEntree().Equals(null) && (outt.getOutils().Equals(null)))
                     {
                         etatSortie = true;
                     }
