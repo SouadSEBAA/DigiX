@@ -5,20 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
+        Background="Azure"
         Icon="ditix.png"
+        ResizeMode="NoResize"
         Closing="Window_Closing"
         WindowStartupLocation="CenterScreen"
-        Title="Attention" Height="172" Width="429">
+        Title=" Attention !" Height="172" Width="429">
+    
     <Grid Margin="0,0,2,-1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="265*"/>
+            <ColumnDefinition Width="154*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="75*"></RowDefinition>
-            <RowDefinition Height="40*"></RowDefinition>
-            <RowDefinition Height="27*"></RowDefinition>
+            <RowDefinition Height="50*"></RowDefinition>
+            <RowDefinition Height="17*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox HorizontalAlignment="Center" Height="45" Margin="105,20,109,0" TextAlignment="Center" TextWrapping="Wrap" Text="Voulez vous enregistrer les modifications faites à ce fichier ?" VerticalAlignment="Top" Width="205"  RenderTransformOrigin="0.257,0.444"/>
-        <Button x:Name="annuler" Content="Annuler"   HorizontalAlignment="Left" Margin="310,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="89" Grid.RowSpan="2" Click="Annuler_Click"/>
-        <Button x:Name="non" Content="Non"   HorizontalAlignment="Left"  Margin="170,8,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Non_Click" />
-        <Button x:Name="oui" Content="Oui"  HorizontalAlignment="Left"   Margin="25,10,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="75" Grid.Row="1" Click="Oui_Click" />
+        <TextBox HorizontalAlignment="Center" Height="45" BorderBrush="Azure" Margin="55,20,49,0" TextAlignment="Center" TextWrapping="Wrap" Text="Voulez vous enregistrer les modifications apportées à ce fichier ?" VerticalAlignment="Top" Width="315"  RenderTransformOrigin="0.257,0.444" Grid.ColumnSpan="2"/>
+        <Button x:Name="annuler" Content="Annuler" BorderBrush="White" Foreground="Black" Background="Lavender"  HorizontalAlignment="Left" Margin="45,10,0,0" Grid.Row="1" MouseEnter="btn_MouseEnter"  MouseLeave="btn_MouseLeave" VerticalAlignment="Top" Width="89" Click="Annuler_Click" Grid.Column="1"/>
+        <Button x:Name="non" Content="Non" BorderBrush="White"  Foreground="Black" Background="Lavender"  HorizontalAlignment="Left"  Margin="170,8,0,0" MouseEnter="btn_MouseEnter"  MouseLeave="btn_MouseLeave"   VerticalAlignment="Top" Width="75" Click="Non_Click" Grid.Row="1" />
+        <Button x:Name="oui" Content="Oui" BorderBrush="White"  Foreground="Black" Background="Lavender" HorizontalAlignment="Left"   Margin="25,10,0,0" MouseEnter="btn_MouseEnter" MouseLeave="btn_MouseLeave" VerticalAlignment="Top" Width="75" Grid.Row="1"  Click="Oui_Click" />
 
     </Grid>
 </Window>
