@@ -24,11 +24,13 @@ namespace WpfApp2
         MainWindow main;
         bool fermer;//fermer tt la fenetre 
         bool ouvrir;//ouvrir un fichier
-        public Close(MainWindow w,bool fermer,bool ouvrir)
+        bool nouveau;
+        public Close(MainWindow w,bool fermer,bool ouvrir,bool nouveau)
         {
             main = w;
             this.fermer = fermer;
             this.ouvrir = ouvrir;
+            this.nouveau = nouveau;
             InitializeComponent();
         }
        
@@ -93,6 +95,12 @@ namespace WpfApp2
 
                 }
             }
+            if (nouveau)
+            {
+                main.Grille.Children.Clear();
+                main.getcircuit().Clear();
+                main.filename = null;
+            }
         }
 
         private void Non_Click(object sender, RoutedEventArgs e)
@@ -121,6 +129,12 @@ namespace WpfApp2
                     }
 
                 }
+            }
+            if (nouveau)
+            {
+                main.Grille.Children.Clear();
+                main.getcircuit().Clear();
+                main.filename = null;
             }
         }
 

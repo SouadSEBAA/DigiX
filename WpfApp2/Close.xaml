@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
+        Icon="ditix.png"
         Closing="Window_Closing"
         WindowStartupLocation="CenterScreen"
         Title="Attention" Height="172" Width="429">

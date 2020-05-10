@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using logisimConsole;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp2
 {
@@ -33,6 +35,9 @@ namespace WpfApp2
         public InputOutput io2 { get; set; }
         public Gate gateEnd { get; set; }
         private bool _value;
+
+        
+
 
         public Wire(Point start, Gate gatePrinciple, InputOutput io)
         {
@@ -62,9 +67,11 @@ namespace WpfApp2
             Panel.SetZIndex(this, -2);
 
             DataContext = this;
+
+            
         }
 
-
+       
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
@@ -107,11 +114,13 @@ namespace WpfApp2
         }
 
 
+
         void Maj()
         {
             _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
             _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, EndPoint.Y);
         }
+
 
         public Point StartPoint 
         { 
@@ -139,7 +148,7 @@ namespace WpfApp2
 
 
                 Sortie o = (Sortie)io2;
-                o.DeleteOustruct(gateStart.outil, gateStart.outil.getListeentrees().IndexOf(i));
+                o.DeleteOustruct(gateStart.outil, i);
             }
             else
             {
@@ -149,7 +158,7 @@ namespace WpfApp2
 
 
                 Sortie o = (Sortie)io1;
-                o.DeleteOustruct(gateEnd.outil, gateEnd.outil.getListeentrees().IndexOf(i));
+                o.DeleteOustruct(gateEnd.outil, i);
             }
         }
 
@@ -165,6 +174,7 @@ namespace WpfApp2
             add { AddHandler(SuppwireEvent, value); }
             remove { RemoveHandler(SuppwireEvent, value); }
         }
+
 
         public bool Value
         {
