@@ -151,6 +151,16 @@ namespace WpfApp2
             
         }
 
-        
+        private void btn_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Button b = (Button)sender;
+            b.BorderBrush = Brushes.Blue;
+        }
+
+        private void btn_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Button b = (Button)sender;
+            b.BorderBrush = Brushes.White;
+        }
     }
 }
