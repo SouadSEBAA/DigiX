@@ -271,6 +271,22 @@ namespace WpfApp2.Chronogramme
         {
             Errors.Children.Clear();
         }
+
+        /**********************************************************************/
+        private void top_Bar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void close_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void minimize_click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 
 }

@@ -6,11 +6,30 @@
       xmlns:local="clr-namespace:WpfApp2"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Foreground="White"
       mc:Ignorable="d" WindowStartupLocation="CenterOwner" WindowState="Normal"
-      Height="735" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" 
+      Height="735" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" WindowStyle="None" 
       >
-
-    <DockPanel LastChildFill="True" Height="700" Width="530" Background="White">
-        <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
+    <Grid Background="#0C8E81">
+        <!-- i added this grid to hold both the stackpanel i used and the dockpanel without modifying the measurments -->
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+            <Grid x:Name="top_Bar" MouseDown="top_Bar_MouseDown"  Background="#0C8E81"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="minimize" Width="30" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="minimize_click">
+                        <materialDesign:PackIcon Kind="WindowMinimize"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20"/>
+                    </Button>
+                    <Button x:Name="close" Width="30" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="close_click">
+                        <materialDesign:PackIcon Kind="CloseCircle" Foreground="Red" VerticalAlignment="Center" HorizontalAlignment="Center" Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ShowChart" Foreground="Black" Margin="5 0"/>
+                    <TextBlock Text="Chronogramme" FontSize="12"  VerticalAlignment="Center" Foreground="Black" FontWeight="DemiBold"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <!-- end of top bar -->
+        
+        <DockPanel LastChildFill="True" Height="700" Width="530" Background="White">
+            <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
                 <TextBlock Text=" Choisissez les :" Margin="0, 8, 0, 0" Foreground="Lavender" VerticalAlignment="Center"  FontSize="15" Width="110" Height="30"/>
                 <Menu IsMainMenu="True" Name="menu" Width="110" Height="30" Background="#060629">
@@ -92,4 +111,5 @@
             </Grid>
         </Border>
     </DockPanel>
+    </Grid>
 </Window>
