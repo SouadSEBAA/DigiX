@@ -39,7 +39,7 @@ namespace WpfApp2.Chronogramme
 
         bool Stop = true;
 
-        public EssaiChrono(InputOutput io, String etiquette)
+        public EssaiChrono(InputOutput io)
         {
             InitializeComponent();
             p.Children.Remove(p.MouseNavigation);
@@ -58,9 +58,9 @@ namespace WpfApp2.Chronogramme
 
             //Bind the data with the graph
             chrono.DataSource = dataSource;
-
+           
             //Labels
-            Legend.SetDescription(chrono, etiquette);
+            Legend.SetDescription(chrono, io.getEtiquette() + "_" + (((io.Parent as Grid).Parent as Canvas).Parent as Gate).outil.getLabel());
 
             this.io = io;
             Stop = true;

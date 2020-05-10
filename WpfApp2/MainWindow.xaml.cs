@@ -491,10 +491,13 @@ namespace WpfApp2
                     //In order to show the pause/stop buttons --------------------------------------------
                     if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
                     if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                    simuler.Visibility = Visibility.Collapsed;
+                    clock.Visibility = Visibility.Collapsed;
                     //-----------------------------------------------------------------------------------
 
                     //To stop changes while simulating
                     Tools.IsEnabled = false;
+                    FichierButton.IsEnabled = false;
                     foreach (UserControl uc in Grille.Children)
                     {
                         if (uc is Gate)
@@ -1129,6 +1132,9 @@ namespace WpfApp2
         private void pause_click(object sender, RoutedEventArgs e)
         {
             circuit.setSimulation(false);
+
+            pause.Visibility = Visibility.Collapsed;
+            simuler.Visibility = Visibility.Visible;
         }
 
        
@@ -1185,7 +1191,7 @@ namespace WpfApp2
             if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
             if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
             if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
-
+            simuler.Visibility = Visibility.Visible;
 
 
             //Supprimer les exceptios if there are any
@@ -1194,6 +1200,8 @@ namespace WpfApp2
 
             //Souad : To enable context menus
             Tools.IsEnabled = true;
+            FichierButton.IsEnabled = true;
+
             foreach (UserControl uc in Grille.Children)
             {
                 if (uc is Gate)

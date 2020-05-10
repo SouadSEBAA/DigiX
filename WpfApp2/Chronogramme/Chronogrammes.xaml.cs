@@ -189,7 +189,7 @@ namespace WpfApp2.Chronogramme
                     InputOutput io = mi.DataContext as InputOutput;
                     mi.IsEnabled = false;
                     IoAdded.Add(mi);
-                    ChronoStack.Children.Add(new EssaiChrono(io, io.getEtiquette()));
+                    ChronoStack.Children.Add(new EssaiChrono(io));
                     ChronoNumber++;
                     /*if (ChronoNumber > ChronNumerAuthorised)
                         menu.IsEnabled = false;*/

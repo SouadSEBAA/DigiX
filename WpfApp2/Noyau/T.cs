@@ -21,7 +21,7 @@ namespace logisimConsole
             this.liste_sorties = new List<Sortie>();
             this.liste_entrees.Add(new ClasseEntree("Clock",0, Disposition.left, false, false));//Horloge
             this.liste_entrees.Add(new ClasseEntree("Preset",1, Disposition.up, false, false));//Preset
-            this.liste_entrees.Add(new ClasseEntree("Clear",2, Disposition.down, false, false));//Clear
+            this.liste_entrees.Add(new ClasseEntree("Clear",2, Disposition.up, false, false));//Clear
             //this.liste_entrees.Add(new ClasseEntree(3, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("T",3, Disposition.left, false, false));//Entrée T
             this.liste_sorties.Add(new Sortie("Q",0, Disposition.right, false, new List<OutStruct>()));

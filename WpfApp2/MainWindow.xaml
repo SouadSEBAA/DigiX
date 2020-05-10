@@ -9,9 +9,9 @@
         mc:Ignorable="d" Name="DigiX"
         Title="DigitX" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="ditix.png" WindowStyle="None">
 
-    
+
     <Grid x:Name="grid"  >
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -103,15 +103,15 @@
 
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">
                         <TextBlock Text="Fichier" Foreground="Lavender" Background="{x:Null}" FontSize="15" VerticalAlignment="Center" FontWeight="DemiBold"/>
-                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" x:Name="FichierButton">
                             <materialDesign:PopupBox.ToggleContent>
                                 <materialDesign:PackIcon Kind="ExpandMore" Foreground="White"
                                 Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=materialDesign:PopupBox}, Path=Foreground }"                        />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Background="#060629">
-                                <Button Content="Sauvgarder" Click="sauvegarde_click" Foreground="#9fa8da"/>
-                                <Button Content="Ouvrir un Fichier" Click="open_file" Foreground="#9fa8da"/>
-                                <Button Content="Nouveau fichier" Foreground="#9fa8da"  Click="new_Click"/>
+                                <Button Content="Sauvgarder" Click="sauvegarde_click" Foreground="Lavender"/>
+                                <Button Content="Ouvrir un Fichier" Click="open_file" Foreground="Lavender"/>
+                                <Button Content="Nouveau fichier" Foreground="Lavender"  Click="new_Click"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -124,8 +124,8 @@
                                 Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=materialDesign:PopupBox}, Path=Foreground}"                        />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Background="#060629">
-                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton" Foreground="#9fa8da"/>
-                                <Button Content="Table de verite" Click="TVClick" Foreground="#9fa8da"/>
+                                <Button Content="Chronogrammes" Click="ChronogrammesClick" x:Name="ChronoButton" Foreground="Lavender"/>
+                                <Button Content="Table de verite" Click="TVClick" Foreground="Lavender"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                     </StackPanel>
@@ -169,21 +169,14 @@
             </Grid>
         </StackPanel>
 
-        <Grid Width="250" Background="#000A19" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Margin="0,20,0,-0.333">
-            <Grid Height="90" Background="#000A19" VerticalAlignment="Top">
-                <Image Source="ditix.png" Stretch="Uniform" Height="100" Width="100"/>
+        <Grid Width="250" Background="#000A19" Name="Tools" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Margin="0,60,0,-0.333">
+            <Grid Height="140" Background="#000A19" VerticalAlignment="Top">
+                <Image Source="ditix.png" Stretch="Uniform" Margin="55,15"/>
             </Grid>
 
-            <Grid Margin="0 100" >
+            <Grid Margin="0, 170, 0, 0" >
                 <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
                     <StackPanel Orientation="Vertical">
-
-                        <ListViewItem Height="60" MouseUp="TextBlock_MouseRightButtonDown">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5" />
-                                <TextBlock Text="Circuit Personnalisee" FontSize="15"  VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender" />
-                            </StackPanel>
-                        </ListViewItem>
 
                         <Grid>
                             <materialDesign:PackIcon Kind="LogicGateOr" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81" />
@@ -247,7 +240,6 @@
                                 </ListView>
                             </Expander>
                         </Grid>
-
                         <Grid>
                             <materialDesign:PackIcon Kind="LetterCCircle" Width="25" Height="25" Margin="10 16" Foreground="#0C8E81"/>
                             <ListBoxItem  Content="Combinatoires" Padding="60 16" FontSize="15" Foreground="Lavender" FontWeight="DemiBold" />
@@ -400,6 +392,13 @@
                                 </ListView>
                             </Expander>
                         </Grid>
+                        <ListViewItem Height="60" MouseUp="TextBlock_MouseRightButtonDown">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5" />
+                                <TextBlock Text="Circuit Personnalisee" FontSize="15"  VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender" />
+                            </StackPanel>
+                        </ListViewItem>
+
 
                     </StackPanel>
                 </ScrollViewer>
