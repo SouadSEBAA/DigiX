@@ -127,37 +127,39 @@ namespace WpfApp2.Chronogramme
         int ChronoNumber;
         private void StartContinuerClick(object sender, RoutedEventArgs e)
         {
-            
-            IsReading = true;
-            ts = (TimeSpan)TimeChrono.SelectedItem;
+            if (ChronoNumber > 0)
+            {
+                IsReading = true;
+                ts = (TimeSpan)TimeChrono.SelectedItem;
 
-            if (isPause)
-            {
-                timer.Interval = ts.Subtract(watch.Elapsed);
-                watch.Start();
-                foreach (EssaiChrono item in ChronoStack.Children)
+                if (isPause)
                 {
-                    item.Continuer();
+                    timer.Interval = ts.Subtract(watch.Elapsed);
+                    watch.Start();
+                    foreach (EssaiChrono item in ChronoStack.Children)
+                    {
+                        item.Continuer();
+                    }
+                    isPause = false;
                 }
-                isPause = false;
-            }
-            else
-            {
-                watch.Restart();
-                foreach (EssaiChrono item in ChronoStack.Children)
+                else
                 {
-                    item.dataSource.Collection.Clear();
-                    item.StartClick();
+                    watch.Restart();
+                    foreach (EssaiChrono item in ChronoStack.Children)
+                    {
+                        item.dataSource.Collection.Clear();
+                        item.StartClick();
+                    }
+                    timer.Interval = ts;
                 }
-                timer.Interval = ts;
+                timer.Start();
+                PauseButton.Visibility = Visibility.Visible;
+                StartContinuerButton.Visibility = Visibility.Collapsed;
+                StopButton.IsEnabled = true;
+                NextButton.IsEnabled = true;
+                PreviousButton.IsEnabled = true;
+                AxesButton.IsEnabled = true;
             }
-            timer.Start();
-            PauseButton.Visibility = Visibility.Visible;
-            StartContinuerButton.Visibility = Visibility.Collapsed;
-            StopButton.IsEnabled = true;
-            NextButton.IsEnabled = true;
-            PreviousButton.IsEnabled = true;
-            AxesButton.IsEnabled = true;
         }
         /**********************************************************************/
         private void Quit(object sender, CancelEventArgs e)

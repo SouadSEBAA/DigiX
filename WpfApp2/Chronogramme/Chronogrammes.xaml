@@ -6,11 +6,15 @@
       xmlns:local="clr-namespace:WpfApp2"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Foreground="White"
       mc:Ignorable="d" WindowStartupLocation="CenterOwner" WindowState="Normal"
-      Height="735" Width="540" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" WindowStyle="None" 
+      Height="726" Width="535" ResizeMode="CanMinimize" MouseDown="Window_MouseDown" WindowStyle="None" 
       >
-    <Grid Background="#0C8E81">
+    <Grid Height="735" Background="#0C8E81">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="21"/>
+            <RowDefinition Height="710" />
+        </Grid.RowDefinitions>
         <!-- i added this grid to hold both the stackpanel i used and the dockpanel without modifying the measurments -->
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Top" Grid.Row="0">
             <Grid x:Name="top_Bar" MouseDown="top_Bar_MouseDown"  Background="#0C8E81"  Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="minimize" Width="30" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="minimize_click">
@@ -27,12 +31,12 @@
             </Grid>
         </StackPanel>
         <!-- end of top bar -->
-        
-        <DockPanel LastChildFill="True" Height="700" Width="530" Background="White">
-            <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#060629">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
+
+        <DockPanel LastChildFill="True" Height="700" Width="530" Background="White" Grid.Row="1">
+            <Border DockPanel.Dock="Top" BorderThickness="1" Width="Auto" Height="Auto" BorderBrush="#000A19">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#000A19">
                 <TextBlock Text=" Choisissez les :" Margin="0, 8, 0, 0" Foreground="Lavender" VerticalAlignment="Center"  FontSize="15" Width="110" Height="30"/>
-                <Menu IsMainMenu="True" Name="menu" Width="110" Height="30" Background="#060629">
+                    <Menu IsMainMenu="True" Name="menu" Width="110" Height="30" Background="#000A19">
                     <MenuItem  Header="Signaux" Foreground="White" Background="Transparent" Width="137" Height="30" ItemsSource="{Binding newl}" x:Name="SignalsChrono" Click="Ajouter">
                         <MenuItem.ItemTemplate>
                             <HierarchicalDataTemplate ItemsSource="{Binding SubMenuItems}" >
@@ -52,10 +56,10 @@
                 </ComboBox>
             </StackPanel>
         </Border>
-        <Border DockPanel.Dock="Bottom" BorderThickness="1" Height="Auto" Width="Auto" BorderBrush="#060629">
-            <DockPanel LastChildFill="True"  Background="#060629">
-                <Border DockPanel.Dock="Right" BorderThickness="1" Height="Auto" BorderBrush="#060629">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
+            <Border DockPanel.Dock="Bottom" BorderThickness="1" Height="Auto" Width="Auto" BorderBrush="#000A19">
+                <DockPanel LastChildFill="True"  Background="#000A19">
+                    <Border DockPanel.Dock="Right" BorderThickness="1" Height="Auto" BorderBrush="#000A19">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#000A19">
                         <Button Click="PreviousClick" Width="70" Height="30" x:Name="PreviousButton"
                         Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="false" ToolTip="Next"
                         Foreground="white" Padding="0" Content="{materialDesign:PackIcon Kind=ArrowBack, Size=30}">
@@ -67,8 +71,8 @@
                         </Button>
                     </StackPanel>
                 </Border>
-                <Border DockPanel.Dock="Left" BorderThickness="1" Height="Auto" BorderBrush="#060629">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#060629">
+                    <Border DockPanel.Dock="Left" BorderThickness="1" Height="Auto" BorderBrush="#000A19">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#000A19">
                         <Button Click="AfficherAxe" Name="AxesButton" Width="90" Height="30" IsEnabled="false" ToolTip="Afficher ou Cacher les axes" 
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0">
                             <TextBlock Foreground="Lavender" FontSize="15" VerticalAlignment="Center">Afficher Axe</TextBlock>
@@ -93,7 +97,7 @@
                 </Border>
             </DockPanel>
         </Border>
-        <Border BorderThickness="1" BorderBrush="#060629" 
+            <Border BorderThickness="1" BorderBrush="#000A19" 
                 >
             <Grid>
                 <Grid.RowDefinitions>
