@@ -926,6 +926,13 @@ namespace WpfApp2
                     return new pin_sortie();
                 case "CircuitComplet":
                     return new CircuitComplet();
+
+                //Ajout des constantes
+                case "constantefalse":
+                    return new constantefalse();
+                case "constantetrue":
+                    return new constantetrue();
+
             }
 
             return null;

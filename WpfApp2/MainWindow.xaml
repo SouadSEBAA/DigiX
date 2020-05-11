@@ -389,6 +389,21 @@
                                         </StackPanel>
                                     </ListViewItem>
 
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
+                                            <TextBlock Text="Constante 1"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <local:constantetrue Canvas.Top="0" Canvas.Left="0" ToolTip="{x:Null}"/>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+                                    <ListViewItem>
+                                        <StackPanel Orientation="Horizontal" Height="75" Width="201">
+                                            <TextBlock Text="Constante 0"  Padding="20 5" VerticalAlignment="Center"></TextBlock>
+                                            <local:constantefalse Canvas.Top="0" Canvas.Left="0" ToolTip="{x:Null}"/>
+                                        </StackPanel>
+                                    </ListViewItem>
+
+
                                 </ListView>
                             </Expander>
                         </Grid>

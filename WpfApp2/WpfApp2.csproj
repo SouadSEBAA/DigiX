@@ -105,6 +105,9 @@
     <Compile Include="ExceptionMessage.xaml.cs">
       <DependentUpon>ExceptionMessage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Noyau\ConstanteFalse.cs" />
+    <Compile Include="Noyau\Constantes.cs" />
+    <Compile Include="Noyau\ConstanteTrue.cs" />
     <Compile Include="Noyau\IN.cs" />
     <Compile Include="AjoutLabel.xaml.cs">
       <DependentUpon>AjoutLabel.xaml</DependentUpon>

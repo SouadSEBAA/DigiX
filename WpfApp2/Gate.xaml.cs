@@ -774,6 +774,8 @@ namespace WpfApp2
             //à ajouter less pins
             if (o is pin_entree) { outils = new pin_entree(); }
             if (o is pin_sortie) { outils = new pin_sortie(); }
+            if (o is constantetrue) { outils = new constantetrue(); }
+            if (o is constantefalse) { outils = new constantefalse(); }
             //le circuits personalisé aussi 
             return outils;
         }
@@ -988,6 +990,18 @@ namespace WpfApp2
 
         }
     }
+
+    public class constantetrue : Gate
+    {
+        public constantetrue() : base(new ConstanteTrue(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { path.Fill = Brushes.Green; }
+    }
+
+    public class constantefalse : Gate
+    {
+        public constantefalse() : base(new ConstanteFalse(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { path.Fill = Brushes.Red; }
+    }
+
+
     //le circuit perssonalisé 
     public class CircuitComplet : Gate
     {
