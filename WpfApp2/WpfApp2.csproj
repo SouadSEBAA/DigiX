@@ -91,6 +91,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AucunPinEntreeException.cs" />
     <Compile Include="Chronogramme\ChronogrammeException.xaml.cs">
       <DependentUpon>ChronogrammeException.xaml</DependentUpon>
     </Compile>
@@ -118,6 +119,7 @@
     <Compile Include="TTPack\TableVerites.xaml.cs">
       <DependentUpon>TableVerites.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TVCompSeqException.cs" />
     <Compile Include="Wire.xaml.cs">
       <DependentUpon>Wire.xaml</DependentUpon>
     </Compile>

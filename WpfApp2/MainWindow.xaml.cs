@@ -277,46 +277,72 @@ namespace WpfApp2
         {
             //Chronogrammes chronoPage = new Chronogrammes();
             //Chronogrammes.Children.Add(chronoPage);
-            bool key = false;
+            bool key = false; bool seq = false; bool pinentree = false;
             if (circuit.getUnrelatedGates().Count == 0)
             {
-                foreach(Outils elmnt in circuit.GetCircuit().Vertices)
+                foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                 {
+                    if (elmnt is CircSequentielle) seq = true;
+                    if (elmnt is PinIn) pinentree = true;
                     if (elmnt is PinOut)
                     {
                         key = true;
-                        break;
+                        //break;
                     }
                 }
-                if (key)
+                if (!seq)
                 {
-                    //To remove the exceptions 
-                    if (Exceptions.set.Count != 0)
+                    if (pinentree)
                     {
-                        Grille.Children.Remove(Exceptions.set[0]);
-                        Exceptions.set.Remove(Exceptions.set[0]);
-                    }
+                        //Souad
+                        if (key) //S'il existe aucun composant séquentiel
+                        {
+                            TableVerites tv = new TableVerites(circuit.GetCircuit());
+                            tv.Show();
+                        }
+                        else
+                        {
+                            //To remove the exceptions 
+                            if (Exceptions.set.Count != 0)
+                            {
+                                Grille.Children.Remove(Exceptions.set[0]);
+                                Exceptions.set.Remove(Exceptions.set[0]);
+                            }
 
-                    TableVerites tv = new TableVerites(circuit.GetCircuit());
-                    tv.Show();
+                            ExceptionMessage message = new ExceptionMessage();
+                            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
+                            message.Opacity = 0.5;
+                            message.MouseDown += Close;
+                            Grille.Children.Add(message);
+                            Exceptions.set.Add(message);
+                            //set.Add(message);
+                            Canvas.SetLeft(message, 300);
+                            Canvas.SetTop(message, 20);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            throw new AucunPinEntreeException(Grille);
+                        }
+                        catch (AucunPinEntreeException exception)
+                        {
+                            exception.Gerer();
+                        }
+
+                    }
                 }
-                else 
+                else
                 {
-
-                    if (Exceptions.set.Count != 0)
+                    try
                     {
-                        Grille.Children.Remove(Exceptions.set[0]);
-                        Exceptions.set.Remove(Exceptions.set[0]);
+                        throw new TVCompSeqException(Grille);
                     }
-                    ExceptionMessage message = new ExceptionMessage();
-                    message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
-                    message.Opacity = 0.5;
-                    message.MouseDown += Close;
-                    Grille.Children.Add(message);
-                    Exceptions.set.Add(message);
-                    //set.Add(message);
-                    Canvas.SetLeft(message, 300);
-                    Canvas.SetTop(message, 20);
+                    catch (TVCompSeqException exception)
+                    {
+                        exception.Gerer();
+                    }
                 }
             }
             else
@@ -327,11 +353,10 @@ namespace WpfApp2
                 }
                 catch (RelatedException exception)
                 {
-                    //StackExceptions.Children.Clear();
-                    
                     exception.Gerer();
                 }
             }
+
         }
 
 
