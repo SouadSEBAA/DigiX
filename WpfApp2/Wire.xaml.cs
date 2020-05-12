@@ -96,7 +96,6 @@ namespace WpfApp2
                 }
                 else
                 {
-                    Console.WriteLine("ddddddddddddddd");
                     if (!circuit.Relate(gateStart.GetOutil(), gateEnd.GetOutil(), (Sortie)io1, (ClasseEntree)io2))
                         return false;
                     (io1 as Sortie).PropertyChanged += new PropertyChangedEventHandler((sender, e) => { Value = io1.getEtat(); });

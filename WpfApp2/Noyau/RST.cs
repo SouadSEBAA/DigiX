@@ -46,7 +46,8 @@ namespace logisimConsole
                     {
                         try
                         {
-                            throw new RSTException(liste_entrees[3], liste_entrees[4], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
+                            if ((((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas != null)
+                                throw new RSTException(liste_entrees[3], liste_entrees[4], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
                         }catch(RSTException e)
                         {
                             e.Gerer();

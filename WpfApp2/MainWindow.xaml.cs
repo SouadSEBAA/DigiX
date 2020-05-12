@@ -1071,6 +1071,7 @@ namespace WpfApp2
                 nouveauCircuit.gates.Add(abgate);
                // list.Add(abgate);
                 nouveauCircuit.AddComponent(abgate.outil);
+                Console.WriteLine("comp added : " + abgate.GetType());
                 abgate.added = true;
 
             }
@@ -1080,7 +1081,7 @@ namespace WpfApp2
                 
                 Wire w = LoadWire(wire, nouveauCircuit);
                 nouveauCircuit.wires.Add(w);
-
+                Console.WriteLine("wire added : " + w.gateStart.GetType() + " and " + w.gateEnd.GetType());
             }
             nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
             nouveauCircuit.ConstructSortie();//construction de la liste des sorties 

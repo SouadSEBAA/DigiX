@@ -70,7 +70,6 @@ namespace logisimConsole
                 //outstruct.getEntree().setEtat(etat);
                 //outstruct.GetEntree().setEtat(etat);
                 outstruct.getOutils().setEntreeSpe(outstruct.getNumEntree(), etat);
-                Console.WriteLine(outstruct.getOutils());
             }
             NotifyPropertyChanged("etat");
         }

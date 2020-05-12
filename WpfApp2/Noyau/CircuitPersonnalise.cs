@@ -169,7 +169,7 @@ namespace logisimConsole
 
         public  void Evaluate(Outils outil)
         {
-            //if (Circuit.ContainsVertex(outil))
+            if (Circuit.ContainsVertex(outil))
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
@@ -264,7 +264,7 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
-
+            
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
             foreach (Outils outil in this.CompFinaux)
@@ -273,6 +273,7 @@ namespace logisimConsole
                 Console.WriteLine("********Evaluate circuit *******"+outil.GetType());
                 this.EvaluatePerso(outil);
             }
+            //this.EvaluateCircuit();
         }
 
         //For chrnogramme
@@ -298,7 +299,7 @@ namespace logisimConsole
         public void EvaluatePerso(Outils outil)
         {
 
-            if (!outil.end)
+            if (!outil.end || Circuit.InEdges(outil) != null)
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
                 foreach (Edge<Outils> edge in inEdges)
@@ -369,6 +370,7 @@ namespace logisimConsole
 
                 }
             }
+
             List<Wire> listw = new List<Wire>();
             foreach (Outils outils1 in list)
             {

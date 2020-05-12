@@ -29,7 +29,8 @@ namespace logisimConsole
             try
             {
                 if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
-                    throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
+                    if ((((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas != null)
+                        throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
             }catch(PresetClearException e)
             { e.Gerer(); }
         }

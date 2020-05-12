@@ -44,7 +44,6 @@ namespace WpfApp2.Noyau
         public override void calcul_sorties()
         {
             //throw new NotImplementedException();
-
         }
 
         public override void setEntreeSpe(int i, bool etat)

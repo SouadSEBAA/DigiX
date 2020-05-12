@@ -29,42 +29,41 @@ namespace logisimConsole
         public override void calcul_sorties()
         {
 
-
-            if (((this.getListeentrees())[1]).isEtat() == true)
-            {//remise à 0
-
-
-                (this.getListeentrees())[1].setEtat(false);
-
-                int i1 = 0;
-                while (i1 < nb_sorties)
-                {
-                    (this.getListesorties())[i1].setEtat(false); i1++;
-
-                }
-            }
-            else
-            {
-                if (((this.getListeentrees())[0]).isEtat() == true)// TO DO: on remplace (front) 
-                {//clock activée
-                 //if (this.verifiRelie())
-                 //{
+                if (((this.getListeentrees())[1]).isEtat() == true)
+                {//remise à 0
 
 
+                    (this.getListeentrees())[1].setEtat(false);
 
-                    bool stop = false;
-                    int i = 0;
-                    while (!stop && i < this.nb_sorties)
-                    {//incrementation du compteur +1
+                    int i1 = 0;
+                    while (i1 < nb_sorties)
+                    {
+                        (this.getListesorties())[i1].setEtat(false); i1++;
 
-
-                        if ((this.getListesorties())[i].isEtat() == false/*0*/) { (this.getListesorties())[i].setEtat(true); stop = true; }
-                        else { (this.getListesorties())[i].setEtat(false); i = i + 1; }
-                        //}
                     }
                 }
-            }
-            
+                else
+                {
+                    if (/*((this.getListeentrees())[0]).isEtat() == true*/front)// TO DO: on remplace (front) 
+                    {//clock activée
+                     //if (this.verifiRelie())
+                     //{
+
+
+
+                        bool stop = false;
+                        int i = 0;
+                        while (!stop && i < this.nb_sorties)
+                        {//incrementation du compteur +1
+
+
+                            if ((this.getListesorties())[i].isEtat() == false/*0*/) { (this.getListesorties())[i].setEtat(true); stop = true; }
+                            else { (this.getListesorties())[i].setEtat(false); i = i + 1; }
+                            //}
+                        }
+                        front = false;
+                    }
+                }
 
         }
 
