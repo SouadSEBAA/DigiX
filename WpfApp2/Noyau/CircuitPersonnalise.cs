@@ -201,7 +201,7 @@ namespace logisimConsole
             foreach (Outils outil in iN.getEndListe())
             {
                // new Thread(() => Evaluate(outil)).Start();
-                Console.WriteLine("********Evaluate circuit *******"+ outil);
+                //Console.WriteLine("********Evaluate circuit *******"+ outil);
                     this.Evaluate(outil);
             }
         }
@@ -280,7 +280,6 @@ namespace logisimConsole
         /******************************************************/
         public List<Outils> StartComponents()
         {
-            Console.WriteLine("Addind start components :");
             List<Outils> l = new List<Outils>();
             foreach (var outil in Circuit.Vertices)
             {
@@ -420,7 +419,18 @@ namespace logisimConsole
             this.CompFinaux.Clear();
         }
 
-
+        public override void setEntreeSpe(int i, bool etat)
+        {
+            ClasseEntree io = liste_entrees[i];
+            foreach (Outils v in Circuit.Vertices)
+            {
+                if (v.getListeentrees().Contains(io))
+                {
+                    v.setEntreeSpe(v.getListeentrees().IndexOf(io), etat);
+                }
+            }
+                //(((liste_entrees[i].Parent as Grid).Parent as Canvas).Parent as Gate).outil.setEntreeSpe(i, etat);
+        }
 
     }
 }
