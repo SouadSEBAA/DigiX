@@ -60,7 +60,8 @@ namespace WpfApp2.Chronogramme
             chrono.DataSource = dataSource;
            
             //Labels
-            Legend.SetDescription(chrono, io.getEtiquette() + "_" + (((io.Parent as Grid).Parent as Canvas).Parent as Gate).outil.getLabel());
+            if (io.Parent != null)
+                Legend.SetDescription(chrono, io.getEtiquette() + "_" + (((io.Parent as Grid).Parent as Canvas).Parent as Gate).outil.getLabel());
 
             this.io = io;
             Stop = true;

@@ -298,7 +298,7 @@ namespace logisimConsole
         public void EvaluatePerso(Outils outil)
         {
 
-            if (!outil.end || Circuit.InEdges(outil) != null)
+            if (!outil.end || Circuit.InEdges(outil) != null || !Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
                 foreach (Edge<Outils> edge in inEdges)
