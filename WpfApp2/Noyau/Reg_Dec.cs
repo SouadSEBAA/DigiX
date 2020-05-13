@@ -21,23 +21,28 @@ namespace logisimConsole
 
         public Reg_Dec() : base() 
         {
-            this.nb_entrees = 8;
-            this.nb_sorties = 4;
+            this.nb_entrees = 11;
+            this.nb_sorties = 6;
             this.liste_entrees = new List<ClasseEntree>();
-            this.liste_sorties = new List<Sortie>();
-            this.liste_entrees.Add(new ClasseEntree("Decalage gauche", 0, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Clear", 1, Disposition.left, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Decalage droit", 2, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Load", 3, Disposition.right, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Entrée 1", 4, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Entrée 2", 5, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Entrée 3", 6, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree("Entrée 4", 7, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie("Sortie 1", 0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie("Sorte 2", 1, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie("Sortie 3", 2, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie("Sortie 4", 3, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties = new List<Sortie>(); 
+            this.liste_entrees.Add(new ClasseEntree("Clock", 0, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Clear", 1, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Load", 2, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Decalage droite", 3, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Decalage gauche", 4, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée série droite", 5, Disposition.right, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée série gauche", 6, Disposition.left, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 1", 7, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 2", 8, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 3", 9, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("Entrée 4", 10, Disposition.up, false, false));
 
+            this.liste_sorties.Add(new Sortie("Sortie Série droite", 0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie Série gauche", 1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 1", 2, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sorte 2", 3, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 3", 4, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Sortie 4", 5, Disposition.down, false, new List<OutStruct>()));
         }
         /*
 		public override bool verifiRelie(){//verifier le  nombre d'entrées paralleles est egale aunombre de sorties
@@ -49,7 +54,7 @@ namespace logisimConsole
             //	{
             if ((this.getListeentrees())[1].isEtat() == true)
             {//remise à 0
-                (this.getListeentrees())[1].setEtat(false);
+                //(this.getListeentrees())[1].setEtat(false);
                 int i1 = 0;
                 while (i1 < nb_sorties)
                 {
@@ -63,7 +68,7 @@ namespace logisimConsole
                 if ((this.getListeentrees())[2].isEtat() == true)//chargement 
                 {
                     int i = 2, j = 7;
-                    (this.getListeentrees())[2].setEtat(false);
+                    //(this.getListeentrees())[2].setEtat(false);
                     while (i < this.nb_sorties)
                     {
                         this.getListesorties()[i].setEtat(
@@ -75,9 +80,9 @@ namespace logisimConsole
                 else
                 {
 
-                    if ((this.getListeentrees())[0].isEtat() == true)//clock on  TO DO: on remplace (front)
+                    if (/*(this.getListeentrees())[0].isEtat() == true*/front)//clock on  TO DO: on remplace (front)
                     {
-                        (this.getListeentrees())[0].setEtat(false);
+                        //(this.getListeentrees())[0].setEtat(false); ??
                         if ((this.getListeentrees())[3].isEtat() == true)//decalage droit dd (plus prioritaire )
                         {//je remes dd à 0???
                             Console.WriteLine("droooooitee");
@@ -108,6 +113,7 @@ namespace logisimConsole
                             }
 
                         }
+                        front = false;
                     }
                 }
             }
