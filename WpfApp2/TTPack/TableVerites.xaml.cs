@@ -213,13 +213,14 @@ namespace WpfApp2.TTPack
         {
 
             Console.WriteLine("--------------  Partie Simuler Click");
-            Last_Elements(circuit);
+            //Last_Elements(circuit);
             Console.WriteLine("--------------  Fin Simuler Click");
 
             //souad
             //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
-            foreach (var gate in circuit.GetCompFinaux())
-                circuit.Evaluate(gate);
+            circuit.EvaluateCircuit();
+            //foreach (var gate in circuit.GetCompFinaux())
+              //  circuit.Evaluate(gate);
         }
 
 

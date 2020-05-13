@@ -253,22 +253,23 @@ namespace logisimConsole
         }
 
         //construiction de la liste de fin d'un element
-        public void EndCircuit(IN iN)
+        public void EndCircuit(IN iN, ICollection<Edge<Outils>> hs)
         {
             Outils o = this;
-
 
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-
-
-                    if ((edge.Target is PinOut) || edge.Target.Empty())
+                    if (!hs.Contains(edge))
                     {
-                        iN.getEndListe().Add(edge.Target);
+                        hs.Add(edge);
+                        if ((edge.Target is PinOut) || edge.Target.Empty())
+                        {
+                            iN.getEndListe().Add(edge.Target);
+                        }
+                        else { edge.Target.EndCircuit(iN, hs); }
                     }
-                    else { edge.Target.EndCircuit(iN); }
                 }
             }
 

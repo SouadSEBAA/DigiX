@@ -167,15 +167,20 @@ namespace logisimConsole
             return CompFinaux;
         }
 
-        public  void Evaluate(Outils outil)
+        public  void Evaluate(Outils outil, ICollection<Edge<Outils>> hs)
         {
             if (Circuit.ContainsVertex(outil))
             if (!Circuit.IsInEdgesEmpty(outil))
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
+                    
                 foreach (Edge<Outils> edge in inEdges)
                 {
-                    Evaluate(edge.Source);
+                        if (!hs.Contains(edge))
+                        {
+                            hs.Add(edge);
+                            Evaluate(edge.Source, hs);
+                        }
                 }
             }
 
@@ -189,20 +194,24 @@ namespace logisimConsole
         {
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
+
+            ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
             foreach(Outils outil in this.CompFinaux)
             {
                 Console.WriteLine("********Evaluate circuit *******");
-                    this.Evaluate(outil);
+                    this.Evaluate(outil, hs);
             }
         }
 
         public void EvaluateCircuit(IN iN)
         {
+            ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
+
             foreach (Outils outil in iN.getEndListe())
             {
                // new Thread(() => Evaluate(outil)).Start();
                 //Console.WriteLine("********Evaluate circuit *******"+ outil);
-                    this.Evaluate(outil);
+                    this.Evaluate(outil, hs);
             }
         }
 

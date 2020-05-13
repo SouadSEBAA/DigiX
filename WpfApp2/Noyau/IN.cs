@@ -26,8 +26,9 @@ namespace logisimConsole
         {
            if (this.circuit.getSimulation())
             {
-                this.EndCircuit(this);
-                    this.circuit.EvaluateCircuit(this);
+                ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
+                this.EndCircuit(this, hs);
+                this.circuit.EvaluateCircuit(this);
             }
         }
 
