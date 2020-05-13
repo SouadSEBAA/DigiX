@@ -282,9 +282,9 @@ namespace WpfApp2
             {
                 foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                 {
-                    if (elmnt is CircSequentielle) seq = true;
-                    if (elmnt is PinIn) pinentree = true;
-                    if (elmnt is PinOut)
+                    if (elmnt is CircSequentielle || elmnt is Horloge) seq = true;
+                    else if (elmnt is PinIn) pinentree = true;
+                    else if (elmnt is PinOut)
                     {
                         key = true;
                         //break;
@@ -294,8 +294,7 @@ namespace WpfApp2
                 {
                     if (pinentree)
                     {
-                        //Souad
-                        if (key) //S'il existe aucun composant séquentiel
+                        if (key) //S'il existe aucun pin sortie
                         {
                             TableVerites tv = new TableVerites(circuit.GetCircuit());
                             tv.Show();

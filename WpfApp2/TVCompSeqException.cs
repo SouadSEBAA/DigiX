@@ -22,7 +22,7 @@ namespace WpfApp2
         public void Gerer()
         {
             ExceptionMessage message = new ExceptionMessage();
-            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Entrée  !";
+            message.textMessage.Text = "  ATTENTION Il existe des composants séquentiels  !";
             message.Opacity = 0.5;
             message.MouseDown += Close;
             //To remove the exceptions 
