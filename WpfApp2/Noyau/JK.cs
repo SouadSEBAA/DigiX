@@ -32,6 +32,7 @@ namespace logisimConsole
             this.liste_entrees.Add(new ClasseEntree("K",4, Disposition.left, false, false));
             this.liste_sorties.Add(new Sortie("Q",0, Disposition.right, false, new List<OutStruct>()));
             this.liste_sorties.Add(new Sortie("|Q",1, Disposition.right, false, new List<OutStruct>()));
+
         }
 
         public override void calcul_sorties()

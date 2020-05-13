@@ -273,14 +273,14 @@ namespace logisimConsole
 
         public override void calcul_sorties()
         {
-            
+            ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
             this.CompFinaux = new List<Outils>();
             this.EndComponents();
             foreach (Outils outil in this.CompFinaux)
             {
                 //new Thread(() => Evaluate(outil)).Start();
                 Console.WriteLine("********Evaluate circuit *******"+outil.GetType());
-                this.EvaluatePerso(outil);
+                this.EvaluatePerso(outil, hs);
             }
             //this.EvaluateCircuit();
         }
@@ -304,15 +304,19 @@ namespace logisimConsole
 
     
         //pour calculsortie()
-        public void EvaluatePerso(Outils outil)
+        public void EvaluatePerso(Outils outil, ICollection<Edge<Outils>> hs)
         {
 
-            if (!outil.end || Circuit.InEdges(outil) != null || !Circuit.IsInEdgesEmpty(outil))
+            if (!outil.end || Circuit.InEdges(outil) != null )
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
                 foreach (Edge<Outils> edge in inEdges)
                 {
-                    EvaluatePerso(edge.Source);
+                    if (!hs.Contains(edge))
+                    {
+                        hs.Add(edge);
+                        EvaluatePerso(edge.Source, hs);
+                    }
                 }
             }
 
