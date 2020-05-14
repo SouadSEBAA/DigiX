@@ -43,6 +43,7 @@ namespace logisimConsole
                 //Synchrone
                 if (front)
                 {
+                    Console.WriteLine("~~~~JK---FRONT");
                     if (EtatAvant_J && EtatAvant_K)//J=1 K=1
                         liste_sorties[0].setEtat(!liste_sorties[0].isEtat());
                     else if (EtatAvant_J && !EtatAvant_K)//J=1 K=0
