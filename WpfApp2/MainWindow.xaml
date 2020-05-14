@@ -96,7 +96,7 @@
 
                     <Button x:Name="CaptEcran" Width="140" Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="CaptEcran_Click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Capture d'ecran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Capture d'écran" Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Monitor" Foreground="White" Margin="5" />
                         </StackPanel>
                     </Button>
@@ -109,7 +109,7 @@
                                 Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=materialDesign:PopupBox}, Path=Foreground }"                        />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel Background="#060629">
-                                <Button Content="Sauvgarder" Click="sauvegarde_click" Foreground="Lavender"/>
+                                <Button Content="Sauvegarder" Click="sauvegarde_click" Foreground="Lavender"/>
                                 <Button Content="Ouvrir un Fichier" Click="open_file" Foreground="Lavender"/>
                                 <Button Content="Nouveau fichier" Foreground="Lavender"  Click="new_Click"/>
                             </StackPanel>
@@ -132,7 +132,7 @@
 
                     <Button x:Name="clock" Width="180" Visibility="Collapsed"  Height="40" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Lavender" Padding="0" Click="clock_click">
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right" >
-                            <TextBlock Text="Reinisialiser l'horloge " Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Reinitialiser l'horloge " Foreground="Lavender" FontSize="15" VerticalAlignment="Center"/>
                             <materialDesign:PackIcon Kind="Hourglass" Margin="5" Foreground="Lavender" />
                         </StackPanel>
                     </Button>
@@ -410,7 +410,7 @@
                         <ListViewItem Height="60" MouseUp="TextBlock_MouseRightButtonDown">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Foreground="#0C8E81" VerticalAlignment="Center" Margin="5" />
-                                <TextBlock Text="Circuit Personnalisee" FontSize="15"  VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender" />
+                                <TextBlock Text="Circuit Personnalisé" FontSize="15"  VerticalAlignment="Center" Margin="20 0" FontWeight="DemiBold" Foreground="Lavender" />
                             </StackPanel>
                         </ListViewItem>
 

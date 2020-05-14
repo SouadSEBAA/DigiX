@@ -460,7 +460,7 @@ namespace WpfApp2
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
-            string path = @".\..\..\..\HelpSite\home.html"; // C:/Users/username/Documents (or whatever directory)
+            string path = @".\..\..\..\HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
 
@@ -552,7 +552,7 @@ namespace WpfApp2
             private void open_tut(object sender, RoutedEventArgs e)
         {
             //takes us directly to the tutorial page
-            string path = @".\..\..\..\HelpSite\tuto.html"; // C:/Users/username/Documents (or whatever directory)
+            string path = @".\..\..\..\HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
 
@@ -1010,26 +1010,26 @@ namespace WpfApp2
 
         private void CaptEcran_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine("hello");
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var stringChars = new char[8];
-            var random = new Random();
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "Capture"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG |*.png"; // Filter files by extension
+                                                 // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
 
-            for (int i = 0; i < stringChars.Length; i++)
+            // Process save file dialog box results
+            if (result == true)
             {
-                stringChars[i] = chars[random.Next(chars.Length)];
+                // Save screenshot
+                string filename = dlg.FileName;
+                this.filename = filename;
+                CreateScreenShot(this, this.filename);
             }
-
-            var finalString = new String(stringChars);
-            string chemin1 = @".\..\..\..\Capture\";
-            string strRes1 = String.Concat(chemin1, finalString);
-            string strRes = String.Concat(strRes1, ".png");
-            CreateScreenShot(this, strRes);
-
             //to inform theuser that the screeshot was created successfully
             //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
         }
+
         //*************************************Reutilisation******************************************
         private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
