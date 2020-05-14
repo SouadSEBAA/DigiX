@@ -12,9 +12,11 @@ using WpfApp2.Noyau;
 
 namespace logisimConsole
 {
-    public class BasculeExceptions : Exception
+    public class BasculeExceptions : Exception, IException
     {
-        protected InputOutput io1, io2; protected Canvas panel;
+        protected InputOutput io1, io2; 
+        public Canvas panel { get; set; }
+
         protected ExceptionMessage message;
 
         public BasculeExceptions(InputOutput io1, InputOutput io2, Canvas p)

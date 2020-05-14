@@ -10,9 +10,9 @@ using WpfApp2.Noyau;
 
 namespace WpfApp2
 {
-    class TVCompSeqException :  Exception
+    class TVCompSeqException :  Exception, IException
     {
-        Canvas panel;
+        public Canvas panel { get; set; }
 
         public TVCompSeqException(Canvas p)
         {

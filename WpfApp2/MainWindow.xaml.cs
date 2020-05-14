@@ -301,22 +301,14 @@ namespace WpfApp2
                         }
                         else
                         {
-                            //To remove the exceptions 
-                            if (Exceptions.set.Count != 0)
+                            try
                             {
-                                Grille.Children.Remove(Exceptions.set[0]);
-                                Exceptions.set.Remove(Exceptions.set[0]);
+                                throw new AucunPinSortieException(Grille);
                             }
-
-                            ExceptionMessage message = new ExceptionMessage();
-                            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
-                            message.Opacity = 0.5;
-                            message.MouseDown += Close;
-                            Grille.Children.Add(message);
-                            Exceptions.set.Add(message);
-                            //set.Add(message);
-                            Canvas.SetLeft(message, 300);
-                            Canvas.SetTop(message, 20);
+                            catch (AucunPinSortieException exception)
+                            {
+                                exception.Gerer();
+                            }
                         }
                     }
                     else
@@ -493,7 +485,7 @@ namespace WpfApp2
             //Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
             if (circuit.getCircuit().VertexCount != 0)
-                if (circuit.getUnrelatedGates().Count != 0)
+            { if (circuit.getUnrelatedGates().Count != 0)
                 {
                     try
                     {
@@ -506,41 +498,63 @@ namespace WpfApp2
                 }
                 else
                 {
-
-                    //To remove the exceptions 
-                    if (Exceptions.set.Count != 0)
-                        Close(null, null);
-
-
-                    //In order to show the pause/stop buttons --------------------------------------------
-                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
-                    if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-                    simuler.Visibility = Visibility.Collapsed;
-                    clock.Visibility = Visibility.Collapsed;
-                    //-----------------------------------------------------------------------------------
-
-                    //To stop changes while simulating
-                    Tools.IsEnabled = false;
-                    FichierButton.IsEnabled = false;
-                    foreach (UserControl uc in Grille.Children)
+                    bool pinsortie = false ;
+                    foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                     {
-                        if (uc is Gate)
+                        if (elmnt is PinOut)
                         {
-                            (uc as Gate).path.ContextMenuOpening += HitContextMenu;
-                        }
-                        if (uc is Wire)
-                        {
-                            uc.ContextMenuOpening += HitContextMenu;
+                            pinsortie = true;
+                            break;
                         }
                     }
 
+                    if (!pinsortie)
+                    {
+                        try
+                        {
+                            throw new AucunPinSortieException(Grille);
+                        }
+                        catch (AucunPinSortieException exception)
+                        {
+                            exception.Gerer();
+                        }
+                    }
+                    else {
 
-                    //melissa
+                        //To remove the exceptions 
+                        if (Exceptions.set.Count != 0)
+                            Close(null, null);
 
-                    circuit.EvaluateCircuit();
-                    circuit.setSimulation(true);
 
-                }       
+                        //In order to show the pause/stop buttons --------------------------------------------
+                        if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+                        if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                        simuler.Visibility = Visibility.Collapsed;
+                        clock.Visibility = Visibility.Collapsed;
+                        //-----------------------------------------------------------------------------------
+
+                        //To stop changes while simulating
+                        Tools.IsEnabled = false;
+                        FichierButton.IsEnabled = false;
+                        foreach (UserControl uc in Grille.Children)
+                        {
+                            if (uc is Gate)
+                            {
+                                (uc as Gate).path.ContextMenuOpening += HitContextMenu;
+                            }
+                            if (uc is Wire)
+                            {
+                                uc.ContextMenuOpening += HitContextMenu;
+                            }
+                        }
+
+
+                        //melissa
+
+                        circuit.EvaluateCircuit();
+                        circuit.setSimulation(true);
+
+                    } } }
         }
 
         private void HitContextMenu(object sender, ContextMenuEventArgs e)

@@ -10,19 +10,19 @@ using WpfApp2.Noyau;
 
 namespace WpfApp2
 {
-    class AucunPinEntreeException : Exception, IException
+    class AucunPinSortieException : Exception, IException
     {
         public Canvas panel { get; set; }
 
-        public AucunPinEntreeException(Canvas p)
+        public AucunPinSortieException(Canvas p)
         {
-             panel = p;
+            panel = p;
         }
 
         public void Gerer()
         {
             ExceptionMessage message = new ExceptionMessage();
-            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Entrée  !";
+            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
             message.Opacity = 0.5;
             message.MouseDown += Close;
             //To remove the exceptions 
@@ -33,8 +33,8 @@ namespace WpfApp2
             }
 
             panel.Children.Add(message);
-            Console.WriteLine("set count :" + Exceptions.set.Count);
             Exceptions.set.Add(message);
+            //set.Add(message);
             Canvas.SetLeft(message, 300);
             Canvas.SetTop(message, 20);
 

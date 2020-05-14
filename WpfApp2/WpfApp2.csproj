@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AucunPinEntreeException.cs" />
+    <Compile Include="AucunPinSortieException.cs" />
     <Compile Include="Chronogramme\ChronogrammeException.xaml.cs">
       <DependentUpon>ChronogrammeException.xaml</DependentUpon>
     </Compile>
@@ -102,6 +103,7 @@
     <Compile Include="Close.xaml.cs">
       <DependentUpon>Close.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IException.cs" />
     <Compile Include="Noyau\BasculeExceptions.cs" />
     <Compile Include="ExceptionMessage.xaml.cs">
       <DependentUpon>ExceptionMessage.xaml</DependentUpon>
