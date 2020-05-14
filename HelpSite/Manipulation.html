@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Manipulation</title>
+        <link rel="stylesheet" type="text/css" href="./tuto.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"  ></script>
+    </head>
+    <header>
+      <div class="main">
+        <nav class="navbar navbar-default fixed-top navbar-expand-sm" role="navigation">
+          <!-- Brand -->
+          <ul class="navbar-nav ml-auto" style="margin-right: 50px">
+            <li class="nav-item active">
+              <a class="nav-link" href="./Aide.html"><i class="fa fa-home"></i>Accueil</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-chevron-circle-right"></i>Composants
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="./Portes.html">Portes Logiques</a>
+                <a class="dropdown-item" href="./Combinatoires.html">Circuits Combinatoires</a>
+                <a class="dropdown-item" href="./Sequentiels.html">Circuits Sequentiels</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-chevron-circle-right"></i>Manipulation
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="Manipulation.html#Tour">Tour de l'application</a>
+                <a class="dropdown-item" href="Manipulation.html#Drag">Déplacer un composant</a>
+                <a class="dropdown-item" href="Manipulation.html#Add&Delete">Ajout, Suppression entrée</a>
+                <a class="dropdown-item" href="Manipulation.html#AddLabel">Ajout Label</a>
+                <a class="dropdown-item" href="Manipulation.html#Delete">Supprimer Composant</a>
+                <a class="dropdown-item" href="Manipulation.html#Lier">Liaison</a>
+                <a class="dropdown-item" href="Manipulation.html#DeleteWire">Supprimer Liaison</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-chevron-circle-right"></i>Simulation
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="Simulation.html#Simuler">Simuler</a>
+                <a class="dropdown-item" href="Simulation.html#Pause">Pause</a>
+                <a class="dropdown-item" href="Simulation.html#Stop">Stop</a>
+                <a class="dropdown-item" href="Simulation.html#TV">La Table de Verité</a>
+                <a class="dropdown-item" href="Simulation.html#Chrono">Le Chronogramme</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+              <i class="fa fa-chevron-circle-right"></i>Sauvegarde
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="Sauvegarde.html#Save">Sauvegarder travail</a>
+                <a class="dropdown-item" href="Sauvegarde.html#open">Ouverture</a>
+                <a class="dropdown-item" href="Sauvegarde.html#Utilisation">Ré-utilisation</a>
+              </div>
+            </li>
+    </ul>
+  </nav>
+  </div>
+
+  <!-- le contenu videos et exemples -->
+	<section id="exemple">
+		<header class="row">
+    <div class="col" style="height:  100px;">
+    </div>
+  </header>
+		<div class="row" style="margin-left: 10px;">
+    <nav class="col-md-2">
+      <div id="jquery-accordion-menu" class="jquery-accordion-menu" >
+				
+				<ul>
+					<li class="active"><a href="#"><i class="fa fa-angle-double-right"></i>Introduction </a></li>
+					<li><a href="#Tour"><i class="fa fa-angle-double-right"></i>Tour de l'application</a></li>
+          <li><a href="#Drag"><i class="fa fa-angle-double-right"></i>Déplacer un composent</a></li>
+          <li><a href="#Add&Delete"><i class="fa fa-angle-double-right"></i>Ajout, Suppression entrée </a></li>
+          <li><a href="#AddLabel"><i class="fa fa-angle-double-right"></i>Ajout Label</a></li>
+          <li><a href="#Delete"><i class="fa fa-angle-double-right"></i>Supprimer Composant</a></li>
+          <li><a href="#Lier"><i class="fa fa-angle-double-right"></i>Liaison</a></li>
+          <li><a href="#DeleteWire"><i class="fa fa-angle-double-right"></i>Suppression Liaison</a></li>
+				</li>
+			</ul>
+		</div>
+		
+    </nav>
+    <section class="col-md-10">
+      <section id="team">
+        <div class="container">
+          <h3 id="intro">Introduction</h3>
+        </div>
+      </section>
+      <div class="row">
+        <article class="col-lg-12">
+          <div class="intro">
+          <p style="margin-left: 25px;">Bonjour à vous,<br>Manipuler une nouvelle application peut etre difficile au premier abord,mais n'ayez crainte, les tutoriels 
+            suiuvant vont vous faciliter la tache, n'hésitez pas à y jeter un coup d'oeil de temps en temps 
+          </p>
+        </div>
+        <a href="#" id="Tour" style="height: 100px;"> </a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container" >
+              <h3>Un petit Tour ça vous dit ?</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Digix est une application de simulation de circuits logiques, cette derniere contient un plan de travail qui abritera vos circuits,
+             on retrouve à gauche, un menu avec tout les composants mis à votre disposition pour une meilleure experience, et en haut, à droite, des boutons de manipulation descriptif 
+          </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/Presentation.mp4"controls></video></div>
+        </div>
+        <a href="#" id="Drag"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Déplacer un composant</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Comme afficher dans la vidéo ci-dessus, pour utiliser un composent, il faut d'abord cliquer sur ce dernier et le glisser vers l'endroit
+            voulu
+          </p>
+        </div>
+          <div class="text-center"><video class="video" height="260" width="550" src="./img/Drag & Drop.mp4"controls></video></div>
+        </div>
+
+        <!-- Ajout, supp entrée-->
+        <a href="#" id="Add&Delete"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Ajouter et supprimer une entrée</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Sur chaque composant, un menu s'affiche lorsque vous cliquez droit avec votre souris, ce dernier vous permet d'ajouter et de supprimer une entrée,
+            si cela est possible, en selectionnant l'action voulue 
+            voulu
+          </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/Add&Supp.mp4"controls></video></div>
+        </div>
+
+        <!--Label-->
+        <a href="#" id="AddLabel"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Ajouter un Label</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Vous l'avez peut-etre remarquer, chaque composant à un label qui s'affiche lorsque vous le survolez, ce dernier peut etre changer de la 
+            manière montrée sur la vidéo, autrement dit, clic droit et sélection de " Ajouter Label ", une fenetre s'affiche, cette derniere contient une bar pour entrer le nouveau
+            label, ce dernier sera mis en place lorsque l'on appuie sur le boutton
+          </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/Add Label.mp4"controls></video></div>
+        </div>
+
+        <!-- Suppression-->
+        <a href="#" id="Delete"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Supprimer un Composant</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Si un composant ne convient pas à votre solution, n'ayez crainte, il est possible de suprimer ce dernier en deux clics, un clic roit
+            pour afficher le menu et un autre pour selectionner le boutton " Suppression "
+          </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/Suppression.mp4"controls></video></div>
+        </div>
+
+        <!--Liaison-->
+        <a href="#" id="Lier"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Liaison de deux composant</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;">Pour lier entre deux composants, rien de plus simple, il faut sélectionner l'entrée ( ou sortie ) voulue du premier composant
+            et glisser le curseur vers la sortie ( ou entrée ) du deuxième composant  </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/Liaison.mp4"controls></video></div>
+        </div>
+
+        <!-- Suppression Wire-->
+        <a href="#" id="DeleteWire"></a>
+        <div class="exemple1">
+          <section id="team">
+            <div class="container">
+              <h3>Supprimer une liaison</h3>
+            </div>
+         </section>
+         
+          <div class="intro">
+          <p style="margin-left: 25px;"> Pour supprimer une liaison entre deux deux composants, il suffit de cliquer droit sur le fil et sélectionner le boutton "Supprimer"        </p>
+        </div>
+        <div class="text-center"><video class="video" height="260" width="550" src="./img/SuppWire.mp4"controls></video></div>
+        </div>
+
+        </article>
+        
+      </div>
+    </section>
+  </div>
+	</section>
+
+</body>
+</html>
