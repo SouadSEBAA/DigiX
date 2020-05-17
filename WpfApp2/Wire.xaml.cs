@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using logisimConsole;
+using Noyau;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -24,10 +24,6 @@ namespace WpfApp2
     public partial class Wire : UserControl
     {
 
-        /******* En cas on pense à utiliser a grille pour la liaison (vertical et horizontal) ****
-        public PathFigure fil;
-        Dictionary<PolyLineSegment, Gate> existingWires;//Ts les fils dérivés
-        ***************************************/
         private BezierSegment _ls;
         private PathFigure _fil;
         public Gate gateStart { get; set; }//début du fil
@@ -35,9 +31,6 @@ namespace WpfApp2
         public InputOutput io2 { get; set; }
         public Gate gateEnd { get; set; }
         private bool _value;
-
-        
-
 
         public Wire(Point start, Gate gatePrinciple, InputOutput io)
         {
@@ -52,26 +45,20 @@ namespace WpfApp2
             _ls.Point1 = new Point(_fil.StartPoint.X * 0.6 + EndPoint.X * 0.4, _fil.StartPoint.Y);
             _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, _fil.StartPoint.Y);
 
-            //PolyLineSegment pls = new PolyLineSegment(); pls.Points.Add(start); existingWires.Add(pls, null);
-            //fil.Segments.Add(pls);
-
             _fil.Segments.Add(_ls);
             var d = new PathGeometry(new PathFigure[] { _fil });
             wire.Data = d;
             outer.Data = d;
             this.io1 = io;
-            
 
             this.gateStart = gatePrinciple;
 
             Panel.SetZIndex(this, -2);
 
             DataContext = this;
-
-            
         }
 
-       
+
         public bool Connect(Point end, Gate gate, InputOutput io, CircuitPersonnalise circuit)
         {
             gateEnd = gate;
@@ -121,8 +108,8 @@ namespace WpfApp2
         }
 
 
-        public Point StartPoint 
-        { 
+        public Point StartPoint
+        {
             get { return _fil.StartPoint; }
             set { _fil.StartPoint = value; }
         }
@@ -130,8 +117,8 @@ namespace WpfApp2
 
         public Point EndPoint
         {
-            get { return _ls.Point3;}
-            set {_ls.Point3 = value;   }
+            get { return _ls.Point3; }
+            set { _ls.Point3 = value; }
         }
 
         public void Supprimer()
@@ -184,7 +171,7 @@ namespace WpfApp2
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     if (value == true)
-                        wire.Stroke = Brushes.Green; //définir la couleur
+                        wire.Stroke = Brushes.Green;
                     else
                         wire.Stroke = Brushes.Red;
                 });
@@ -192,7 +179,5 @@ namespace WpfApp2
         }
 
         public void stopbutton() { Value = false; wire.Stroke = Brushes.Black; }
-        
-
     }
 }

@@ -1,4 +1,4 @@
-﻿using logisimConsole;
+﻿using Noyau;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,13 @@ using WpfApp2.Noyau;
 
 namespace WpfApp2
 {
-    class AucunPinEntreeException : Exception, IException
+    class AucunPinEntreeException : Exception
     {
-        public Canvas panel { get; set; }
+        Canvas panel;
 
         public AucunPinEntreeException(Canvas p)
         {
-             panel = p;
+            panel = p;
         }
 
         public void Gerer()

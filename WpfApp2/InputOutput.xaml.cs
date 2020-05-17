@@ -1,4 +1,4 @@
-﻿using logisimConsole;
+﻿using Noyau;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,14 +19,13 @@ namespace WpfApp2
     {
 
         public String etiquette { get; set; }
-        //protected String etiquette;
         protected int ID;
         protected Disposition dispo = Disposition.left;
         protected bool etat;
         protected bool IsInput;
 
 
-        public InputOutput(String etiq,int ID, Disposition disposi)
+        public InputOutput(String etiq, int ID, Disposition disposi)
         {
             InitializeComponent();
             this.etiquette = etiq;
@@ -38,11 +37,9 @@ namespace WpfApp2
         public InputOutput(int ID, Disposition disposi)
         {
             InitializeComponent();
-            ///this.etiquette = etiq;
             this.ID = ID;
             this.dispo = disposi;
             this.MouseDoubleClick += MouseClick;
-            // this.MouseEnter += MouseOver2; // for our labels
         }
 
 
@@ -60,11 +57,11 @@ namespace WpfApp2
 
         public void setDispo(Disposition dispo) { this.dispo = dispo; }
 
-        public InputOutput() { InitializeComponent(); etat = false;  }
+        public InputOutput() { InitializeComponent(); etat = false; }
 
         public Disposition GetDisposition() { return dispo; }
 
-           //****************la liaison
+        //****************la liaison
         private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -75,7 +72,6 @@ namespace WpfApp2
                 line.StrokeThickness = 2;
                 line.Stroke = System.Windows.Media.Brushes.Black;
 
-                //la ligne à copier 
                 data.SetData("Object", line);
                 data.SetData("String", "inputoutput");
                 // Inititate the drag-and-drop operation.
@@ -87,16 +83,9 @@ namespace WpfApp2
 
         private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //for the labels
             my_label.Content = this.GetEtiquette();
             this.Cursor = System.Windows.Input.Cursors.Hand;
         }
-
-
-       /* private void MouseOver2(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            my_label.Content = this.GetEtiquette();
-        }*/
 
         private void MouseLeft(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -107,20 +96,16 @@ namespace WpfApp2
         virtual public void setEtat(bool etat)
         {
             this.etat = etat;
-            
-            //exception aprés a fermeture dde la fenetre à regler(une tache annulée)
-            //System.Threading.Tasks.TaskCanceledException : 'Une tâche a été annulée.'
-            //this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,new Action( ()=>
+
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // Code causing the exception or requires UI thread access
                 if (etat == true)
                     elSelector.Fill = Brushes.Green;
                 else
                     elSelector.Fill = Brushes.Red;
 
             });
-            
+
         }
 
 
@@ -130,7 +115,7 @@ namespace WpfApp2
         {
             return this.etat;
         }
-        
+
         public bool isEtat() { return this.etat; }
 
         public String getEtiquette() { return etiquette; }
@@ -139,11 +124,11 @@ namespace WpfApp2
         {
             if (IsInput)
                 setEtat(!this.etat);
-                
+
         }
 
         /***************************************************************/
-        // Pour supprimer un wire lors de la sippression d'une entree
+        // Pour supprimer un wire lors de la suppression d'une entree
         /***************************************************************/
 
         public void Supprimer()

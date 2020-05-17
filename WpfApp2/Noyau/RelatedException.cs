@@ -4,15 +4,14 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using WpfApp2;
 using WpfApp2.Noyau;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
-    public class RelatedException : Exception, IException
+    public class RelatedException : Exception
     {
-        public Canvas panel { get; set; }
+        Canvas panel;
 
         public RelatedException(Canvas p)
         {

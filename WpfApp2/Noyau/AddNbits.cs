@@ -1,23 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace logisimConsole
+
+namespace Noyau
 {
     [Serializable]
     class AddNbits : CircCombinatoire
     {
-        public AddNbits(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
-        public AddNbits() 
+        // Ceci est le constructeur de AddNbit, il est utilisé pour la création de ce dernier
+        // Chaque nouvel instance est représenté comme le décrit le corps du constructeur
+        // Autrement dit, avec 2 d'entées et 2 sorties
+        public AddNbits()
         {
             this.nb_entrees = 2;
             this.nb_sorties = 2;
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             //on crée less listes
-            this.liste_entrees.Add(new ClasseEntree("A",1, Disposition.up, false, false));
-            this.liste_entrees.Add(new ClasseEntree("B",2, Disposition.up, false, false));
-            this.liste_sorties.Add(new Sortie("Somme",0, Disposition.down, false, new List<OutStruct>()));
-            this.liste_sorties.Add(new Sortie("Retenue sortante",1, Disposition.down, false, new List<OutStruct>()));
+            this.liste_entrees.Add(new ClasseEntree("A1", 1, Disposition.up, false, false));
+            this.liste_entrees.Add(new ClasseEntree("B1", 2, Disposition.up, false, false));
+            this.liste_sorties.Add(new Sortie("Somme", 0, Disposition.down, false, new List<OutStruct>()));
+            this.liste_sorties.Add(new Sortie("Retenue sortante", 1, Disposition.down, false, new List<OutStruct>()));
         }
+
+        // Le calcul des sorties se fait de cette facon
         public override void calcul_sorties()
         {
             foreach (Sortie unesortie in this.liste_sorties)
@@ -173,5 +178,4 @@ namespace logisimConsole
             }
         }
     }
-    //*just a test
 }

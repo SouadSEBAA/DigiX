@@ -5,12 +5,11 @@ using System.Threading;
 using System.Text;
 using System.Linq;
 
-namespace logisimConsole
+namespace Noyau
 {
 	[Serializable]
 	public class Horloge : IN
 	{
-		public Outils fin;
 		//Constructeur 
 		public Horloge()
 		{
@@ -20,13 +19,8 @@ namespace logisimConsole
 			this.liste_entrees = new List<ClasseEntree>();
 			this.liste_sorties = new List<Sortie>();
 			this.disposition = Disposition.right;
-			//liste_sorties.Add(new Sortie("Sortie",1, Disposition.down, false, null));
-			//liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
-			//on demare le thread
-	        /*this.mythread = new Thread(new ThreadStart(this.auto));
-			mythread.Start();*/
-			liste_sorties.Add(new Sortie("Sortie Horloge",1, Disposition.right, false, new List<OutStruct>()));
-			liste_entrees.Add(new ClasseEntree("",0, Disposition.left, false, false));
+			liste_sorties.Add(new Sortie("Sortie Horloge", 1, Disposition.right, false, new List<OutStruct>()));
+			liste_entrees.Add(new ClasseEntree("", 0, Disposition.left, false, false));
 		}
 
 		public void Demmarer()
@@ -49,11 +43,10 @@ namespace logisimConsole
 		//***********
 		public void auto()
 		{
-			//fin = circuit.getCircuit().Vertices.Last();
 			bool parti = false;
 			while (!this.stop)
 			{
-				if (stop) {/* mythread.Interrupt();*/ break; }
+				if (stop) { break; }
 				else
 				{
 					if (parti)//etat haut 
@@ -64,7 +57,7 @@ namespace logisimConsole
 					}
 					else//etat bas 
 					{
-						(this.liste_sorties[0]).setEtat(false); 
+						(this.liste_sorties[0]).setEtat(false);
 						this.Calcul();
 						Thread.Sleep(T - UP);
 					}
@@ -76,28 +69,28 @@ namespace logisimConsole
 		}
 
 		//Chronogramme
-		public void auto(object sender, EventArgs e )
+		public void auto(object sender, EventArgs e)
 		{
 			bool parti = false;
 			while (!this.stop)
 			{
-					if (parti)//etat haut 
-					{
-						(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
-						Thread.Sleep(UP);
-					}
-					else//etat bas 
-					{
-						(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
-						Thread.Sleep(T - UP);
-					}
-					parti = !parti;
+				if (parti)//etat haut 
+				{
+					(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
+					Thread.Sleep(UP);
+				}
+				else//etat bas 
+				{
+					(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
+					Thread.Sleep(T - UP);
+				}
+				parti = !parti;
 			}
 
 		}
 
 		//*********
-		
+
 		public override void calcul_sorties() { }
 
 		public void arreter()
@@ -141,7 +134,7 @@ namespace logisimConsole
 
 		public void setUP(int UP)
 		{
-			this.UP =UP;
+			this.UP = UP;
 		}
 
 		public void setT(int T)

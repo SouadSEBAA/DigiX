@@ -25,7 +25,7 @@ namespace WpfApp2
         bool fermer;//fermer tt la fenetre 
         bool ouvrir;//ouvrir un fichier
         bool nouveau;
-        public Close(MainWindow w,bool fermer,bool ouvrir,bool nouveau)
+        public Close(MainWindow w, bool fermer, bool ouvrir, bool nouveau)
         {
             main = w;
             this.fermer = fermer;
@@ -33,10 +33,10 @@ namespace WpfApp2
             this.nouveau = nouveau;
             InitializeComponent();
         }
-       
+
         private void Oui_Click(object sender, RoutedEventArgs e)
         {
-            if(main.filename!=null)//le fichier existe
+            if (main.filename != null)//le fichier existe
             {
                 this.Close();
                 File.Delete(main.filename);
@@ -45,8 +45,6 @@ namespace WpfApp2
                 {
                     main.Close();
                 }
-
-
             }
             else//le fichier n'existe pas deja on doit crée un autre 
             {
@@ -70,7 +68,7 @@ namespace WpfApp2
                     {
                         main.Close();
                     }
-                   
+
                     //melissa 
 
                 }
@@ -147,8 +145,8 @@ namespace WpfApp2
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             main.IsEnabled = true;
-            
-            
+
+
         }
 
         private void btn_MouseEnter(object sender, MouseEventArgs e)

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     public abstract class CircSequentielle : Circuit
@@ -50,35 +50,5 @@ namespace logisimConsole
             }
             liste_entrees[i].setEtat(etat);
         }
-
-        /*
-        private void watchClockEntry()
-        {
-            while (true)
-            {
-                Clock = liste_entrees[0].isEtat();
-                /*if (liste_entrees[0].isEtat() && oldClockValue == false )
-                {
-                    if (Trigger == true)
-                    {
-                        frontDetector = true;
-                        Thread.Sleep(2000); //TO DO: change 2000
-                        frontDetector = false;
-                    }
-                    oldClockValue = true;
-                }
-                else if (!liste_entrees[0].isEtat() && oldClockValue == true)
-                {
-                    if (Trigger == false)
-                    {
-                        frontDetector = true;
-                        Thread.Sleep(2000); //TO DO: change 2000
-                        frontDetector = false;
-                    }
-                    oldClockValue = false;
-                }*/
-        /* frontMontant = liste_entrees[0].isEtat();
-    }*/
     }
-
 }

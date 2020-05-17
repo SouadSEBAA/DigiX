@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     class Decodeur : CircCombinatoire
     {
-        public Decodeur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo) { }
-
-
         public Decodeur()
         {
             this.nb_entrees = 1;
@@ -47,20 +44,20 @@ namespace logisimConsole
             // Decodeur 2 -> 4
             if (nb_entrees == 2)
             {
-                if (liste_entrees[0].isEtat() == false )
+                if (liste_entrees[0].isEtat() == false)
                 {
                     liste_sorties[0].setEtat(true);
                     liste_sorties[1].setEtat(false);
                 }
 
-                if (liste_entrees[0].isEtat() == true )
+                if (liste_entrees[0].isEtat() == true)
                 {
                     liste_sorties[0].setEtat(false);
                     liste_sorties[1].setEtat(true);
                 }
             }
-                // Decodeur 2 -> 4
-                if (nb_entrees == 2)
+            // Decodeur 2 -> 4
+            if (nb_entrees == 2)
             {
                 if (liste_entrees[0].isEtat() == false && liste_entrees[1].isEtat() == false)
                 {

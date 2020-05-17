@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     class EmptyListException : Exception

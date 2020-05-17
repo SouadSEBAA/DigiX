@@ -16,6 +16,7 @@ namespace WpfApp2
         public OneChronogrammeException(Panel panel) { this.panel = panel; }
         public OneChronogrammeException() { this.panel = null; }
 
+        // Pour lever l'exception
         public void Gerer(String s)
         {
             ChronogrammeException message = new ChronogrammeException();
@@ -26,6 +27,7 @@ namespace WpfApp2
             panel.Children.Add(message);
         }
 
+        // Lorsque l'utilisateur clique sur le boutton "Close x", se dernier se ferme 
         public void Close(object sender, MouseEventArgs e)
         {
             panel.Children.Remove((ChronogrammeException)sender);

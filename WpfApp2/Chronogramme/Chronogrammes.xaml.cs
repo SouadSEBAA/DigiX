@@ -9,7 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfApp2.Noyau;
-using logisimConsole;
+using Noyau;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
@@ -42,7 +42,7 @@ namespace WpfApp2.Chronogramme
         {
             InitializeComponent();
 
-            this.circuit = circ; 
+            this.circuit = circ;
             IsReading = false;
             isPause = false;
             watch = new Stopwatch();
@@ -66,7 +66,7 @@ namespace WpfApp2.Chronogramme
                 list = new List<InputOutput>();
                 list.AddRange(v.getListesorties());
                 list.AddRange(v.getListeentrees());
-                ViewModel vm = new ViewModel ( v,list );
+                ViewModel vm = new ViewModel(v, list);
                 newl.Add(vm);
             }
 
@@ -86,18 +86,18 @@ namespace WpfApp2.Chronogramme
         /**********************************************************************/
         private void NextClick(object sender, RoutedEventArgs e)
         {
-                foreach (EssaiChrono item in ChronoStack.Children)
-                {
-                    item.NextClick(); //avancer avec 5 secondes
-                }
+            foreach (EssaiChrono item in ChronoStack.Children)
+            {
+                item.NextClick(); //avancer avec 5 secondes
+            }
         }
         /**********************************************************************/
         private void PreviousClick(object sender, RoutedEventArgs e)
         {
-                foreach (EssaiChrono item in ChronoStack.Children)
-                {
-                    item.PreviousClick();//Retourner avec 5 secondes
-                }
+            foreach (EssaiChrono item in ChronoStack.Children)
+            {
+                item.PreviousClick();//Retourner avec 5 secondes
+            }
         }
 
         /**********************************************************************/
@@ -212,7 +212,8 @@ namespace WpfApp2.Chronogramme
                 try
                 {
                     throw new OneChronogrammeException(Errors);
-                }catch(OneChronogrammeException exception)
+                }
+                catch (OneChronogrammeException exception)
                 {
                     Errors.Children.Clear();
                     exception.Gerer("Supprimez un de vos chronogrammes, puis rajoutez un autre !");

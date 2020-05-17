@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuickGraph;
-using System.Collections.Generic;
 using WpfApp2;
 using WpfApp2.Noyau;
 
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     public abstract class Outils
@@ -22,7 +21,6 @@ namespace logisimConsole
         protected int nb_entrees;
         protected int nb_sorties;
         protected string etiquette;
-        //protected taille taille;
         protected Disposition disposition;
         protected List<ClasseEntree> liste_entrees;
         protected List<Sortie> liste_sorties;
@@ -49,7 +47,6 @@ namespace logisimConsole
             nbrOutils++;
 
             etiquette = "Label_" + (id - 24);
-
         }
 
 
@@ -62,15 +59,6 @@ namespace logisimConsole
             this.liste_entrees = liste_entrees;
         }
 
-        /*
-                //Constructeur pour la porte non -cas speciale- car elle a une seule entree
-                public Outils(string etiquette, List<ClasseEntree> liste_entrees)
-                {
-                    this.etiquette = etiquette;
-                    this.liste_entrees = liste_entrees;
-                }
-        */
-
         //pour fixer le nombre de sorties a 1 pour les portes logique
         public void setnb_sorties(int i) { this.nb_sorties = i; }
 
@@ -79,6 +67,7 @@ namespace logisimConsole
 
         //un getter et un setter pour la liste de sortie
         public List<Sortie> get_liste_sortie() { return liste_sorties; }
+
         public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
 
         public void setSortieSpe(int i, bool etat)
@@ -142,7 +131,7 @@ namespace logisimConsole
         public Sortie GetSortie(Sortie sortie)
         {
             int i = GetInt(sortie);
-            if ( i != -1)
+            if (i != -1)
             {
                 return liste_sorties[i];
             }
@@ -208,29 +197,6 @@ namespace logisimConsole
             return liste_sorties[i];
         }
 
-        //essai
-        public Outils(int nb_entrees, int nb_sorties)
-        {
-            liste_sorties = new List<Sortie>(nb_sorties);
-            liste_entrees = new List<ClasseEntree>(nb_entrees);
-            this.nb_sorties = nb_sorties;
-            this.nb_entrees = nb_entrees;
-
-            ClasseEntree entree;
-            for (int i = 0; i < nb_entrees; i++)
-            {
-                entree = new ClasseEntree("entree", i, Disposition.left, false, false);
-                liste_entrees.Add(entree);
-            }
-
-            Sortie sortie;
-            for (int i = 0; i < nb_sorties; i++)
-            {
-                sortie = new Sortie("sortie", 0, Disposition.right, false, new List<OutStruct>());
-                liste_sorties.Add(sortie);
-            }
-        }
-
         public bool SortieVide()
         {
             bool etatSortie = false;
@@ -253,23 +219,22 @@ namespace logisimConsole
         }
 
         //construiction de la liste de fin d'un element
-        public void EndCircuit(IN iN, ICollection<Edge<Outils>> hs)
+        public void EndCircuit(IN iN)
         {
             Outils o = this;
+
 
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-                    if (!hs.Contains(edge))
+
+
+                    if ((edge.Target is PinOut) || edge.Target.Empty())
                     {
-                        hs.Add(edge);
-                        if ((edge.Target is PinOut) || edge.Target.Empty())
-                        {
-                            iN.getEndListe().Add(edge.Target);
-                        }
-                        else { edge.Target.EndCircuit(iN, hs); }
+                        iN.getEndListe().Add(edge.Target);
                     }
+                    else { edge.Target.EndCircuit(iN); }
                 }
             }
 
@@ -303,6 +268,6 @@ namespace logisimConsole
             throw new System.NotImplementedException();
         }
     }
- 
+
 
 }

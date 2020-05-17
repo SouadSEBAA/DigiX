@@ -1,4 +1,3 @@
-using logisimConsole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +8,16 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading.Tasks;
 
-namespace WpfApp2.Noyau
+namespace Noyau
 {
     [Serializable]
     public class PinOut : Outils, INotifyPropertyChanged
     {
-        public PinOut(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo) : base(entree, etiq, liste_e, dispo)
-        {
-            /*  this.nb_entrees = 1;
-              this.nb_sorties = 0;
-              this.etiquette = "Pin sortie";
-              this.liste_entrees = new List<ClasseEntree>();
-              this.liste_sorties = new List<Sortie>();
-              this.disposition = Disposition.right;
-              liste_sorties.Add(new Sortie(0, Disposition.down, false, null));
-              liste_entrees.Add(new ClasseEntree(1, Disposition.left, false, false));*/
-
-        }
         public PinOut()
         {
             etiquette = "PinSortie" + (id - 24);
             this.nb_entrees = 1;
             this.nb_sorties = 0;
-            //this.etiquette = "Pin sortie";
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             this.disposition = Disposition.right;
@@ -43,7 +29,7 @@ namespace WpfApp2.Noyau
 
         public override void calcul_sorties()
         {
-            //throw new NotImplementedException();
+
         }
 
         public override void setEntreeSpe(int i, bool etat)
@@ -53,16 +39,16 @@ namespace WpfApp2.Noyau
         }
 
 
-    protected void NotifyPropertyChanged(string property)
-    {
-        if (PropertyChanged != null)
-            PropertyChanged(this, new PropertyChangedEventArgs(property));
+        protected void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    } 
-            
 
 }
 

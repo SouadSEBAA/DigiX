@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     public class OutStruct
@@ -15,7 +15,7 @@ namespace logisimConsole
 
         }
 
-        //public Outstruct(){ }
+        public OutStruct() { }
         public void setOutil(Outils outil) { outils = outil; }
         public Outils getOutils() { return this.outils; }
         public ClasseEntree GetEntree() { return this.entree; }
@@ -30,11 +30,5 @@ namespace logisimConsole
         {
             return outils.getListeentrees().IndexOf(entree);
         }
-
-        /*essai
-        public ClasseEntree getEntree()
-        {
-            return outils.getEntreeSpecifique(num_entree);
-        }*/
     }
 }

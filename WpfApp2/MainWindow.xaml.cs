@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using logisimConsole;
+using Noyau;
 using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
@@ -29,6 +29,7 @@ using System.Xml;
 using WpfApp2.TTPack;
 using System.Windows.Controls.Primitives;
 using System.Xml.Linq;
+using System.Globalization;
 
 namespace WpfApp2
 {
@@ -49,42 +50,10 @@ namespace WpfApp2
             circuit = new CircuitPersonnalise();
             Wires = new List<Wire>();
 
-            //Suppression d'un Gate
             Grille.AddHandler(Gate.DeletingGateEvent, new RoutedEventHandler(Supprimer));
-
-            ///test sequentiel
-            //T
-            /*
-             T basculeT = new T(); circuit.AddComponent(basculeT);
-             basculeT.getEntreeSpecifique(3).setEtat(true);//T
-             basculeT.getEntreeSpecifique(2).setEtat(true);//Clr
-             basculeT.getEntreeSpecifique(1).setEtat(true);//Pr
-             //D
-             D basculeD = new D(); circuit.AddComponent(basculeD);
-             basculeD.getEntreeSpecifique(3).setEtat(true);//T
-             basculeD.getEntreeSpecifique(2).setEtat(true);//Clr
-             basculeD.getEntreeSpecifique(1).setEtat(true);//Pr
-             //Et
-             ET et = new ET();circuit.AddComponent(et);
-             //horloge
-             Horloge horloge = new Horloge();circuit.AddComponent(horloge);
-             horloge.circuit = circuit;
-             //relation
-             circuit.Relate(horloge, basculeT, 0, 0);
-             circuit.Relate(horloge, basculeD, 0, 0);
-             circuit.Relate(basculeT, et, 0, 0);
-             circuit.Relate(basculeD, et, 0, 1);
-             horloge.fin = et;
-             horloge.Demmarer();*/
-            //seriaisation 
-
-            Grille.AddHandler(Gate.MAJwiresEvent, new RoutedEventHandler(Redraw2));
             Grille.AddHandler(Wire.SuppwireEvent, new RoutedEventHandler(Supp_Wire));
             Grille.AddHandler(InputOutput.SupprimerWireEvent, new RoutedEventHandler(SupprimerWire));
 
-            //Exceptions
-            //Exceptions exceptions = new Exceptions();
-            //liste_Exceptions = Exceptions.set;
         }
 
 
@@ -223,12 +192,6 @@ namespace WpfApp2
             }
         }
 
-        public void Redraw2(object sender, RoutedEventArgs e)
-        {
-            Redraw();
-            e.Handled = true;
-        }
-
         /******************************************************************************/
         // Pour 
         /*****************************************************************************/
@@ -282,9 +245,9 @@ namespace WpfApp2
             {
                 foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                 {
-                    if (elmnt is CircSequentielle || elmnt is Horloge) seq = true;
-                    else if (elmnt is PinIn) pinentree = true;
-                    else if (elmnt is PinOut)
+                    if (elmnt is CircSequentielle) seq = true;
+                    if (elmnt is PinIn) pinentree = true;
+                    if (elmnt is PinOut)
                     {
                         key = true;
                         //break;
@@ -294,21 +257,29 @@ namespace WpfApp2
                 {
                     if (pinentree)
                     {
-                        if (key) //S'il existe aucun pin sortie
+                        if (key) //S'il existe aucun composant séquentiel
                         {
                             TableVerites tv = new TableVerites(circuit.GetCircuit());
                             tv.Show();
                         }
                         else
                         {
-                            try
+                            //To remove the exceptions 
+                            if (Exceptions.set.Count != 0)
                             {
-                                throw new AucunPinSortieException(Grille);
+                                Grille.Children.Remove(Exceptions.set[0]);
+                                Exceptions.set.Remove(Exceptions.set[0]);
                             }
-                            catch (AucunPinSortieException exception)
-                            {
-                                exception.Gerer();
-                            }
+
+                            ExceptionMessage message = new ExceptionMessage();
+                            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
+                            message.Opacity = 0.5;
+                            message.MouseDown += Close;
+                            Grille.Children.Add(message);
+                            Exceptions.set.Add(message);
+                            //set.Add(message);
+                            Canvas.SetLeft(message, 300);
+                            Canvas.SetTop(message, 20);
                         }
                     }
                     else
@@ -386,9 +357,6 @@ namespace WpfApp2
         protected override void OnDragLeave(DragEventArgs e)
         {
             base.OnDragLeave(e);
-            //Si la grille contient l'element in le supprime 
-            // Undo the preview that was applied in OnDragEnter.
-
         }
 
         //nos controleurs de Drag &Drop 
@@ -451,7 +419,7 @@ namespace WpfApp2
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
-            string path = @".\..\..\..\HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
+            string path = @"HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
 
@@ -485,7 +453,7 @@ namespace WpfApp2
             //Last_Elements(); //idk if this is needed based on what has been done below
             //Vérifier si les éléments sont reliés
             if (circuit.getCircuit().VertexCount != 0)
-            { if (circuit.getUnrelatedGates().Count != 0)
+                if (circuit.getUnrelatedGates().Count != 0)
                 {
                     try
                     {
@@ -498,63 +466,38 @@ namespace WpfApp2
                 }
                 else
                 {
-                    bool pinsortie = false ;
-                    foreach (Outils elmnt in circuit.GetCircuit().Vertices)
+
+                    //To remove the exceptions 
+                    if (Exceptions.set.Count != 0)
+                        Close(null, null);
+
+
+                    //In order to show the pause/stop buttons --------------------------------------------
+                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+                    if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                    simuler.Visibility = Visibility.Collapsed;
+                    clock.Visibility = Visibility.Collapsed;
+                    //-----------------------------------------------------------------------------------
+
+                    //To stop changes while simulating
+                    Tools.IsEnabled = false;
+                    FichierButton.IsEnabled = false;
+                    foreach (UserControl uc in Grille.Children)
                     {
-                        if (elmnt is PinOut)
+                        if (uc is Gate)
                         {
-                            pinsortie = true;
-                            break;
+                            (uc as Gate).path.ContextMenuOpening += HitContextMenu;
+                        }
+                        if (uc is Wire)
+                        {
+                            uc.ContextMenuOpening += HitContextMenu;
                         }
                     }
 
-                    if (!pinsortie)
-                    {
-                        try
-                        {
-                            throw new AucunPinSortieException(Grille);
-                        }
-                        catch (AucunPinSortieException exception)
-                        {
-                            exception.Gerer();
-                        }
-                    }
-                    else {
+                    circuit.EvaluateCircuit();
+                    circuit.setSimulation(true);
 
-                        //To remove the exceptions 
-                        if (Exceptions.set.Count != 0)
-                            Close(null, null);
-
-
-                        //In order to show the pause/stop buttons --------------------------------------------
-                        if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
-                        if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-                        simuler.Visibility = Visibility.Collapsed;
-                        clock.Visibility = Visibility.Collapsed;
-                        //-----------------------------------------------------------------------------------
-
-                        //To stop changes while simulating
-                        Tools.IsEnabled = false;
-                        FichierButton.IsEnabled = false;
-                        foreach (UserControl uc in Grille.Children)
-                        {
-                            if (uc is Gate)
-                            {
-                                (uc as Gate).path.ContextMenuOpening += HitContextMenu;
-                            }
-                            if (uc is Wire)
-                            {
-                                uc.ContextMenuOpening += HitContextMenu;
-                            }
-                        }
-
-
-                        //melissa
-
-                        circuit.EvaluateCircuit();
-                        circuit.setSimulation(true);
-
-                    } } }
+                }
         }
 
         private void HitContextMenu(object sender, ContextMenuEventArgs e)
@@ -562,10 +505,10 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-            private void open_tut(object sender, RoutedEventArgs e)
+        private void open_tut(object sender, RoutedEventArgs e)
         {
             //takes us directly to the tutorial page
-            string path = @".\..\..\..\HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
+            string path = @".\..\..\..\HelpSite\Aide.html";
             System.Diagnostics.Process.Start(path);
         }
 
@@ -761,9 +704,9 @@ namespace WpfApp2
         {
 
             //sauvegarde du present
-            Close window = new Close(this, false, true,false);
+            Close window = new Close(this, false, true, false);
             window.Show();
-            
+
         }
         //deserialisation gate 
         public Gate LoadGate(XElement gate)
@@ -771,12 +714,12 @@ namespace WpfApp2
             Gate abgate = CreateGate(gate);
             //l'emplacement
             //anchorpoint
-            double x = double.Parse(gate.Element("anchorPoint").Attribute("X").Value);
-            double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value);
+            double x = double.Parse(gate.Element("anchorPoint").Attribute("X").Value, CultureInfo.InvariantCulture);
+            double y = double.Parse(gate.Element("anchorPoint").Attribute("Y").Value, CultureInfo.InvariantCulture);
             abgate.anchorPoint = new Point(x, y);
             //transform point 
-            x = double.Parse(gate.Element("transform").Attribute("X").Value);
-            y = double.Parse(gate.Element("transform").Attribute("Y").Value);
+            x = double.Parse(gate.Element("transform").Attribute("X").Value, CultureInfo.InvariantCulture);
+            y = double.Parse(gate.Element("transform").Attribute("Y").Value, CultureInfo.InvariantCulture);
             abgate.transform.X += x;
             abgate.transform.Y += y;
             abgate.RenderTransform = abgate.transform;
@@ -816,7 +759,7 @@ namespace WpfApp2
                     ClasseEntree classeEntree = gate1.outil.getListeentrees()[y0];
                     classeEntree.setDispo(Disposition.left);
                     classeEntree.setRelated(false);
-                   ((Grid)(classeEntree.Parent)).Children.Remove(classeEntree);
+                    ((Grid)(classeEntree.Parent)).Children.Remove(classeEntree);
                     abgate.outil.AjoutEntree(classeEntree);
                     abgate.getE_left().Insert(0, classeEntree);
 
@@ -831,7 +774,7 @@ namespace WpfApp2
                     sortie.set_Sorties(new List<OutStruct>());
                     sortie.setDispo(Disposition.right);
                     ((Grid)(sortie.Parent)).Children.Remove(sortie);
-                    
+
                     abgate.outil.AjoutSortie(sortie);
                     abgate.getS_right().Insert(0, sortie);
 
@@ -844,7 +787,7 @@ namespace WpfApp2
             return abgate;
         }
         //recuperer les relations 
-        public Wire LoadWire(XElement wire,CircuitPersonnalise circuit)
+        public Wire LoadWire(XElement wire, CircuitPersonnalise circuit)
         {
             //id
             int idStart = int.Parse(wire.Element("gatestart").Attribute("ID").Value);
@@ -860,7 +803,7 @@ namespace WpfApp2
             Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
             InputOutput IN1, IN2;
             //on recupere les gate qui ont ces identifiants
-            Gate gatestart = Recuplist(idStart,circuit.gates), gateend = Recuplist(idEnd,circuit.gates);
+            Gate gatestart = Recuplist(idStart, circuit.gates), gateend = Recuplist(idEnd, circuit.gates);
             Console.WriteLine("gateEntrée" + gatestart.outil.getnbrentrees());
             Console.WriteLine("gateEnd" + gateend.outil.getnbrentrees());
             if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
@@ -893,8 +836,8 @@ namespace WpfApp2
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
             {
-                
-                Gate abgate = LoadGate(gate);Console.WriteLine("deserealisation " + abgate.GetType().Name);
+
+                Gate abgate = LoadGate(gate); Console.WriteLine("deserealisation " + abgate.GetType().Name);
                 Grille.Children.Add(abgate);
                 this.circuit.AddComponent(abgate.outil);
                 ((CircuitPersonnalise)this.circuit).gates.Add(abgate);
@@ -908,7 +851,7 @@ namespace WpfApp2
             //Wires 
             foreach (XElement wire in root.Element("Wires").Elements())
             {
-                Wire w = LoadWire(wire,this.circuit);
+                Wire w = LoadWire(wire, this.circuit);
                 Grille.Children.Add(w);
                 this.Wires.Add(w);
 
@@ -990,7 +933,7 @@ namespace WpfApp2
             }
             return null;
         }
-        
+
 
 
 
@@ -1027,7 +970,7 @@ namespace WpfApp2
             dlg.FileName = "Capture"; // Default file name
             dlg.DefaultExt = ".png"; // Default file extension
             dlg.Filter = "PNG |*.png"; // Filter files by extension
-                                                 // Show save file dialog box
+                                       // Show save file dialog box
             Nullable<bool> result = dlg.ShowDialog();
 
             // Process save file dialog box results
@@ -1038,9 +981,6 @@ namespace WpfApp2
                 this.filename = filename;
                 CreateScreenShot(this, this.filename);
             }
-            //to inform theuser that the screeshot was created successfully
-            //MessageBox.Show("Votre Capture d'ecran a ete enregistree.", "Capture D'ecran", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-
         }
 
         //*************************************Reutilisation******************************************
@@ -1055,20 +995,15 @@ namespace WpfApp2
             if (result == true)
             {
                 string filename = dlg.FileName;
-                String nom = dlg.SafeFileName.Replace(".xaml"," ");
-                CircuitPersonnalise personnalise = Reutilisation(filename);personnalise.setLabel(nom);
+                String nom = dlg.SafeFileName.Replace(".xaml", " ");
+                CircuitPersonnalise personnalise = Reutilisation(filename); personnalise.setLabel(nom);
                 CircuitComplet gate = new CircuitComplet(personnalise);
-                
+
                 Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
                 Console.WriteLine("height " + gate.ActualHeight + "width" + gate.Width);
                 this.circuit.AddComponent(personnalise);
                 gate.added = true;
                 Grille.Children.Add(gate);
-                /*
-                Console.WriteLine("done");
-                Canvas.SetLeft(gate, 50);
-                Canvas.SetTop(gate,50);*/
-
             }
         }
 
@@ -1080,9 +1015,9 @@ namespace WpfApp2
             //Gates
             foreach (XElement gate in root.Element("Gates").Elements())
             {
-                Gate abgate =LoadGate(gate);
+                Gate abgate = LoadGate(gate);
                 nouveauCircuit.gates.Add(abgate);
-               // list.Add(abgate);
+                // list.Add(abgate);
                 nouveauCircuit.AddComponent(abgate.outil);
                 Console.WriteLine("comp added : " + abgate.GetType());
                 abgate.added = true;
@@ -1091,17 +1026,17 @@ namespace WpfApp2
             //Wires 
             foreach (XElement wire in root.Element("Wires").Elements())
             {
-                
+
                 Wire w = LoadWire(wire, nouveauCircuit);
                 nouveauCircuit.wires.Add(w);
                 Console.WriteLine("wire added : " + w.gateStart.GetType() + " and " + w.gateEnd.GetType());
             }
             nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
             nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
-           // nouveauCircuit.setLabel(filename);
-            //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
-            //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
-            //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
+                                             // nouveauCircuit.setLabel(filename);
+                                             //on parcourt la liste des sortie et on ajoute les sorties non liées et celle liées à un pinout à la liste des sorties du circuit 
+                                             //on parcourt les composants et ceux qui ont une sortie non liée on l'ajoute à ,otre liste des sorties
+                                             //on parcourt la liste des pinin et des horloge et on les ajoute à notre liste d'entrées du circuit 
 
             return nouveauCircuit;
         }
@@ -1121,10 +1056,6 @@ namespace WpfApp2
         //**************************************END OF MENU BUTTONS*******************************//
 
 
-
-
-
-
         public IEnumerator GetEnumerator()
         {
             throw new NotImplementedException();
@@ -1133,22 +1064,19 @@ namespace WpfApp2
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)
         {
-                foreach (Outils o in circuit.getCircuit().Vertices)
+            foreach (Outils o in circuit.getCircuit().Vertices)
+            {
+                if (o is Horloge)
                 {
-                    if (o is Horloge)
-                    {
-                        ((Horloge)o).arreter();
-                    }
+                    ((Horloge)o).arreter();
                 }
+            }
 
-            /*Remove any exception if left
-            if (Exceptions.set.Count != 0)
-                Grille.Children.Remove(Exceptions.set[0]);*/
 
             //on ajoute la fenetre
-            if (Grille.Children.Count != 0 || filename!=null)
+            if (Grille.Children.Count != 0 || filename != null)
             {
-                Window window = new Close(this, true,false,false);
+                Window window = new Close(this, true, false, false);
                 window.Show();
                 window.HorizontalAlignment = HorizontalAlignment.Center;
                 window.VerticalAlignment = VerticalAlignment.Center;
@@ -1183,36 +1111,35 @@ namespace WpfApp2
             simuler.Visibility = Visibility.Visible;
         }
 
-       
+
 
         private void stop_click(object sender, RoutedEventArgs e)
         {
-            int i = 0; int j = 0; //need this to make sure it works --on console only--
+            int i = 0; int j = 0;
             Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
 
             foreach (Outils o in circuit.getCircuit().Vertices)
             {
                 if (o is Horloge) { ((Horloge)o).arreter(); }
-                if (o is PinIn) 
+                if (o is PinIn)
                 {
-                        Console.WriteLine("----------------Pins------------------");
-                        Console.WriteLine("Was : " + o.getListeentrees()[0].getEtat());
-                        o.getListeentrees()[0].setEtat(false);
-                        ((PinIn)(o)).Calcul();
-                        Console.WriteLine("is : " + o.getListeentrees()[0].getEtat());
-                        Console.WriteLine("---------------- Fin Pins------------------");
+                    Console.WriteLine("----------------Pins------------------");
+                    Console.WriteLine("Was : " + o.getListeentrees()[0].getEtat());
+                    o.getListeentrees()[0].setEtat(false);
+                    ((PinIn)(o)).Calcul();
+                    Console.WriteLine("is : " + o.getListeentrees()[0].getEtat());
+                    Console.WriteLine("---------------- Fin Pins------------------");
                 }
-              
-                Console.WriteLine("l'outil :"+o);
 
-                foreach (ClasseEntree c_e in o.getListeentrees()) 
+                Console.WriteLine("l'outil :" + o);
+
+                foreach (ClasseEntree c_e in o.getListeentrees())
                 {
                     i++;
-                    Console.WriteLine("input number : "+i);
+                    Console.WriteLine("input number : " + i);
                     //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
                     Console.WriteLine("etat avant 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
-                    //c_e.setRelated(false);
                     c_e.setEtat(false);
                     c_e.stopbutton();
                     Console.WriteLine("etat apres 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
@@ -1222,10 +1149,10 @@ namespace WpfApp2
                 {
                     j++;
                     Console.WriteLine("output number : " + j);
-                    Console.WriteLine("etat avant"+s.getEtat());
+                    Console.WriteLine("etat avant" + s.getEtat());
                     s.setEtat(false);
                     s.stopbutton();
-                    Console.WriteLine("etat avant:"+s.getEtat());
+                    Console.WriteLine("etat avant:" + s.getEtat());
                 }
             }
             foreach (Wire w in Wires)
@@ -1244,7 +1171,7 @@ namespace WpfApp2
             if (Exceptions.set.Count != 0)
                 Close(null, null);
 
-            //Souad : To enable context menus
+
             Tools.IsEnabled = true;
             FichierButton.IsEnabled = true;
 
@@ -1254,21 +1181,19 @@ namespace WpfApp2
                 {
                     (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
 
-                    //jimin
                     if (uc is pin_entree)
                     {
                         ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
                     }
-                    //fin
                 }
 
                 if (uc is Wire)
                     uc.ContextMenuOpening -= HitContextMenu;
             }
-            }
+        }
 
 
-        
+
 
         public void reset_clock()
         {
@@ -1281,13 +1206,6 @@ namespace WpfApp2
             }
         }
 
-        
-        private void circuit_click(object sender, MouseButtonEventArgs e)
-        {
-            //for the 'circuit personnalise' button 
-            
-        }
-
         private void clock_click(object sender, RoutedEventArgs e)
         {
             reset_clock();
@@ -1295,10 +1213,9 @@ namespace WpfApp2
 
         private void new_Click(object sender, RoutedEventArgs e)
         {
-            if (Grille.Children.Count != 0 || filename!=null)
+            if (Grille.Children.Count != 0 || filename != null)
             {
-                
-                Close window = new Close(this, false, false,true);
+                Close window = new Close(this, false, false, true);
                 window.Show();
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using WpfApp2;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     public class Sortie : InputOutput, INotifyPropertyChanged
@@ -13,14 +13,14 @@ namespace logisimConsole
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
-        public Sortie(String e,int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(e,ID, disposi)
+        public Sortie(String e, int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(e, ID, disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;
             IsInput = false;
         }
 
-        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base( ID, disposi)
+        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(ID, disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;
@@ -28,9 +28,9 @@ namespace logisimConsole
         }
 
 
-        public void set_Sorties(List<OutStruct> Sorties) 
-        { 
-            this.Sorties = Sorties; 
+        public void set_Sorties(List<OutStruct> Sorties)
+        {
+            this.Sorties = Sorties;
         }
 
         public void DeleteOustruct(Outils outil, ClasseEntree t)
@@ -52,8 +52,6 @@ namespace logisimConsole
             Sorties.Remove(outStruct);
         }
 
-        //public  void set_Etat_Class_Sortie(bool etat) { this.etat = etat; }
-        //public  bool get_Etat_Class_Sortie() { return etat; }
         public List<OutStruct> get_OutStruct() { return Sorties; }
 
         public virtual OutStruct getSortieSpecifique(int i)
@@ -61,14 +59,11 @@ namespace logisimConsole
             return Sorties[i];
         }
 
-        //essai
         public override void setEtat(bool etat)
         {
             base.setEtat(etat);
             foreach (OutStruct outstruct in Sorties)
             {
-                //outstruct.getEntree().setEtat(etat);
-                //outstruct.GetEntree().setEtat(etat);
                 outstruct.getOutils().setEntreeSpe(outstruct.getNumEntree(), etat);
             }
             NotifyPropertyChanged("etat");
@@ -82,12 +77,10 @@ namespace logisimConsole
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-
         //Supression elemnt
         public void DeleteOustruct(Outils outil)
         {
-            
+
             for (int i = Sorties.Count - 1; i >= 0; i--)
             {
                 if (Sorties[i].getOutils().Equals(outil))

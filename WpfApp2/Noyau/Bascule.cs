@@ -3,27 +3,30 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using WpfApp2;
 
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
     public abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;
 
+        // Premier constructeur de Bascule
         public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, 2, etiquette, dispo)
         {
             Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie("sortie",1, dd, false, null);
-            tab[1] = new Sortie("sortie",1, dd, false, null);
+            tab[0] = new Sortie("sortie", 1, dd, false, null);
+            tab[1] = new Sortie("sortie", 1, dd, false, null);
 
             liste_sorties = new List<Sortie>(tab);
-
         }
-        public Bascule() :base()
+
+        // 2eme construction de Bascule
+        public Bascule() : base()
         {
-            
+
         }
 
+        // Cette methode calcule les sorties, dans le cas de l'etat synchrone
         public override void calcul_sorties()
         {
             try
@@ -31,10 +34,12 @@ namespace logisimConsole
                 if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
                     if ((((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas != null)
                         throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
-            }catch(PresetClearException e)
+            }
+            catch (PresetClearException e)
             { e.Gerer(); }
         }
 
+        // Cette methode calcule les sorties, dans le ca asynchrone
         public void calcul_sorties_asynch()
         {
             //Asynchrone

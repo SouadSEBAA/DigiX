@@ -1,4 +1,4 @@
-﻿using logisimConsole;
+﻿using Noyau;
 using Microsoft.Research.DynamicDataDisplay.Charts;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
 using System;
@@ -29,7 +29,7 @@ namespace WpfApp2.Chronogramme
     {
         public ObservableDataSource<MeasureModel> dataSource = new ObservableDataSource<MeasureModel>();
         TimeSpanAxis d = new TimeSpanAxis();
-        
+
         int a = 16;
         double xMin;
         double startXMax;
@@ -58,7 +58,7 @@ namespace WpfApp2.Chronogramme
 
             //Bind the data with the graph
             chrono.DataSource = dataSource;
-           
+
             //Labels
             if (io.Parent != null)
                 Legend.SetDescription(chrono, io.getEtiquette() + "_" + (((io.Parent as Grid).Parent as Canvas).Parent as Gate).outil.getLabel());
@@ -79,7 +79,7 @@ namespace WpfApp2.Chronogramme
                     {
 
                         Thread.Sleep(1);
-                        
+
                         dataSource.AppendAsync(Application.Current.Dispatcher, new MeasureModel
                         {
                             interval = Chronogrammes.watch.Elapsed,

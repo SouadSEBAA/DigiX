@@ -1,5 +1,4 @@
-﻿using logisimConsole;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Noyau;
+using Noyau;
 
 namespace WpfApp2
 {
-    class TVCompSeqException :  Exception, IException
+    class TVCompSeqException : Exception
     {
-        public Canvas panel { get; set; }
+        Canvas panel;
 
         public TVCompSeqException(Canvas p)
         {
@@ -22,7 +22,7 @@ namespace WpfApp2
         public void Gerer()
         {
             ExceptionMessage message = new ExceptionMessage();
-            message.textMessage.Text = "  ATTENTION Il existe des composants séquentiels  !";
+            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Entrée  !";
             message.Opacity = 0.5;
             message.MouseDown += Close;
             //To remove the exceptions 

@@ -1,19 +1,14 @@
-using logisimConsole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfApp2.Noyau
+namespace Noyau
 {
     [Serializable]
     class PinIn : IN
     {
-        public PinIn(int entree, string etiq, List<ClasseEntree> liste_e, Disposition dispo)// : base(entree, etiq, liste_e, dispo)
-        {
-           
-        }
         public PinIn()
         {
             etiquette = "PinEntrée_" + (id - 24);
@@ -23,7 +18,7 @@ namespace WpfApp2.Noyau
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             disposition = Disposition.right;
-            liste_sorties.Add(new Sortie("Sortie",0, Disposition.right, false, new List<OutStruct>()));
+            liste_sorties.Add(new Sortie("Sortie", 0, Disposition.right, false, new List<OutStruct>()));
             liste_entrees.Add(new ClasseEntree("Entrée", 0, Disposition.left, false, false));
         }
 

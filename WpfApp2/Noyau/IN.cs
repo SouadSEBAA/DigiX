@@ -7,7 +7,7 @@ using QuickGraph;
 using WpfApp2;
 using WpfApp2.Noyau;
 
-namespace logisimConsole
+namespace Noyau
 {
     public abstract class IN : Outils
     {
@@ -24,10 +24,9 @@ namespace logisimConsole
 
         public void Calcul()
         {
-           if (this.circuit.getSimulation())
+            if (this.circuit.getSimulation())
             {
-                ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
-                this.EndCircuit(this, hs);
+                this.EndCircuit(this);
                 this.circuit.EvaluateCircuit(this);
             }
         }

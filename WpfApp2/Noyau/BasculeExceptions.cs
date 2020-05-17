@@ -10,13 +10,11 @@ using System.Windows.Media;
 using WpfApp2;
 using WpfApp2.Noyau;
 
-namespace logisimConsole
+namespace Noyau
 {
-    public class BasculeExceptions : Exception, IException
+    public class BasculeExceptions : Exception
     {
-        protected InputOutput io1, io2; 
-        public Canvas panel { get; set; }
-
+        protected InputOutput io1, io2; protected Canvas panel;
         protected ExceptionMessage message;
 
         public BasculeExceptions(InputOutput io1, InputOutput io2, Canvas p)
@@ -65,7 +63,7 @@ namespace logisimConsole
         public RSTException(InputOutput io1, InputOutput io2, Canvas p) : base(io1, io2, p) { }
         public override void Gerer()
         {
-                base.Gerer();
+            base.Gerer();
             Application.Current.Dispatcher.Invoke(() =>
             {
 

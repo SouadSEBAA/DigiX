@@ -7,10 +7,10 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Xml.Linq;
 using System.Windows;
-namespace logisimConsole
+namespace Noyau
 {
     [Serializable]
-    public class CircuitPersonnalise :Outils
+    public class CircuitPersonnalise : Outils
     {
         private bool Sauvegardé;
         private bool simulation;
@@ -42,47 +42,14 @@ namespace logisimConsole
         {
             liste_entrees = new List<ClasseEntree>(nb_entrees);
             liste_sorties = new List<Sortie>(nb_sorties);
-
-            //à décommenter
-            //this.nb_entrees = nbentree;
-            //this.nb_sorties = nbsortie;
         }
 
-        
+
         public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> grph)
         {
             this.Circuit = grph;
             CompFinaux = new List<Outils>();
         }
-
-
-        //Relate for console
-        /*public bool Relate(Outils component1, Outils component2, int num_sortie, int num_entree)
-        { 
-            if (!component2.getEntreeSpecifique(num_entree).getRelated() ) //Si l'entrée de component2 n'est pas reliée
-            {
-                OutStruct outstruct = new OutStruct(num_entree, component2);
-                if (!component1.getSortieSpecifique(num_sortie).get_OutStruct().Contains(outstruct))
-                {
-                    component1.getSortieSpecifique(num_sortie).get_OutStruct().Add(outstruct);//Mise à jour des liaison
-                    component2.getEntreeSpecifique(num_entree).setRelated(true);//Mise à jour de related
-                }
-
-                if (!Circuit.ContainsEdge(component1, component2))//Si il n'y a pas un edge déja présent liant component1 et component2
-                {
-                    Edge<Outils> edge = new Edge<Outils>(component1, component2);
-                    Circuit.AddEdge(edge); //Ajouter edge entre component1 et component2
-                }
-
-                component2.getEntreeSpecifique(num_entree).setEtat(component1.getSortieSpecifique(num_sortie).getEtat());//Mise à jour de l'état d'entree de component2
-                return true; // component1 et component2 liées avec succès
-            }
-            else
-            {
-                return false;
-            }
-        }
-        */
 
         //Relate for graphique
         public bool Relate(Outils component1, Outils component2, Sortie sortie, ClasseEntree entree)
@@ -93,7 +60,7 @@ namespace logisimConsole
             {
                 Console.WriteLine(component1.GetType() + "          ");
 
-                Console.WriteLine(component2.GetType() + "          " );
+                Console.WriteLine(component2.GetType() + "          ");
 
                 OutStruct outstruct = new OutStruct(entree, component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
@@ -136,7 +103,7 @@ namespace logisimConsole
         {
             bool empty = true;
 
-            foreach (Sortie s in outil.get_liste_sortie()) 
+            foreach (Sortie s in outil.get_liste_sortie())
             {
                 if (s.get_OutStruct() != null)
                 {
@@ -157,37 +124,33 @@ namespace logisimConsole
             {
                 //foreach (var edge in Circuit.InEdges(outil))
                 //{
-                    if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
-                    //if ((outil is PinOut) || outil.SortieVide())
-                    {
-                        CompFinaux.Add(outil);
-                    }
+                if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
+                //if ((outil is PinOut) || outil.SortieVide())
+                {
+                    CompFinaux.Add(outil);
+                }
                 //}
             }
             return CompFinaux;
         }
 
-        public  void Evaluate(Outils outil, ICollection<Edge<Outils>> hs)
+        public void Evaluate(Outils outil, ICollection<Edge<Outils>> hs)
         {
             if (Circuit.ContainsVertex(outil))
-            if (!Circuit.IsInEdgesEmpty(outil))
-            {
-                IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
-                    
-                foreach (Edge<Outils> edge in inEdges)
+                if (!Circuit.IsInEdgesEmpty(outil))
                 {
+                    IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
+
+                    foreach (Edge<Outils> edge in inEdges)
+                    {
                         if (!hs.Contains(edge))
                         {
                             hs.Add(edge);
                             Evaluate(edge.Source, hs);
                         }
+                    }
                 }
-            }
-
-            
             outil.calcul_sorties();
-
-
         }
 
         public void EvaluateCircuit()
@@ -196,10 +159,10 @@ namespace logisimConsole
             this.EndComponents();
 
             ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
-            foreach(Outils outil in this.CompFinaux)
+            foreach (Outils outil in this.CompFinaux)
             {
                 Console.WriteLine("********Evaluate circuit *******");
-                    this.Evaluate(outil, hs);
+                this.Evaluate(outil, hs);
             }
         }
 
@@ -209,9 +172,7 @@ namespace logisimConsole
 
             foreach (Outils outil in iN.getEndListe())
             {
-               // new Thread(() => Evaluate(outil)).Start();
-                //Console.WriteLine("********Evaluate circuit *******"+ outil);
-                    this.Evaluate(outil, hs);
+                this.Evaluate(outil, hs);
             }
         }
 
@@ -228,7 +189,7 @@ namespace logisimConsole
         {
             List<Outils> UnrelatedList = new List<Outils>();
             foreach (var outil in Circuit.Vertices)
-                if (outil.getnbrentrees() != 0 )
+                if (outil.getnbrentrees() != 0)
                 {
                     List<ClasseEntree> listentree = outil.getListeentrees();
                     foreach (var entree in listentree)
@@ -241,21 +202,21 @@ namespace logisimConsole
             return UnrelatedList;
         }
 
-        
+
         //Suppression d'un outil
         public bool DeleteComponent(Outils outil)
         {
             if (Circuit.ContainsVertex(outil))
             {
                 //Mettre à jour les entrées des outils auxquelles l'outil était connecté
-                foreach(var sortie in outil.getListesorties())
+                foreach (var sortie in outil.getListesorties())
                 {
                     sortie.getSortie().ForEach((outstruct) => { outstruct.GetEntree().setRelated(false); });
                 }
                 //Mettre à jour les sorties des outils auxquelles l'outil était connecté
-                foreach(var edge in Circuit.InEdges(outil))
+                foreach (var edge in Circuit.InEdges(outil))
                 {
-                   foreach(var sortie in edge.Source.getListesorties())
+                    foreach (var sortie in edge.Source.getListesorties())
                     {
                         sortie.DeleteOustruct(outil);
                     }
@@ -279,7 +240,7 @@ namespace logisimConsole
             foreach (Outils outil in this.CompFinaux)
             {
                 //new Thread(() => Evaluate(outil)).Start();
-                Console.WriteLine("********Evaluate circuit *******"+outil.GetType());
+                Console.WriteLine("********Evaluate circuit *******" + outil.GetType());
                 this.EvaluatePerso(outil, hs);
             }
             //this.EvaluateCircuit();
@@ -302,12 +263,12 @@ namespace logisimConsole
         }
 
 
-    
+
         //pour calculsortie()
         public void EvaluatePerso(Outils outil, ICollection<Edge<Outils>> hs)
         {
 
-            if (!outil.end || Circuit.InEdges(outil) != null )
+            if (!outil.end || Circuit.InEdges(outil) != null)
             {
                 IEnumerable<Edge<Outils>> inEdges = Circuit.InEdges(outil);
                 foreach (Edge<Outils> edge in inEdges)
@@ -328,28 +289,28 @@ namespace logisimConsole
         }
         public void ConstructSortie()
         {
-            
-            foreach(Outils outils in this.Circuit.Vertices)
+
+            foreach (Outils outils in this.Circuit.Vertices)
             {
-                if(outils is PinOut )
+                if (outils is PinOut)
                 {
                     //on construit la liste des sorties
-                   
+
                     foreach (Edge<Outils> edge in Circuit.InEdges(outils))
                     {
-                        RecupSorti(edge.Source,(PinOut)outils);
+                        RecupSorti(edge.Source, (PinOut)outils);
                     }
                 }
             }
-            
-            
+
+
         }
         //recuperation de la sortie
-        public void RecupSorti(Outils outil,PinOut pin)
+        public void RecupSorti(Outils outil, PinOut pin)
         {
-            foreach(Sortie sorti in outil.getListesorties())
+            foreach (Sortie sorti in outil.getListesorties())
             {
-                foreach(OutStruct outs in sorti.get_OutStruct())
+                foreach (OutStruct outs in sorti.get_OutStruct())
                 {
                     if (outs.getOutils().Equals(pin))
                     {
@@ -359,8 +320,8 @@ namespace logisimConsole
                         //creation de la liste pour la sauvegarde du circuit aprés  reutilisation 
                         this.Sortie.Add(new Point(outil.id, outil.getListesorties().IndexOf(sorti)));
                         this.liste_sorties.Add(sorti);
-                        Console.WriteLine("SORTIE"+nb_sorties);
-                        
+                        Console.WriteLine("SORTIE" + nb_sorties);
+
                         //on supprime la sortie de gate 
                         ((Grid)(sorti.Parent)).Children.Remove(sorti);
                     }
@@ -442,7 +403,6 @@ namespace logisimConsole
                     v.setEntreeSpe(v.getListeentrees().IndexOf(io), etat);
                 }
             }
-                //(((liste_entrees[i].Parent as Grid).Parent as Canvas).Parent as Gate).outil.setEntreeSpe(i, etat);
         }
 
     }
