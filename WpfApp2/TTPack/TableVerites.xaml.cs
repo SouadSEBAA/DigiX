@@ -29,7 +29,6 @@ namespace WpfApp2.TTPack
 
         public TableVerites(BidirectionalGraph<Outils, Edge<Outils>> graph)
         {
-            Console.WriteLine("rani hna");
             this.circuit = graph;
             InitializeComponent();
 
@@ -60,8 +59,8 @@ namespace WpfApp2.TTPack
             DataTable dt = new DataTable();
             int nbrPinEntree = 0;
             int nbrDiodSortie = 0;
-            string ch1 = "WpfApp2.Noyau.PinOut";
-            string ch2 = "WpfApp2.Noyau.PinIn";
+            string ch1 = "Noyau.PinOut";
+            string ch2 = "Noyau.PinIn";
             List<Outils> PinEntreeLLC = new List<Outils>();
             List<Outils> DiodSortieLLC = new List<Outils>();
 
@@ -192,7 +191,7 @@ namespace WpfApp2.TTPack
 
         public void Last_Elements(CircuitPersonnalise circuit)
         {
-            string ch1 = "WpfApp2.Noyau.PinOut";
+            string ch1 = "Noyau.PinOut";
             circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
 
             foreach (var vertex in circuit.GetCircuit().Vertices)
@@ -258,8 +257,8 @@ namespace WpfApp2.TTPack
             List<Outils> liste = lst.ToList();
             int nbrPinEntree = 0;
             int nbrDiodSortie = 0;
-            string ch1 = "WpfApp2.Noyau.PinOut";
-            string ch2 = "WpfApp2.Noyau.PinIn";
+            string ch1 = "Noyau.PinOut";
+            string ch2 = "Noyau.PinIn";
             List<Outils> LLC = new List<Outils>();
             List<Outils> PinEntreeLLC = new List<Outils>();
             List<Outils> DiodSortieLLC = new List<Outils>();

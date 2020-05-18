@@ -276,41 +276,32 @@ namespace WpfApp2
             {
                 foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                 {
-                    if (elmnt is CircSequentielle) seq = true;
-                    if (elmnt is PinIn) pinentree = true;
-                    if (elmnt is PinOut)
+                    if (elmnt is CircSequentielle || elmnt is Horloge) seq = true;
+                    else if (elmnt is PinIn) pinentree = true;
+                    else if (elmnt is PinOut)
                     {
                         key = true;
-                        //break;
                     }
                 }
                 if (!seq)
                 {
                     if (pinentree)
                     {
-                        if (key) //S'il existe aucun composant séquentiel
+                        if (key) //S'il existe au moins un pin sortie
                         {
                             TableVerites tv = new TableVerites(circuit.GetCircuit());
                             tv.Show();
                         }
                         else
                         {
-                            //To remove the exceptions 
-                            if (Exceptions.set.Count != 0)
+                            try
                             {
-                                Grille.Children.Remove(Exceptions.set[0]);
-                                Exceptions.set.Remove(Exceptions.set[0]);
+                                throw new AucunPinSortieException(Grille);
                             }
-
-                            ExceptionMessage message = new ExceptionMessage();
-                            message.textMessage.Text = "  ATTENTION Il n'existe aucun Pin Sortie  !";
-                            message.Opacity = 0.5;
-                            message.MouseDown += Close;
-                            Grille.Children.Add(message);
-                            Exceptions.set.Add(message);
-                            //set.Add(message);
-                            Canvas.SetLeft(message, 300);
-                            Canvas.SetTop(message, 20);
+                            catch (AucunPinSortieException exception)
+                            {
+                                exception.Gerer();
+                            }
                         }
                     }
                     else
@@ -349,7 +340,6 @@ namespace WpfApp2
                     exception.Gerer();
                 }
             }
-
         }
 
 
