@@ -11,8 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using Noyau;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace WpfApp2
 {

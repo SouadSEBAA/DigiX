@@ -1,12 +1,12 @@
 using QuickGraph;
 using System.Collections.Generic;
 using WpfApp2;
-using WpfApp2.Noyau;
 using System;
-using System.Threading;
 using System.Windows.Controls;
-using System.Xml.Linq;
 using System.Windows;
+
+
+
 namespace Noyau
 {
     public class CircuitPersonnalise : Outils

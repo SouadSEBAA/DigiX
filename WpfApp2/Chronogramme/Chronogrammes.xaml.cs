@@ -8,12 +8,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using WpfApp2.Noyau;
 using Noyau;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
 
 namespace WpfApp2.Chronogramme
 {

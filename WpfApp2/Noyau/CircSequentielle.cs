@@ -4,6 +4,8 @@ namespace Noyau
 {
     /// <summary>
     /// Classe mère des circuits séquentiels
+    /// Les conventions :
+    /// liste_entrees[0] -> Clock
     /// </summary>
     public abstract class CircSequentielle : Circuit
     {

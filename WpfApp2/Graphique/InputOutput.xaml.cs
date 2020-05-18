@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using System.Threading;
 using System;
-using System.ComponentModel;
 
 namespace WpfApp2
 {

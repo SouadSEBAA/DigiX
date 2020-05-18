@@ -14,20 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Noyau;
-using WpfApp2.Noyau;
 using WpfApp2.Chronogramme;
 using Microsoft.Win32;
-using Path = System.IO.Path;
-using System.Windows.Threading;
-using System.Diagnostics;
-using System.Threading;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using System.Collections;
-using System.Windows.Markup;
-using System.Xml;
-using WpfApp2.TTPack;
-using System.Windows.Controls.Primitives;
+using TableVerite;
 using System.Xml.Linq;
 using System.Globalization;
 
@@ -98,7 +87,6 @@ namespace WpfApp2
         private bool isDrawing;
         Wire line = null;
         Point mousePos; //Position actuelle du curseur
-        Point mousePosPrec; //Position précédente du curseur
 
         /// <summary>
         /// Début du déssin du wire, quand le bouton gauche de la souris est enfoncée sur un io
@@ -125,7 +113,6 @@ namespace WpfApp2
                 {
                     isDrawing = true;
                     line = new Wire(io.TranslatePoint(new Point(5, 5), Grille), gate, io);
-                    mousePosPrec = io.TranslatePoint(new Point(5, 5), Grille);
                     Grille.Children.Add(line);
                 }
             }
@@ -140,7 +127,6 @@ namespace WpfApp2
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
-            //mousePos = SnapToGrid(mousePos.X, mousePos.Y);
             if (isDrawing && e.LeftButton == MouseButtonState.Pressed)
             {
                 line.EndPoint = mousePos;
@@ -283,9 +269,9 @@ namespace WpfApp2
                         key = true;
                     }
                 }
-                if (!seq)
+                if (!seq)//S'il existe aucun composant sequentiel
                 {
-                    if (pinentree)
+                    if (pinentree)//S'il existe au moins un pin entree
                     {
                         if (key) //S'il existe au moins un pin sortie
                         {
@@ -340,13 +326,6 @@ namespace WpfApp2
                     exception.Gerer();
                 }
             }
-        }
-
-
-        public void Close(object sender, MouseEventArgs e)
-        {
-            Grille.Children.Remove(Exceptions.set[0]);
-            Exceptions.set.Remove(Exceptions.set[0]);
         }
 
         #endregion
@@ -439,13 +418,16 @@ namespace WpfApp2
 
         //************************************FOR THE MENU BUTTONS**********************************************// 
         #region MENU BUTTONS
+
+        //AIDE
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
-            string path = @"HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
+            string path = @"HelpSite\Aide.html"; 
             System.Diagnostics.Process.Start(path);
         }
 
+        //SIMULER
         private void simuler_click(object sender, RoutedEventArgs e)
         {
             circuit.setSimulation(false);
@@ -478,9 +460,9 @@ namespace WpfApp2
                     //-----------------------------------------------------------------------------------
 
                     //To stop changes while simulating
-                    Tools.IsEnabled = false;
-                    FichierButton.IsEnabled = false;
-                    foreach (UserControl uc in Grille.Children)
+                    Tools.IsEnabled = false; //désactiver le pnale des outils
+                    FichierButton.IsEnabled = false; //désactiver le bouton de suavegrade,  ....
+                    foreach (UserControl uc in Grille.Children) //désactiver le context menu de tous les composants sur la grille
                     {
                         if (uc is Gate)
                         {
@@ -498,10 +480,112 @@ namespace WpfApp2
                 }
         }
 
+        //Pour désactver le context menu 
         private void HitContextMenu(object sender, ContextMenuEventArgs e)
         {
             e.Handled = true;
         }
+
+        //Pour les exceptions
+        public void Close(object sender, MouseEventArgs e)
+        {
+            Grille.Children.Remove(Exceptions.set[0]);
+            Exceptions.set.Remove(Exceptions.set[0]);
+        }
+
+        //PAUSE 
+        private void pause_click(object sender, RoutedEventArgs e)
+        {
+            circuit.setSimulation(false);
+
+            pause.Visibility = Visibility.Collapsed;
+            simuler.Visibility = Visibility.Visible;
+        }
+
+        //STOP
+        private void stop_click(object sender, RoutedEventArgs e)
+        {
+            int i = 0; int j = 0;
+            circuit.setSimulation(false);
+
+            foreach (Outils o in circuit.getCircuit().Vertices)
+            {
+                if (o is Horloge) { ((Horloge)o).arreter(); }
+                if (o is PinIn)
+                {
+                    o.getListeentrees()[0].setEtat(false);
+                    ((PinIn)(o)).Calcul();
+                }
+
+
+                foreach (ClasseEntree c_e in o.getListeentrees())
+                {
+                    i++;
+                    //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
+                    c_e.setEtat(false);
+                    c_e.stopbutton();
+                }
+
+                foreach (Sortie s in o.getListesorties())
+                {
+                    j++;
+                    s.setEtat(false);
+                    s.stopbutton();
+                }
+            }
+            foreach (Wire w in Wires)
+            {
+                w.stopbutton();
+            }
+
+
+            if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
+            if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
+            if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
+            simuler.Visibility = Visibility.Visible;
+
+
+            //Supprimer les exceptios if there are any
+            if (Exceptions.set.Count != 0)
+                Close(null, null);
+
+
+            Tools.IsEnabled = true;
+            FichierButton.IsEnabled = true;
+
+            foreach (UserControl uc in Grille.Children)
+            {
+                if (uc is Gate)
+                {
+                    (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
+
+                    if (uc is pin_entree)
+                    {
+                        ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
+                    }
+                }
+
+                if (uc is Wire)
+                    uc.ContextMenuOpening -= HitContextMenu;
+            }
+        }
+
+        private void clock_click(object sender, RoutedEventArgs e)
+        {
+            reset_clock();
+        }
+
+        public void reset_clock()
+        {
+            foreach (Outils o in circuit.getCircuit().Vertices)
+            {
+                if (o is Horloge)
+                {
+                    ((Horloge)o).mini();
+                }
+            }
+        }
+
 
         private void CreateScreenShot(UIElement visual, string file)
         {
@@ -548,6 +632,14 @@ namespace WpfApp2
             }
         }
 
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+            if (Grille.Children.Count != 0 || filename != null)
+            {
+                Close window = new Close(this, false, false, true);
+                window.Show();
+            }
+        }
 
         #endregion
 
@@ -690,7 +782,6 @@ namespace WpfApp2
                     this.filename = filename;
                     SerializeToXAML(filename);
 
-                    //melissa 
 
                 }
             }
@@ -835,16 +926,12 @@ namespace WpfApp2
             int io1 = int.Parse(wire.Element("gatestart").Attribute("IO").Value);
             int io2 = int.Parse(wire.Element("gateend").Attribute("IO").Value);
             //points
-            Console.WriteLine("x: " + wire.Element("endp").Attribute("X").Value);
-            Console.WriteLine("y: " + wire.Element("endp").Attribute("Y").Value);
-
             Point startp = new Point(double.Parse(wire.Element("startp").Attribute("X").Value), double.Parse(wire.Element("startp").Attribute("Y").Value));
             Point endp = new Point(double.Parse(wire.Element("endp").Attribute("X").Value), double.Parse(wire.Element("endp").Attribute("Y").Value));
             InputOutput IN1, IN2;
             //on recupere les gate qui ont ces identifiants
             Gate gatestart = Recuplist(idStart, circuit.gates), gateend = Recuplist(idEnd, circuit.gates);
-            Console.WriteLine("gateEntrée" + gatestart.outil.getnbrentrees());
-            Console.WriteLine("gateEnd" + gateend.outil.getnbrentrees());
+
             if (wire.Element("gatestart").Attribute("Type").Value == "ClasseEntree")
             {
                 IN1 = gatestart.outil.getListeentrees()[io1];
@@ -1025,10 +1112,8 @@ namespace WpfApp2
         #endregion
 
 
-
-        //**************************************START OF MENU BUTTONS*******************************//
-        #region MENU BUTTONS
-
+        //*************************************Top Bar******************************************
+        #region TopBar
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)
         {
@@ -1068,116 +1153,9 @@ namespace WpfApp2
         {
             this.WindowState = WindowState.Maximized;
         }
-
-
-        private void pause_click(object sender, RoutedEventArgs e)
-        {
-            circuit.setSimulation(false);
-
-            pause.Visibility = Visibility.Collapsed;
-            simuler.Visibility = Visibility.Visible;
-        }
-
-
-
-        private void stop_click(object sender, RoutedEventArgs e)
-        {
-            int i = 0; int j = 0;
-            circuit.setSimulation(false);
-
-            foreach (Outils o in circuit.getCircuit().Vertices)
-            {
-                if (o is Horloge) { ((Horloge)o).arreter(); }
-                if (o is PinIn)
-                {
-                    o.getListeentrees()[0].setEtat(false);
-                    ((PinIn)(o)).Calcul();
-                }
-
-
-                foreach (ClasseEntree c_e in o.getListeentrees())
-                {
-                    i++;
-                    //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
-                    c_e.setEtat(false);
-                    c_e.stopbutton();
-                }
-
-                foreach (Sortie s in o.getListesorties())
-                {
-                    j++;
-                    s.setEtat(false);
-                    s.stopbutton();
-                }
-            }
-            foreach (Wire w in Wires)
-            {
-                w.stopbutton();
-            }
-
-
-            if (pause.Visibility == Visibility.Visible) { pause.Visibility = Visibility.Collapsed; }
-            if (stop.Visibility == Visibility.Visible) { stop.Visibility = Visibility.Collapsed; }
-            if (clock.Visibility == Visibility.Collapsed) { clock.Visibility = Visibility.Visible; }
-            simuler.Visibility = Visibility.Visible;
-
-
-            //Supprimer les exceptios if there are any
-            if (Exceptions.set.Count != 0)
-                Close(null, null);
-
-
-            Tools.IsEnabled = true;
-            FichierButton.IsEnabled = true;
-
-            foreach (UserControl uc in Grille.Children)
-            {
-                if (uc is Gate)
-                {
-                    (uc as Gate).path.ContextMenuOpening -= HitContextMenu;
-
-                    if (uc is pin_entree)
-                    {
-                        ((pin_entree)uc).path.Fill = Brushes.Red;  //resetting the pins to red to match their state:'false'
-                    }
-                }
-
-                if (uc is Wire)
-                    uc.ContextMenuOpening -= HitContextMenu;
-            }
-        }
-
-
-
-
-        public void reset_clock()
-        {
-            foreach (Outils o in circuit.getCircuit().Vertices)
-            {
-                if (o is Horloge)
-                {
-                    ((Horloge)o).mini();
-                }
-            }
-        }
-
-        private void clock_click(object sender, RoutedEventArgs e)
-        {
-            reset_clock();
-        }
-
-        private void new_Click(object sender, RoutedEventArgs e)
-        {
-            if (Grille.Children.Count != 0 || filename != null)
-            {
-                Close window = new Close(this, false, false, true);
-                window.Show();
-            }
-        }
         #endregion
-
-
-
+        
+        
         public CircuitPersonnalise getcircuit() { return this.circuit; }
 
 

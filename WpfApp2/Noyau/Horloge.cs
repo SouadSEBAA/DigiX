@@ -89,14 +89,12 @@ namespace Noyau
 		/// </summary>
 		public void arreter()
 		{
-			Console.WriteLine("arreter");
 			this.stop = true;
 		}
 
 		public void mini()
 		{
 			this.stop = false;
-			//mythread.Start();
 		}
 
 

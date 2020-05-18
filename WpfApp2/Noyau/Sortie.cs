@@ -28,21 +28,9 @@ namespace Noyau
             this.Sorties = Sorties;
         }
 
-        public void DeleteOustruct(Outils outil, ClasseEntree t)
-        {
-            for (int i = Sorties.Count - 1; i >= 0; i--)
-            {
-                if (Sorties[i].getOutils().Equals(outil))
-                {
-                    if (Sorties[i].GetEntree().Equals(t))
-                    {
-                        Sorties.Remove(Sorties[i]);
-                    }
-                }
-            }
-        }
-
         public List<OutStruct> get_OutStruct() { return Sorties; }
+
+
 
         public override void setEtat(bool etat)
         {
@@ -62,6 +50,8 @@ namespace Noyau
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+
         //Supression elemnt
         public void DeleteOustruct(Outils outil)
         {
@@ -74,5 +64,20 @@ namespace Noyau
                 }
             }
         }
+
+        public void DeleteOustruct(Outils outil, ClasseEntree t)
+        {
+            for (int i = Sorties.Count - 1; i >= 0; i--)
+            {
+                if (Sorties[i].getOutils().Equals(outil))
+                {
+                    if (Sorties[i].GetEntree().Equals(t))
+                    {
+                        Sorties.Remove(Sorties[i]);
+                    }
+                }
+            }
+        }
+
     }
 }

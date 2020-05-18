@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
+
 namespace Noyau
 {
-    [Serializable]
     /// <summary>
     /// Les conventions : 
     /// liste_entrees[3] -> J
@@ -39,7 +40,6 @@ namespace Noyau
                 //Synchrone
                 if (front)
                 {
-                    Console.WriteLine("~~~~JK---FRONT");
                     if (EtatAvant_J && EtatAvant_K)//J=1 K=1
                         liste_sorties[0].setEtat(!liste_sorties[0].isEtat());
                     else if (EtatAvant_J && !EtatAvant_K)//J=1 K=0

@@ -118,7 +118,7 @@
     <Compile Include="Noyau\PinIn.cs" />
     <Compile Include="Noyau\PinOut.cs" />
     <Compile Include="Chronogramme\OneChronogrammeException.cs" />
-    <Compile Include="TTPack\TableVerites.xaml.cs">
+    <Compile Include="TableVerite\TableVerites.xaml.cs">
       <DependentUpon>TableVerites.xaml</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\TVCompSeqException.cs" />
@@ -174,7 +174,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TTPack\TableVerites.xaml">
+    <Page Include="TableVerite\TableVerites.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
