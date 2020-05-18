@@ -202,7 +202,7 @@
     <Compile Include="Noyau\DemiAdd.cs" />
     <Compile Include="Noyau\Demultiplexeur.cs" />
     <Compile Include="Noyau\Disposition.cs" />
-    <Compile Include="Noyau\EmptyListException.cs" />
+    <Compile Include="Exceptions\EmptyListException.cs" />
     <Compile Include="Noyau\Encodeur.cs" />
     <Compile Include="Noyau\ET.cs" />
     <Compile Include="Noyau\Horloge.cs" />
@@ -217,7 +217,7 @@
     <Compile Include="Noyau\OUX.cs" />
     <Compile Include="Noyau\PorteLogique.cs" />
     <Compile Include="Noyau\Reg_Dec.cs" />
-    <Compile Include="Noyau\RelatedException.cs" />
+    <Compile Include="Exceptions\RelatedException.cs" />
     <Compile Include="Noyau\RST.cs" />
     <Compile Include="Noyau\Sortie.cs" />
     <Compile Include="Noyau\T.cs" />
