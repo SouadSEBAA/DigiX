@@ -125,7 +125,6 @@ namespace WpfApp2
 
             while (nE < outil.getnbrentrees())
             {
-                //Console.WriteLine(nE);
                 switch (outil.getListeentrees()[nE].GetDisposition())
                 {
                     case Disposition.up:
@@ -149,7 +148,6 @@ namespace WpfApp2
 
             while (nS < outil.getnbrsoryies())
             {
-                //Console.WriteLine(nE);
                 switch (outil.getListesorties()[nS].GetDisposition())
                 {
                     case Disposition.up:

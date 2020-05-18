@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Noyau
 {
-    [Serializable]
+    
     /// <summary>
     /// Conventions :
     /// liste_entrees[1] -> Remise à zéro
@@ -42,7 +42,7 @@ namespace Noyau
             else
             {
                 if (front)
-                {
+                {//cas d'incrementation au top d'horloge
                     bool stop = false;
                     int i = 0;
                     while (!stop && i < this.nb_sorties)

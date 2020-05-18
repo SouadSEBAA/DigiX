@@ -429,7 +429,6 @@ namespace WpfApp2
                 gate.transform.Y += (gate.currentPoint.Y - gate.anchorPoint.Y);
                 gate.RenderTransform = gate.transform;
                 gate.anchorPoint = gate.currentPoint;
-                // Grille.Children.Add(gate);
             }
 
         }
@@ -574,23 +573,26 @@ namespace WpfApp2
             gt.SetAttributeValue("Sortie", g.outil.getnbrsoryies());
             //on ajoute le id pour recréer le circuit 
             gt.SetAttributeValue("ID", g.outil.id);
-            if (g is CircuitComplet)
+            if (g is CircuitComplet)//cas d'utilissation d'un circuit personalisé
             {
                 XElement Cgates = new XElement("Gates");
                 XElement Cwires = new XElement("Wires");
                 XElement entrées = new XElement("Entrees");
                 XElement sorties = new XElement("Sorties");
+                //on sauvegarde tt less composants
                 foreach (Gate gate in ((CircuitPersonnalise)g.outil).gates)
                 {
                     XElement element = SaveGate(gate);
                     element.SetAttributeValue("end", gate.outil.end);
                     Cgates.Add(element);
                 }
+                //on sauvegarde tt les liaisons
                 foreach (Wire wire in ((CircuitPersonnalise)g.outil).wires)
                 {
                     XElement element = SaveWire(wire);
                     Cwires.Add(element);
                 }
+                //on ssauvegarde les entrées et sorties du circuit en cas de réutiissation 
                 foreach (Point point in ((CircuitPersonnalise)g.outil).Entrée)
                 {
                     XElement entre = new XElement("Entree");
@@ -711,13 +713,12 @@ namespace WpfApp2
             XElement wires = new XElement("Wires");//pour les wires 
             //parcourire les gates
             foreach (UserControl user in Grille.Children)
-            {//on ajoute le nbr d'entrées et sorties 
+            {
+                //on sauvegarde  tt les composants et liaissons
                 if (user is Gate)
                 {
                     Gate g = (Gate)user;
                     XElement gt = SaveGate(g);
-                    //le cas d'un circuit personalisé
-
                     gates.Add(gt);
                 }
                 else
@@ -767,14 +768,14 @@ namespace WpfApp2
             abgate.outil.id = int.Parse(gate.Attribute("ID").Value);
             int i = abgate.outil.getnbrentrees(), entree = int.Parse(gate.Attribute("Entree").Value);
             if (!(abgate is CircuitComplet))
-            {
+            {//norbre d'entrées mis à jour
                 while (i < entree)
                 {
                     abgate.AddEntree(abgate.outil.GetType());
                     i++;
                 }
             }
-            if (abgate is CircuitComplet)
+            if (abgate is CircuitComplet)//le cass d'un circuit personalisé
             {
                 foreach (XElement element in gate.Element("Gates").Elements())
                 {
@@ -851,12 +852,6 @@ namespace WpfApp2
             }
             else
             {
-                Console.WriteLine("/////////");
-                Console.WriteLine("io1" + io1 + "----gatestart" + gatestart.outil.getnbrentrees() + "  ID" + gatestart.outil.id);
-                Console.WriteLine("io2" + io2 + "----gateend" + gateend.outil.getnbrentrees() + "   ID" + gateend.outil.id);
-
-                Console.WriteLine("/////////");
-
                 IN1 = gatestart.outil.getListesorties()[io1];
                 IN2 = gateend.outil.getListeentrees()[io2];
             }
@@ -880,7 +875,6 @@ namespace WpfApp2
                 this.circuit.AddComponent(abgate.outil);
                 ((CircuitPersonnalise)this.circuit).gates.Add(abgate);
                 abgate.added = true;
-
                 //Pour lier
                 abgate.MouseLeftButtonDown += new MouseButtonEventHandler(MouseLeftButtonPressed);
                 abgate.MouseLeftButtonUp += new MouseButtonEventHandler(MouseLeftButtonReleased);
@@ -1013,6 +1007,7 @@ namespace WpfApp2
 
             return nouveauCircuit;
         }
+        //on recupere un composant particulier  d'une liste
         public Gate Recuplist(int id, List<Gate> list)
         {
             foreach (UserControl user in list)

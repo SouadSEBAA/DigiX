@@ -136,11 +136,11 @@ namespace Noyau
                         if (!hs.Contains(edge))
                         {
                             hs.Add(edge);
-                            Evaluate(edge.Source, hs);
+                            Evaluate(edge.Source, hs);//on remonte au debut du circuit
                         }
                     }
                 }
-            outil.calcul_sorties();
+            outil.calcul_sorties();//on calcul en décendant vers la fin du circuit
         }
 
         /// <summary>
@@ -157,7 +157,10 @@ namespace Noyau
                 this.Evaluate(outil, hs);
             }
         }
-
+        /// <summary>
+        /// en cas de changement d'etat d'une horloge ou d'un  pinin
+        /// </summary>
+        /// <param name="iN"></param>
         public void EvaluateCircuit(IN iN)
         {
             ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
@@ -258,7 +261,11 @@ namespace Noyau
                 this.EvaluatePerso(outil, hs);
             }
         }
-
+        /// <summary>
+        /// pour calculsortie()
+        /// </summary>
+        /// <param name="outil"></param>
+        /// <param name="hs"></param>
         //pour calculsortie()
         public void EvaluatePerso(Outils outil, ICollection<Edge<Outils>> hs)
         {
@@ -278,7 +285,9 @@ namespace Noyau
 
             outil.calcul_sorties();
         }
-
+        /// <summary>
+        /// construire la liste des sorties reliéess à un pinout pour la reutilisation
+        /// </summary>
         public void ConstructSortie()
         {
 
@@ -319,7 +328,10 @@ namespace Noyau
                 }
             }
         }
-        //construction de la liste des entrées
+        /// <summary>
+        /// construction de la liste des entrées reliées à un pinin ou horloge
+        /// </summary>
+        
         public void ConstructEntrée()
         {
             List<Outils> list = new List<Outils>();
@@ -372,6 +384,9 @@ namespace Noyau
                 ((Grid)(entree.Parent)).Children.Remove(entree);
             }
         }
+        /// <summary>
+        /// vider un circuit
+        /// </summary>
         public void Clear()
         {
             this.Circuit.Clear();

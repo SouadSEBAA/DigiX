@@ -34,7 +34,6 @@ namespace Noyau
             this.liste_entrees.Add(new ClasseEntree("Entrée 2", 8, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 3", 9, Disposition.up, false, false));
             this.liste_entrees.Add(new ClasseEntree("Entrée 4", 10, Disposition.up, false, false));
-            //ortie g et d 0.1
             this.liste_sorties.Add(new Sortie("Sortie 1", 1, Disposition.down, false, new List<OutStruct>()));
             this.liste_sorties.Add(new Sortie("Sorte 2", 2, Disposition.down, false, new List<OutStruct>()));
             this.liste_sorties.Add(new Sortie("Sortie 3", 3, Disposition.down, false, new List<OutStruct>()));
@@ -76,7 +75,6 @@ namespace Noyau
                         if ((this.getListeentrees())[3].isEtat() == true)//decalage droit dd (plus prioritaire )
                         {
                             int i = 0;
-                            //le premier bit à droite 
                             while (i < (this.getnbrsoryies() - 1))
                             {
                                 this.getListesorties()[i].setEtat(this.getListesorties()[i + 1].isEtat());//decalage de la memoire...le positionnement des indices  [n,n-1,........,1,0]
@@ -91,7 +89,6 @@ namespace Noyau
                             {
 
                                 int i = this.getnbrsoryies() - 1;
-                                //le premier bit à gauche 
                                 while (i > 0)
                                 {
                                     this.getListesorties()[i].setEtat(this.getListesorties()[i - 1].isEtat());//decalage de la memoire...le positionnement des indices est le suivant   [n,n-1,........,1,0]

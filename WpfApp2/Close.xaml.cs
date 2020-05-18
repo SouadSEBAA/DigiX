@@ -24,7 +24,7 @@ namespace WpfApp2
         MainWindow main;
         bool fermer;//fermer tt la fenetre 
         bool ouvrir;//ouvrir un fichier
-        bool nouveau;
+        bool nouveau;//ouvrir un nouveau fichier
         public Close(MainWindow w, bool fermer, bool ouvrir, bool nouveau)
         {
             main = w;
@@ -68,14 +68,10 @@ namespace WpfApp2
                     {
                         main.Close();
                     }
-
-                    //melissa 
-
                 }
             }
             if (ouvrir)
             {
-                //on doit attendre la fermiture de la fenetre precedente pour lancer celle ci 
                 Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
                 dlg.DefaultExt = ".xaml"; // Default file extension
                 dlg.Filter = "Xaml File (.xaml)|*.xaml"; // Filter files by extension
