@@ -446,36 +446,61 @@ namespace WpfApp2
                 }
                 else
                 {
-
-                    //To remove the exceptions 
-                    if (Exceptions.set.Count != 0)
-                        Close(null, null);
-
-
-                    //In order to show the pause/stop buttons --------------------------------------------
-                    if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
-                    if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
-                    simuler.Visibility = Visibility.Collapsed;
-                    clock.Visibility = Visibility.Collapsed;
-                    //-----------------------------------------------------------------------------------
-
-                    //To stop changes while simulating
-                    Tools.IsEnabled = false; //désactiver le pnale des outils
-                    FichierButton.IsEnabled = false; //désactiver le bouton de suavegrade,  ....
-                    foreach (UserControl uc in Grille.Children) //désactiver le context menu de tous les composants sur la grille
+                    bool pinsortie = false;
+                    foreach (Outils elmnt in circuit.GetCircuit().Vertices)
                     {
-                        if (uc is Gate)
+                        if (elmnt is PinOut)
                         {
-                            (uc as Gate).path.ContextMenuOpening += HitContextMenu;
-                        }
-                        if (uc is Wire)
-                        {
-                            uc.ContextMenuOpening += HitContextMenu;
+                            pinsortie = true;
+                            break;
                         }
                     }
 
-                    circuit.EvaluateCircuit();
-                    circuit.setSimulation(true);
+                    if (!pinsortie)
+                    {
+                        try
+                        {
+                            throw new AucunPinSortieException(Grille);
+                        }
+                        catch (AucunPinSortieException exception)
+                        {
+                            exception.Gerer();
+                        }
+                    }
+                    else
+                    {
+
+
+                        //To remove the exceptions 
+                        if (Exceptions.set.Count != 0)
+                            Close(null, null);
+
+
+                        //In order to show the pause/stop buttons --------------------------------------------
+                        if (pause.Visibility == Visibility.Collapsed) { pause.Visibility = Visibility.Visible; }
+                        if (stop.Visibility == Visibility.Collapsed) { stop.Visibility = Visibility.Visible; }
+                        simuler.Visibility = Visibility.Collapsed;
+                        clock.Visibility = Visibility.Collapsed;
+                        //-----------------------------------------------------------------------------------
+
+                        //To stop changes while simulating
+                        Tools.IsEnabled = false; //désactiver le pnale des outils
+                        FichierButton.IsEnabled = false; //désactiver le bouton de suavegrade,  ....
+                        foreach (UserControl uc in Grille.Children) //désactiver le context menu de tous les composants sur la grille
+                        {
+                            if (uc is Gate)
+                            {
+                                (uc as Gate).path.ContextMenuOpening += HitContextMenu;
+                            }
+                            if (uc is Wire)
+                            {
+                                uc.ContextMenuOpening += HitContextMenu;
+                            }
+                        }
+
+                        circuit.EvaluateCircuit();
+                        circuit.setSimulation(true);
+                    }
 
                 }
         }
