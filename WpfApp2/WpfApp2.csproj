@@ -121,7 +121,7 @@
     <Compile Include="TTPack\TableVerites.xaml.cs">
       <DependentUpon>TableVerites.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TVCompSeqException.cs" />
+    <Compile Include="Exceptions\TVCompSeqException.cs" />
     <Compile Include="Graphique\Wire.xaml.cs">
       <DependentUpon>Wire.xaml</DependentUpon>
     </Compile>
