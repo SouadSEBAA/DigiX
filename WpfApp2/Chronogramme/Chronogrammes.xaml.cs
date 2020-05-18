@@ -22,21 +22,45 @@ namespace WpfApp2.Chronogramme
     /// </summary>
     public partial class Chronogrammes : Window
     {
-        //Stopwatch watch = new Stopwatch();
-        public static bool IsReading { get; set; }
-        private bool isPause;
-        public static bool isOneChrono { get; set; }
 
         CircuitPersonnalise circuit;
 
+        /// <summary>
+        /// Indique si les chronogrammes sont entrain de se déssiner
+        /// </summary>
+        /// <value></value>
+        public static bool IsReading { get; set; }
+
+        /// <summary>
+        /// Indique si les chronogrammes sont en pause
+        /// </summary>
+        private bool isPause;
+
+        /// <summary>
+        /// Indique s'il y a déjà une fenetre de chronogramme ouverte
+        /// </summary>
+        /// <value></value>
+        public static bool isOneChrono { get; set; }
+
+        /// <summary>
+        /// Pour l'axe des x
+        /// </summary>
         public static Stopwatch watch;
+
         DispatcherTimer timer;
 
+        /// <summary>
+        /// Indique le temps pendant lequel les chrongrammes vont se déssiner
+        /// </summary>
+        /// <returns></returns>
         public static TimeSpan ts = new TimeSpan();
+
         public List<TimeSpan> l_ts { get; set; }
         public List<InputOutput> list { get; set; }
         public TimeSpan STs { get; set; }
         public List<ViewModel> newl { get; set; }
+
+        int ChronoNumber;//Le nombre de chronogrammes affichés
 
         public Chronogrammes(CircuitPersonnalise circ)
         {
@@ -55,7 +79,6 @@ namespace WpfApp2.Chronogramme
             l_ts.Add(new TimeSpan(0, 0, 32));
             l_ts.Add(new TimeSpan(0, 0, 48));
             l_ts.Add(new TimeSpan(0, 0, 64));
-            //TimeChrono.ItemsSource = l_ts;
             l_ts.Add(new TimeSpan(0, 0, 128));
             l_ts.Add(new TimeSpan(0, 0, 256));
 
@@ -88,7 +111,7 @@ namespace WpfApp2.Chronogramme
         {
             foreach (EssaiChrono item in ChronoStack.Children)
             {
-                item.NextClick(); //avancer avec 5 secondes
+                item.NextClick(); //avancer avec 16 secondes
             }
         }
         /**********************************************************************/
@@ -96,7 +119,7 @@ namespace WpfApp2.Chronogramme
         {
             foreach (EssaiChrono item in ChronoStack.Children)
             {
-                item.PreviousClick();//Retourner avec 5 secondes
+                item.PreviousClick();//Retourner avec 16 secondes
             }
         }
 
@@ -124,7 +147,6 @@ namespace WpfApp2.Chronogramme
         }
 
         /**********************************************************************/
-        int ChronoNumber;
         private void StartContinuerClick(object sender, RoutedEventArgs e)
         {
             if (ChronoNumber > 0)
@@ -191,8 +213,6 @@ namespace WpfApp2.Chronogramme
                     IoAdded.Add(mi);
                     ChronoStack.Children.Add(new EssaiChrono(io));
                     ChronoNumber++;
-                    /*if (ChronoNumber > ChronNumerAuthorised)
-                        menu.IsEnabled = false;*/
                 }
                 else
                 {
@@ -253,6 +273,9 @@ namespace WpfApp2.Chronogramme
         }
         /**********************************************************************/
 
+        /// <summary>
+        /// Pour le menu des signaux
+        /// </summary>
         public class ViewModel : UserControl
         {
             public List<InputOutput> SubMenuItems { get; set; }
@@ -275,7 +298,7 @@ namespace WpfApp2.Chronogramme
             Errors.Children.Clear();
         }
 
-        /**********************************************************************/
+        #region TopBar
         private void top_Bar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -290,6 +313,7 @@ namespace WpfApp2.Chronogramme
         {
             this.WindowState = WindowState.Minimized;
         }
+        #endregion
     }
 
 }

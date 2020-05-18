@@ -5,22 +5,17 @@ using WpfApp2;
 
 namespace Noyau
 {
-    [Serializable]
     public class Sortie : InputOutput, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Liste des OutStruct [entree, outil] avec lesquelles cette sortie est reliée
+        /// </summary>
         private List<OutStruct> Sorties;
         public Sortie() : base() { Sorties = new List<OutStruct>(); IsInput = false; }
 
         public List<OutStruct> getSortie() { return this.Sorties; }
 
         public Sortie(String e, int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(e, ID, disposi)
-        {
-            this.etat = etat;
-            this.Sorties = Sorties;
-            IsInput = false;
-        }
-
-        public Sortie(int ID, Disposition disposi, bool etat, List<OutStruct> Sorties) : base(ID, disposi)
         {
             this.etat = etat;
             this.Sorties = Sorties;
@@ -47,17 +42,7 @@ namespace Noyau
             }
         }
 
-        public void suppSortie(OutStruct outStruct)
-        {
-            Sorties.Remove(outStruct);
-        }
-
         public List<OutStruct> get_OutStruct() { return Sorties; }
-
-        public virtual OutStruct getSortieSpecifique(int i)
-        {
-            return Sorties[i];
-        }
 
         public override void setEtat(bool etat)
         {

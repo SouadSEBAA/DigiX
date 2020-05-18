@@ -9,12 +9,22 @@ using System.Xml.Linq;
 using System.Windows;
 namespace Noyau
 {
-    [Serializable]
     public class CircuitPersonnalise : Outils
     {
-        private bool Sauvegardé;
+        /// <summary>
+        /// Si True indique que le circuit est en simulation
+        /// </summary>
         private bool simulation;
+
+        /// <summary>
+        /// La vraie structure du circuit sous forme de graph
+        /// </summary>
         private BidirectionalGraph<Outils, Edge<Outils>> Circuit;
+
+        /// <summary>
+        /// Liste des composants qui constituent la fin du circuit
+        /// Ce sont les éléments qui n'ont pas de sortie reliée, ou qui sont des PinOut
+        /// </summary>
         private List<Outils> CompFinaux;
         public List<Gate> gates;
         public List<Wire> wires;
@@ -36,14 +46,6 @@ namespace Noyau
             gates = new List<Gate>();
             wires = new List<Wire>();
         }
-        public BidirectionalGraph<Outils, Edge<Outils>> GetGraph() { return Circuit; }
-
-        public CircuitPersonnalise(int nbentree, int nbsortie)
-        {
-            liste_entrees = new List<ClasseEntree>(nb_entrees);
-            liste_sorties = new List<Sortie>(nb_sorties);
-        }
-
 
         public CircuitPersonnalise(BidirectionalGraph<Outils, Edge<Outils>> grph)
         {
@@ -51,17 +53,27 @@ namespace Noyau
             CompFinaux = new List<Outils>();
         }
 
-        //Relate for graphique
+
+        #region Liaison
+        /// <summary>
+        /// Retourne True si une sortie d'un component1 à une sortie d'un component2 ont été reliées, et si c'est le cas mettre à jour les input/output
+        /// </summary>
+        /// <param name="component1">Le composant qui comporte le input/output sortie</param>
+        /// <param name="component2">Le composant qui comporte le input/output entree</param>
+        /// <param name="sortie">La sortie à relier</param>
+        /// <param name="entree">L'entrée à relier</param>
+        /// <returns></returns>
         public bool Relate(Outils component1, Outils component2, Sortie sortie, ClasseEntree entree)
         {
             component1.circuit = this;
             component2.circuit = this;
+            //On vérifie si l'entrée entree n'est pas déjà reliée, 
+            //et si sortie et entree ont le meme état booléen, 
+            //et si sortie est contenue dans la liste_sorties de component1, 
+            //et si entree est contenue dans la liste_sentrees de component2, 
+            //et si component1 et component2 sont contenus dans le circuit 
             if (!entree.getRelated() && entree.getEtat() == sortie.getEtat() && component1.getListesorties().Contains(sortie) && component2.getListeentrees().Contains(entree) && Circuit.ContainsVertex(component2) && Circuit.ContainsVertex(component1)) //Si l'entrée de component2 n'est pas reliée
             {
-                Console.WriteLine(component1.GetType() + "          ");
-
-                Console.WriteLine(component2.GetType() + "          ");
-
                 OutStruct outstruct = new OutStruct(entree, component2);//Mise à jour des liaison
                 if (!sortie.getSortie().Contains(outstruct))
                 {
@@ -83,10 +95,17 @@ namespace Noyau
                 return false;
             }
         }
+        #endregion
 
+        #region Ajout/Suppression d'un composant
+        /// <summary>
+        /// Retourne True si outil a été ajouté au circuit
+        /// </summary>
+        /// <param name="outil"></param>
+        /// <returns></returns>
         public bool AddComponent(Outils outil)
         {
-            if (!Circuit.ContainsVertex(outil))
+            if (!Circuit.ContainsVertex(outil)) //Si outil n'est aps déjà présent dans le circuit
             {
                 Circuit.AddVertex(outil);
                 outil.circuit = this;
@@ -97,43 +116,14 @@ namespace Noyau
                 return false;
             }
         }
+        #endregion
 
-
-        public bool Empty(Outils outil)  //to make sure an element is considered an ending element
-        {
-            bool empty = true;
-
-            foreach (Sortie s in outil.get_liste_sortie())
-            {
-                if (s.get_OutStruct() != null)
-                {
-                    foreach (OutStruct o in s.get_OutStruct())
-                    {
-                        if (o.getOutils() != null) { empty = false; }
-                    }
-                }
-                else empty = true;
-            }
-            return empty;
-        }
-
-        //pour trouver les elements dor sortie Fonction version  1
-        public List<Outils> EndComponents()
-        {
-            foreach (var outil in Circuit.Vertices)
-            {
-                //foreach (var edge in Circuit.InEdges(outil))
-                //{
-                if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
-                //if ((outil is PinOut) || outil.SortieVide())
-                {
-                    CompFinaux.Add(outil);
-                }
-                //}
-            }
-            return CompFinaux;
-        }
-
+        #region Ealuation du circuit
+        /// <summary>
+        /// Evalue le circuit en considérant outil sa fin
+        /// </summary>
+        /// <param name="outil">La fin du circuit considéré</param>
+        /// <param name="hs">Collection des edges déjà passé par</param>
         public void Evaluate(Outils outil, ICollection<Edge<Outils>> hs)
         {
             if (Circuit.ContainsVertex(outil))
@@ -153,6 +143,9 @@ namespace Noyau
             outil.calcul_sorties();
         }
 
+        /// <summary>
+        /// Evalue tout ce circuit
+        /// </summary>
         public void EvaluateCircuit()
         {
             this.CompFinaux = new List<Outils>();
@@ -161,7 +154,6 @@ namespace Noyau
             ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
             foreach (Outils outil in this.CompFinaux)
             {
-                Console.WriteLine("********Evaluate circuit *******");
                 this.Evaluate(outil, hs);
             }
         }
@@ -176,15 +168,29 @@ namespace Noyau
             }
         }
 
-        public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
+        /// <summary>
+        /// Retourne CompFinaux (liste des composants qui constituent la fin du circuit)
+        /// </summary>
+        /// <returns></returns>
+        public List<Outils> EndComponents()
         {
-            return Circuit;
+            foreach (var outil in Circuit.Vertices)
+            {
+                if ((outil is PinOut) || Circuit.IsOutEdgesEmpty(outil))
+                {
+                    CompFinaux.Add(outil);
+                }
+            }
+            return CompFinaux;
         }
 
 
-        public bool getSimulation() { return simulation; }
-        public void setSimulation(bool s) { this.simulation = s; }
+        #endregion
 
+        /// <summary>
+        /// Retourne liste des composants qui ont des entrées non reliées
+        /// </summary>
+        /// <returns></returns>
         public List<Outils> getUnrelatedGates()
         {
             List<Outils> UnrelatedList = new List<Outils>();
@@ -203,10 +209,15 @@ namespace Noyau
         }
 
 
-        //Suppression d'un outil
+        #region Suppression d'un composant
+        /// <summary>
+        /// Retourne True si outil est supprimé du circuit
+        /// </summary>
+        /// <param name="outil"></param>
+        /// <returns></returns>
         public bool DeleteComponent(Outils outil)
         {
-            if (Circuit.ContainsVertex(outil))
+            if (Circuit.ContainsVertex(outil))// Si outil figure dans le circuit
             {
                 //Mettre à jour les entrées des outils auxquelles l'outil était connecté
                 foreach (var sortie in outil.getListesorties())
@@ -231,7 +242,12 @@ namespace Noyau
             }
 
         }
+        #endregion
 
+        #region Réutilisation
+        /// <summary>
+        /// Pour la réutilisation du circuit
+        /// </summary>
         public override void calcul_sorties()
         {
             ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
@@ -239,30 +255,9 @@ namespace Noyau
             this.EndComponents();
             foreach (Outils outil in this.CompFinaux)
             {
-                //new Thread(() => Evaluate(outil)).Start();
-                Console.WriteLine("********Evaluate circuit *******" + outil.GetType());
                 this.EvaluatePerso(outil, hs);
             }
-            //this.EvaluateCircuit();
         }
-
-        //For chrnogramme
-        /******************************************************/
-        public List<Outils> StartComponents()
-        {
-            List<Outils> l = new List<Outils>();
-            foreach (var outil in Circuit.Vertices)
-            {
-                if (Circuit.IsInEdgesEmpty(outil))
-                {
-                    Console.WriteLine(outil.GetType().Name);
-                    l.Add(outil);
-                }
-            }
-            return l;
-        }
-
-
 
         //pour calculsortie()
         public void EvaluatePerso(Outils outil, ICollection<Edge<Outils>> hs)
@@ -282,11 +277,8 @@ namespace Noyau
             }
 
             outil.calcul_sorties();
-            Console.WriteLine("--------------------------");
-            Console.WriteLine(outil.GetType());
-            Console.WriteLine("apres calcul " + outil.getListeentrees()[0].getEtat());
-            Console.WriteLine("apres calcul " + outil.getListesorties()[0].getEtat());
         }
+
         public void ConstructSortie()
         {
 
@@ -320,7 +312,6 @@ namespace Noyau
                         //creation de la liste pour la sauvegarde du circuit aprés  reutilisation 
                         this.Sortie.Add(new Point(outil.id, outil.getListesorties().IndexOf(sorti)));
                         this.liste_sorties.Add(sorti);
-                        Console.WriteLine("SORTIE" + nb_sorties);
 
                         //on supprime la sortie de gate 
                         ((Grid)(sorti.Parent)).Children.Remove(sorti);
@@ -365,7 +356,6 @@ namespace Noyau
 
 
         }
-        //****
         public void RecupEntré(IN outils)
         {
             foreach (OutStruct outs in outils.getListesorties()[0].get_OutStruct())
@@ -376,7 +366,6 @@ namespace Noyau
                 entree.setRelated(false);
                 outs.getOutils().end = true;
                 this.liste_entrees.Add(entree);//on ajoute l'entrée 
-                Console.WriteLine("ENTREE" + this.nb_entrees);
                 //creation de la liste pour la sauvegarde aprés réutilisation 
                 this.Entrée.Add(new Point(outs.getOutils().id, outs.getOutils().getListeentrees().IndexOf(outs.GetEntree())));
 
@@ -393,6 +382,7 @@ namespace Noyau
             this.CompFinaux.Clear();
         }
 
+        /// Pour la réeutilisation
         public override void setEntreeSpe(int i, bool etat)
         {
             ClasseEntree io = liste_entrees[i];
@@ -405,6 +395,18 @@ namespace Noyau
             }
         }
 
+        #endregion
+
+        #region Getter/Setters
+                public BidirectionalGraph<Outils, Edge<Outils>> getCircuit()
+        {
+            return Circuit;
+        }
+
+
+        public bool getSimulation() { return simulation; }
+        public void setSimulation(bool s) { this.simulation = s; }
+        #endregion
     }
 }
 

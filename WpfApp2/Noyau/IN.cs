@@ -18,7 +18,11 @@ namespace Noyau
 
         }
 
-        //construiction de la liste des elementss finaux d'un mini circuit relié à un element de depart
+        
+        /// <summary>
+        /// construire la liste des elementss finaux d'un mini circuit relié à un element de départ
+        /// </summary>
+        /// <returns></returns>
         public HashSet<Outils> getEndListe() { return this.listefin; }
         //*************************
 
@@ -26,7 +30,8 @@ namespace Noyau
         {
             if (this.circuit.getSimulation())
             {
-                this.EndCircuit(this);
+                ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
+                this.EndCircuit(this, hs);
                 this.circuit.EvaluateCircuit(this);
             }
         }

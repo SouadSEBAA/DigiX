@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
+
+    /// <summary>
+    /// les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente ( entrente )
+    /// On a deux sortie, la somme et la retenue sortante
+    /// </summary>
     class AddComplet : CircCombinatoire
     {
-        // les add complet comportent 3 entrees : bit de A, bit de B, bit de la retenue precedente ( entrente )
-        // On a deux sortie, la somme et la retenue sortante
 
         // Ceci est le constructeur de AddComplet, il est utilisé pour la création de ce dernier
         // Chaque nouvel instance est représenté comme le décrit le corps du constructeur

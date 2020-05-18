@@ -2,7 +2,6 @@
 
 namespace Noyau
 {
-    [Serializable]
     class Program
     {
     }

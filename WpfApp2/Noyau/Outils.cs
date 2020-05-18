@@ -16,7 +16,6 @@ namespace Noyau
         public static int nbrOutils = 0;
         public int id = 0;
         public CircuitPersonnalise circuit;
-        public bool added;
         public bool end;
         protected int nb_entrees;
         protected int nb_sorties;
@@ -26,6 +25,9 @@ namespace Noyau
         protected List<Sortie> liste_sorties;
 
         //Methodes:
+        /// <summary>
+        /// Calculer les sorties de cet outil en focniton de ses entrées
+        /// </summary>
         public abstract void calcul_sorties();
 
         public string getname() { return this.etiquette; }
@@ -59,21 +61,21 @@ namespace Noyau
             this.liste_entrees = liste_entrees;
         }
 
-        //pour fixer le nombre de sorties a 1 pour les portes logique
+        /// <summary>
+        /// pour fixer le nombre de sorties a 1 pour les portes logique
+        /// </summary>
+        /// <param name="i"></param>
         public void setnb_sorties(int i) { this.nb_sorties = i; }
 
-        //pour fixer le nombre d'entrée à 1 pour la porte NON 
+        /// <summary>
+        /// pour fixer le nombre d'entrée à 1 pour la porte NON 
+        /// </summary>
+        /// <param name="i"></param>
         public void setnb_entrees(int i) { this.nb_entrees = i; }
 
         //un getter et un setter pour la liste de sortie
         public List<Sortie> get_liste_sortie() { return liste_sorties; }
 
-        public void set_liste_sortie(List<Sortie> list) { liste_sorties = list; }
-
-        public void setSortieSpe(int i, bool etat)
-        {
-            liste_sorties[i].setEtat(etat);
-        }
 
         public void AjoutEntree(ClasseEntree entree)
         {
@@ -116,66 +118,11 @@ namespace Noyau
             this.etiquette = label;
         }
 
-        public int GetInt(Sortie sortie)
-        {
-            if (liste_sorties.Contains(sortie))
-            {
-                return liste_sorties.IndexOf(sortie);
-            }
-            else
-            {
-                return (-1);
-            }
-        }
-
-        public Sortie GetSortie(Sortie sortie)
-        {
-            int i = GetInt(sortie);
-            if (i != -1)
-            {
-                return liste_sorties[i];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public List<Sortie> getListesorties() { return liste_sorties; }
         public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
         public int getnbrentrees() { return this.nb_entrees; }
         public int getnbrsoryies() { return this.nb_sorties; }
 
-        public bool verifiRelie()
-        {
-            int i = 0;
-            bool stop = false;
-            while (i < this.nb_entrees && !stop)
-            {
-                stop = !!((this.liste_entrees[i]).getRelated());
-            }
-            if (stop) { Console.WriteLine("attention entrée non reliée"); }
-            return (!stop);
-        }
-
-        public void appelCalcul()
-        {
-            int i = 0, i1 = 0;
-            Sortie s;
-            while (i < nb_entrees)
-            {
-                s = liste_sorties[i]; i1 = 0;
-                while (i1 < s.getSortie().Count)
-                    (s.getSortie())[i1].getOutils().calcul_sorties();
-                i1++;
-            }
-            i++;
-        }
-
-        public void setEntree(List<ClasseEntree> l)
-        {
-            liste_entrees = l;
-        }
         public bool getSortie()
         {
             return liste_sorties[0].isEtat();
@@ -192,54 +139,37 @@ namespace Noyau
             return liste_entrees[i];
         }
 
-        public virtual Sortie getSortieSpecifique(int i)
-        {
-            return liste_sorties[i];
-        }
-
-        public bool SortieVide()
-        {
-            bool etatSortie = false;
-            foreach (Sortie s in this.liste_sorties)
-            {
-                foreach (OutStruct outt in s.get_OutStruct())
-                {
-                    if (outt.GetEntree().Equals(null) && (outt.getOutils().Equals(null)))
-                    {
-                        etatSortie = true;
-                    }
-                }
-            }
-            return etatSortie;
-        }
 
         public String getLabel()
         {
             return etiquette;
         }
 
-        //construiction de la liste de fin d'un element
-        public void EndCircuit(IN iN)
+        /// <summary>
+        /// Construire la liste de fin d'un element
+        /// </summary>
+        /// <param name="iN"></param>
+        public void EndCircuit(IN iN, ICollection<Edge<Outils>> hs)
         {
             Outils o = this;
-
 
             if ((iN.circuit.getCircuit().OutEdges(o)).Any())
             {
                 foreach (Edge<Outils> edge in iN.circuit.getCircuit().OutEdges(o))
                 {
-
-
-                    if ((edge.Target is PinOut) || edge.Target.Empty())
+                    if (!hs.Contains(edge))
                     {
-                        iN.getEndListe().Add(edge.Target);
+                        hs.Add(edge);
+                        if ((edge.Target is PinOut) || edge.Target.Empty())
+                        {
+                            iN.getEndListe().Add(edge.Target);
+                        }
+                        else { edge.Target.EndCircuit(iN, hs); }
                     }
-                    else { edge.Target.EndCircuit(iN); }
                 }
             }
 
         }
-
 
         public bool Empty()  //to make sure an element is considered an ending element
         {
@@ -261,13 +191,6 @@ namespace Noyau
     }
 
 
-    public class Outilspm
-    {
-        public void calcul_sorties()
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 
 
 }

@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Les conventions : 
+    /// liste_entrees[3] -> D
+    /// </summary>
+
     class D : Bascule
     {
         //liste des entrées :[clock,Pr,Clr,D]
         //liste des sorties :[Q,-Q]
 
+        //Pour gérer quel etat prendre en considération si un front a lieu au moment l'entrée D change
         protected bool EtatAvant_D;
 
         public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }

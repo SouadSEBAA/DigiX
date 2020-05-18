@@ -2,7 +2,9 @@
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Cette structure englobe une entree et son outil
+    /// </summary>
     public class OutStruct
     {
         private ClasseEntree entree;
@@ -15,16 +17,14 @@ namespace Noyau
 
         }
 
-        public OutStruct() { }
-        public void setOutil(Outils outil) { outils = outil; }
-        public Outils getOutils() { return this.outils; }
-        public ClasseEntree GetEntree() { return this.entree; }
-
         public override bool Equals(Object obj)
         {
             return ((OutStruct)obj).entree.Equals(this.entree) && ((OutStruct)obj).outils.Equals(this.outils);
         }
 
+
+        public Outils getOutils() { return this.outils; }
+        public ClasseEntree GetEntree() { return this.entree; }
 
         public int getNumEntree()
         {

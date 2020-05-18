@@ -12,9 +12,16 @@ using WpfApp2.Noyau;
 
 namespace Noyau
 {
+    /// <summary>
+    /// Représente les exceptions qui puissent etre levées à cause d'un état interdit dans la bascule
+    /// </summary>
     public class BasculeExceptions : Exception
     {
-        protected InputOutput io1, io2; protected Canvas panel;
+        /// <summary>
+        /// les entrées qui lèvent l'exception 
+        /// </summary>
+        protected InputOutput io1, io2; 
+        protected Canvas panel;
         protected ExceptionMessage message;
 
         public BasculeExceptions(InputOutput io1, InputOutput io2, Canvas p)
@@ -58,6 +65,9 @@ namespace Noyau
 
     }
 
+/// <summary>
+/// L'exception levée dans la bascule RST à cause de l'état interdit : R = 1 et S = 1
+/// </summary>
     public class RSTException : BasculeExceptions
     {
         public RSTException(InputOutput io1, InputOutput io2, Canvas p) : base(io1, io2, p) { }
@@ -71,6 +81,9 @@ namespace Noyau
             });
         }
     }
+    /// <summary>
+    /// Lexception levée dans la bascule à cause des états interdits Preset = 0 et Clear = 0
+    /// </summary>
     public class PresetClearException : BasculeExceptions
     {
         public PresetClearException(InputOutput io1, InputOutput io2, Canvas p) : base(io1, io2, p) { }

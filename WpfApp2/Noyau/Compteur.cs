@@ -3,10 +3,15 @@ using System.Collections.Generic;
 namespace Noyau
 {
     [Serializable]
+    /// <summary>
+    /// Conventions :
+    /// liste_entrees[1] -> Remise à zéro
+    /// </summary>
     class Compteur : CircSequentielle
     {
-        //liste des entrées : [clock ,raz]
-        //liste des sorties : [les sories du compteur]
+            /// liste des entrées : [clock ,raz]
+            /// liste des sorties : [les sories du compteur]
+
         Disposition dd = Disposition.down;
         public Compteur(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
         {

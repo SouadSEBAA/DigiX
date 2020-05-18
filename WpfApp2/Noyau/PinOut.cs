@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Noyau
 {
-    [Serializable]
     public class PinOut : Outils, INotifyPropertyChanged
     {
         public PinOut()

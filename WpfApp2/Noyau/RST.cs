@@ -5,12 +5,16 @@ using WpfApp2;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Les conventions : 
+    /// liste_entrees[0] -> T
+    /// liste_entrees[3] -> R
+    /// liste_entrees[4] -> S
+    /// </summary>
+
     class RST : Bascule
     {
-        //liste_entrees[3] == R
-        //liste_entrees[4] == S
-        //liste_entrees[0] == T
+        //Pour gérer quels etats prendre en considération si un front a lieu au moment ou l'une des entrées R ou S change
         private bool EtatAvant_R, EtatAvant_S;
 
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 namespace Noyau
 {
-    [Serializable]
     class Encodeur : CircCombinatoire
     {
         public Encodeur()

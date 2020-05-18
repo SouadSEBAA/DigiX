@@ -3,9 +3,11 @@ using WpfApp2;
 
 namespace Noyau
 {
-    [Serializable]
     public class ClasseEntree : InputOutput
     {
+        /// <summary>
+        /// True si cette entrée est reliée
+        /// </summary>
         private bool related;
         public ClasseEntree() { } //added this for serialization
         public ClasseEntree(String e, int ID, Disposition disposi, bool rel, bool etat) : base(e, ID, disposi)

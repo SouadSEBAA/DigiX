@@ -3,10 +3,15 @@ using System;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Les conventions : 
+    /// liste_entrees[3] -> T
+    /// </summary>
+
     class T : Bascule
     {
-        //liste_entrees[3] = T
+
+        //Pour gérer quel etat prendre en considération si un front a lieu au moment ou l'entrée T change
         protected bool EtatAvant_T;
 
         public T(string etiquette, Disposition dispo) : base(2, etiquette, dispo)

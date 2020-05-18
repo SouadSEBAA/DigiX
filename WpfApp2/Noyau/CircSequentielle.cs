@@ -2,14 +2,26 @@
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Classe mère des circuits séquentiels
+    /// </summary>
     public abstract class CircSequentielle : Circuit
     {
-        protected bool Trigger; //si Trigger = 1 alors le circuit se déclenche sur un FrontMontant
+        /// <summary>
+        /// Si True alors ce circuit séquentiel focntionne sur front montant, sur front descendant sinon
+        /// </summary>
+        protected bool Trigger; 
 
-        protected bool front;  //Indique si front montant (si Trigger= 1), indique un front descendant sinon
+        /// <summary>
+        /// Se met à True quand un front est détécté sur l'entrée de l'horloge, False sinon
+        /// </summary>
+        protected bool front;  
 
-        private System.Timers.Timer timer = new System.Timers.Timer(100); //Timer qui s'occupe de la gestion du front
+        /// <summary>
+        /// Un timer qui s'occupe de la gestion du front, il permet de remettre le booléen fornt à False après un certain intervalle de temps
+        /// </summary>
+        /// <returns></returns>
+        private System.Timers.Timer timer = new System.Timers.Timer(100); 
         //TO DO changer 100
 
         public CircSequentielle(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
@@ -25,30 +37,39 @@ namespace Noyau
             timer.Elapsed += Maj; //Associe la methode a exécuter une fois l'intervalle de temps dépassé
         }
 
-
+        /// <summary>
+        /// Remet front à faux après l'intervalle de temps précisé dans la déclaration de timer
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="elapsedEventArgs"></param>
         private void Maj(Object source, System.Timers.ElapsedEventArgs elapsedEventArgs)
         {
             front = false;
         }
 
-
-        //Redéfinition de la méthode set pour controler le changeemt d'état de l'entrée Clock et générer un front
+        /// <summary>
+        /// Redéfinition de la méthode setEntreeSpe pour controler le changement d'état de l'entrée Clock et générer un front
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="etat"></param>
         public override void setEntreeSpe(int i, bool etat)
         {
-            if (i == 0)
+            //On vérifie avant de changer l'état d'une entrée s'il s'agit de l'entrée Clock pour controler le front 
+            if (i == 0) 
             {
-                if (etat == true && !liste_entrees[0].isEtat() && Trigger == true)
+                if (etat == true && !liste_entrees[0].isEtat() && Trigger == true)// Si le circuit fonctionne sur front montant, et l'état actuel est False, et l'état qui s'apprete à devenir est True
                 {
-                    front = true;
-                    timer.Start();
+                    front = true; //Un front montant detecté
+                    timer.Start();//Déclencher le timer
                 }
-                else if (etat == false && liste_entrees[0].isEtat() && Trigger == false)
+                else if (etat == false && liste_entrees[0].isEtat() && Trigger == false)// Si le circuit fonctionne sur front descendant, et l'état actuel est True, et l'état qui s'apprete à devenir est False
                 {
-                    front = true;
-                    timer.Start();
+                    front = true;//Un front descendant detecté
+                    timer.Start();//Déclencher le timer
                 }
             }
-            liste_entrees[i].setEtat(etat);
+            //On change l'état de l'entrée spécifiée
+            liste_entrees[i].setEtat(etat); // Changer l'état de l'entrée Clock
         }
     }
 }

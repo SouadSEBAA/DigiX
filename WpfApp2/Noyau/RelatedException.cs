@@ -8,7 +8,10 @@ using WpfApp2.Noyau;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Exception levée si l'utilisateur tente de simuler ou afficher la Table de Vérité 
+    /// alors qu'il existe des entrées non reliées
+    /// </summary>
     public class RelatedException : Exception
     {
         Canvas panel;
@@ -23,7 +26,7 @@ namespace Noyau
         public void Gerer()
         {
             ExceptionMessage message = new ExceptionMessage();
-            message.textMessage.Text = "     Il existe des entrées qui n'ont pas été reliées, reliez-les puis simulez !";
+            message.textMessage.Text = "     Il existe des entrées qui n'ont pas été reliées";
             message.Opacity = 0.5;
             message.MouseDown += Close;
 
@@ -34,7 +37,6 @@ namespace Noyau
             }
 
             panel.Children.Add(message);
-            Console.WriteLine("set count :" + Exceptions.set.Count);
             Exceptions.set.Add(message);
             Canvas.SetLeft(message, 300);
             Canvas.SetTop(message, 20);

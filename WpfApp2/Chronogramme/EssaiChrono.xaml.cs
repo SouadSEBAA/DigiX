@@ -27,10 +27,11 @@ namespace WpfApp2.Chronogramme
     /// </summary>
     public partial class EssaiChrono : UserControl
     {
-        public ObservableDataSource<MeasureModel> dataSource = new ObservableDataSource<MeasureModel>();
+        public ObservableDataSource<MeasureModel> dataSource = new ObservableDataSource<MeasureModel>(); //la liste des points à déssiner
+
         TimeSpanAxis d = new TimeSpanAxis();
 
-        int a = 16;
+        int a = 16;//la largeur de l'axe des x, ici c'st 16 secondes
         double xMin;
         double startXMax;
         double startYMin = -0.06;
@@ -113,12 +114,6 @@ namespace WpfApp2.Chronogramme
             startXMax = d.ConvertToDouble(Chronogrammes.watch.Elapsed.Add(new TimeSpan(0, 0, a)));
             p.Visible = new Rect { X = xMin, Width = startXMax - xMin, Y = startYMin, Height = startYMax - startYMin };
 
-        }
-
-
-        public void stop()
-        {
-            Stop = true;
         }
 
         public void Continuer()

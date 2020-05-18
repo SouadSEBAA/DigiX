@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
     class ET : PorteLogique
     {
         //Constructeur

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
     class NAND : PorteLogique
     {
         //Constructeur

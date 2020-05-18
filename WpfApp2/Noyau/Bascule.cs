@@ -5,7 +5,14 @@ using WpfApp2;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Les bascules : JK, D, T, RST
+    /// Les conventions : 
+    /// liste_entrees[1] -> Preset
+    /// liste_entrees[2] -> Clear
+    /// Sortie[0] -> Q
+    /// Sortie[1] -> non Q
+    /// </summary>
     public abstract class Bascule : CircSequentielle
     {
         Disposition dd = Disposition.down;
@@ -26,12 +33,11 @@ namespace Noyau
 
         }
 
-        // Cette methode calcule les sorties, dans le cas de l'etat synchrone
         public override void calcul_sorties()
         {
             try
             {
-                if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat())
+                if (!liste_entrees[1].getEtat() && !liste_entrees[2].getEtat()) //Si Preset = 0 et Clear = 0, un état interdit, un excpetion est levée
                     if ((((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas != null)
                         throw new PresetClearException(liste_entrees[1], liste_entrees[2], (((liste_entrees[1].Parent as Grid).Parent as Canvas).Parent as Gate).Parent as Canvas);
             }
@@ -39,7 +45,9 @@ namespace Noyau
             { e.Gerer(); }
         }
 
-        // Cette methode calcule les sorties, dans le ca asynchrone
+        /// <summary>
+        /// Calculer les sorties dans le cas asynchrone
+        /// </summary>
         public void calcul_sorties_asynch()
         {
             //Asynchrone

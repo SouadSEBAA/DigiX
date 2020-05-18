@@ -19,8 +19,6 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour Wire.xaml
     /// </summary>
-
-    [Serializable]
     public partial class Wire : UserControl
     {
 
@@ -107,20 +105,6 @@ namespace WpfApp2
             _ls.Point2 = new Point(_fil.StartPoint.X * 0.4 + EndPoint.X * 0.6, EndPoint.Y);
         }
 
-
-        public Point StartPoint
-        {
-            get { return _fil.StartPoint; }
-            set { _fil.StartPoint = value; }
-        }
-
-
-        public Point EndPoint
-        {
-            get { return _ls.Point3; }
-            set { _ls.Point3 = value; }
-        }
-
         public void Supprimer()
         {
             // Supression in kernel
@@ -161,6 +145,20 @@ namespace WpfApp2
             remove { RemoveHandler(SuppwireEvent, value); }
         }
 
+        public void stopbutton() { Value = false; wire.Stroke = Brushes.Black; }
+
+        public Point StartPoint
+        {
+            get { return _fil.StartPoint; }
+            set { _fil.StartPoint = value; }
+        }
+
+
+        public Point EndPoint
+        {
+            get { return _ls.Point3; }
+            set { _ls.Point3 = value; }
+        }
 
         public bool Value
         {
@@ -178,6 +176,5 @@ namespace WpfApp2
             }
         }
 
-        public void stopbutton() { Value = false; wire.Stroke = Brushes.Black; }
     }
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Noyau
 {
-    [Serializable]
     class PinIn : IN
     {
         public PinIn()
@@ -14,7 +13,6 @@ namespace Noyau
             etiquette = "PinEntrée_" + (id - 24);
             this.nb_entrees = 0;
             this.nb_sorties = 1;
-            //this.etiquette = "Pin entrée";
             this.liste_entrees = new List<ClasseEntree>();
             this.liste_sorties = new List<Sortie>();
             disposition = Disposition.right;

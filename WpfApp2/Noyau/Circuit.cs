@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
     public abstract class Circuit : Outils
     {
         // Constructeur ..

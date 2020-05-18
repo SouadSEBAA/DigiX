@@ -4,9 +4,17 @@ using System.Collections.Generic;
 namespace Noyau
 {
     [Serializable]
+    /// <summary>
+    /// Les conventions : 
+    /// liste_entrees[3] -> J
+    /// liste_entrees[4] -> K
+    /// </summary>
+
     class JK : Bascule
     {
         Disposition dd = Disposition.down;
+        
+        //Pour gérer quels etats prendre en considération si un front a lieu au moment ou l'une des entrées J ou K change
         private bool EtatAvant_J, EtatAvant_K;
 
         public JK(string etiquette, Disposition dispo) : base(2, etiquette, dispo)

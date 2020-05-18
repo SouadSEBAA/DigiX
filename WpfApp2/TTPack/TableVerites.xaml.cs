@@ -217,9 +217,6 @@ namespace WpfApp2.TTPack
             Console.WriteLine("--------------  Fin Simuler Click");
 
             ICollection<Edge<Outils>> hs = new HashSet<Edge<Outils>>();
-            //souad
-            //circuit.Evaluate(circuit.getCircuit().Vertices.Last());
-            //circuit.EvaluateCircuit();
             foreach (var gate in circuit.GetCompFinaux())
                 circuit.Evaluate(gate, hs);
         }

@@ -37,13 +37,13 @@ namespace WpfApp2
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    [Serializable]
-    public partial class MainWindow : Window/*, System.Collections.IEnumerable*/
+    public partial class MainWindow : Window
     {
-        int gridGap = 20;
+        
         CircuitPersonnalise circuit;
         List<Wire> Wires;
         public String filename;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -57,16 +57,10 @@ namespace WpfApp2
         }
 
 
-        private Point SnapToGrid(double x, double y)
-        {
-            x = gridGap * (double)Math.Round((double)x / gridGap);
-            y = gridGap * (double)Math.Round((double)y / gridGap);
-
-            return new Point(x, y);
-        }
-
-        //Suppression d'un outil graphiquement et en noyau
+        //Suppression d'un outil 
         /***********************************************************/
+        #region Suppression d'un outil
+
         private void Supprimer(object sender, RoutedEventArgs e)
         {
 
@@ -79,6 +73,11 @@ namespace WpfApp2
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Retourne la liste des fils reliés à ce composnat afin de les supprimer quand e composant est supprimé
+        /// </summary>
+        /// <param name="gate"></param>
+        /// <returns></returns>
         private List<Wire> RecupererWires(Gate gate)
         {
             List<Wire> list = new List<Wire>();
@@ -89,15 +88,24 @@ namespace WpfApp2
             }
             return list;
         }
-        /*************************************************************/
+        #endregion
 
 
         //Liaison
         /*****************************************************************/
+        #region Liaison
+
         private bool isDrawing;
         Wire line = null;
-        Point mousePos;
+        Point mousePos; //Position actuelle du curseur
+        Point mousePosPrec; //Position précédente du curseur
 
+        /// <summary>
+        /// Début du déssin du wire, quand le bouton gauche de la souris est enfoncée sur un io
+        /// Positionner le début du fil au centre du io
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MouseLeftButtonPressed(object sender, MouseButtonEventArgs e)
         {
             if (!isDrawing && !circuit.getSimulation())
@@ -124,7 +132,11 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-        Point mousePosPrec;
+        /// <summary>
+        /// Lier la fin du fil avec le curseur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MouseMoved(object sender, MouseEventArgs e)
         {
             mousePos = e.GetPosition(Grille);
@@ -136,6 +148,12 @@ namespace WpfApp2
 
         }
 
+        /// <summary>
+        /// Si la fin du fil a été liée à un io alors on appelle Connect du wire, qui les relie si 
+        /// des consitions ont été vérifiées
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MouseLeftButtonReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
@@ -167,6 +185,11 @@ namespace WpfApp2
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Si la souris a été relaché sans qu'un io soit detécté alors le fil est supprimé instantanément de la grille
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MouseReleased(object sender, MouseButtonEventArgs e)
         {
             if (isDrawing)
@@ -175,6 +198,8 @@ namespace WpfApp2
                 Grille.Children.Remove(line);
             }
         }
+        #endregion
+
 
         /******************************************************************************/
         // Pour redessiner les wires
@@ -218,8 +243,12 @@ namespace WpfApp2
         }
 
         /******************************************************************************/
-        //Chronogrammes
-        /******************************************************************************/
+
+
+        //Chronogramme
+        /*****************************************************************/
+        #region Chronogramme
+
         private void ChronogrammesClick(object sender, RoutedEventArgs e)
         {
             if (!Chronogrammes.isOneChrono && circuit.getSimulation())
@@ -233,13 +262,15 @@ namespace WpfApp2
             }
 
         }
-        /******************************************************************************/
-        //List<ExceptionMessage> liste_Exceptions = Exceptions.set;
+
+        #endregion
+
+        //TV
+        /*****************************************************************/
+        #region TV
 
         private void TVClick(object sender, RoutedEventArgs e)
         {
-            //Chronogrammes chronoPage = new Chronogrammes();
-            //Chronogrammes.Children.Add(chronoPage);
             bool key = false; bool seq = false; bool pinentree = false;
             if (circuit.getUnrelatedGates().Count == 0)
             {
@@ -327,12 +358,16 @@ namespace WpfApp2
             Grille.Children.Remove(Exceptions.set[0]);
             Exceptions.set.Remove(Exceptions.set[0]);
         }
-        /*****************/
-        //drag and drop 
+
+        #endregion
+
+        //Drag&Drop
+        /*****************************************************************/
+        #region Drag&Drop
 
         protected override void OnDrop(DragEventArgs e)
         {
-            base.OnDrop(e); Console.WriteLine("mouse4");
+            base.OnDrop(e); 
             e.Effects = DragDropEffects.All;
             e.Handled = true;
 
@@ -343,8 +378,6 @@ namespace WpfApp2
         {
             base.OnDragOver(e);
             e.Effects = DragDropEffects.All;
-            //e.Effects = DragDropEffects.None;
-            Console.WriteLine("mouse111");
 
             e.Handled = true;
         }
@@ -411,37 +444,18 @@ namespace WpfApp2
 
         }
 
+        #endregion
 
 
 
         //************************************FOR THE MENU BUTTONS**********************************************// 
-
+        #region MENU BUTTONS
         private void aide_click(object sender, RoutedEventArgs e)
         {
             //takes us to our main help site
             string path = @"HelpSite\Aide.html"; // C:/Users/username/Documents (or whatever directory)
             System.Diagnostics.Process.Start(path);
         }
-
-
-        //Fonction elements de sortie version 2
-        public void Last_Elements()
-        {
-            circuit.SetCompFinaux(new List<Outils>()); //so that each time it does the job all over again  for our circuit
-
-            foreach (var vertex in circuit.GetCircuit().Vertices)
-            {
-                if (vertex is PinOut || circuit.GetCircuit().IsOutEdgesEmpty(vertex))
-                {
-                    //list_element_de_sortie.Add(vertex);
-                    circuit.GetCompFinaux().Add(vertex);
-                }
-
-            }
-            foreach (Outils o in circuit.GetCompFinaux()) Console.WriteLine(o);
-        }
-
-
 
         private void simuler_click(object sender, RoutedEventArgs e)
         {
@@ -505,15 +519,57 @@ namespace WpfApp2
             e.Handled = true;
         }
 
-        private void open_tut(object sender, RoutedEventArgs e)
+        private void CreateScreenShot(UIElement visual, string file)
         {
-            //takes us directly to the tutorial page
-            string path = @".\..\..\..\HelpSite\Aide.html";
-            System.Diagnostics.Process.Start(path);
+            double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
+            double height = Convert.ToDouble(visual.GetValue(FrameworkElement.HeightProperty));
+            if (double.IsNaN(width) || double.IsNaN(height))
+            {
+                throw new FormatException("You need to indicate the Width and Height values of the UIElement.");
+            }
+            RenderTargetBitmap render = new RenderTargetBitmap(
+               Convert.ToInt32(width),
+               Convert.ToInt32(visual.GetValue(FrameworkElement.HeightProperty)),
+               96,
+               96,
+               PixelFormats.Pbgra32);
+            // Indicate which control to render in the image
+            render.Render(visual);
+            using (FileStream stream = new FileStream(file, FileMode.Create))
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(render));
+                encoder.Save(stream);
+            }
         }
 
-        //*********************SERIALISATION*********************
 
+
+        private void CaptEcran_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "Capture"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG |*.png"; // Filter files by extension
+                                       // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save screenshot
+                string filename = dlg.FileName;
+                this.filename = filename;
+                CreateScreenShot(this, this.filename);
+            }
+        }
+
+
+        #endregion
+
+
+        //*********************SERIALISATION*********************
+        #region Serialisation
 
         //sauvegarder un composant 
         public XElement SaveGate(Gate g)
@@ -592,7 +648,6 @@ namespace WpfApp2
             {
                 if (wire.gateStart.outil.getListeentrees().Contains(wire.io1))//io1 est entrée dans gatestart..io2 sortie dans gateend
                 {
-                    Console.WriteLine("1");
                     w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io1));
                     w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
@@ -600,7 +655,6 @@ namespace WpfApp2
                 }
                 else//io1 entrée dans gateend .. io2 sortie danss gatesstart
                 {
-                    Console.WriteLine("2");
                     w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie 
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io2));
                     w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
@@ -612,7 +666,6 @@ namespace WpfApp2
             {
                 if (wire.gateStart.outil.getListesorties().Contains(wire.io1))//io1 est sortie dans gatestart... io2 entrée dans gateend
                 {
-                    Console.WriteLine("3");
                     w.Element("gatestart").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est sortie
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListesorties().IndexOf((Sortie)wire.io1));
                     w.Element("gateend").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est entrée 
@@ -620,7 +673,6 @@ namespace WpfApp2
                 }
                 else//io1 sortie dans gateend ..io2 entrée dans gatestart
                 {
-                    Console.WriteLine("4");
                     w.Element("gatestart").SetAttributeValue("Type", wire.io2.GetType().Name);//le name est sortie
                     w.Element("gatestart").SetAttributeValue("IO", wire.gateStart.outil.getListeentrees().IndexOf((ClasseEntree)wire.io2));
                     w.Element("gateend").SetAttributeValue("Type", wire.io1.GetType().Name);//le name est entrée 
@@ -698,7 +750,11 @@ namespace WpfApp2
             grille.Save(filename);
 
         }
+        #endregion
+
+
         //*************************DESERIALISATION*******************************
+        #region Deserialisation
 
         private void open_file(object sender, RoutedEventArgs e)
         {
@@ -727,11 +783,8 @@ namespace WpfApp2
             int i = abgate.outil.getnbrentrees(), entree = int.Parse(gate.Attribute("Entree").Value);
             if (!(abgate is CircuitComplet))
             {
-                Console.WriteLine("serialisation" + entree + "  ID" + abgate.outil.id);
                 while (i < entree)
                 {
-                    Console.WriteLine("Entree");
-
                     abgate.AddEntree(abgate.outil.GetType());
                     i++;
                 }
@@ -918,72 +971,11 @@ namespace WpfApp2
 
             return null;
         }
+        #endregion
 
-
-        public Gate Recup(int id)
-        {
-            foreach (UserControl user in Grille.Children)
-            {
-                if (user is Gate)
-                {
-                    Gate gate = (Gate)user;
-                    if (gate.outil.id == id) { return gate; }
-                }
-
-            }
-            return null;
-        }
-
-
-
-
-
-        private void CreateScreenShot(UIElement visual, string file)
-        {
-            double width = Convert.ToDouble(visual.GetValue(FrameworkElement.WidthProperty));
-            double height = Convert.ToDouble(visual.GetValue(FrameworkElement.HeightProperty));
-            if (double.IsNaN(width) || double.IsNaN(height))
-            {
-                throw new FormatException("You need to indicate the Width and Height values of the UIElement.");
-            }
-            RenderTargetBitmap render = new RenderTargetBitmap(
-               Convert.ToInt32(width),
-               Convert.ToInt32(visual.GetValue(FrameworkElement.HeightProperty)),
-               96,
-               96,
-               PixelFormats.Pbgra32);
-            // Indicate which control to render in the image
-            render.Render(visual);
-            using (FileStream stream = new FileStream(file, FileMode.Create))
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(render));
-                encoder.Save(stream);
-            }
-        }
-
-
-
-        private void CaptEcran_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "Capture"; // Default file name
-            dlg.DefaultExt = ".png"; // Default file extension
-            dlg.Filter = "PNG |*.png"; // Filter files by extension
-                                       // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
-            {
-                // Save screenshot
-                string filename = dlg.FileName;
-                this.filename = filename;
-                CreateScreenShot(this, this.filename);
-            }
-        }
 
         //*************************************Reutilisation******************************************
+        #region Réeutilisation
         private void TextBlock_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -999,8 +991,6 @@ namespace WpfApp2
                 CircuitPersonnalise personnalise = Reutilisation(filename); personnalise.setLabel(nom);
                 CircuitComplet gate = new CircuitComplet(personnalise);
 
-                Console.WriteLine("entree " + gate.outil.getnbrentrees() + "sortie" + gate.outil.getnbrsoryies());
-                Console.WriteLine("height " + gate.ActualHeight + "width" + gate.Width);
                 this.circuit.AddComponent(personnalise);
                 gate.added = true;
                 Grille.Children.Add(gate);
@@ -1019,7 +1009,6 @@ namespace WpfApp2
                 nouveauCircuit.gates.Add(abgate);
                 // list.Add(abgate);
                 nouveauCircuit.AddComponent(abgate.outil);
-                Console.WriteLine("comp added : " + abgate.GetType());
                 abgate.added = true;
 
             }
@@ -1029,7 +1018,6 @@ namespace WpfApp2
 
                 Wire w = LoadWire(wire, nouveauCircuit);
                 nouveauCircuit.wires.Add(w);
-                Console.WriteLine("wire added : " + w.gateStart.GetType() + " and " + w.gateEnd.GetType());
             }
             nouveauCircuit.ConstructEntrée();//construction de la liste des entrées 
             nouveauCircuit.ConstructSortie();//construction de la liste des sorties 
@@ -1053,13 +1041,13 @@ namespace WpfApp2
             }
             return null;
         }
-        //**************************************END OF MENU BUTTONS*******************************//
+
+        #endregion
 
 
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+
+        //**************************************START OF MENU BUTTONS*******************************//
+        #region MENU BUTTONS
 
         //For the top bar
         private void close_click(object sender, RoutedEventArgs e)
@@ -1100,7 +1088,6 @@ namespace WpfApp2
         {
             this.WindowState = WindowState.Maximized;
         }
-        //-----------------------------------
 
 
         private void pause_click(object sender, RoutedEventArgs e)
@@ -1116,7 +1103,6 @@ namespace WpfApp2
         private void stop_click(object sender, RoutedEventArgs e)
         {
             int i = 0; int j = 0;
-            Console.WriteLine("-----Stop Button--------");
             circuit.setSimulation(false);
 
             foreach (Outils o in circuit.getCircuit().Vertices)
@@ -1124,35 +1110,24 @@ namespace WpfApp2
                 if (o is Horloge) { ((Horloge)o).arreter(); }
                 if (o is PinIn)
                 {
-                    Console.WriteLine("----------------Pins------------------");
-                    Console.WriteLine("Was : " + o.getListeentrees()[0].getEtat());
                     o.getListeentrees()[0].setEtat(false);
                     ((PinIn)(o)).Calcul();
-                    Console.WriteLine("is : " + o.getListeentrees()[0].getEtat());
-                    Console.WriteLine("---------------- Fin Pins------------------");
                 }
 
-                Console.WriteLine("l'outil :" + o);
 
                 foreach (ClasseEntree c_e in o.getListeentrees())
                 {
                     i++;
-                    Console.WriteLine("input number : " + i);
                     //I iterate through each vertice and set its "ClassEntree" anew as if its just being dragged and created again
-                    Console.WriteLine("etat avant 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
                     c_e.setEtat(false);
                     c_e.stopbutton();
-                    Console.WriteLine("etat apres 'related,etat': " + c_e.getRelated() + "," + c_e.getEtat());
                 }
 
                 foreach (Sortie s in o.getListesorties())
                 {
                     j++;
-                    Console.WriteLine("output number : " + j);
-                    Console.WriteLine("etat avant" + s.getEtat());
                     s.setEtat(false);
                     s.stopbutton();
-                    Console.WriteLine("etat avant:" + s.getEtat());
                 }
             }
             foreach (Wire w in Wires)
@@ -1219,9 +1194,12 @@ namespace WpfApp2
                 window.Show();
             }
         }
+        #endregion
+
+
+
         public CircuitPersonnalise getcircuit() { return this.circuit; }
 
-        //**************************************END OF MENU BUTTONS*******************************//
 
     }
 }

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// les demi additionneurs n'existe que sur 1 bit
+    /// on additionne 2 nombre d'un bit chacun 
+    /// Comme entree, on a 2 bits
+    /// Comme sortie, on a 2 bits, bit de some et bit de retenue
+    /// </summary>
     class DemiAdd : CircCombinatoire
     {
-        // les demi additionneurs n'existe que sur 1 bit
-        // on additionne 2 nombre d'un bit chacun 
-        // Comme entree, on a 2 bits
-        // Comme sortie, on a 2 bits, bit de some et bit de retenue
         public DemiAdd(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(2, 2, etiquette, dispo) { }
         public DemiAdd()
         {

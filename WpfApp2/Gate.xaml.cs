@@ -17,8 +17,6 @@ namespace WpfApp2
     /// <summary>
     /// Logique d'interaction pour Gate.xaml
     /// </summary>
-
-    [Serializable]
     public partial class Gate : UserControl
     {
         protected string data;
@@ -116,8 +114,10 @@ namespace WpfApp2
 
         }
 
-        // Fonction qui separe les entrees et sorties selon la disposition
-
+        
+        /// <summary>
+        /// Fonction qui separe les entrees et sorties selon la disposition
+        /// </summary>
         public void Classification()
         {
             int nE = 0;
@@ -177,7 +177,10 @@ namespace WpfApp2
         }
 
 
-        // Pour la creaction de tt les IO du gate
+        
+        /// <summary>
+        /// Pour la creaction de tt les IO du gate
+        /// </summary>
         public void Creation()
         {
             // Les entrees :
@@ -240,7 +243,12 @@ namespace WpfApp2
         }
 
 
-        //cette fonction pour ajouter et créer les i/o
+        /// <summary>
+        /// ajouter et créer les i/o
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="myt"></param>
+        /// <param name="n"></param>
         public void AjouterIO(Grid grid, InputOutput myt, int n)
         {
             ColumnDefinition cd = new ColumnDefinition();
@@ -252,9 +260,11 @@ namespace WpfApp2
             InputOutputs.Add(myt);
         }
 
-        // Lors de l'ajout ou suppression, on refets tt le travail
-        // Donc il faut supprimer tt les children et columndefinitions du gate
-        // Pour qu'apres en puisse ajouter c'est dernier comme besoin
+        /// <summary>
+        /// Lors de l'ajout ou suppression, on refait tout le travail
+        /// Donc il faut supprimer tous les children et columndefinitions du gate
+        /// Pour qu'après on puisse ajouter ces derniers comme besoin
+        /// </summary>
         public void MAJ()
         {
             InputOutputs = new List<InputOutput>();
@@ -263,7 +273,10 @@ namespace WpfApp2
             LeftGate.ColumnDefinitions.Clear(); RightGate.ColumnDefinitions.Clear(); BottomGate.ColumnDefinitions.Clear(); TopGate.ColumnDefinitions.Clear();
         }
 
-        // Mise a jour du path apres ajout ou suppression d'une entrée ou sortie
+        
+        /// <summary>
+        /// Mise a jour du path apres ajout ou suppression d'une entrée ou sortie
+        /// </summary>
         public void MAJ_Path()
         {
             int taille = 20;
@@ -278,9 +291,13 @@ namespace WpfApp2
             OutilShape.Height = path.Height + 44;
         }
 
-        // ContextMenu
-
-        // Ajout d'une entrée
+        #region ContextMenu
+        
+        /// <summary>
+        /// Ajout d'une entrée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AjouterEntrée(object sender, RoutedEventArgs e)
         {
             Type type = outil.GetType();
@@ -448,7 +465,11 @@ namespace WpfApp2
             MAJ_Path();
         }
 
-        // Suppression d'une entree
+        /// <summary>
+        /// Supprimer une entrée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SupprimerEntrée(object sender, RoutedEventArgs e)
         {
 
@@ -642,7 +663,11 @@ namespace WpfApp2
             Creation();
         }
 
-
+        /// <summary>
+        /// Ajoyter une étiquette au composant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AjouterLabel(object sender, MouseButtonEventArgs e)
         {
             AjoutLabel ajoutLabel = new AjoutLabel();
@@ -658,7 +683,34 @@ namespace WpfApp2
             path.ToolTip = tt;
         }
 
+        //Suppression
+        //**************************************************************
 
+        /// <summary>
+        /// Supprimer le composant
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Supprimer(object sender, MouseButtonEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(DeletingGateEvent));
+        }
+
+        public static readonly RoutedEvent DeletingGateEvent = EventManager.RegisterRoutedEvent(
+            "DeletingGate", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
+
+        public event RoutedEventHandler DeletingGate
+        {
+            add { AddHandler(DeletingGateEvent, value); }
+            remove { RemoveHandler(DeletingGateEvent, value); }
+        }
+        //Fin Suppression
+        //*************************************************************
+
+        #endregion
+
+        
+        #region Drag&Drop
         //Drag Drop 
         //les attributs
         public bool added;
@@ -706,23 +758,6 @@ namespace WpfApp2
             }
         }
 
-        //Suppression
-        //**************************************************************
-        private void Supprimer(object sender, MouseButtonEventArgs e)
-        {
-            RaiseEvent(new RoutedEventArgs(DeletingGateEvent));
-        }
-
-        public static readonly RoutedEvent DeletingGateEvent = EventManager.RegisterRoutedEvent(
-            "DeletingGate", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Gate));
-
-        public event RoutedEventHandler DeletingGate
-        {
-            add { AddHandler(DeletingGateEvent, value); }
-            remove { RemoveHandler(DeletingGateEvent, value); }
-        }
-        //Fin Suppression
-        //*************************************************************
 
         private Gate Copier()
         {
@@ -770,8 +805,10 @@ namespace WpfApp2
 
         //Liaison
         public List<InputOutput> InputOutputs;
-
+        #endregion
     }
+
+    #region Les paths de chaque outil spécifique
     //la partie portes logiques
     [Serializable]
     public class Et : Gate
@@ -1006,6 +1043,8 @@ namespace WpfApp2
         public CircuitComplet(CircuitPersonnalise c) : base(c, "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
         public CircuitComplet() : base(new CircuitPersonnalise(), "M0.5,0.5 L38.611,0.5 L38.611,51.944 L0.5,51.944 z") { }
     }
+
+    #endregion
 }
 
 

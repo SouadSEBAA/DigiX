@@ -14,7 +14,6 @@ namespace WpfApp2
     /// Logique d'interaction pour InputOutput.xaml
     /// </summary>
     /// 
-    [Serializable]
     public partial class InputOutput : UserControl
     {
 
@@ -42,44 +41,7 @@ namespace WpfApp2
             this.MouseDoubleClick += MouseClick;
         }
 
-
-        public bool GetIsInput() { return IsInput; }
-        public String GetEtiquette() { return etiquette; }
-        public void SetEtiquette(String e) { etiquette = e; }
-
-
-        public InputOutput(bool isInput)
-        {
-            InitializeComponent();
-            this.IsInput = isInput;
-        }
-
-
-        public void setDispo(Disposition dispo) { this.dispo = dispo; }
-
         public InputOutput() { InitializeComponent(); etat = false; }
-
-        public Disposition GetDisposition() { return dispo; }
-
-        //****************la liaison
-        private void cercle_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DataObject data = new DataObject();
-                Line line = new Line();
-
-                line.StrokeThickness = 2;
-                line.Stroke = System.Windows.Media.Brushes.Black;
-
-                data.SetData("Object", line);
-                data.SetData("String", "inputoutput");
-                // Inititate the drag-and-drop operation.
-                DragDrop.DoDragDrop(this, data, DragDropEffects.All);
-
-            }
-        }
-
 
         private void MouseOver(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -93,32 +55,7 @@ namespace WpfApp2
         }
 
 
-        virtual public void setEtat(bool etat)
-        {
-            this.etat = etat;
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if (etat == true)
-                    elSelector.Fill = Brushes.Green;
-                else
-                    elSelector.Fill = Brushes.Red;
-
-            });
-
-        }
-
-
         public void stopbutton() { elSelector.Fill = Brushes.Black; }
-
-        public bool getEtat()
-        {
-            return this.etat;
-        }
-
-        public bool isEtat() { return this.etat; }
-
-        public String getEtiquette() { return etiquette; }
 
         private void MouseClick(object sender, MouseEventArgs e)
         {
@@ -144,5 +81,43 @@ namespace WpfApp2
             add { AddHandler(SupprimerWireEvent, value); }
             remove { RemoveHandler(SupprimerWireEvent, value); }
         }
+
+        #region Getters/Setters
+
+        virtual public void setEtat(bool etat)
+        {
+            this.etat = etat;
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (etat == true)
+                    elSelector.Fill = Brushes.Green;
+                else
+                    elSelector.Fill = Brushes.Red;
+
+            });
+
+        }
+
+        public bool GetIsInput() { return IsInput; }
+        public String GetEtiquette() { return etiquette; }
+
+        public void setDispo(Disposition dispo) { this.dispo = dispo; }
+
+
+        public Disposition GetDisposition() { return dispo; }
+
+                public bool getEtat()
+        {
+            return this.etat;
+        }
+
+        public bool isEtat() { return this.etat; }
+
+        public String getEtiquette() { return etiquette; }
+
+
+        #endregion
+
     }
 }

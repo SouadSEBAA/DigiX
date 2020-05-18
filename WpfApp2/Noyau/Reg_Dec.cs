@@ -3,7 +3,15 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Les conventions : 
+    /// liste_entrees[1] -> Remise à zéro
+    /// liste_entrees[2] -> Chargement (Load)
+    /// liste_entrees[3] -> dd (Décalage vers la droite)
+    /// liste_entrees[4] -> dg (Décalage vers la gauche)
+    /// liste_entrees[5] -> esd (entrée série droite)
+    /// liste_entrees[6] -> esg (entrée série gauche)
+    /// </summary>
     class Reg_Dec : CircSequentielle
     {
         //liste des sorties : [mem...]

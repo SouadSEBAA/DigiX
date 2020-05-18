@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace Noyau
 {
+	/// <summary>
+	/// Un composant qui est à 0 ou à 1, pendant des intervals de temps réguliers
+	/// </summary>
 	[Serializable]
 	public class Horloge : IN
 	{
@@ -31,16 +34,28 @@ namespace Noyau
 
 		}
 
-		//  le Tour du signal d'horloge 
-
+		
+		/// <summary>
+		/// Tour en millisecondes du signal d'horloge 
+		/// </summary>
 		int T = 2000;
+
+		/// <summary>
+		/// Temps en millisecondes ou l'horloge est True pendant un tour
+		/// </summary>
 		int UP = 1000;
+
+		/// <summary>
+		/// le Thread qui controle les intervals de temps
+		/// </summary>
 		Thread mythread;
-		//Task task;
+
+		/// <summary>
+		/// Si True alors l'horloge est arrétée
+		/// </summary>
 		bool stop = false;
 
 
-		//***********
 		public void auto()
 		{
 			bool parti = false;
@@ -68,84 +83,35 @@ namespace Noyau
 
 		}
 
-		//Chronogramme
-		public void auto(object sender, EventArgs e)
-		{
-			bool parti = false;
-			while (!this.stop)
-			{
-				if (parti)//etat haut 
-				{
-					(this.liste_sorties[0]).setEtat(true); this.appelCalcul();
-					Thread.Sleep(UP);
-				}
-				else//etat bas 
-				{
-					(this.liste_sorties[0]).setEtat(false); this.appelCalcul();
-					Thread.Sleep(T - UP);
-				}
-				parti = !parti;
-			}
-
-		}
-
-		//*********
-
 		public override void calcul_sorties() { }
 
+		/// <summary>
+		/// Permet de d'arreter l'horloge
+		/// </summary>
 		public void arreter()
 		{
 			Console.WriteLine("arreter");
 			this.stop = true;
 		}
-		//**********
+
 		public void mini()
 		{
 			this.stop = false;
 			//mythread.Start();
 		}
-		//**********/
-		public Horloge(int T, int UP)
-		{
 
-			this.nb_entrees = 0;
-			this.nb_sorties = 1;
-			this.etiquette = "horloge";
-			this.liste_entrees = new List<ClasseEntree>();
-			this.liste_sorties = new List<Sortie>();
-			this.disposition = Disposition.right;
-			liste_sorties.Add(new Sortie(1, Disposition.down, false, new List<OutStruct>()));
-			liste_entrees.Add(new ClasseEntree(0, Disposition.left, false, false));
 
-			this.T = T; this.UP = UP;
-			this.mythread = new Thread(new ThreadStart(this.auto));
-			//task = Task.Run(new Action(auto));
-			mythread.Start();
-			//tf.StartNew(new Action(auto));
-			//
-			// TODO: Add constructor logic here
-			//
-		}
-
-		public int getUP()
-		{
-			return UP;
-		}
-
-		public void setUP(int UP)
-		{
-			this.UP = UP;
-		}
-
-		public void setT(int T)
-		{
-			this.T = T;
-		}
-
+		#region Getters/Setters
+		/// <summary>
+		/// Remet T et UP de l'horloge
+		/// </summary>
+		/// <param name="T">Le tour T en millisecondes</param>
+		/// <param name="UP">Le temps à 1 de l'horloge pendant un tour en millisecondes</param>
 		public void setTUp(int T, int UP)
 		{
 			this.UP = UP;
 			this.T = T;
 		}
+		#endregion
 	}
 }

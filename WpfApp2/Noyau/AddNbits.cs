@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace Noyau
 {
-    [Serializable]
+    /// <summary>
+    /// Un additionneur n bits fait l'addition de deux nombres, de n bits chacun
+    /// </summary>
     class AddNbits : CircCombinatoire
     {
         // Ceci est le constructeur de AddNbit, il est utilisé pour la création de ce dernier
