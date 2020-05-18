@@ -18,16 +18,6 @@ namespace Noyau
             this.liste_sorties.Add(new Sortie("Sortie", 0, Disposition.right, false, new List<OutStruct>()));
         }
 
-        public void setListEntrees(List<ClasseEntree> liste_entrees)
-        {
-            this.liste_entrees = liste_entrees;
-        }
-
-        public void setListSorties(List<Sortie> liste_sorties)
-        {
-            this.liste_sorties = liste_sorties;
-        }
-
         public override void calcul_sorties()
         {
             switch (this.nb_entrees)

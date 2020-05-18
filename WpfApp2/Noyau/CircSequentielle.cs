@@ -22,14 +22,7 @@ namespace Noyau
         /// </summary>
         /// <returns></returns>
         private System.Timers.Timer timer = new System.Timers.Timer(100); 
-        //TO DO changer 100
 
-        public CircSequentielle(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(nb_entrees, nb_sorties, etiquette, dispo)
-        {
-            Trigger = true; //Initialisé à etre déclenché sur un front montant (par défaut)
-            timer.AutoReset = false; //Indique que le task du timer ne va s'exécuter qu'une seule fois
-            timer.Elapsed += Maj; //Associe la methode a exécuter une fois l'intervalle de temps dépassé
-        }
         public CircSequentielle() : base()
         {
             Trigger = true; //Initialisé à etre déclenché sur un front montant (par défaut)

@@ -15,19 +15,6 @@ namespace Noyau
     /// </summary>
     public abstract class Bascule : CircSequentielle
     {
-        Disposition dd = Disposition.down;
-
-        // Premier constructeur de Bascule
-        public Bascule(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, 2, etiquette, dispo)
-        {
-            Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie("sortie", 1, dd, false, null);
-            tab[1] = new Sortie("sortie", 1, dd, false, null);
-
-            liste_sorties = new List<Sortie>(tab);
-        }
-
-        // 2eme construction de Bascule
         public Bascule() : base()
         {
 

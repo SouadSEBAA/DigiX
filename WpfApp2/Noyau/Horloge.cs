@@ -10,7 +10,6 @@ namespace Noyau
 	/// <summary>
 	/// Un composant qui est à 0 ou à 1, pendant des intervals de temps réguliers
 	/// </summary>
-	[Serializable]
 	public class Horloge : IN
 	{
 		//Constructeur 

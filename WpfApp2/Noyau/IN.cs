@@ -13,18 +13,12 @@ namespace Noyau
     {
 
         HashSet<Outils> listefin = new HashSet<Outils>();//pour eviter less redoublants qui changent less sorties
-        public IN()
-        {
-
-        }
-
         
         /// <summary>
         /// construire la liste des elementss finaux d'un mini circuit relié à un element de départ
         /// </summary>
         /// <returns></returns>
         public HashSet<Outils> getEndListe() { return this.listefin; }
-        //*************************
 
         public void Calcul()
         {

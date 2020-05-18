@@ -10,9 +10,9 @@ using WpfApp2.Noyau;
 
 namespace WpfApp2
 {
-    class AucunPinEntreeException : Exception
+    class AucunPinEntreeException : Exception, IException
     {
-        Canvas panel;
+        public Canvas panel { get; set; }
 
         public AucunPinEntreeException(Canvas p)
         {

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfApp2;
 using WpfApp2.Noyau;
 
 namespace Noyau
@@ -12,10 +13,10 @@ namespace Noyau
     /// Exception levée si l'utilisateur tente de simuler ou afficher la Table de Vérité 
     /// alors qu'il existe des entrées non reliées
     /// </summary>
-    public class RelatedException : Exception
+    public class RelatedException : Exception, IException
     {
-        Canvas panel;
 
+        public Canvas panel { get; set; }
         public RelatedException(Canvas p)
         {
             Application.Current.Dispatcher.Invoke(() =>

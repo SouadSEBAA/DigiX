@@ -451,11 +451,6 @@ namespace WpfApp2
         {
             circuit.setSimulation(false);
 
-            //For exceptions
-            //StackExceptions.Children.Clear();
-
-            //Last_Elements(); //idk if this is needed based on what has been done below
-            //Vérifier si les éléments sont reliés
             if (circuit.getCircuit().VertexCount != 0)
                 if (circuit.getUnrelatedGates().Count != 0)
                 {

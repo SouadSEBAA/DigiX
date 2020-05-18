@@ -25,12 +25,6 @@ namespace Noyau
         protected List<Sortie> liste_sorties;
 
         //Methodes:
-        /// <summary>
-        /// Calculer les sorties de cet outil en focniton de ses entrées
-        /// </summary>
-        public abstract void calcul_sorties();
-
-        public string getname() { return this.etiquette; }
 
         public Outils(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo)
         {
@@ -62,19 +56,9 @@ namespace Noyau
         }
 
         /// <summary>
-        /// pour fixer le nombre de sorties a 1 pour les portes logique
+        /// Calculer les sorties de cet outil en focniton de ses entrées
         /// </summary>
-        /// <param name="i"></param>
-        public void setnb_sorties(int i) { this.nb_sorties = i; }
-
-        /// <summary>
-        /// pour fixer le nombre d'entrée à 1 pour la porte NON 
-        /// </summary>
-        /// <param name="i"></param>
-        public void setnb_entrees(int i) { this.nb_entrees = i; }
-
-        //un getter et un setter pour la liste de sortie
-        public List<Sortie> get_liste_sortie() { return liste_sorties; }
+        public abstract void calcul_sorties();
 
 
         public void AjoutEntree(ClasseEntree entree)
@@ -113,37 +97,7 @@ namespace Noyau
             this.liste_sorties.Remove(sortie);
         }
 
-        public void setLabel(string label)
-        {
-            this.etiquette = label;
-        }
 
-        public List<Sortie> getListesorties() { return liste_sorties; }
-        public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
-        public int getnbrentrees() { return this.nb_entrees; }
-        public int getnbrsoryies() { return this.nb_sorties; }
-
-        public bool getSortie()
-        {
-            return liste_sorties[0].isEtat();
-        }
-
-
-        public virtual void setEntreeSpe(int i, bool etat)
-        {
-            liste_entrees[i].setEtat(etat);
-        }
-
-        public virtual ClasseEntree getEntreeSpecifique(int i)
-        {
-            return liste_entrees[i];
-        }
-
-
-        public String getLabel()
-        {
-            return etiquette;
-        }
 
         /// <summary>
         /// Construire la liste de fin d'un element
@@ -188,9 +142,60 @@ namespace Noyau
             }
             return empty;
         }
+
+
+        #region Getters/Setters
+
+        public List<Sortie> getListesorties() { return liste_sorties; }
+        public List<ClasseEntree> getListeentrees() { return this.liste_entrees; }
+        public int getnbrentrees() { return this.nb_entrees; }
+        public int getnbrsoryies() { return this.nb_sorties; }
+
+        public bool getSortie()
+        {
+            return liste_sorties[0].isEtat();
+        }
+
+
+        public virtual void setEntreeSpe(int i, bool etat)
+        {
+            liste_entrees[i].setEtat(etat);
+        }
+
+        public virtual ClasseEntree getEntreeSpecifique(int i)
+        {
+            return liste_entrees[i];
+        }
+
+
+        public String getLabel()
+        {
+            return etiquette;
+        }
+
+        public void setLabel(string label)
+        {
+            this.etiquette = label;
+        }
+
+        /// <summary>
+        /// pour fixer le nombre de sorties a 1 pour les portes logique
+        /// </summary>
+        /// <param name="i"></param>
+        public void setnb_sorties(int i) { this.nb_sorties = i; }
+
+        /// <summary>
+        /// pour fixer le nombre d'entrée à 1 pour la porte NON 
+        /// </summary>
+        /// <param name="i"></param>
+        public void setnb_entrees(int i) { this.nb_entrees = i; }
+
+        //un getter et un setter pour la liste de sortie
+        public List<Sortie> get_liste_sortie() { return liste_sorties; }
+
+        public string getname() { return this.etiquette; }
+
+        #endregion
+
     }
-
-
-
-
 }

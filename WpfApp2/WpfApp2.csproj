@@ -207,7 +207,6 @@
     <Compile Include="Noyau\ET.cs" />
     <Compile Include="Noyau\Horloge.cs" />
     <Compile Include="Noyau\JK.cs" />
-    <Compile Include="Noyau\Liaison.cs" />
     <Compile Include="Noyau\Multiplexeur.cs" />
     <Compile Include="Noyau\NAND.cs" />
     <Compile Include="Noyau\NON.cs" />
@@ -217,7 +216,6 @@
     <Compile Include="Noyau\OutStruct.cs" />
     <Compile Include="Noyau\OUX.cs" />
     <Compile Include="Noyau\PorteLogique.cs" />
-    <Compile Include="Noyau\Program.cs" />
     <Compile Include="Noyau\Reg_Dec.cs" />
     <Compile Include="Noyau\RelatedException.cs" />
     <Compile Include="Noyau\RST.cs" />

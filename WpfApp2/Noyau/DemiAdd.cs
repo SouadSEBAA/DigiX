@@ -10,7 +10,6 @@ namespace Noyau
     /// </summary>
     class DemiAdd : CircCombinatoire
     {
-        public DemiAdd(int nb_entrees, int nb_sorties, string etiquette, Disposition dispo) : base(2, 2, etiquette, dispo) { }
         public DemiAdd()
         {
             this.nb_entrees = 2;

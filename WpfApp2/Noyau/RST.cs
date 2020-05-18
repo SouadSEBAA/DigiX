@@ -18,7 +18,6 @@ namespace Noyau
         private bool EtatAvant_R, EtatAvant_S;
 
 
-        public RST(string etiquette, Disposition dispo) : base(2, etiquette, dispo) { }
         public RST() : base()
         {
             this.nb_entrees = 5;

@@ -15,7 +15,6 @@ namespace Noyau
         //Pour gérer quel etat prendre en considération si un front a lieu au moment l'entrée D change
         protected bool EtatAvant_D;
 
-        public D(int nb_entrees, string etiquette, Disposition dispo) : base(nb_entrees, etiquette, dispo) { }
         public D() : base()
         {
             this.nb_entrees = 4;

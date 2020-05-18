@@ -12,19 +12,10 @@ namespace Noyau
 
     class JK : Bascule
     {
-        Disposition dd = Disposition.down;
         
         //Pour gérer quels etats prendre en considération si un front a lieu au moment ou l'une des entrées J ou K change
         private bool EtatAvant_J, EtatAvant_K;
 
-        public JK(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
-        {
-            Sortie[] tab = new Sortie[2];
-            tab[0] = new Sortie("Q", 1, dd, false, null);
-            tab[1] = new Sortie("|Q", 1, dd, false, null);
-
-            liste_sorties = new List<Sortie>(tab);
-        }
         public JK() : base()
         {
             this.nb_entrees = 5;

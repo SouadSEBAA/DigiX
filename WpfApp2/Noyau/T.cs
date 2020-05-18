@@ -14,10 +14,6 @@ namespace Noyau
         //Pour gérer quel etat prendre en considération si un front a lieu au moment ou l'entrée T change
         protected bool EtatAvant_T;
 
-        public T(string etiquette, Disposition dispo) : base(2, etiquette, dispo)
-        {
-            liste_entrees = new List<ClasseEntree>(nb_entrees);
-        }
         public T() : base()
         {
             this.nb_entrees = 4;
