@@ -957,7 +957,7 @@ namespace WpfApp2
             foreach (XElement gate in root.Element("Gates").Elements())
             {
 
-                Gate abgate = LoadGate(gate); Console.WriteLine("deserealisation " + abgate.GetType().Name);
+                Gate abgate = LoadGate(gate); 
                 Grille.Children.Add(abgate);
                 this.circuit.AddComponent(abgate.outil);
                 ((CircuitPersonnalise)this.circuit).gates.Add(abgate);

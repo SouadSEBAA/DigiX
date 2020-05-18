@@ -33,7 +33,6 @@ namespace WpfApp2
             }
 
             panel.Children.Add(message);
-            Console.WriteLine("set count :" + Exceptions.set.Count);
             Exceptions.set.Add(message);
             Canvas.SetLeft(message, 300);
             Canvas.SetTop(message, 20);

@@ -48,7 +48,6 @@ namespace Noyau
                     { liste_sorties[3].setEtat(liste_entrees[2].isEtat()); }
                     break;
                 case 8:
-                    Console.WriteLine("8 sorties || 3 commande");
                     if (liste_entrees[2].isEtat() == false && liste_entrees[1].isEtat() == false && liste_entrees[0].isEtat() == false)
                     { liste_sorties[0].setEtat(liste_entrees[3].isEtat()); }
                     if (liste_entrees[2].isEtat() == false && liste_entrees[1].isEtat() == false && liste_entrees[0].isEtat() == true)

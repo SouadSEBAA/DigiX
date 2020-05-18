@@ -947,7 +947,6 @@ namespace WpfApp2
 
             path.Fill = Brushes.Red;
             this.MouseDoubleClick += new MouseButtonEventHandler(OnClick);
-            // this.MouseDoubleClick += OnClick;
         }
 
         public void OnClick(object sender, MouseEventArgs e)
@@ -955,20 +954,16 @@ namespace WpfApp2
 
             if (this.outil.getListeentrees()[0].getEtat().Equals(true))
             {
-                Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(false);
                 //le calcul automatique 
                 path.Fill = Brushes.Red;
                 ((PinIn)(this.outil)).Calcul();
-                Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
             else
             {
-                Console.WriteLine("Etat etait : " + this.outil.getListeentrees()[0].getEtat());
                 this.outil.getListeentrees()[0].setEtat(true);
                 path.Fill = Brushes.Green;
                 ((PinIn)(this.outil)).Calcul();
-                Console.WriteLine("Etat devenu : " + this.outil.getListeentrees()[0].getEtat());
             }
 
         }
@@ -1005,10 +1000,8 @@ namespace WpfApp2
         }
         public void OnClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Demmarer");
 
             ((Horloge)this.outil).Demmarer();
-
 
         }
     }
