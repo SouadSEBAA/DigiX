@@ -1,5 +1,5 @@
-# DigiX
- 
+## DigiX
+ ❮img src="https://github.com/OussamaBenakmoum/DigiX/blob/master/WpfApp2/ditix.png" width="100" ❯
 Digix is a graphical simulator of logic circuits, a 3 months working project, designed by a team of 6 students as a part of a module. 
 Here is a video demonstration :https://www.youtube.com/watch?v=OxuG4MAOG0g&fbclid=IwAR02kJ8JblrgUim53vQ_8IlaGj_bfO7Sgh0C09xM5hx9iHCtdE5rpg29FuM
 
