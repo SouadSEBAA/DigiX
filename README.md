@@ -15,7 +15,7 @@ Digix is a graphical simulator of logic circuits, a 3 months working project, de
 -	A user guide and a Help are also put in disposition of the user. <br/>
 
 # To try
-You can download directly DigiX.exe to try it .Follow this [Link here!](https://www.mediafire.com/file/c70ie4820ktxvhr/DigiX.msi/file)
+You can download directly DigiX.exe. Follow this [Link here!](https://www.mediafire.com/file/c70ie4820ktxvhr/DigiX.msi/file)
 
 <p align="center">
  <img src="https://github.com/OussamaBenakmoum/DigiX/blob/master/WpfApp2/ditix.png" >
