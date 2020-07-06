@@ -12,5 +12,7 @@ Digix is a graphical simulator of logic circuits, a 3 months working project, de
 -	Display the truth table of the circuit 
 -	Draw the timing diagram of the different signals when it is a circuit comprising sequential components .
 -	Save the circuit with the abaility to re-open it later to modify or tu use it as a component of another circuit.
--	A user guide and a Help are also put in disposition of the user.
-                               
+-	A user guide and a Help are also put in disposition of the user. <br/>
+<p align="center">
+ <img src="https://github.com/OussamaBenakmoum/DigiX/blob/master/WpfApp2/ditix.png" >
+</p>
