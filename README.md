@@ -3,9 +3,6 @@
 Digix is a graphical simulator of logic circuits, a 3 months working project, designed by a team of 6 students as a part of a module. <br/>
 --> [Youtube Video here!](https://www.youtube.com/watch?v=OxuG4MAOG0g&fbclid=IwAR02kJ8JblrgUim53vQ_8IlaGj_bfO7Sgh0C09xM5hx9iHCtdE5rpg29FuM) For demonstration.
 
-# DigiX.exe
-You can download directly DigiX.exe for trial .Follow this [Link here!](https://www.mediafire.com/file/c70ie4820ktxvhr/DigiX.msi/file)
-
 # Features: 
 
 -	the simulator provides the user with a set of logic gates (NO, AND, OR, …), combinational circuits (multiplexers, adders ...), and sequential circuits (flip-flops, registers, clock ...) and user created circuits for re-use.
@@ -19,3 +16,6 @@ You can download directly DigiX.exe for trial .Follow this [Link here!](https://
 <p align="center">
  <img src="https://github.com/OussamaBenakmoum/DigiX/blob/master/WpfApp2/ditix.png" >
 </p>
+
+# Download
+You can download directly DigiX.exe for trial .Follow this [Link here!](https://www.mediafire.com/file/c70ie4820ktxvhr/DigiX.msi/file)
