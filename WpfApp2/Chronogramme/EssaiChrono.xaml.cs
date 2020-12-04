@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace WpfApp2.Chronogramme
 {
@@ -46,7 +47,7 @@ namespace WpfApp2.Chronogramme
             p.MainHorizontalAxis.Visibility = Visibility.Hidden;
             p.MainVerticalAxis.Visibility = Visibility.Hidden;
             dataSource.SetXMapping(model => d.ConvertToDouble(model.interval));
-            dataSource.SetYMapping((model) => { if (model.Value == true) return 1; else return 0; });
+            dataSource.SetYMapping((model) => { if (model.Value) return 1; else return 0; });
 
             //Bind the data with the graph
             chrono.DataSource = dataSource;
@@ -59,27 +60,42 @@ namespace WpfApp2.Chronogramme
             Stop = true;
             DataContext = this;
 
+            dataTimer = new System.Timers.Timer();
+            dataTimer.Elapsed += DataTimer_Tick;
+            dataTimer.Interval = 1;
+
+            graphTimer.Tick += timer_Tick;
+            graphTimer.Interval = new TimeSpan(600000);
+        }
+        DispatcherTimer graphTimer = new DispatcherTimer(DispatcherPriority.Render);
+        System.Timers.Timer dataTimer;
+        public Queue<MeasureModel> data = new Queue<MeasureModel>();
+        private void DataTimer_Tick(object sender, EventArgs args)
+        {
+            data.Enqueue(new MeasureModel { interval = Chronogrammes.watch.Elapsed, Value = io.getEtat() });
         }
 
-        void timer_Tick()
+        void timer_Tick(object sender, EventArgs args)
         {
-            while (Chronogrammes.IsReading && (Chronogrammes.watch.Elapsed.CompareTo(Chronogrammes.ts) < 0) && !Stop)
+            if (Chronogrammes.IsReading && (Chronogrammes.watch.Elapsed.CompareTo(Chronogrammes.ts) < 0) && !Stop)
             {
-                lock (Chronogrammes.watch)
-                {
-                    lock (io)
+                //lock (Chronogrammes.watch)
+                //{
+                    lock (data)
                     {
 
-                        Thread.Sleep(1);
-
+                        //Thread.Sleep(1);
+                        dataSource.AppendMany(data.ToArray()); data.Clear();
+                        /*
                         dataSource.AppendAsync(Application.Current.Dispatcher, new MeasureModel
                         {
                             interval = Chronogrammes.watch.Elapsed,
                             Value = io.getEtat(),
-                        });
+                        });*/
                     }
-                }
+                //}
             }
+            else { dataTimer.Stop(); graphTimer.Stop(); }
         }
 
         public void NextClick()
@@ -98,8 +114,9 @@ namespace WpfApp2.Chronogramme
         public void StartClick()
         {
             Stop = false;
-
-            Task.Factory.StartNew(timer_Tick);
+            graphTimer.Start();
+            dataTimer.Start();
+            //Task.Factory.StartNew(timer_Tick);
 
             xMin = d.ConvertToDouble(Chronogrammes.watch.Elapsed);
             startXMax = d.ConvertToDouble(Chronogrammes.watch.Elapsed.Add(new TimeSpan(0, 0, a)));
@@ -110,7 +127,9 @@ namespace WpfApp2.Chronogramme
         public void Continuer()
         {
             Stop = false;
-            Task.Factory.StartNew(timer_Tick);
+            //Task.Factory.StartNew(timer_Tick);
+            graphTimer.Start();
+            dataTimer.Start();
         }
 
         public void AfficherCacherAxes()
@@ -140,5 +159,6 @@ namespace WpfApp2.Chronogramme
         {
             Stop = true;
         }
+
     }
 }

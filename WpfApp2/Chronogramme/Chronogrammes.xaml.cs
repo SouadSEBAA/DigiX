@@ -12,6 +12,8 @@ using Noyau;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using Microsoft.Research.DynamicDataDisplay.Common.Auxiliary;
 
 namespace WpfApp2.Chronogramme
 {
@@ -68,7 +70,7 @@ namespace WpfApp2.Chronogramme
             IsReading = false;
             isPause = false;
             watch = new Stopwatch();
-            timer = new DispatcherTimer();
+            timer = new DispatcherTimer(DispatcherPriority.Render);
 
             l_ts = new List<TimeSpan>();
             l_ts.Add(new TimeSpan(0, 0, 5));
@@ -164,13 +166,22 @@ namespace WpfApp2.Chronogramme
                 }
                 else
                 {
-                    watch.Restart();
-                    foreach (EssaiChrono item in ChronoStack.Children)
+                    watch.Restart(); timer.Interval = ts; 
+                    Parallel.ForEach(essaiChronos, (EssaiChrono item) =>
+                    {
+                        item.Dispatcher.BeginInvoke(() =>
+                        {
+                            method(item);
+                        }, DispatcherPriority.Render);
+ 
+                    } );
+                   
+                    /*foreach (EssaiChrono item in ChronoStack.Children)
                     {
                         item.dataSource.Collection.Clear();
                         item.StartClick();
-                    }
-                    timer.Interval = ts;
+                    }*/
+                    
                 }
                 timer.Start();
                 PauseButton.Visibility = Visibility.Visible;
@@ -180,6 +191,10 @@ namespace WpfApp2.Chronogramme
                 PreviousButton.IsEnabled = true;
                 AxesButton.IsEnabled = true;
             }
+        }
+        void method (EssaiChrono item)
+        {
+                item.dataSource.Collection.Clear(); item.data.Clear(); item.StartClick();
         }
         /**********************************************************************/
         private void Quit(object sender, CancelEventArgs e)
@@ -198,6 +213,7 @@ namespace WpfApp2.Chronogramme
         /**********************************************************************/
         List<MenuItem> IoAdded = new List<MenuItem>();
         int ChronNumerAuthorised = 6;
+        List<EssaiChrono> essaiChronos = new List<EssaiChrono>();
 
         private void Ajouter(object sender, RoutedEventArgs e)
         {
@@ -208,8 +224,8 @@ namespace WpfApp2.Chronogramme
                     MenuItem mi = e.OriginalSource as MenuItem;
                     InputOutput io = mi.DataContext as InputOutput;
                     mi.IsEnabled = false;
-                    IoAdded.Add(mi);
-                    ChronoStack.Children.Add(new EssaiChrono(io));
+                    IoAdded.Add(mi); EssaiChrono ec = new EssaiChrono(io);
+                    ChronoStack.Children.Add(ec); essaiChronos.Add(ec);
                     ChronoNumber++;
                 }
                 else

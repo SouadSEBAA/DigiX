@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\obj\Debug\
+D:\DigiX\DigiX\WpfApp2\obj\Debug\
 WpfApp2
 none
 false
 DEBUG;TRACE
-C:\Users\Oussama\source\repos\WpfApp2\WpfApp2\App.xaml
+D:\DigiX\DigiX\WpfApp2\App.xaml
 11-1272804892
 
 611440822538
-25-385222809
+251781979509
 Graphique\AjoutLabel.xaml;Chronogramme\Chronogrammes.xaml;Chronogramme\ChronogrammeException.xaml;Chronogramme\EssaiChrono.xaml;Close.xaml;Graphique\Gate.xaml;Graphique\InputOutput.xaml;MainWindow.xaml;TableVerite\TableVerites.xaml;Graphique\Wire.xaml;Exceptions\ExceptionMessage.xaml;
 
 False
